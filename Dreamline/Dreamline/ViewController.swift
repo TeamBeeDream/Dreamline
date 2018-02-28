@@ -7,14 +7,36 @@
 //
 
 import UIKit
+import GLKit
 
-class ViewController: UIViewController {
-
+class ViewController: GLKViewController {
+    var context: EAGLContext? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.context = EAGLContext(api: .openGLES2)
+        if self.context == nil {
+            print("Failed to create ES context")
+        }
+        
+        EAGLContext.setCurrent(self.context)
+        
+        let view = self.view as! GLKView
+        view.context = self.context!
+        view.drawableDepthFormat = .format24
+        view.drawableColorFormat = .RGBA8888
+        
+        glClearColor(0.0, 0.0, 0.0, 0.0)
+        glClearDepthf(1.0)
     }
 
+    override func glkView(_ view: GLKView, drawIn rect: CGRect) {
+        glClear(GLbitfield(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT))
+        glClearColor(1.0, 1.0, 0.0, 1.0)
+        glFlush()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -32,7 +32,7 @@ class ViewController: GLKViewController {
     }
 
     override func glkView(_ view: GLKView, drawIn rect: CGRect) {
-        render()
+        demo_scene()
     }
     
     override func didReceiveMemoryWarning() {

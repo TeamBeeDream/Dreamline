@@ -1,9 +1,11 @@
 #include <stdio.h>
-#include "render.h"
+
+#include "dev.h"
+#include "graphics/render.h"
 
 int main(int argc, const char* argv[]) {
-    printf("this program is running!\n");
-    //test_render();
-    test_capabilities();
+    dev_init();
+    dev_loop(demo_scene);
+    dev_quit();
     return 0;
 }

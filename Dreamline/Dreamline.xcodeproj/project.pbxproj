@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		691207E22048464100E95600 /* gl_test.c in Sources */ = {isa = PBXBuildFile; fileRef = 691207E12048464100E95600 /* gl_test.c */; };
+		691207E4204846A900E95600 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 691207E3204846A900E95600 /* OpenGLES.framework */; };
 		69775BFC2047500900629520 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69775BFB2047500900629520 /* AppDelegate.swift */; };
 		69775BFE2047500900629520 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69775BFD2047500900629520 /* ViewController.swift */; };
 		69775C012047500900629520 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69775BFF2047500900629520 /* Main.storyboard */; };
@@ -35,6 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		691207DF2048464000E95600 /* Dreamline-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dreamline-Bridging-Header.h"; sourceTree = "<group>"; };
+		691207E02048464100E95600 /* gl_test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gl_test.h; sourceTree = "<group>"; };
+		691207E12048464100E95600 /* gl_test.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = gl_test.c; sourceTree = "<group>"; };
+		691207E3204846A900E95600 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		69775BF82047500900629520 /* Dreamline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dreamline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69775BFB2047500900629520 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		69775BFD2047500900629520 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				691207E4204846A900E95600 /* OpenGLES.framework in Frameworks */,
 				69775C2B204750AB00629520 /* GLKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,6 +114,9 @@
 				69775C022047500900629520 /* Assets.xcassets */,
 				69775C042047500900629520 /* LaunchScreen.storyboard */,
 				69775C072047500900629520 /* Info.plist */,
+				691207E02048464100E95600 /* gl_test.h */,
+				691207E12048464100E95600 /* gl_test.c */,
+				691207DF2048464000E95600 /* Dreamline-Bridging-Header.h */,
 			);
 			path = Dreamline;
 			sourceTree = "<group>";
@@ -132,6 +142,7 @@
 		69775C29204750AB00629520 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				691207E3204846A900E95600 /* OpenGLES.framework */,
 				69775C2A204750AB00629520 /* GLKit.framework */,
 			);
 			name = Frameworks;
@@ -272,6 +283,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				691207E22048464100E95600 /* gl_test.c in Sources */,
 				69775BFE2047500900629520 /* ViewController.swift in Sources */,
 				69775BFC2047500900629520 /* AppDelegate.swift in Sources */,
 			);
@@ -446,6 +458,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.teambeedream.Dreamline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Dreamline/Dreamline-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -463,6 +476,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.teambeedream.Dreamline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Dreamline/Dreamline-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -5,8 +5,7 @@ CFLAGS = -g -Wall
 
 SRC_DIR = ./src
 BIN_DIR = ./bin
-#APP_DIR = ../Dreamline/Dreamline/c_code
-APP_DIR = ./bin/c_code
+APP_DIR = ./bin/core
 
 .PHONY: default all clean
 
@@ -28,6 +27,7 @@ OBJECTS = $(patsubst %.c, %.o, $(SOURCES))
 $(TARGET): $(OBJECTS)
 	$(CC) $(OBJECTS) -Wall $(LIBS) -o $(BIN_DIR)/$@
 	-rm -f $(SRC_DIR)/*.o
+	-rm -f $(SRC_DIR)/*/*.o
 
 # clean rule
 clean:
@@ -39,11 +39,9 @@ clean:
 run: $(TARGET)
 	$(BIN_DIR)/$(TARGET)
 
-# export source files to xcode project
+# export files for xcode
 export: $(TARGET)
 	-mkdir -p $(APP_DIR)
 	-rm -rf $(APP_DIR)/*
 	-cp -R $(SRC_DIR)/* $(APP_DIR)/
-	
-	-rm -f $(wildcard $(APP_DIR)/*.*)
-	-rm -rf $(APP_DIR)/*/*.o
+	-rm -f $(APP_DIR)/*.*

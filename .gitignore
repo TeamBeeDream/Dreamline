@@ -71,3 +71,6 @@ fastlane/test_output
 # C code
 *.o
 bin/
+
+# MAC stuff
+.DS_STORE

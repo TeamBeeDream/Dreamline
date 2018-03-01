@@ -31,6 +31,9 @@ void test_capabilities(void) {
 
    glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
     do {
+        glClearColor(1.0f, 1.0f, 0.0f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     } while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS &&

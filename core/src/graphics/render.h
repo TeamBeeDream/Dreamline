@@ -1,8 +1,15 @@
 #ifndef render_h
 #define render_h
 
-#include "../logic/messages.h" // @TODO: move messages to common/
+#include "../common/messages.h"
 
-void render(MessageQueue* logic_queue);
+typedef struct {
+    float playerPosition;
+} Renderer;
+
+void renderer_init(Renderer* renderer);
+void renderer_free(Renderer* renderer);
+
+void render(Renderer* render, MessageQueue* logic_queue);
 
 #endif

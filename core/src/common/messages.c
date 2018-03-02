@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "../config/memory.h"
+#include "memory.h"
 #include "messages.h"
 
 void message_queue_init(MessageQueue* queue) {

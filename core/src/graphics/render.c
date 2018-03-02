@@ -5,10 +5,18 @@
 #include "render.h"
 #include "gl.h"
 
-// GLOBAL render state stuff, @FIXME
-//
+void renderer_init(Renderer* renderer) {
+    renderer->playerPosition = 0.0f;
+}
 
-void render(MessageQueue* logic_queue) {
+void renderer_free(Renderer* renderer) {
+    renderer_init(renderer);
+}
+
+void render(Renderer* renderer, MessageQueue* logic_queue) {
+    glClearColor(1.0f, 0.5f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
     for (int i = 0; i < logic_queue->count; i++) {
         // for each message, update renderer's internal state
         Message message;

@@ -1,7 +1,7 @@
 #ifndef logic_h
 #define logic_h
 
-#include "messages.h"
+#include "../common/messages.h"
 
 typedef struct {
     float playerX;

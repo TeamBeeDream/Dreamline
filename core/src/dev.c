@@ -5,10 +5,11 @@
 #include "graphics/gl.h"
 
 void error_callback(int error, const char* description);
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 // GLOBAL: watch out!
 GLFWwindow* devWindow;
+void (*custom_key_callback)(int, int);
 
 void dev_init(void) {
     if (!glfwInit()) {
@@ -33,9 +34,14 @@ void dev_init(void) {
     glfwSetKeyCallback(devWindow, key_callback);
 }
 
-void dev_loop(void (*f)(void)) {
+// @TODO: rename all these key_callback functions,
+// @TODO: typedef function signatures
+void dev_loop(void (*update)(void), void (*given_key_callback)(int key, int action)) {
+    custom_key_callback = given_key_callback;
+    glfwSetKeyCallback(devWindow, key_callback);
+
     while (!glfwWindowShouldClose(devWindow)) {
-        f();
+        update(); // @TODO: figure out if this should be before or after pollevents()
 
         glfwSwapBuffers(devWindow);
         glfwPollEvents();
@@ -51,8 +57,10 @@ void error_callback(int error, const char* description) {
     fprintf(stderr, "Error: %s\n", description);
 }
 
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
     }
+
+    custom_key_callback(key, action);
 }

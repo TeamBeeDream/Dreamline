@@ -2,4 +2,5 @@
 random todo stuff
 
 - setup renderer to take in MessageQueue of events
+- make message queue behave like a ring buffer (ordered messages)
 - setup main loop to pass events from logic update to renderer update

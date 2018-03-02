@@ -16,4 +16,11 @@ void game_state_update(GameState* state, MessageQueue* input_queue, MessageQueue
     // dequeue all input messages
     // update all game entities (pass message queue)
     // clean up 'dead' entities
+    
+    // temp: copy all messages to output queue
+    for (int i = 0; i < input_queue->count; i++) {
+        Message message;
+        dequeue_message(input_queue, &message);
+        enqueue_message(output_queue, message.type);
+    }
 }

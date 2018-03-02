@@ -1,7 +1,7 @@
 #ifndef gl_h
 #define gl_h
 
-#include "../config/config.h"
+#include "../common/config.h"
 
 #ifdef DEV
     // OpenGL imports for local dev (OSX)

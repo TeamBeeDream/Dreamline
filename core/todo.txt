@@ -1,0 +1,5 @@
+
+random todo stuff
+
+- setup renderer to take in MessageQueue of events
+- setup main loop to pass events from logic update to renderer update

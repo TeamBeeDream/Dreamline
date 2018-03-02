@@ -14,19 +14,24 @@ class TestController {
     var player_input_pressed = false
     var player_input_count = 0
 
-    var inputQueue = UnsafeMutablePointer<MessageQueue>.allocate(capacity: 1)
-    var renderer = UnsafeMutablePointer<Renderer>.allocate(capacity: 1)
-
+    //var inputQueue = UnsafeMutablePointer<MessageQueue>.allocate(capacity: 1)
+    //var renderer = UnsafeMutablePointer<Renderer>.allocate(capacity: 1)
+    var inputQueue: MessageQueue
+    var renderer: Renderer
+    
     init() {
-        message_queue_init(inputQueue)
-        renderer_init(renderer)
+        inputQueue = TestController.initStruct()
+        message_queue_init(&inputQueue)
+        
+        renderer = TestController.initStruct()
+        renderer_init(&renderer)
     }
     
     func mainLoop() {
         // process input
-        message_queue_free(inputQueue)
+        message_queue_free(&inputQueue)
         if player_input != 0.0 {
-            enqueue_message(inputQueue, player_input < 0 ? INPUT_LEFT : INPUT_RIGHT)
+            enqueue_message(&inputQueue, player_input < 0 ? INPUT_LEFT : INPUT_RIGHT)
         }
         player_input = 0.0
         player_input_pressed = false
@@ -35,7 +40,7 @@ class TestController {
         // @TODO
 
         // render
-        render(renderer, inputQueue)
+        render(&renderer, &inputQueue)
     }
     
     func addInput(input: Float) {
@@ -46,5 +51,14 @@ class TestController {
     
     func removeInput() {
         player_input_count -= 1
+    }
+    
+    // @TODO: Move to common memory class.
+    private static func initStruct<S>() -> S {
+        let struct_pointer = UnsafeMutablePointer<S>.allocate(capacity: 1)
+        let struct_memory = struct_pointer.pointee
+        struct_pointer.deallocate(capacity: 1)
+        
+        return struct_memory
     }
 }

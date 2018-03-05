@@ -46,7 +46,7 @@ void dev_init(void) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
     
-    devWindow = glfwCreateWindow(320, 568, "iPhone", NULL, NULL);
+    devWindow = glfwCreateWindow(VIEWPORT_W, VIEWPORT_H, "iPhone", NULL, NULL);
     if (!devWindow) {
         printf("Failed to open GLFW window!\n");
         return;
@@ -54,6 +54,12 @@ void dev_init(void) {
 
     glfwMakeContextCurrent(devWindow);
     glfwSetKeyCallback(devWindow, key_callback);
+
+    // GLAD
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+        printf("Failed to init GLAD\n");
+        return;
+    }
 
     // init stuff
     message_queue_init(&input_queue);

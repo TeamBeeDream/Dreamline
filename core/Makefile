@@ -1,5 +1,5 @@
 TARGET = program
-LIBS = -lm -framework OpenGL -lGLFW
+LIBS = -lm -framework OpenGL -lGLFW -I/usr/local/include
 CC = gcc
 CFLAGS = -g -Wall
 
@@ -26,8 +26,6 @@ OBJECTS = $(patsubst %.c, %.o, $(SOURCES))
 # main build rule
 $(TARGET): $(OBJECTS)
 	$(CC) $(OBJECTS) -Wall $(LIBS) -o $(BIN_DIR)/$@
-	-rm -f $(SRC_DIR)/*.o
-	-rm -f $(SRC_DIR)/*/*.o
 
 # clean rule
 clean:
@@ -45,3 +43,4 @@ export: $(TARGET)
 	-rm -rf $(APP_DIR)/*
 	-cp -R $(SRC_DIR)/* $(APP_DIR)/
 	-rm -f $(APP_DIR)/*.*
+	-rm -f $(APP_DIR)/*/*.o

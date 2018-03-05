@@ -19,15 +19,24 @@ class TestController {
     var inputQueue: MessageQueue
     var renderer: Renderer
     
+    private var isSetup = false
+    
     init() {
         inputQueue = TestController.initStruct()
-        message_queue_init(&inputQueue)
-        
         renderer = TestController.initStruct()
+    }
+    
+    // dont call this until after the GL context is created
+    func setup() {
+        message_queue_init(&inputQueue)
         renderer_init(&renderer)
+        
+        self.isSetup = true
     }
     
     func mainLoop() {
+        if (!self.isSetup) { return; }
+        
         // process input
         message_queue_free(&inputQueue)
         if player_input != 0.0 {

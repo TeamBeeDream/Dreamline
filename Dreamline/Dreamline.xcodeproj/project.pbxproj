@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		691207E4204846A900E95600 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 691207E3204846A900E95600 /* OpenGLES.framework */; };
-		6926EA472049EA48002AD339 /* logic.c in Sources */ = {isa = PBXBuildFile; fileRef = 6926EA3B2049EA48002AD339 /* logic.c */; };
-		6926EA482049EA48002AD339 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = 6926EA3F2049EA48002AD339 /* memory.c */; };
-		6926EA492049EA48002AD339 /* messages.c in Sources */ = {isa = PBXBuildFile; fileRef = 6926EA412049EA48002AD339 /* messages.c */; };
-		6926EA4A2049EA48002AD339 /* render.c in Sources */ = {isa = PBXBuildFile; fileRef = 6926EA442049EA48002AD339 /* render.c */; };
 		6926EA4C2049ED38002AD339 /* TestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6926EA4B2049ED38002AD339 /* TestController.swift */; };
 		69775BFC2047500900629520 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69775BFB2047500900629520 /* AppDelegate.swift */; };
 		69775BFE2047500900629520 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69775BFD2047500900629520 /* ViewController.swift */; };
@@ -21,6 +17,10 @@
 		69775C112047500900629520 /* DreamlineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69775C102047500900629520 /* DreamlineTests.swift */; };
 		69775C1C2047500900629520 /* DreamlineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69775C1B2047500900629520 /* DreamlineUITests.swift */; };
 		69775C2B204750AB00629520 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69775C2A204750AB00629520 /* GLKit.framework */; };
+		699FC545204D8C7D00DB09B4 /* logic.c in Sources */ = {isa = PBXBuildFile; fileRef = 699FC537204D8C7D00DB09B4 /* logic.c */; };
+		699FC546204D8C7D00DB09B4 /* memory.c in Sources */ = {isa = PBXBuildFile; fileRef = 699FC53B204D8C7D00DB09B4 /* memory.c */; };
+		699FC547204D8C7D00DB09B4 /* messages.c in Sources */ = {isa = PBXBuildFile; fileRef = 699FC53D204D8C7D00DB09B4 /* messages.c */; };
+		699FC548204D8C7D00DB09B4 /* render.c in Sources */ = {isa = PBXBuildFile; fileRef = 699FC540204D8C7D00DB09B4 /* render.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,16 +43,6 @@
 /* Begin PBXFileReference section */
 		691207DF2048464000E95600 /* Dreamline-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Dreamline-Bridging-Header.h"; sourceTree = "<group>"; };
 		691207E3204846A900E95600 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		6926EA3B2049EA48002AD339 /* logic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = logic.c; sourceTree = "<group>"; };
-		6926EA3C2049EA48002AD339 /* logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logic.h; sourceTree = "<group>"; };
-		6926EA3E2049EA48002AD339 /* messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messages.h; sourceTree = "<group>"; };
-		6926EA3F2049EA48002AD339 /* memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = memory.c; sourceTree = "<group>"; };
-		6926EA402049EA48002AD339 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		6926EA412049EA48002AD339 /* messages.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = messages.c; sourceTree = "<group>"; };
-		6926EA422049EA48002AD339 /* memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
-		6926EA442049EA48002AD339 /* render.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = render.c; sourceTree = "<group>"; };
-		6926EA452049EA48002AD339 /* gl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl.h; sourceTree = "<group>"; };
-		6926EA462049EA48002AD339 /* render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render.h; sourceTree = "<group>"; };
 		6926EA4B2049ED38002AD339 /* TestController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestController.swift; sourceTree = "<group>"; };
 		69775BF82047500900629520 /* Dreamline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dreamline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		69775BFB2047500900629520 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +58,17 @@
 		69775C1B2047500900629520 /* DreamlineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamlineUITests.swift; sourceTree = "<group>"; };
 		69775C1D2047500900629520 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69775C2A204750AB00629520 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		699FC537204D8C7D00DB09B4 /* logic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = logic.c; sourceTree = "<group>"; };
+		699FC538204D8C7D00DB09B4 /* logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logic.h; sourceTree = "<group>"; };
+		699FC53A204D8C7D00DB09B4 /* messages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messages.h; sourceTree = "<group>"; };
+		699FC53B204D8C7D00DB09B4 /* memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = memory.c; sourceTree = "<group>"; };
+		699FC53C204D8C7D00DB09B4 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		699FC53D204D8C7D00DB09B4 /* messages.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = messages.c; sourceTree = "<group>"; };
+		699FC53E204D8C7D00DB09B4 /* memory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory.h; sourceTree = "<group>"; };
+		699FC540204D8C7D00DB09B4 /* render.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = render.c; sourceTree = "<group>"; };
+		699FC542204D8C7D00DB09B4 /* basic_shader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basic_shader.h; sourceTree = "<group>"; };
+		699FC543204D8C7D00DB09B4 /* gl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gl.h; sourceTree = "<group>"; };
+		699FC544204D8C7D00DB09B4 /* render.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = render.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,47 +98,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6926EA392049EA48002AD339 /* core */ = {
-			isa = PBXGroup;
-			children = (
-				6926EA3A2049EA48002AD339 /* logic */,
-				6926EA3D2049EA48002AD339 /* common */,
-				6926EA432049EA48002AD339 /* graphics */,
-			);
-			path = core;
-			sourceTree = "<group>";
-		};
-		6926EA3A2049EA48002AD339 /* logic */ = {
-			isa = PBXGroup;
-			children = (
-				6926EA3B2049EA48002AD339 /* logic.c */,
-				6926EA3C2049EA48002AD339 /* logic.h */,
-			);
-			path = logic;
-			sourceTree = "<group>";
-		};
-		6926EA3D2049EA48002AD339 /* common */ = {
-			isa = PBXGroup;
-			children = (
-				6926EA3E2049EA48002AD339 /* messages.h */,
-				6926EA3F2049EA48002AD339 /* memory.c */,
-				6926EA402049EA48002AD339 /* config.h */,
-				6926EA412049EA48002AD339 /* messages.c */,
-				6926EA422049EA48002AD339 /* memory.h */,
-			);
-			path = common;
-			sourceTree = "<group>";
-		};
-		6926EA432049EA48002AD339 /* graphics */ = {
-			isa = PBXGroup;
-			children = (
-				6926EA442049EA48002AD339 /* render.c */,
-				6926EA452049EA48002AD339 /* gl.h */,
-				6926EA462049EA48002AD339 /* render.h */,
-			);
-			path = graphics;
-			sourceTree = "<group>";
-		};
 		69775BEF2047500900629520 = {
 			isa = PBXGroup;
 			children = (
@@ -165,7 +125,7 @@
 				69775BFB2047500900629520 /* AppDelegate.swift */,
 				69775BFD2047500900629520 /* ViewController.swift */,
 				6926EA4B2049ED38002AD339 /* TestController.swift */,
-				6926EA392049EA48002AD339 /* core */,
+				699FC535204D8C7D00DB09B4 /* core */,
 				69775C022047500900629520 /* Assets.xcassets */,
 				69775BFF2047500900629520 /* Main.storyboard */,
 				69775C042047500900629520 /* LaunchScreen.storyboard */,
@@ -200,6 +160,56 @@
 				69775C2A204750AB00629520 /* GLKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		699FC535204D8C7D00DB09B4 /* core */ = {
+			isa = PBXGroup;
+			children = (
+				699FC536204D8C7D00DB09B4 /* logic */,
+				699FC539204D8C7D00DB09B4 /* common */,
+				699FC53F204D8C7D00DB09B4 /* graphics */,
+			);
+			path = core;
+			sourceTree = "<group>";
+		};
+		699FC536204D8C7D00DB09B4 /* logic */ = {
+			isa = PBXGroup;
+			children = (
+				699FC537204D8C7D00DB09B4 /* logic.c */,
+				699FC538204D8C7D00DB09B4 /* logic.h */,
+			);
+			path = logic;
+			sourceTree = "<group>";
+		};
+		699FC539204D8C7D00DB09B4 /* common */ = {
+			isa = PBXGroup;
+			children = (
+				699FC53A204D8C7D00DB09B4 /* messages.h */,
+				699FC53B204D8C7D00DB09B4 /* memory.c */,
+				699FC53C204D8C7D00DB09B4 /* config.h */,
+				699FC53D204D8C7D00DB09B4 /* messages.c */,
+				699FC53E204D8C7D00DB09B4 /* memory.h */,
+			);
+			path = common;
+			sourceTree = "<group>";
+		};
+		699FC53F204D8C7D00DB09B4 /* graphics */ = {
+			isa = PBXGroup;
+			children = (
+				699FC540204D8C7D00DB09B4 /* render.c */,
+				699FC541204D8C7D00DB09B4 /* shaders */,
+				699FC543204D8C7D00DB09B4 /* gl.h */,
+				699FC544204D8C7D00DB09B4 /* render.h */,
+			);
+			path = graphics;
+			sourceTree = "<group>";
+		};
+		699FC541204D8C7D00DB09B4 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				699FC542204D8C7D00DB09B4 /* basic_shader.h */,
+			);
+			path = shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -337,12 +347,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6926EA492049EA48002AD339 /* messages.c in Sources */,
-				6926EA4A2049EA48002AD339 /* render.c in Sources */,
-				6926EA472049EA48002AD339 /* logic.c in Sources */,
+				699FC548204D8C7D00DB09B4 /* render.c in Sources */,
 				69775BFE2047500900629520 /* ViewController.swift in Sources */,
-				6926EA482049EA48002AD339 /* memory.c in Sources */,
+				699FC547204D8C7D00DB09B4 /* messages.c in Sources */,
 				69775BFC2047500900629520 /* AppDelegate.swift in Sources */,
+				699FC546204D8C7D00DB09B4 /* memory.c in Sources */,
+				699FC545204D8C7D00DB09B4 /* logic.c in Sources */,
 				6926EA4C2049ED38002AD339 /* TestController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,7 +17,7 @@ class ViewController: GLKViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.context = EAGLContext(api: .openGLES2)
+        self.context = EAGLContext(api: .openGLES3)
         if self.context == nil {
             print("Failed to create ES context")
         }
@@ -28,6 +28,10 @@ class ViewController: GLKViewController {
         view.context = self.context!
         view.drawableDepthFormat = .format24
         view.drawableColorFormat = .RGBA8888
+        
+        print("GLVIEW created");
+        controller.setup()
+        //print(view.frame.size.width, view.frame.size.height)
     }
 
     override func glkView(_ view: GLKView, drawIn rect: CGRect) {

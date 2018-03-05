@@ -1,4 +1,4 @@
-TARGET = program
+TARGET = dreamline_debug
 LIBS = -lm -framework OpenGL -lGLFW -I/usr/local/include
 CC = gcc
 CFLAGS = -g -Wall

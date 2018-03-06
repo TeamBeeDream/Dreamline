@@ -17,8 +17,6 @@ protocol GameModel {
     // MAYBE ALL STATE SHOULD BE REMOVE FROM MODEL??
 }
 
-
-
 // @TODO: separate user input to usergamemodel protocol
 class DebugGameModel: GameModel {
     
@@ -36,8 +34,8 @@ class DebugGameModel: GameModel {
     // sequencer
     var gridProperties: GridProperties
     var gridState: BarrierGridState
-    var timeBetweenPatterns: Double = 0.1
-    var timeSinceLastPattern: Double = 0.0
+    var distanceSinceLastPattern: Double = 0.0
+    var distanceBetweenPatterns: Double = 0.3
     var patternSource: PatternSource
     var patternOptions: PatternOptions
     
@@ -65,13 +63,6 @@ class DebugGameModel: GameModel {
         patterns[0]!.append(Pattern(data: [.closed,   .open,   .open]))
         self.patternSource = PatternSource(patterns: patterns)
         self.patternOptions = PatternOptions(groupCount: 1, groupLength: 1, difficulty: 0)
-        
-        // @HACK: debug: add a bunch of barriers to the grid
-        let generatedPatterns = self.sequencer.generatePatterns(source: self.patternSource, options: self.patternOptions)
-        for (i, pattern) in generatedPatterns.enumerated() {
-            let offset = Double(i) * 0.2
-            self.gridState.barriers.append(Barrier(pattern: pattern, position: self.gridProperties.spawnPosition - offset)) // @FIXME: this is weird
-        }
     }
     
     func addInput(_ lane: Int) {
@@ -94,7 +85,7 @@ class DebugGameModel: GameModel {
             dt: dt)
         // @NOTE: interesting intermediate step where we have both the old and the
         // new states that we can compare/cache/etc...
-        self.positionerState = updatedPositionerState
+        self.positionerState = updatedPositionerState // @TODO: maybe update at end of method
         
         // update sequencer
         let updatedGridState = self.grid.update(
@@ -102,10 +93,17 @@ class DebugGameModel: GameModel {
             properties: self.gridProperties,
             dt: dt)
         // @NOTE: have room to compare states before updating
-        self.gridState = updatedGridState
+        let distance = updatedGridState.totalDistance - self.gridState.totalDistance
+        self.gridState = updatedGridState // @TODO: maybe update at end of method
         
-        // @TODO: implement adding new barriers to grid
-        // could be time based or distance based
+        // if necessary add new patterns to grid
+        self.distanceSinceLastPattern += distance
+        if (self.distanceSinceLastPattern > self.distanceBetweenPatterns) {
+            self.distanceSinceLastPattern = 0.0 // @TODO: better method for positioning barriers
+            
+            let newPattern = self.sequencer.generatePatterns(source: self.patternSource, options: self.patternOptions)[0]
+            self.gridState.barriers.append(Barrier(pattern: newPattern, position: self.gridProperties.spawnPosition))
+        }
     }
     
     func getPosition() -> Position {

@@ -25,18 +25,19 @@ struct Pattern {
 
 struct PatternSource {
     let patterns: [Int: [Pattern]]
-    //let width: Int
 }
 
 struct PatternOptions {
     let groupCount: Int
     let groupLength: Int
-    //let groupPadding: Int
     let difficulty: Int
 }
 
 protocol Sequencer {
     func generatePatterns(source: PatternSource, options: PatternOptions) -> [Pattern]
+    // @TODO: change this to be more generic
+    // it should just return the next pattern (and keep doing so infinitely)
+    // different implementations have different methods for generating patterns
 }
 
 // @TODO: rename class

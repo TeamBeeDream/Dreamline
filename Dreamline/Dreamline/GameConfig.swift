@@ -13,8 +13,10 @@ struct GameConfig {
 }
 
 // @TODO: start using state in this struct
+/*
 static class GameConfigFactory {
     public static func getStandardGame() -> GameConfig {
         return GameConfig()
     }
 }
+ */

@@ -19,6 +19,8 @@
 		699FC58C204E0E3300DB09B4 /* Lerp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC58B204E0E3300DB09B4 /* Lerp.swift */; };
 		699FC58E204E1A8F00DB09B4 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC58D204E1A8F00DB09B4 /* GameModel.swift */; };
 		699FC590204E257F00DB09B4 /* GameConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC58F204E257F00DB09B4 /* GameConfig.swift */; };
+		69AB5E8E204EF0E200093B33 /* Sequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E8D204EF0E200093B33 /* Sequencer.swift */; };
+		69AB5E90204EF84400093B33 /* BarrierGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E8F204EF84400093B33 /* BarrierGrid.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		699FC58B204E0E3300DB09B4 /* Lerp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lerp.swift; sourceTree = "<group>"; };
 		699FC58D204E1A8F00DB09B4 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		699FC58F204E257F00DB09B4 /* GameConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConfig.swift; sourceTree = "<group>"; };
+		69AB5E8D204EF0E200093B33 /* Sequencer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequencer.swift; sourceTree = "<group>"; };
+		69AB5E8F204EF84400093B33 /* BarrierGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarrierGrid.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +117,8 @@
 				699FC58D204E1A8F00DB09B4 /* GameModel.swift */,
 				699FC58F204E257F00DB09B4 /* GameConfig.swift */,
 				699FC589204E09A700DB09B4 /* Positioner.swift */,
+				69AB5E8D204EF0E200093B33 /* Sequencer.swift */,
+				69AB5E8F204EF84400093B33 /* BarrierGrid.swift */,
 				699FC58B204E0E3300DB09B4 /* Lerp.swift */,
 				699FC55F204E053600DB09B4 /* Main.storyboard */,
 				699FC562204E053600DB09B4 /* Assets.xcassets */,
@@ -275,10 +281,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				699FC55C204E053600DB09B4 /* GameScene.swift in Sources */,
+				69AB5E90204EF84400093B33 /* BarrierGrid.swift in Sources */,
 				699FC55E204E053600DB09B4 /* GameViewController.swift in Sources */,
 				699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */,
 				699FC590204E257F00DB09B4 /* GameConfig.swift in Sources */,
 				699FC58A204E09A700DB09B4 /* Positioner.swift in Sources */,
+				69AB5E8E204EF0E200093B33 /* Sequencer.swift in Sources */,
 				699FC58C204E0E3300DB09B4 /* Lerp.swift in Sources */,
 				699FC58E204E1A8F00DB09B4 /* GameModel.swift in Sources */,
 			);

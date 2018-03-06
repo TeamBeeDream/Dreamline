@@ -31,6 +31,7 @@ protocol Positioner {
     func getPosition(state: PositionerState) -> Position
 }
 
+// @TODO: new name for this
 class UserPositioner: Positioner {
     func update(state: PositionerState, targetOffset: Double, dt: Double) -> PositionerState {
         let diff = targetOffset - state.currentOffset
@@ -38,7 +39,6 @@ class UserPositioner: Positioner {
         let delta = step * diff
         
         return PositionerState(
-            //targetOffset: state.targetOffset,
             currentOffset: state.currentOffset + delta,
             tolerance: state.tolerance,
             moveDuration: state.moveDuration)

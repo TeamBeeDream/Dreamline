@@ -17,9 +17,11 @@ class GameViewController: UIViewController {
         
         // @TODO: For now launch the game view.
         if let view = self.view as! SKView? {
-            let scene = GameScene(size: view.frame.size)
-            scene.scaleMode = .aspectFit
             
+            // This is the important bit vvv
+            let scene = GameScene(size: view.frame.size)
+            
+            scene.scaleMode = .aspectFit
             view.showsFPS = true
             view.showsNodeCount = true
             //view.showsDrawCount = true

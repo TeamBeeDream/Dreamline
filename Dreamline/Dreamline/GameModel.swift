@@ -46,8 +46,8 @@ class DebugGameModel: GameModel {
         
         // @TODO: move to factory
         self.gridProperties = GridProperties(
-            spawnPosition: -1.0,
-            destroyPosition: 1.0,
+            spawnPosition: -2.0, // @TODO: should this be absolute or relative to player?
+            destroyPosition: 0.5, // @TODO: should this be absolute or relative to player?
             moveSpeed: 0.75)
         self.gridState = BarrierGridState(
             barriers: [Barrier](),
@@ -72,19 +72,24 @@ class DebugGameModel: GameModel {
             state: self.positionerState,
             targetOffset: self.targetPosition,
             dt: dt)
-        // @NOTE: interesting intermediate step where we have both the old and the
-        // new states that we can compare/cache/etc...
-        self.positionerState = updatedPositionerState // @TODO: maybe update at end of method
         
-        // update sequencer
+        // update grid
         let updatedGridState = self.grid.update(
             state: self.gridState,
             properties: self.gridProperties,
             dt: dt)
-        // @NOTE: have room to compare states before updating
         let distance = updatedGridState.totalDistance - self.gridState.totalDistance
-        self.gridState = updatedGridState // @TODO: maybe update at end of method
+        // handle collision
+        // @TODO: better naming scheme to handle incremental updates
+        // since the grid is likely to be updated multiple times
+        // per frame, need some way to manage those steps
+        let collisionGridState = self.grid.testCollision(state: updatedGridState, position: self.positioner.getPosition(state: self.positionerState))
         
+        // update state
+        self.positionerState = updatedPositionerState
+        self.gridState = collisionGridState
+        
+        // @HACK: needs to go after gridState update, because I'm manually mutating the state, BAD!
         // if necessary add new patterns to grid
         self.distanceSinceLastPattern += distance
         if (self.distanceSinceLastPattern > self.distanceBetweenPatterns) {
@@ -93,7 +98,7 @@ class DebugGameModel: GameModel {
             let newBarrier = Barrier(
                 pattern: self.sequencer.getNextPattern(),
                 position: self.gridProperties.spawnPosition)
-            self.gridState.barriers.append(newBarrier)
+            self.gridState.barriers.append(newBarrier) // @FIXME: don't mutate grid state directly
         }
     }
     

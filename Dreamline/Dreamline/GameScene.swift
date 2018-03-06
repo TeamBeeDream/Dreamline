@@ -13,7 +13,7 @@ class GameScene: SKScene {
     // TEMP
     var previousTime: TimeInterval = 0
     var tmpPlayerNode = SKShapeNode()
-    let tmpVertPos: CGFloat = 0.5
+    let tmpVertPos: CGFloat = 0.25 // @FIXME @HARDCODED
     let tmpHoriOffset: CGFloat = 0.35
     let model: GameModel = DebugGameModel()
     var barrierNodes = [SKNode]()
@@ -26,7 +26,7 @@ class GameScene: SKScene {
         playerGraphic.fillColor = SKColor.red
         self.tmpPlayerNode = playerGraphic
         addChild(self.tmpPlayerNode)
-        self.tmpPlayerNode.position = CGPoint(x: self.frame.midX, y: self.frame.maxX * self.tmpVertPos)
+        self.tmpPlayerNode.position = CGPoint(x: self.frame.midX, y: self.frame.maxY * self.tmpVertPos)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -74,6 +74,8 @@ class GameScene: SKScene {
         let wallY: Double = 0
         
         let barrierGraphic = SKNode()
+        let wallColor = self.wallColor(barrier.state)
+        let gateColor = self.gateColor(barrier.state)
         
         let data = self.barrierDataToBoolArray(data: barrier.pattern.data)
         for i in 1...4 {
@@ -89,32 +91,54 @@ class GameScene: SKScene {
             if prev != curr {
                 let gate = self.createLine(from: CGPoint(x: midX, y: gateUpY),
                                            to: CGPoint(x: midX, y: gateDownY),
-                                           color: SKColor.cyan)
+                                           color: gateColor)
                 barrierGraphic.addChild(gate)
             }
             if !prev {
                 let wall = self.createLine(from: CGPoint(x: prevX, y: wallY),
                                            to: CGPoint(x: midX, y: wallY),
-                                           color: SKColor.magenta)
+                                           color: wallColor)
                 barrierGraphic.addChild(wall)
             }
             if !curr {
                 let wall = self.createLine(from: CGPoint(x: midX, y: wallY),
                                            to: CGPoint(x: currX, y: wallY),
-                                           color: SKColor.magenta)
+                                           color: wallColor)
                 barrierGraphic.addChild(wall)
             }
         }
         let wallL = self.createLine(from: CGPoint(x: Double(frame.minX), y: wallY),
                                    to: CGPoint(x: frame.minX + margin, y: CGFloat(wallY)),
-                                   color: SKColor.magenta)
+                                   color: wallColor)
         barrierGraphic.addChild(wallL)
         let wallR = self.createLine(from: CGPoint(x: Double(frame.maxX), y: wallY),
                                     to: CGPoint(x: frame.maxX - margin, y: CGFloat(wallY)),
-                                    color: SKColor.magenta)
+                                    color: wallColor)
         barrierGraphic.addChild(wallR)
         
         return barrierGraphic
+    }
+    
+    private func wallColor(_ state: BarrierState) -> SKColor {
+        switch (state) {
+        case .idle:
+            return SKColor.magenta
+        case .pass:
+            return SKColor.green
+        case .hit:
+            return SKColor.red
+        }
+    }
+    
+    private func gateColor(_ state: BarrierState) -> SKColor {
+        switch (state) {
+        case .idle:
+            return SKColor.cyan
+        case .pass:
+            return SKColor.green
+        case .hit:
+            return SKColor.red
+        }
     }
     
     private func barrierDataToBoolArray(data: [Gate]) -> [Bool] {
@@ -159,7 +183,8 @@ class GameScene: SKScene {
     
     // @TODO: make better coordinate conversion methods
     private func posY(_ pos: Double) -> Double {
-        return Double(frame.midY) - Double(frame.height / 2) * pos
+        let origin = frame.height * tmpVertPos
+        return Double(origin) - Double(frame.height / 2) * pos
     }
     
     private func clearBarriers() {

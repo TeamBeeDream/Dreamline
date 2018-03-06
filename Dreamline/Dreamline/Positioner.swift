@@ -47,7 +47,7 @@ class UserPositioner: Positioner {
     func getPosition(state: PositionerState) -> Position {
         let nearest = round(state.currentOffset)
         let distance = fabs(state.currentOffset - nearest)
-        let within = distance > state.tolerance
+        let within = distance < state.tolerance // @TODO: only allow within if nearest == target
         
         return Position(lane: Int(nearest),
                         offset: state.currentOffset,

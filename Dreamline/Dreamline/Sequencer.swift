@@ -22,26 +22,50 @@ enum Gate {
 struct Pattern {
     let data: [Gate]    // @TODO: maybe typedef/alias this
 }
-
+/*
+ @TODO: move into authored sequencer
 struct PatternSource {
     let patterns: [Int: [Pattern]]
 }
+ */
 
+/*
+ @TODO: move into authored sequencer
 struct PatternOptions {
     let groupCount: Int
     let groupLength: Int
     let difficulty: Int
 }
+ */
 
 protocol Sequencer {
-    func generatePatterns(source: PatternSource, options: PatternOptions) -> [Pattern]
-    // @TODO: change this to be more generic
-    // it should just return the next pattern (and keep doing so infinitely)
-    // different implementations have different methods for generating patterns
+    func getNextPattern() -> Pattern
+    // @TODO: should there be a method like: anyRemaining() -> Bool ?
 }
 
-// @TODO: rename class
-class DefaultSequencer: Sequencer {
+class RandomSequencer: Sequencer {
+    func getNextPattern() -> Pattern {
+        // generate a random pattern
+        var gates = [Gate]()
+        for _ in 1...3 {
+            gates.append(self.randomGate())
+        }
+        //print(gates)
+        return Pattern(data: gates)
+    }
+    
+    func randomGate() -> Gate {
+        if Math.random() > 0.5 {
+            return .open
+        } else {
+            return .closed
+        }
+    }
+}
+
+// @TODO: implement authored sequencer
+/*
+class AuthoredSequencer: Sequencer {
     func generatePatterns(source: PatternSource, options: PatternOptions) -> [Pattern] {
         var patterns = [Pattern]()
         
@@ -71,21 +95,7 @@ class DefaultSequencer: Sequencer {
         return Pattern(data: [.closed, .closed, .closed])
     }
 }
+ */
 
 
-// @TODO: move to separate file
-class Math {
-    static func randInt(min: Int, max: Int) -> Int {
-        let range = max - min
-        let randValue = Int(arc4random_uniform(UInt32(range)))
-        return Int(randValue + min) // @TODO: use call to random()
-    }
-    
-    static func random() -> Double {
-        return Double(arc4random()) / 0xFFFFFFFF
-    }
-    
-    static func random(min: Double, max: Double) -> Double {
-        return random() * (max - min) + min
-    }
-}
+

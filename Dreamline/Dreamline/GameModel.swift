@@ -20,9 +20,9 @@ protocol GameModel {
 // @TODO: separate user input to usergamemodel protocol
 class DebugGameModel: GameModel {
     
-    // PROTOCOLS
+    // PROTOCOLS @TODO: set from config
     var positioner: Positioner = UserPositioner()
-    var sequencer: Sequencer = DefaultSequencer()
+    var sequencer: Sequencer = RandomSequencer()
     var grid: BarrierGrid = DefaultBarrierGrid()
     
     // STATE
@@ -35,9 +35,7 @@ class DebugGameModel: GameModel {
     var gridProperties: GridProperties
     var gridState: BarrierGridState
     var distanceSinceLastPattern: Double = 0.0
-    var distanceBetweenPatterns: Double = 0.3
-    var patternSource: PatternSource
-    var patternOptions: PatternOptions
+    var distanceBetweenPatterns: Double = 0.7
     
     init() {
         // @TODO: move to factory
@@ -54,15 +52,6 @@ class DebugGameModel: GameModel {
         self.gridState = BarrierGridState(
             barriers: [Barrier](),
             totalDistance: 0.0)
-        
-        // @FIXME: this is test data, define somewhere else
-        var patterns = [Int: [Pattern]]()
-        patterns[0] = [Pattern]()
-        patterns[0]!.append(Pattern(data: [.closed, .closed, .closed]))
-        patterns[0]!.append(Pattern(data: [.closed,   .open, .closed]))
-        patterns[0]!.append(Pattern(data: [.closed,   .open,   .open]))
-        self.patternSource = PatternSource(patterns: patterns)
-        self.patternOptions = PatternOptions(groupCount: 1, groupLength: 1, difficulty: 0)
     }
     
     func addInput(_ lane: Int) {
@@ -101,8 +90,10 @@ class DebugGameModel: GameModel {
         if (self.distanceSinceLastPattern > self.distanceBetweenPatterns) {
             self.distanceSinceLastPattern = 0.0 // @TODO: better method for positioning barriers
             
-            let newPattern = self.sequencer.generatePatterns(source: self.patternSource, options: self.patternOptions)[0]
-            self.gridState.barriers.append(Barrier(pattern: newPattern, position: self.gridProperties.spawnPosition))
+            let newBarrier = Barrier(
+                pattern: self.sequencer.getNextPattern(),
+                position: self.gridProperties.spawnPosition)
+            self.gridState.barriers.append(newBarrier)
         }
     }
     

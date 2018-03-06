@@ -9,8 +9,24 @@
 import Foundation
 
 struct Barrier {
+    let id: Int
     let pattern: Pattern
     var position: Double
+    
+    init(pattern: Pattern, position: Double) {
+        self.id = Barrier.genId()
+        self.pattern = pattern
+        self.position = position
+    }
+    
+    // @TODO: determine if there is a better way to
+    // generate a unique id for barriers
+    static var parity: Int = 0
+    static func genId() -> Int {
+        let id = Barrier.parity
+        Barrier.parity += 1
+        return id
+    }
 }
 
 // @TODO: rename
@@ -28,7 +44,6 @@ struct BarrierGridState {
 
 // @TODO: rename
 protocol BarrierGrid {
-    //func addBarrier(state: BarrierGridState, pattern: Pattern, position: Double) -> BarrierGridState
     func update(state: BarrierGridState, properties: GridProperties, dt: Double) -> BarrierGridState
 }
 

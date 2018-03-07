@@ -13,7 +13,11 @@ class GameScene: SKScene {
     
     // @TODO: move model stuff to controller
     var model: GameModel = DefaultGameModel()
+    var rulesetModifier: RulesetModifier = DefaultRulesetModifier()
+    
     var state: ModelState = ModelState.getDefault()
+    var config: GameConfig = GameConfigFactory.getDefault()
+    var ruleset: Ruleset = RulesetFactory.getDefault()
     
     // TEMP
     var previousTime: TimeInterval = 0
@@ -25,7 +29,7 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.darkGray
         
-        let radius = CGFloat(state.positionerState.tolerance) * frame.width / 4.0
+        let radius = CGFloat(config.positionerTolerance) * frame.width / 4.0
         let playerGraphic = SKShapeNode(circleOfRadius: radius)
         playerGraphic.lineWidth = 0
         playerGraphic.fillColor = SKColor.red
@@ -126,10 +130,17 @@ class GameScene: SKScene {
         if dt > 1.0 { dt = 1.0/60.0 }
         
         // @TODO: handle events from update
-        let (updatedState, _) = model.update(state: state, dt: dt)
-        self.state = updatedState
         
-        let position = state.positioner.getPosition(state: state.positionerState)
+        // update state
+        let (updatedState, events) = model.update(state: state, config: config, dt: dt)
+        let updatedConfig = rulesetModifier.updateRuleset(ruleset: ruleset, config: config, events: events)
+        
+        // set new state
+        self.state = updatedState
+        self.config = updatedConfig // @TODO: should config changes be done here or in the model?
+        // probably here (controller)
+        
+        let position = state.positioner.getPosition(state: state.positionerState, config: config)
         let offset = CGFloat(position.offset * state.boardLayout.laneOffset)
         self.tmpPlayerNode.position.x = point(x: offset, y: 0.0).x
         self.tmpPlayerNode.fillColor = position.withinTolerance ? SKColor.green : SKColor.white

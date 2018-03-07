@@ -36,20 +36,18 @@ extension ModelState {
     }
 }
 
+// @TODO: convert this to a factory class
 extension ModelState {
     // @CLEANUP: temp factory method
     static func getDefault() -> ModelState {
         return ModelState(
             positioner: UserPositioner(),
             positionerState: PositionerState(
-                currentOffset: 0.0,
-                tolerance: 0.2,
-                moveDuration: 0.1),
+                currentOffset: 0.0),
             targetOffset: 0.0,
             board: DefaultBoard(),
             boardState: BoardState(
-                distanceBetweenBarriers: 0.7,
-                moveSpeed: 1.2),
+                distanceBetweenBarriers: 0.7),
             boardLayout: BoardLayout(
                 spawnPosition: -0.9,
                 destroyPosition: 0.9,
@@ -61,25 +59,29 @@ extension ModelState {
 
 protocol GameModel {
     // @TODO: add ruleset
-    func update(state: ModelState, dt: Double) -> (ModelState, [Event])
+    func update(state: ModelState, config: GameConfig, dt: Double) -> (ModelState, [Event])
 }
 
 // @TODO: rename
 class DefaultGameModel: GameModel {
-    func update(state: ModelState, dt: Double) -> (ModelState, [Event]) {
+    func update(state: ModelState, config: GameConfig, dt: Double) -> (ModelState, [Event]) {
         
         // Update positioner
         let (updatedPositionerState, positionEvents) = state.positioner.update(
             state: state.positionerState,
+            config: config,
             targetOffset: state.targetOffset,
             dt: dt)
         
         // Update board
         let (updatedBoardState, boardEvents) = state.board.update(
             state: state.boardState,
+            config: config,
             layout: state.boardLayout,
             sequencer: state.sequencer,
-            position: state.positioner.getPosition(state: updatedPositionerState),
+            position: state.positioner.getPosition(
+                state: updatedPositionerState,
+                config: config),
             dt: dt)
         
         // Composite updated states
@@ -95,104 +97,3 @@ class DefaultGameModel: GameModel {
         return (updatedState, allEvents)
     }
 }
-
-/*
-class DebugGameModel: GameModel {
-    
-    // PROTOCOLS @TODO: set from config
-    var positioner: Positioner = UserPositioner()
-    var sequencer: Sequencer = RandomSequencer()
-    var grid: BarrierGrid = DefaultBarrierGrid()
-    
-    // EVENT LISTENERS
-    var listeners = [EventListener]()
-    
-    // STATE @ROBUSTNESS: should i separate this out?
-    var positionerState: PositionerState // @TODO: set from config
-    var numInputs: Int = 0               // @TODO: move input to its own protocol
-    var targetPosition: Double = 0.0     // @TODO: move input to its own protocol
-    
-    var gridLayout: GridLayout
-    var gridState: BarrierGridState
-    var distanceSinceLastPattern: Double = 0.0
-    var distanceBetweenPatterns: Double = 0.7
-    
-    init() {
-        // @TODO: move to factory
-        self.positionerState = PositionerState(
-            currentOffset: 0.0,
-            tolerance: 0.2,
-            moveDuration: 0.1)
-        
-        // @TODO: move to factory
-        self.gridLayout = GridLayout(
-            spawnPosition: -0.9,
-            destroyPosition: 0.9,
-            playerPosition: 0.5,
-            laneOffset: 0.65,
-            moveSpeed: 1.5)
-        self.gridState = BarrierGridState(
-            barriers: [Barrier](),
-            totalDistance: 0.0)
-    }
-    
-    func addInput(_ lane: Int) {
-        self.targetPosition = Double(lane)
-        self.numInputs += 1
-    }
-    
-    func removeInput(count: Int) {
-        self.numInputs -= count
-        if (self.numInputs == 0) {
-            self.targetPosition = 0.0
-        }
-    }
-    
-    // @TODO: implement event handling
-    // maybe update interfaces take in state and return (updated state, and [Event])
-    // so events are always bubbled up, but each step can respond to it if it needs to
-    func update(dt: Double) {
-        // update positioner
-        let updatedPositionerState = self.positioner.update(
-            state: self.positionerState,
-            targetOffset: self.targetPosition,
-            dt: dt)
-        
-        // update grid
-        let updatedGridState = self.grid.update(
-            state: self.gridState,
-            layout: self.gridLayout,
-            dt: dt)
-        let distance = updatedGridState.totalDistance - self.gridState.totalDistance
-        // handle collision
-        // @TODO: better naming scheme to handle incremental updates
-        // since the grid is likely to be updated multiple times
-        // per frame, need some way to manage those steps
-        let collisionGridState = self.grid.testCollision(state: updatedGridState, layout: self.gridLayout, position: self.positioner.getPosition(state: self.positionerState))
-        
-        // update state
-        self.positionerState = updatedPositionerState
-        self.gridState = collisionGridState
-        
-        // @HACK: needs to go after gridState update, because I'm manually mutating the state, BAD!
-        // if necessary add new patterns to grid
-        self.distanceSinceLastPattern += distance
-        if (self.distanceSinceLastPattern > self.distanceBetweenPatterns) {
-            self.distanceSinceLastPattern = 0.0 // @TODO: better method for positioning barriers
-            
-            let newBarrier = Barrier(
-                pattern: self.sequencer.getNextPattern(),
-                position: self.gridLayout.spawnPosition)
-            self.gridState.barriers.append(newBarrier) // @FIXME: don't mutate grid state directly
-        }
-    }
-    
-    func getPosition() -> Position {
-        return self.positioner.getPosition(state: self.positionerState)
-    }
-    
-    func getBarriers() -> BarrierGridState {
-        return self.gridState
-    }
-}
- */

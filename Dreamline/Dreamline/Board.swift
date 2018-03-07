@@ -41,17 +41,15 @@ struct BoardState {
     var barriers: [Barrier]
     var totalDistance: Double
     var distanceSinceLastBarrier: Double
-    var distanceBetweenBarriers: Double
+    var distanceBetweenBarriers: Double // @TODO: might make this a config
     var barrierCount: Int
-    var moveSpeed: Double
     
-    init(distanceBetweenBarriers: Double, moveSpeed:Double) {
+    init(distanceBetweenBarriers: Double) {
         self.barriers = [Barrier]()
         self.totalDistance = 0.0
         self.distanceBetweenBarriers = distanceBetweenBarriers
         self.distanceSinceLastBarrier = 0.0
         self.barrierCount = 0
-        self.moveSpeed = moveSpeed
     }
 }
 
@@ -61,14 +59,12 @@ extension BoardState {
                  totalDistance: Double,
                  distanceSinceLastBarrier: Double,
                  distanceBetweenBarriers: Double,
-                 barrierCount: Int,
-                 moveSpeed: Double) {
+                 barrierCount: Int) {
         self.barriers = barriers
         self.totalDistance = totalDistance
         self.distanceSinceLastBarrier = distanceSinceLastBarrier
         self.distanceBetweenBarriers = distanceBetweenBarriers
         self.barrierCount = barrierCount
-        self.moveSpeed = moveSpeed
     }
     
     func clone() -> BoardState {
@@ -76,13 +72,13 @@ extension BoardState {
                           totalDistance: self.totalDistance,
                           distanceSinceLastBarrier: self.distanceSinceLastBarrier,
                           distanceBetweenBarriers: self.distanceBetweenBarriers,
-                          barrierCount: self.barrierCount,
-                          moveSpeed: self.moveSpeed)
+                          barrierCount: self.barrierCount)
     }
 }
 
 protocol Board {
     func update(state: BoardState,
+                config: GameConfig,
                 layout: BoardLayout,
                 sequencer: Sequencer,
                 position: Position,
@@ -99,12 +95,13 @@ class DefaultBoard: Board {
     
     // @CLEANUP: this method needs another pass for clarity
     func update(state: BoardState,
+                config: GameConfig,
                 layout: BoardLayout,
                 sequencer: Sequencer,
                 position: Position,
                 dt: Double) -> (BoardState, [Event]) {
         
-        let step = dt * state.moveSpeed // @TODO: weird
+        let step = dt * config.boardScrollSpeed
         var events = [Event]()
         var newBarrierCount = state.barrierCount
         
@@ -138,6 +135,9 @@ class DefaultBoard: Board {
         }
         
         // COLLISION
+        // @TODO: need better collision detection,
+        // if the board is scrolling too fast then instantaneous checking is not precise enough
+        // draw a line from player's previous position and do a line collision across the barrier
         let verticalRange = 0.05 // @HARDCODED
         
         var updatedBarriers = [Barrier]()

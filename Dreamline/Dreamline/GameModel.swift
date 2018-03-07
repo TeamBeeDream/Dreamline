@@ -14,9 +14,9 @@ struct ModelState {
     var positionerState: PositionerState
     var targetOffset: Double
     
-    var grid: BarrierGrid
-    var gridState: BarrierGridState
-    var gridLayout: GridLayout
+    var board: Board
+    var boardState: BoardState
+    var boardLayout: BoardLayout
     
     var sequencer: Sequencer
 }
@@ -27,9 +27,11 @@ extension ModelState {
             positioner: self.positioner,
             positionerState: self.positionerState,
             targetOffset: self.targetOffset,
-            grid: self.grid,
-            gridState: self.gridState,
-            gridLayout: self.gridLayout,
+            
+            board: self.board,
+            boardState: self.boardState,
+            boardLayout: self.boardLayout,
+            
             sequencer: self.sequencer)
     }
 }
@@ -44,64 +46,51 @@ extension ModelState {
                 tolerance: 0.2,
                 moveDuration: 0.1),
             targetOffset: 0.0,
-            grid: DefaultBarrierGrid(),
-            gridState: BarrierGridState(
-                barriers: [Barrier](),
-                totalDistance: 0.0,
-                distanceSinceLastBarrier: 0.0,
-                distanceBetweenBarriers: 0.7),
-            gridLayout: GridLayout(
+            board: DefaultBoard(),
+            boardState: BoardState(
+                distanceBetweenBarriers: 0.7,
+                moveSpeed: 1.2),
+            boardLayout: BoardLayout(
                 spawnPosition: -0.9,
                 destroyPosition: 0.9,
                 playerPosition: 0.5,
-                laneOffset: 0.65,
-                moveSpeed: 1.2),
+                laneOffset: 0.65),
             sequencer: RandomSequencer())
     }
 }
 
 protocol GameModel {
-    /*
-    func addInput(_ lane: Int)
-    func removeInput(count: Int)
-     */
     // @TODO: add ruleset
     func update(state: ModelState, dt: Double) -> (ModelState, [Event])
- 
-    // @TODO: remove these, model doesn't hold state
-    //func getPosition() -> Position
-    //func getBarriers() -> BarrierGridState
 }
 
 // @TODO: rename
 class DefaultGameModel: GameModel {
     func update(state: ModelState, dt: Double) -> (ModelState, [Event]) {
-        // steps:
-        // 0? handle input
-        // 1. update positioner
-        // 2. update grid
-        // 3. handle collisions
-        // 4. composite updated state and events
         
+        // Update positioner
         let (updatedPositionerState, positionEvents) = state.positioner.update(
             state: state.positionerState,
             targetOffset: state.targetOffset,
             dt: dt)
         
-        let (updatedGridState, gridEvents) = state.grid.update(
-            state: state.gridState,
-            layout: state.gridLayout,
+        // Update board
+        let (updatedBoardState, boardEvents) = state.board.update(
+            state: state.boardState,
+            layout: state.boardLayout,
             sequencer: state.sequencer,
             position: state.positioner.getPosition(state: updatedPositionerState),
             dt: dt)
         
+        // Composite updated states
         var updatedState = state.clone()
         updatedState.positionerState = updatedPositionerState
-        updatedState.gridState = updatedGridState
+        updatedState.boardState = updatedBoardState
         
+        // Composite events
         var allEvents = [Event]()
         allEvents.append(contentsOf: positionEvents)
-        allEvents.append(contentsOf: gridEvents)
+        allEvents.append(contentsOf: boardEvents)
         
         return (updatedState, allEvents)
     }

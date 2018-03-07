@@ -14,6 +14,7 @@ enum Lane: Int {
     case right  =  1
 }
 
+// @CLEANUP: maybe combine with PositionerState
 struct Position {
     let lane: Int
     let offset: Double

@@ -11,6 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    // @TODO: move model stuff to controller
     var model: GameModel = DefaultGameModel()
     var state: ModelState = ModelState.getDefault()
     
@@ -30,13 +31,13 @@ class GameScene: SKScene {
         playerGraphic.fillColor = SKColor.red
         self.tmpPlayerNode = playerGraphic
         addChild(self.tmpPlayerNode)
-        self.tmpPlayerNode.position = point(x: 0.0, y: state.gridLayout.playerPosition)
+        self.tmpPlayerNode.position = point(x: 0.0, y: state.boardLayout.playerPosition)
         
         // debug
-        drawLayoutLines(layout: state.gridLayout)
+        drawLayoutLines(layout: state.boardLayout)
     }
     
-    private func drawLayoutLines(layout: GridLayout) {
+    private func drawLayoutLines(layout: BoardLayout) {
         // spawn line
         addChild(createLine(
             from: point(x: -1.0, y: layout.spawnPosition),
@@ -129,18 +130,18 @@ class GameScene: SKScene {
         self.state = updatedState
         
         let position = state.positioner.getPosition(state: state.positionerState)
-        let offset = CGFloat(position.offset * state.gridLayout.laneOffset)
+        let offset = CGFloat(position.offset * state.boardLayout.laneOffset)
         self.tmpPlayerNode.position.x = point(x: offset, y: 0.0).x
         self.tmpPlayerNode.fillColor = position.withinTolerance ? SKColor.green : SKColor.white
         
         // @HACK
-        self.drawBarriers(gridState: state.gridState)
+        self.drawBarriers(gridState: state.boardState)
     }
     
     // @TODO: move to separate class (in graphics folder)
     private func createBarrierGraphic(barrier: Barrier) -> SKNode {
         // @CLEANUP, this code is hard to understand
-        let occupied = CGFloat(1.0 - state.gridLayout.laneOffset * 2)
+        let occupied = CGFloat(1.0 - state.boardLayout.laneOffset * 2)
         let margin = (frame.width * occupied) / 2.0
         let width = frame.width - (margin * 2.0)
         let gateWidth = Double(width / 4.0)
@@ -148,8 +149,8 @@ class GameScene: SKScene {
         let wallY: Double = 0
         
         let barrierGraphic = SKNode()
-        let wallColor = self.wallColor(barrier.state)
-        let gateColor = self.gateColor(barrier.state)
+        let wallColor = self.wallColor(barrier.status)
+        let gateColor = self.gateColor(barrier.status)
         
         let data = self.barrierDataToBoolArray(data: barrier.pattern.data)
         for i in 1...4 {
@@ -193,8 +194,8 @@ class GameScene: SKScene {
         return barrierGraphic
     }
     
-    private func wallColor(_ state: BarrierState) -> SKColor {
-        switch (state) {
+    private func wallColor(_ status: BarrierStatus) -> SKColor {
+        switch (status) {
         case .idle:
             return SKColor.magenta
         case .pass:
@@ -204,8 +205,8 @@ class GameScene: SKScene {
         }
     }
     
-    private func gateColor(_ state: BarrierState) -> SKColor {
-        switch (state) {
+    private func gateColor(_ status: BarrierStatus) -> SKColor {
+        switch (status) {
         case .idle:
             return SKColor.cyan
         case .pass:
@@ -244,16 +245,16 @@ class GameScene: SKScene {
     }
     
     private func getFadeAmount(y: Double) -> CGFloat {
-        if y < state.gridLayout.spawnPosition { return 0.0 }
-        if y > state.gridLayout.destroyPosition { return 0.0 }
+        if y < state.boardLayout.spawnPosition { return 0.0 }
+        if y > state.boardLayout.destroyPosition { return 0.0 }
         
-        if y < state.gridLayout.spawnPosition + fadeCutoff {
-            let t = ((state.gridLayout.spawnPosition + fadeCutoff) - y) / fadeCutoff
+        if y < state.boardLayout.spawnPosition + fadeCutoff {
+            let t = ((state.boardLayout.spawnPosition + fadeCutoff) - y) / fadeCutoff
             return CGFloat(lerp(t, min: 1.0, max: 0.0))
         }
         
-        if y > state.gridLayout.destroyPosition - fadeCutoff {
-            let t = (y - (state.gridLayout.destroyPosition - fadeCutoff)) / fadeCutoff
+        if y > state.boardLayout.destroyPosition - fadeCutoff {
+            let t = (y - (state.boardLayout.destroyPosition - fadeCutoff)) / fadeCutoff
             return CGFloat(lerp(t, min: 1.0, max: 0.0))
         }
         
@@ -261,7 +262,7 @@ class GameScene: SKScene {
     }
     
     // @TODO: move to other class
-    private func drawBarriers(gridState: BarrierGridState) {
+    private func drawBarriers(gridState: BoardState) {
         self.clearBarriers()
         
         for (_, barrier) in gridState.barriers.enumerated() {

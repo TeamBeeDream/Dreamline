@@ -93,12 +93,20 @@ class DebugRenderer: SKNode, GameRenderer {
     
     private func passBarrier(_ barrierId: Int) {
         let node = self.barrierCache[barrierId]!
-        node.makeGreen()
+        node.run(SKAction.sequence([
+            SKAction.run { node.makeColor(.white) },
+            SKAction.wait(forDuration: 0.05),
+            SKAction.run { node.makeColor(.green) },
+            SKAction.fadeAlpha(to: 0.0, duration: 0.3)]))
     }
     
     private func hitBarrier(_ barrierId: Int) {
         let node = self.barrierCache[barrierId]!
-        node.makeRed()
+        node.run(SKAction.sequence([
+            SKAction.run { node.makeColor(.white) },
+            SKAction.wait(forDuration: 0.05),
+            SKAction.run { node.makeColor(.red) },
+            SKAction.fadeAlpha(to: 0.0, duration: 0.5)]))
     }
     
     // this is weird
@@ -240,31 +248,14 @@ class BarrierNode: SKNode {
         addChild(self.graphic!)
     }
     
-    func makeGreen() {
+    func makeColor(_ color: SKColor) {
         // gross
         var updatedBits = [SKShapeNode]()
         
         for node in self.bits {
             node.removeFromParent()
             let updatedNode = node.copy() as! SKShapeNode
-            updatedNode.strokeColor = .green
-            updatedNode.run(self.getFadeAction())
-            updatedBits.append(updatedNode)
-            addChild(updatedNode)
-        }
-        
-        self.bits = updatedBits
-    }
-    
-    func makeRed() {
-        // gross
-        var updatedBits = [SKShapeNode]()
-        
-        for node in self.bits {
-            node.removeFromParent()
-            let updatedNode = node.copy() as! SKShapeNode
-            updatedNode.strokeColor = .red
-            updatedNode.run(self.getBadAnimation())
+            updatedNode.strokeColor = color
             updatedBits.append(updatedNode)
             addChild(updatedNode)
         }

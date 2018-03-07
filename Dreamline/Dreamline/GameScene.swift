@@ -27,60 +27,14 @@ class GameScene: SKScene {
     var numInputs: Int = 0
     
     override func didMove(to view: SKView) {
-        backgroundColor = SKColor.darkGray
-        
-        let radius = CGFloat(config.positionerTolerance) * frame.width / 4.0
-        let playerGraphic = SKShapeNode(circleOfRadius: radius)
-        playerGraphic.lineWidth = 0
-        playerGraphic.fillColor = SKColor.red
-        self.tmpPlayerNode = playerGraphic
-        addChild(self.tmpPlayerNode)
-        self.tmpPlayerNode.position = point(x: 0.0, y: state.boardLayout.playerPosition)
-        
-        // debug
-        drawLayoutLines(layout: state.boardLayout)
+        self.renderer = DebugRenderer(frame: self.frame)
+        (self.renderer as! DebugRenderer).drawLayoutLines(layout: state.boardLayout) // @DEBUG
+        addChild(self.renderer as! SKNode)
     }
     
-    private func drawLayoutLines(layout: BoardLayout) {
-        // spawn line
-        addChild(createLine(
-            from: point(x: -1.0, y: layout.spawnPosition),
-            to: point(x: 1.0, y: layout.spawnPosition),
-            color: SKColor.gray,
-            width: 1.0))
-        
-        // destroy line
-        addChild(createLine(
-            from: point(x: -1.0, y: layout.destroyPosition),
-            to: point(x: 1.0, y: layout.destroyPosition),
-            color: SKColor.gray,
-            width: 1.0))
-        
-        // player line
-        addChild(createLine(
-            from: point(x: -1.0, y: layout.playerPosition),
-            to: point(x: 1.0, y: layout.playerPosition),
-            color: SKColor.gray,
-            width: 1.0))
-        
-        // lane lines
-        addChild(createLine(
-            from: point(x: -layout.laneOffset, y: layout.playerPosition),
-            to: point(x: -layout.laneOffset, y: -1.0),
-            color: SKColor.gray,
-            width: 1.0))
-        addChild(createLine(
-            from: point(x: 0.0, y: layout.playerPosition),
-            to: point(x: 0.0, y: -1.0),
-            color: SKColor.gray,
-            width: 1.0))
-        addChild(createLine(
-            from: point(x: layout.laneOffset, y: layout.playerPosition),
-            to: point(x: layout.laneOffset, y: -1.0),
-            color: SKColor.gray,
-            width: 1.0))
-    }
     
+    
+    /*
     private func point(x: Double, y: Double) -> CGPoint {
         return point(x: CGFloat(x), y: CGFloat(y))
     }
@@ -90,6 +44,7 @@ class GameScene: SKScene {
         let convertedY = frame.midY - (y * frame.height / 2.0)
         return CGPoint(x: convertedX, y: convertedY)
     }
+ */
     
     // @TODO: move to user input class
     private func addInput(_ lane: Int) {
@@ -124,7 +79,21 @@ class GameScene: SKScene {
         self.removeInput(count: touches.count)
     }
     
+    private var renderer: GameRenderer? // eh, I don't like this
     override func update(_ currentTime: TimeInterval) {
+        
+        var dt = currentTime - self.previousTime
+        self.previousTime = currentTime
+        if dt > 1.0 { dt = 1.0/60.0 }
+        
+        let (updatedState, events) = model.update(state: state, config: config, dt: dt)
+        let updatedConfig = rulesetModifier.updateRuleset(ruleset: ruleset, config: config, events: events)
+        self.state = updatedState
+        self.config = updatedConfig // @TODO: should config changes be done here or in the model?
+        
+        self.renderer?.render(state: updatedState, config: config, events: events)
+        
+        /*
         var dt = currentTime - self.previousTime
         self.previousTime = currentTime
         if dt > 1.0 { dt = 1.0/60.0 }
@@ -147,8 +116,9 @@ class GameScene: SKScene {
         
         // @HACK
         self.drawBarriers(gridState: state.boardState)
+ */
     }
-    
+    /*
     // @TODO: move to separate class (in graphics folder)
     private func createBarrierGraphic(barrier: Barrier) -> SKNode {
         // @CLEANUP, this code is hard to understand
@@ -204,7 +174,8 @@ class GameScene: SKScene {
         
         return barrierGraphic
     }
-    
+    */
+    /*
     private func wallColor(_ status: BarrierStatus) -> SKColor {
         switch (status) {
         case .idle:
@@ -215,7 +186,8 @@ class GameScene: SKScene {
             return SKColor.red
         }
     }
-    
+    */
+    /*
     private func gateColor(_ status: BarrierStatus) -> SKColor {
         switch (status) {
         case .idle:
@@ -226,7 +198,9 @@ class GameScene: SKScene {
             return SKColor.red
         }
     }
+    */
     
+    /*
     private func barrierDataToBoolArray(data: [Gate]) -> [Bool] {
         assert(data.count == 3) // @ROBUSTNESS: expects data array to have exactly 3 values
         var result = [Bool](repeating: false, count: 5)
@@ -240,7 +214,9 @@ class GameScene: SKScene {
         }
         return result
     }
+    */
     
+    /*
     private func createLine(from: CGPoint,
                             to: CGPoint,
                             color: SKColor,
@@ -254,7 +230,9 @@ class GameScene: SKScene {
         node.lineWidth = width
         return node
     }
+ */
     
+    /*
     private func getFadeAmount(y: Double) -> CGFloat {
         if y < state.boardLayout.spawnPosition { return 0.0 }
         if y > state.boardLayout.destroyPosition { return 0.0 }
@@ -271,7 +249,8 @@ class GameScene: SKScene {
         
         return 1.0
     }
-    
+ */
+   /*
     // @TODO: move to other class
     private func drawBarriers(gridState: BoardState) {
         self.clearBarriers()
@@ -292,4 +271,5 @@ class GameScene: SKScene {
         
         self.barrierNodes.removeAll()
     }
+ */
 }

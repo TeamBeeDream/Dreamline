@@ -49,8 +49,8 @@ extension ModelState {
             boardState: BoardState(
                 distanceBetweenBarriers: 0.7),
             boardLayout: BoardLayout(
-                spawnPosition: -0.9,
-                destroyPosition: 0.9,
+                spawnPosition: -1.1,
+                destroyPosition: 1.1,
                 playerPosition: 0.5,
                 laneOffset: 0.65),
             sequencer: RandomSequencer())

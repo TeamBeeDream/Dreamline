@@ -26,6 +26,8 @@ protocol RulesetModifier {
     func updateRuleset(ruleset: Ruleset, config: GameConfig, events: [Event]) -> GameConfig
 }
 
+// @NOTE: if we do the ruleset correctly,
+// then this class can be strictly data driven
 class DefaultRulesetModifier: RulesetModifier {
     func updateRuleset(ruleset: Ruleset, config: GameConfig, events: [Event]) -> GameConfig {
         var updatedConfig = config.clone()

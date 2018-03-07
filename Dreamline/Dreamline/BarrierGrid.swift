@@ -72,40 +72,53 @@ struct GridLayout {
 struct BarrierGridState {
     var barriers: [Barrier]
     var totalDistance: Double
+    var distanceSinceLastBarrier: Double
+    var distanceBetweenBarriers: Double
 }
 
 // @TODO: rename
 protocol BarrierGrid {
-    func update(state: BarrierGridState, layout: GridLayout, dt: Double) -> BarrierGridState
-    func testCollision(state: BarrierGridState, layout: GridLayout, position: Position) -> BarrierGridState
+    func update(state: BarrierGridState, layout: GridLayout, sequencer: Sequencer, position: Position, dt: Double) -> (BarrierGridState, [Event])
 }
 
 // @TODO: better name
 class DefaultBarrierGrid: BarrierGrid {
-    func update(state: BarrierGridState, layout: GridLayout, dt: Double) -> BarrierGridState {
-        let step = dt * layout.moveSpeed // @TODO: weird
+    func update(state: BarrierGridState, layout: GridLayout, sequencer: Sequencer, position: Position, dt: Double) -> (BarrierGridState, [Event]) {
         
-        // update all barriers, only include ones that remain active
-        var updatedBarriers = [Barrier]()
+        let step = dt * layout.moveSpeed // @TODO: weird
+        var events = [Event]()
+        
+        // MOVE ALL BARRIERS, DESTROY INVALID ONES
+        var remainingBarriers = [Barrier]()
         for barrier in state.barriers {
             let newPosition = barrier.position + step
-            if newPosition > layout.destroyPosition { continue } // exclude
+            if newPosition > layout.destroyPosition {
+                events.append(.barrierDestroyed(barrier.id))
+                continue
+            }
             
             var newBarrier = barrier.clone()
             newBarrier.position = newPosition
-            updatedBarriers.append(newBarrier)
+            remainingBarriers.append(newBarrier)
         }
         
-        return BarrierGridState(
-            barriers: updatedBarriers,
-            totalDistance: state.totalDistance + step)
-    }
-    
-    func testCollision(state: BarrierGridState, layout: GridLayout, position: Position) -> BarrierGridState {
+        // ADD NEW BARRIER IF NECESSARY
+        // @FIXME: make sure new barrier is positioned correctly
+        var distance = state.distanceSinceLastBarrier + step
+        if distance > state.distanceBetweenBarriers {
+            distance = 0.0 // @HACK
+            let newBarrier = Barrier(
+                pattern: sequencer.getNextPattern(),
+                position: layout.spawnPosition)
+            remainingBarriers.append(newBarrier) // @CLEANUP
+            events.append(.barrierAdded(newBarrier))
+        }
+        
+        // COLLISION
         let verticalRange = 0.05 // @HARDCODED
         
         var updatedBarriers = [Barrier]()
-        for barrier in state.barriers {
+        for barrier in remainingBarriers {
             let isIdle = barrier.state == .idle
             let withinRange = fabs(barrier.position - layout.playerPosition) < verticalRange
             if !(isIdle && withinRange) {
@@ -117,11 +130,23 @@ class DefaultBarrierGrid: BarrierGrid {
             let withinTolerance = position.withinTolerance
             let isGateOpen = barrier.pattern.data[position.lane + 1] == .open // @FIXME
             var newBarrier = barrier.clone()
-            if !withinTolerance { newBarrier.state = .hit }
-            else { newBarrier.state = isGateOpen ? .pass : .hit }
+            
+            if !withinTolerance {
+                newBarrier.state = .hit
+                events.append(.barrierHit(barrier.id))
+            } else {
+                newBarrier.state = isGateOpen ? .pass : .hit
+                events.append(isGateOpen ? .barrierPass(barrier.id) : .barrierHit(barrier.id))
+            }
             updatedBarriers.append(newBarrier)
         }
         
-        return BarrierGridState(barriers: updatedBarriers, totalDistance: state.totalDistance)
+        
+        let updatedState = BarrierGridState(
+            barriers: updatedBarriers,
+            totalDistance: state.totalDistance + step,
+            distanceSinceLastBarrier: distance,
+            distanceBetweenBarriers: state.distanceBetweenBarriers) // @TODO: add clone method
+        return (updatedState, events)
     }
 }

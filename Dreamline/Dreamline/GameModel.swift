@@ -8,21 +8,115 @@
 
 import Foundation
 
-protocol GameModel {
-    func addInput(_ lane: Int)
-    func removeInput(count: Int)
-    func update(dt: Double)
-    func getPosition() -> Position
-    func getBarriers() -> BarrierGridState // @FIXME: is this good?
+// @TODO: rename
+struct ModelState {
+    var positioner: Positioner
+    var positionerState: PositionerState
+    var targetOffset: Double
+    
+    var grid: BarrierGrid
+    var gridState: BarrierGridState
+    var gridLayout: GridLayout
+    
+    var sequencer: Sequencer
 }
 
-// @TODO: separate user input to usergamemodel protocol
+extension ModelState {
+    func clone() -> ModelState {
+        return ModelState(
+            positioner: self.positioner,
+            positionerState: self.positionerState,
+            targetOffset: self.targetOffset,
+            grid: self.grid,
+            gridState: self.gridState,
+            gridLayout: self.gridLayout,
+            sequencer: self.sequencer)
+    }
+}
+
+extension ModelState {
+    // @CLEANUP: temp factory method
+    static func getDefault() -> ModelState {
+        return ModelState(
+            positioner: UserPositioner(),
+            positionerState: PositionerState(
+                currentOffset: 0.0,
+                tolerance: 0.2,
+                moveDuration: 0.1),
+            targetOffset: 0.0,
+            grid: DefaultBarrierGrid(),
+            gridState: BarrierGridState(
+                barriers: [Barrier](),
+                totalDistance: 0.0,
+                distanceSinceLastBarrier: 0.0,
+                distanceBetweenBarriers: 0.7),
+            gridLayout: GridLayout(
+                spawnPosition: -0.9,
+                destroyPosition: 0.9,
+                playerPosition: 0.5,
+                laneOffset: 0.65,
+                moveSpeed: 1.2),
+            sequencer: RandomSequencer())
+    }
+}
+
+protocol GameModel {
+    /*
+    func addInput(_ lane: Int)
+    func removeInput(count: Int)
+     */
+    // @TODO: add ruleset
+    func update(state: ModelState, dt: Double) -> (ModelState, [Event])
+ 
+    // @TODO: remove these, model doesn't hold state
+    //func getPosition() -> Position
+    //func getBarriers() -> BarrierGridState
+}
+
+// @TODO: rename
+class DefaultGameModel: GameModel {
+    func update(state: ModelState, dt: Double) -> (ModelState, [Event]) {
+        // steps:
+        // 0? handle input
+        // 1. update positioner
+        // 2. update grid
+        // 3. handle collisions
+        // 4. composite updated state and events
+        
+        let (updatedPositionerState, positionEvents) = state.positioner.update(
+            state: state.positionerState,
+            targetOffset: state.targetOffset,
+            dt: dt)
+        
+        let (updatedGridState, gridEvents) = state.grid.update(
+            state: state.gridState,
+            layout: state.gridLayout,
+            sequencer: state.sequencer,
+            position: state.positioner.getPosition(state: updatedPositionerState),
+            dt: dt)
+        
+        var updatedState = state.clone()
+        updatedState.positionerState = updatedPositionerState
+        updatedState.gridState = updatedGridState
+        
+        var allEvents = [Event]()
+        allEvents.append(contentsOf: positionEvents)
+        allEvents.append(contentsOf: gridEvents)
+        
+        return (updatedState, allEvents)
+    }
+}
+
+/*
 class DebugGameModel: GameModel {
     
     // PROTOCOLS @TODO: set from config
     var positioner: Positioner = UserPositioner()
     var sequencer: Sequencer = RandomSequencer()
     var grid: BarrierGrid = DefaultBarrierGrid()
+    
+    // EVENT LISTENERS
+    var listeners = [EventListener]()
     
     // STATE @ROBUSTNESS: should i separate this out?
     var positionerState: PositionerState // @TODO: set from config
@@ -65,6 +159,9 @@ class DebugGameModel: GameModel {
         }
     }
     
+    // @TODO: implement event handling
+    // maybe update interfaces take in state and return (updated state, and [Event])
+    // so events are always bubbled up, but each step can respond to it if it needs to
     func update(dt: Double) {
         // update positioner
         let updatedPositionerState = self.positioner.update(
@@ -106,6 +203,7 @@ class DebugGameModel: GameModel {
     }
     
     func getBarriers() -> BarrierGridState {
-        return self.gridState // @FIXME: bug
+        return self.gridState
     }
 }
+ */

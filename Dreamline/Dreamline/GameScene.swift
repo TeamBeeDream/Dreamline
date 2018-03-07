@@ -10,26 +10,30 @@ import SpriteKit
 import GameplayKit
 
 class GameScene: SKScene {
+    
+    var model: GameModel = DefaultGameModel()
+    var state: ModelState = ModelState.getDefault()
+    
     // TEMP
     var previousTime: TimeInterval = 0
     var tmpPlayerNode = SKShapeNode()
-    let model: DebugGameModel = DebugGameModel()
     var barrierNodes = [SKNode]()
     var fadeCutoff = 0.175
+    var numInputs: Int = 0
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.darkGray
         
-        let radius = CGFloat(model.positionerState.tolerance) * frame.width / 4.0
+        let radius = CGFloat(state.positionerState.tolerance) * frame.width / 4.0
         let playerGraphic = SKShapeNode(circleOfRadius: radius)
         playerGraphic.lineWidth = 0
         playerGraphic.fillColor = SKColor.red
         self.tmpPlayerNode = playerGraphic
         addChild(self.tmpPlayerNode)
-        self.tmpPlayerNode.position = point(x: 0.0, y: model.gridLayout.playerPosition)
+        self.tmpPlayerNode.position = point(x: 0.0, y: state.gridLayout.playerPosition)
         
         // debug
-        drawLayoutLines(layout: model.gridLayout)
+        drawLayoutLines(layout: state.gridLayout)
     }
     
     private func drawLayoutLines(layout: GridLayout) {
@@ -82,23 +86,37 @@ class GameScene: SKScene {
         return CGPoint(x: convertedX, y: convertedY)
     }
     
+    // @TODO: move to user input class
+    private func addInput(_ lane: Int) {
+        state.targetOffset = Double(lane)
+        self.numInputs += 1
+    }
+    
+    // @TODO: move to user input class
+    private func removeInput(count: Int) {
+        self.numInputs -= count
+        if (self.numInputs == 0) {
+            state.targetOffset = 0.0
+        }
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
             let position = t.location(in: self.view)
             if position.x < self.frame.midX {
-                self.model.addInput(Lane.left.rawValue)
+                self.addInput(Lane.left.rawValue)
             } else {
-                self.model.addInput(Lane.right.rawValue)
+                self.addInput(Lane.right.rawValue)
             }
         }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.model.removeInput(count: touches.count) // woah
+        self.removeInput(count: touches.count)
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.model.removeInput(count: touches.count) // woah
+        self.removeInput(count: touches.count)
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -106,21 +124,23 @@ class GameScene: SKScene {
         self.previousTime = currentTime
         if dt > 1.0 { dt = 1.0/60.0 }
         
-        self.model.update(dt: dt)
+        // @TODO: handle events from update
+        let (updatedState, _) = model.update(state: state, dt: dt)
+        self.state = updatedState
         
-        let position = self.model.getPosition()
-        let offset = CGFloat(position.offset * model.gridLayout.laneOffset) // @CLEANUP
+        let position = state.positioner.getPosition(state: state.positionerState)
+        let offset = CGFloat(position.offset * state.gridLayout.laneOffset)
         self.tmpPlayerNode.position.x = point(x: offset, y: 0.0).x
         self.tmpPlayerNode.fillColor = position.withinTolerance ? SKColor.green : SKColor.white
         
         // @HACK
-        self.drawBarriers(gridState: self.model.getBarriers())
+        self.drawBarriers(gridState: state.gridState)
     }
     
     // @TODO: move to separate class (in graphics folder)
     private func createBarrierGraphic(barrier: Barrier) -> SKNode {
         // @CLEANUP, this code is hard to understand
-        let occupied = CGFloat(1.0 - self.model.gridLayout.laneOffset * 2)
+        let occupied = CGFloat(1.0 - state.gridLayout.laneOffset * 2)
         let margin = (frame.width * occupied) / 2.0
         let width = frame.width - (margin * 2.0)
         let gateWidth = Double(width / 4.0)
@@ -224,16 +244,16 @@ class GameScene: SKScene {
     }
     
     private func getFadeAmount(y: Double) -> CGFloat {
-        if y < model.gridLayout.spawnPosition { return 0.0 }
-        if y > model.gridLayout.destroyPosition { return 0.0 }
+        if y < state.gridLayout.spawnPosition { return 0.0 }
+        if y > state.gridLayout.destroyPosition { return 0.0 }
         
-        if y < model.gridLayout.spawnPosition + fadeCutoff {
-            let t = ((model.gridLayout.spawnPosition + fadeCutoff) - y) / fadeCutoff
+        if y < state.gridLayout.spawnPosition + fadeCutoff {
+            let t = ((state.gridLayout.spawnPosition + fadeCutoff) - y) / fadeCutoff
             return CGFloat(lerp(t, min: 1.0, max: 0.0))
         }
         
-        if y > model.gridLayout.destroyPosition - fadeCutoff {
-            let t = (y - (model.gridLayout.destroyPosition - fadeCutoff)) / fadeCutoff
+        if y > state.gridLayout.destroyPosition - fadeCutoff {
+            let t = (y - (state.gridLayout.destroyPosition - fadeCutoff)) / fadeCutoff
             return CGFloat(lerp(t, min: 1.0, max: 0.0))
         }
         

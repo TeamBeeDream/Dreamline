@@ -27,21 +27,24 @@ struct PositionerState {
 }
 
 protocol Positioner {
-    func update(state: PositionerState, targetOffset: Double, dt: Double) -> PositionerState
+    func update(state: PositionerState, targetOffset: Double, dt: Double) -> (PositionerState, [Event])
     func getPosition(state: PositionerState) -> Position
 }
 
 // @TODO: new name for this
 class UserPositioner: Positioner {
-    func update(state: PositionerState, targetOffset: Double, dt: Double) -> PositionerState {
+    func update(state: PositionerState, targetOffset: Double, dt: Double) -> (PositionerState, [Event]) {
         let diff = targetOffset - state.currentOffset
         let step = clamp(dt / state.moveDuration, min: 0.0, max: 1.0)
         let delta = step * diff
         
-        return PositionerState(
+        let updatedState = PositionerState(
             currentOffset: state.currentOffset + delta,
             tolerance: state.tolerance,
             moveDuration: state.moveDuration)
+        let events = [Event]() // @TODO: implement position events
+        
+        return (updatedState, events)
     }
     
     func getPosition(state: PositionerState) -> Position {

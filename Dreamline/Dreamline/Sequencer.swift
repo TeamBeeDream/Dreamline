@@ -47,10 +47,18 @@ class RandomSequencer: Sequencer {
     func getNextPattern() -> Pattern {
         // generate a random pattern
         var gates = [Gate]()
-        for _ in 1...3 {
-            gates.append(self.randomGate())
+        var allClosed = true
+        var allOpen = true
+        for i in 1...3 {
+            let gate = self.randomGate()
+            if gate == .open { allClosed = allClosed && false }
+            if gate == .closed { allOpen = allOpen && false }
+            
+            if i == 3 && allClosed { gates.append(.open) }
+            else if i == 3 && allOpen { gates.append(.closed) }
+            else { gates.append(gate) }
         }
-        //print(gates)
+        
         return Pattern(data: gates)
     }
     

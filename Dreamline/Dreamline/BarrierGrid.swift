@@ -22,20 +22,30 @@ struct Barrier {
     var state: BarrierState
     
     init(pattern: Pattern, position: Double) {
-        self.id = Barrier.genId()
+        self.id = Barrier.genId()   // auto-gen new id
         self.pattern = pattern
         self.position = position
         self.state = .idle
     }
-    
-    // @ROBUSTNESS: is having a second init for state a good idea?
-    init(id: Int, pattern: Pattern, position: Double, state: BarrierState) {
+}
+
+extension Barrier {
+    private init(id: Int, pattern: Pattern, position: Double, state: BarrierState) {
         self.id = id
         self.pattern = pattern
         self.position = position
         self.state = state
     }
     
+    func clone() -> Barrier {
+        return Barrier(id: self.id,
+                       pattern: self.pattern,
+                       position: self.position,
+                       state: self.state)
+    }
+}
+
+extension Barrier {
     // @TODO: determine if there is a better way to
     // generate a unique id for barriers
     static var parity: Int = 0
@@ -49,10 +59,13 @@ struct Barrier {
 // @TODO: rename
 // @TODO: add player position
 // @TODO: make all positions absolute
-struct GridProperties {
-    var spawnPosition: Double
+struct GridLayout {
+    var   spawnPosition: Double
     var destroyPosition: Double
-    var moveSpeed: Double
+    var  playerPosition: Double
+    var laneOffset: Double
+    
+    var moveSpeed: Double // @TODO: this probably shouldn't be here
 }
 
 // @TODO: rename
@@ -63,24 +76,24 @@ struct BarrierGridState {
 
 // @TODO: rename
 protocol BarrierGrid {
-    func update(state: BarrierGridState, properties: GridProperties, dt: Double) -> BarrierGridState
-    func testCollision(state: BarrierGridState, position: Position) -> BarrierGridState
+    func update(state: BarrierGridState, layout: GridLayout, dt: Double) -> BarrierGridState
+    func testCollision(state: BarrierGridState, layout: GridLayout, position: Position) -> BarrierGridState
 }
 
 // @TODO: better name
 class DefaultBarrierGrid: BarrierGrid {
-    func update(state: BarrierGridState, properties: GridProperties, dt: Double) -> BarrierGridState {
-        let step = dt * properties.moveSpeed
+    func update(state: BarrierGridState, layout: GridLayout, dt: Double) -> BarrierGridState {
+        let step = dt * layout.moveSpeed // @TODO: weird
         
         // update all barriers, only include ones that remain active
         var updatedBarriers = [Barrier]()
         for barrier in state.barriers {
             let newPosition = barrier.position + step
-            if newPosition > properties.destroyPosition { continue } // exclude
-            updatedBarriers.append(Barrier(id: barrier.id,
-                                           pattern: barrier.pattern,
-                                           position: newPosition,
-                                           state: barrier.state)) // @TODO: create clone() method
+            if newPosition > layout.destroyPosition { continue } // exclude
+            
+            var newBarrier = barrier.clone()
+            newBarrier.position = newPosition
+            updatedBarriers.append(newBarrier)
         }
         
         return BarrierGridState(
@@ -88,25 +101,25 @@ class DefaultBarrierGrid: BarrierGrid {
             totalDistance: state.totalDistance + step)
     }
     
-    func testCollision(state: BarrierGridState, position: Position) -> BarrierGridState {
+    func testCollision(state: BarrierGridState, layout: GridLayout, position: Position) -> BarrierGridState {
         let verticalRange = 0.05 // @HARDCODED
         
         var updatedBarriers = [Barrier]()
         for barrier in state.barriers {
             let isIdle = barrier.state == .idle
-            let withinRange = fabs(barrier.position) < verticalRange
+            let withinRange = fabs(barrier.position - layout.playerPosition) < verticalRange
             if !(isIdle && withinRange) {
-                updatedBarriers.append(Barrier(id: barrier.id, pattern: barrier.pattern, position: barrier.position, state: barrier.state)) // @TODO: create clone method
+                updatedBarriers.append(barrier.clone())
                 continue
             }
             
             // test collision
+            let withinTolerance = position.withinTolerance
             let isGateOpen = barrier.pattern.data[position.lane + 1] == .open // @FIXME
-            updatedBarriers.append(
-                Barrier(id: barrier.id,
-                        pattern: barrier.pattern,
-                        position: barrier.position,
-                        state: isGateOpen ? .pass : .hit)) // @TODO: create clone method
+            var newBarrier = barrier.clone()
+            if !withinTolerance { newBarrier.state = .hit }
+            else { newBarrier.state = isGateOpen ? .pass : .hit }
+            updatedBarriers.append(newBarrier)
         }
         
         return BarrierGridState(barriers: updatedBarriers, totalDistance: state.totalDistance)

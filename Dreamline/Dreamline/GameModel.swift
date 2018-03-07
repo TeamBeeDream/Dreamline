@@ -14,7 +14,6 @@ protocol GameModel {
     func update(dt: Double)
     func getPosition() -> Position
     func getBarriers() -> BarrierGridState // @FIXME: is this good?
-    // MAYBE ALL STATE SHOULD BE REMOVE FROM MODEL??
 }
 
 // @TODO: separate user input to usergamemodel protocol
@@ -25,14 +24,12 @@ class DebugGameModel: GameModel {
     var sequencer: Sequencer = RandomSequencer()
     var grid: BarrierGrid = DefaultBarrierGrid()
     
-    // STATE
-    // positioner
+    // STATE @ROBUSTNESS: should i separate this out?
     var positionerState: PositionerState // @TODO: set from config
     var numInputs: Int = 0               // @TODO: move input to its own protocol
     var targetPosition: Double = 0.0     // @TODO: move input to its own protocol
     
-    // sequencer
-    var gridProperties: GridProperties
+    var gridLayout: GridLayout
     var gridState: BarrierGridState
     var distanceSinceLastPattern: Double = 0.0
     var distanceBetweenPatterns: Double = 0.7
@@ -41,14 +38,16 @@ class DebugGameModel: GameModel {
         // @TODO: move to factory
         self.positionerState = PositionerState(
             currentOffset: 0.0,
-            tolerance: 0.1,
+            tolerance: 0.2,
             moveDuration: 0.1)
         
         // @TODO: move to factory
-        self.gridProperties = GridProperties(
-            spawnPosition: -2.0, // @TODO: should this be absolute or relative to player?
-            destroyPosition: 0.5, // @TODO: should this be absolute or relative to player?
-            moveSpeed: 0.75)
+        self.gridLayout = GridLayout(
+            spawnPosition: -0.9,
+            destroyPosition: 0.9,
+            playerPosition: 0.5,
+            laneOffset: 0.65,
+            moveSpeed: 1.5)
         self.gridState = BarrierGridState(
             barriers: [Barrier](),
             totalDistance: 0.0)
@@ -76,14 +75,14 @@ class DebugGameModel: GameModel {
         // update grid
         let updatedGridState = self.grid.update(
             state: self.gridState,
-            properties: self.gridProperties,
+            layout: self.gridLayout,
             dt: dt)
         let distance = updatedGridState.totalDistance - self.gridState.totalDistance
         // handle collision
         // @TODO: better naming scheme to handle incremental updates
         // since the grid is likely to be updated multiple times
         // per frame, need some way to manage those steps
-        let collisionGridState = self.grid.testCollision(state: updatedGridState, position: self.positioner.getPosition(state: self.positionerState))
+        let collisionGridState = self.grid.testCollision(state: updatedGridState, layout: self.gridLayout, position: self.positioner.getPosition(state: self.positionerState))
         
         // update state
         self.positionerState = updatedPositionerState
@@ -97,7 +96,7 @@ class DebugGameModel: GameModel {
             
             let newBarrier = Barrier(
                 pattern: self.sequencer.getNextPattern(),
-                position: self.gridProperties.spawnPosition)
+                position: self.gridLayout.spawnPosition)
             self.gridState.barriers.append(newBarrier) // @FIXME: don't mutate grid state directly
         }
     }

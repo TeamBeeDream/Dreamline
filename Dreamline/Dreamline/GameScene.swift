@@ -13,20 +13,73 @@ class GameScene: SKScene {
     // TEMP
     var previousTime: TimeInterval = 0
     var tmpPlayerNode = SKShapeNode()
-    let tmpVertPos: CGFloat = 0.25 // @FIXME @HARDCODED
-    let tmpHoriOffset: CGFloat = 0.35
-    let model: GameModel = DebugGameModel()
+    let model: DebugGameModel = DebugGameModel()
     var barrierNodes = [SKNode]()
+    var fadeCutoff = 0.175
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.darkGray
         
-        let playerGraphic = SKShapeNode(circleOfRadius: 16)
+        let radius = CGFloat(model.positionerState.tolerance) * frame.width / 4.0
+        let playerGraphic = SKShapeNode(circleOfRadius: radius)
         playerGraphic.lineWidth = 0
         playerGraphic.fillColor = SKColor.red
         self.tmpPlayerNode = playerGraphic
         addChild(self.tmpPlayerNode)
-        self.tmpPlayerNode.position = CGPoint(x: self.frame.midX, y: self.frame.maxY * self.tmpVertPos)
+        self.tmpPlayerNode.position = point(x: 0.0, y: model.gridLayout.playerPosition)
+        
+        // debug
+        drawLayoutLines(layout: model.gridLayout)
+    }
+    
+    private func drawLayoutLines(layout: GridLayout) {
+        // spawn line
+        addChild(createLine(
+            from: point(x: -1.0, y: layout.spawnPosition),
+            to: point(x: 1.0, y: layout.spawnPosition),
+            color: SKColor.gray,
+            width: 1.0))
+        
+        // destroy line
+        addChild(createLine(
+            from: point(x: -1.0, y: layout.destroyPosition),
+            to: point(x: 1.0, y: layout.destroyPosition),
+            color: SKColor.gray,
+            width: 1.0))
+        
+        // player line
+        addChild(createLine(
+            from: point(x: -1.0, y: layout.playerPosition),
+            to: point(x: 1.0, y: layout.playerPosition),
+            color: SKColor.gray,
+            width: 1.0))
+        
+        // lane lines
+        addChild(createLine(
+            from: point(x: -layout.laneOffset, y: layout.playerPosition),
+            to: point(x: -layout.laneOffset, y: -1.0),
+            color: SKColor.gray,
+            width: 1.0))
+        addChild(createLine(
+            from: point(x: 0.0, y: layout.playerPosition),
+            to: point(x: 0.0, y: -1.0),
+            color: SKColor.gray,
+            width: 1.0))
+        addChild(createLine(
+            from: point(x: layout.laneOffset, y: layout.playerPosition),
+            to: point(x: layout.laneOffset, y: -1.0),
+            color: SKColor.gray,
+            width: 1.0))
+    }
+    
+    private func point(x: Double, y: Double) -> CGPoint {
+        return point(x: CGFloat(x), y: CGFloat(y))
+    }
+    
+    private func point(x: CGFloat, y: CGFloat) -> CGPoint {
+        let convertedX = frame.midX + (x * frame.width / 2.0)
+        let convertedY = frame.midY - (y * frame.height / 2.0)
+        return CGPoint(x: convertedX, y: convertedY)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -56,8 +109,8 @@ class GameScene: SKScene {
         self.model.update(dt: dt)
         
         let position = self.model.getPosition()
-        let offset = CGFloat(position.offset) * (tmpHoriOffset * frame.width)
-        self.tmpPlayerNode.position.x = self.frame.midX + offset
+        let offset = CGFloat(position.offset * model.gridLayout.laneOffset) // @CLEANUP
+        self.tmpPlayerNode.position.x = point(x: offset, y: 0.0).x
         self.tmpPlayerNode.fillColor = position.withinTolerance ? SKColor.green : SKColor.white
         
         // @HACK
@@ -66,8 +119,9 @@ class GameScene: SKScene {
     
     // @TODO: move to separate class (in graphics folder)
     private func createBarrierGraphic(barrier: Barrier) -> SKNode {
-        
-        let margin = frame.width * (1.0 - (tmpHoriOffset * 4)) / 2.0
+        // @CLEANUP, this code is hard to understand
+        let occupied = CGFloat(1.0 - self.model.gridLayout.laneOffset * 2)
+        let margin = (frame.width * occupied) / 2.0
         let width = frame.width - (margin * 2.0)
         let gateWidth = Double(width / 4.0)
         let gateHeight = 20.0 // @HARDCODED
@@ -169,22 +223,34 @@ class GameScene: SKScene {
         return node
     }
     
+    private func getFadeAmount(y: Double) -> CGFloat {
+        if y < model.gridLayout.spawnPosition { return 0.0 }
+        if y > model.gridLayout.destroyPosition { return 0.0 }
+        
+        if y < model.gridLayout.spawnPosition + fadeCutoff {
+            let t = ((model.gridLayout.spawnPosition + fadeCutoff) - y) / fadeCutoff
+            return CGFloat(lerp(t, min: 1.0, max: 0.0))
+        }
+        
+        if y > model.gridLayout.destroyPosition - fadeCutoff {
+            let t = (y - (model.gridLayout.destroyPosition - fadeCutoff)) / fadeCutoff
+            return CGFloat(lerp(t, min: 1.0, max: 0.0))
+        }
+        
+        return 1.0
+    }
+    
     // @TODO: move to other class
     private func drawBarriers(gridState: BarrierGridState) {
         self.clearBarriers()
         
         for (_, barrier) in gridState.barriers.enumerated() {
             let node = self.createBarrierGraphic(barrier: barrier)
-            node.position.y = CGFloat(posY(barrier.position))
+            node.position.y = point(x: 0.0, y: barrier.position).y
+            node.alpha = getFadeAmount(y: barrier.position)
             self.barrierNodes.append(node)
             addChild(node)
         }
-    }
-    
-    // @TODO: make better coordinate conversion methods
-    private func posY(_ pos: Double) -> Double {
-        let origin = frame.height * tmpVertPos
-        return Double(origin) - Double(frame.height / 2) * pos
     }
     
     private func clearBarriers() {

@@ -23,15 +23,13 @@ struct Position {
 // @CLEANUP: this may just replaced by Position struct
 struct PositionerState {
     var currentOffset: Double
-    //var tolerance: Double
-    //var moveDuration: Double
 }
 
 protocol Positioner {
     // @TODO: should I be passing the entire config struct?
     func update(state: PositionerState, config: GameConfig, targetOffset: Double, dt: Double) -> (PositionerState, [Event])
+    // @CLEANUP: really only need to pass in offset, actually positioner state is just the offset
     func getPosition(state: PositionerState, config: GameConfig) -> Position
-    // @TODO: combine update and getPosition (have update return position)
 }
 
 // @TODO: new name for this

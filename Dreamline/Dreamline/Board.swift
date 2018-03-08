@@ -82,6 +82,7 @@ protocol Board {
                 config: GameConfig,
                 layout: BoardLayout,
                 sequencer: Sequencer,
+                positioner: Positioner,
                 originalPosition: Position,
                 updatedPosition: Position,
                 dt: Double) -> (BoardState, [Event])
@@ -100,6 +101,7 @@ class DefaultBoard: Board {
                 config: GameConfig,
                 layout: BoardLayout,
                 sequencer: Sequencer,
+                positioner: Positioner,
                 originalPosition: Position,
                 updatedPosition: Position,
                 dt: Double) -> (BoardState, [Event]) {
@@ -107,7 +109,6 @@ class DefaultBoard: Board {
         let step = dt * config.boardScrollSpeed
         var events = [Event]()
         var newBarrierCount = state.barrierCount
-        //var prevBarrierPositions = [Int: Double]()
         
         // MOVE ALL BARRIERS, DESTROY INVALID ONES
         var remainingBarriers = [Barrier]()
@@ -121,7 +122,6 @@ class DefaultBoard: Board {
             var newBarrier = barrier.clone()
             newBarrier.position = newPosition
             remainingBarriers.append(newBarrier)
-            //prevBarrierPositions[barrier.id] = barrier.position // cache locally
         }
         
         // ADD NEW BARRIER IF NECESSARY
@@ -140,6 +140,7 @@ class DefaultBoard: Board {
         }
         
         // COLLISION
+        // @CLEANUP: this is so hard to understand
         var updatedBarriers = [Barrier]()
         for barrier in remainingBarriers {
             
@@ -159,22 +160,35 @@ class DefaultBoard: Board {
             let xPos = lerp(t, min: originalPosition.offset, max: updatedPosition.offset)
             
             // sample barrier at xPos
-            // @TODO: make better method for checking player collision
-            // can probably use positioner to getPosition at xPos, and see
-            // which lane it's closest to.  Need to check for multiple open gates
-            // if crossing lanes, check for within tolerance, otherwise don't
-            let distCenter = fabs(0 - xPos)
-            let distLeft = fabs(-layout.laneOffset - xPos)
-            let distRight = fabs(layout.laneOffset - xPos)
-            let minD = min(min(distLeft, distRight), distCenter)
-            var nearest = 0
-            if minD == distCenter { nearest = Lane.center.rawValue }
-            if minD == distLeft { nearest = Lane.left.rawValue }
-            if minD == distRight { nearest = Lane.right.rawValue }
+            let pState = PositionerState(currentOffset: xPos) // this is silly
+            let dPos = positioner.getPosition(state: pState, config: config)
+            
+            let crossedLanes = originalPosition.lane != updatedPosition.lane
+            let withinTolerance = dPos.withinTolerance
+            let nearest = dPos.lane + 1
             
             var newBarrier = barrier.clone()
+            var didHit = false
             
-            if barrier.pattern.data[nearest+1] == .open {
+            print(nearest)
+            if crossedLanes {
+                // check if both lanes are open
+                let open0 = barrier.pattern.data[originalPosition.lane + 1] == .open
+                let open1 = barrier.pattern.data[updatedPosition.lane + 1] == .open
+                if open0 && open1 {
+                    // no need to check tolerance
+                    didHit = barrier.pattern.data[nearest] != .open
+                } else {
+                    // include tolerance
+                    didHit = barrier.pattern.data[nearest] != .open && withinTolerance
+                }
+            } else {
+                // simple check
+                didHit = barrier.pattern.data[nearest] != .open
+            }
+            
+            
+            if !didHit {
                 newBarrier.status = .pass
                 events.append(.barrierPass(newBarrier.id))
             } else {

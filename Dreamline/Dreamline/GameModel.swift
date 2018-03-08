@@ -79,6 +79,7 @@ class DefaultGameModel: GameModel {
             config: config,
             layout: state.boardLayout,
             sequencer: state.sequencer,
+            positioner: state.positioner,
             originalPosition: state.positioner.getPosition(
                 state: state.positionerState, config: config), // using original state
             updatedPosition: state.positioner.getPosition(

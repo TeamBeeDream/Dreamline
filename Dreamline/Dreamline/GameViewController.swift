@@ -10,6 +10,7 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
+// @RENAME: "GameView..." was autofilled
 class GameViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -19,12 +20,11 @@ class GameViewController: UIViewController {
         if let view = self.view as! SKView? {
             
             // This is the important bit vvv
-            let scene = GameScene(size: view.frame.size)
+            let scene = GameController(size: view.frame.size)
             
             scene.scaleMode = .aspectFit
             view.showsFPS = true
             view.showsNodeCount = true
-            //view.showsDrawCount = true
             view.presentScene(scene) // @TODO: Add transition.
         } else {
             // @TODO: Do better error handling.
@@ -33,7 +33,7 @@ class GameViewController: UIViewController {
     }
 
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

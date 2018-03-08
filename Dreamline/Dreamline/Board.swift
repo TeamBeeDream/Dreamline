@@ -170,7 +170,6 @@ class DefaultBoard: Board {
             var newBarrier = barrier.clone()
             var didHit = false
             
-            print(nearest)
             if crossedLanes {
                 // check if both lanes are open
                 let open0 = barrier.pattern.data[originalPosition.lane + 1] == .open

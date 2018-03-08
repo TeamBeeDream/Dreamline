@@ -79,9 +79,10 @@ class DefaultGameModel: GameModel {
             config: config,
             layout: state.boardLayout,
             sequencer: state.sequencer,
-            position: state.positioner.getPosition(
-                state: updatedPositionerState,
-                config: config),
+            originalPosition: state.positioner.getPosition(
+                state: state.positionerState, config: config), // using original state
+            updatedPosition: state.positioner.getPosition(
+                state: updatedPositionerState, config: config), // using updated state
             dt: dt)
         
         // Composite updated states

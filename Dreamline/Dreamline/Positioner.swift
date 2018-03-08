@@ -20,34 +20,37 @@ struct Position {
     let withinTolerance: Bool
 }
 
+// @CLEANUP: this may just replaced by Position struct
 struct PositionerState {
     var currentOffset: Double
-    var tolerance: Double
-    var moveDuration: Double
+    //var tolerance: Double
+    //var moveDuration: Double
 }
 
 protocol Positioner {
-    func update(state: PositionerState, targetOffset: Double, dt: Double) -> PositionerState
-    func getPosition(state: PositionerState) -> Position
+    // @TODO: should I be passing the entire config struct?
+    func update(state: PositionerState, config: GameConfig, targetOffset: Double, dt: Double) -> (PositionerState, [Event])
+    func getPosition(state: PositionerState, config: GameConfig) -> Position
+    // @TODO: combine update and getPosition (have update return position)
 }
 
 // @TODO: new name for this
 class UserPositioner: Positioner {
-    func update(state: PositionerState, targetOffset: Double, dt: Double) -> PositionerState {
+    func update(state: PositionerState, config: GameConfig, targetOffset: Double, dt: Double) -> (PositionerState, [Event]) {
         let diff = targetOffset - state.currentOffset
-        let step = clamp(dt / state.moveDuration, min: 0.0, max: 1.0)
+        let step = clamp(dt / config.positionerMoveDuration, min: 0.0, max: 1.0)
         let delta = step * diff
         
-        return PositionerState(
-            currentOffset: state.currentOffset + delta,
-            tolerance: state.tolerance,
-            moveDuration: state.moveDuration)
+        let updatedState = PositionerState(currentOffset: state.currentOffset + delta)
+        let events = [Event]() // @TODO: implement position events
+        
+        return (updatedState, events)
     }
     
-    func getPosition(state: PositionerState) -> Position {
+    func getPosition(state: PositionerState, config: GameConfig) -> Position {
         let nearest = round(state.currentOffset)
         let distance = fabs(state.currentOffset - nearest)
-        let within = distance < state.tolerance // @TODO: only allow within if nearest == target
+        let within = distance < config.positionerTolerance // @TODO: only allow within if nearest == target
         
         return Position(lane: Int(nearest),
                         offset: state.currentOffset,

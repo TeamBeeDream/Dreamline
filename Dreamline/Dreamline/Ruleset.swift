@@ -16,8 +16,8 @@ struct Ruleset {
 class RulesetFactory {
     static func getDefault() -> Ruleset {
         return Ruleset(
-            speedIncreaseMultiplier: 1.1,
-            speedDecreaseMultiplier: 0.8)
+            speedIncreaseMultiplier: 1.0,
+            speedDecreaseMultiplier: 1.0)
     }
 }
 

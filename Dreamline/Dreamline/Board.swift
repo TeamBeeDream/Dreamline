@@ -9,9 +9,11 @@
 import Foundation
 import UIKit
 
+// @RENAME: this is more than just the type, it IS the data
 enum TriggerType {
     case barrier(Barrier)
     case modifier(ModifierRow)
+    case empty // not sure if this is a good idea
 }
 
 // @RENAME: this is close
@@ -43,6 +45,7 @@ struct Barrier {
 enum ModifierType {
     case speedUp
     case speedDown
+    case none // this is a little weird
 }
 
 struct ModifierRow {
@@ -158,10 +161,10 @@ class DefaultBoard: Board {
         if distance > config.boardDistanceBetweenTriggers {
             distance = 0.0 // @HACK: this is used later in this function, very fragile
             updatedTotalTriggerCount += 1
-            let barrier = Barrier(pattern: sequencer.getNextPattern().data, status: .idle)
+            let triggerType = sequencer.getNextTrigger()
             let newTrigger = Trigger(id: updatedTotalTriggerCount,
                                      position: layout.spawnPosition,
-                                     type: .barrier(barrier)) // @HARDCODED
+                                     type: triggerType)
             updatedTriggers_Added.append(newTrigger)
             raisedEvents.append(.triggerAdded(newTrigger))
         }

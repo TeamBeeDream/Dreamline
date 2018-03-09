@@ -29,13 +29,17 @@ class DebugRenderer: SKNode, GameRenderer {
     // smooth animation so it feels soft.
     
     var playerNode: SKNode
-    var barrierCache: [Int: BarrierNode]
+    var triggerCache: [Int: TriggerType]
+    var emptyNodeCache: [Int: EmptyNode]
+    var barrierNodeCache: [Int: BarrierNode]
     var cachedFrame: CGRect
     
     // @CLEANUP: this is ugly
     init(frame: CGRect) {
         self.cachedFrame = frame
-        self.barrierCache = [Int: BarrierNode]()
+        self.triggerCache = [Int: TriggerType]()
+        self.barrierNodeCache = [Int: BarrierNode]()
+        self.emptyNodeCache = [Int: EmptyNode]()
         let radius = CGFloat(0.2) * (320.0) / 4.0 // @HARDCODED
         let playerGraphic = SKShapeNode(circleOfRadius: radius)
         playerGraphic.lineWidth = 0
@@ -61,10 +65,6 @@ class DebugRenderer: SKNode, GameRenderer {
         // 1. loop through event queue
         for event in events {
             switch (event) {
-            //case .barrierAdded(let barrier):
-            //    self.cacheBarrier(barrier, layout: state.boardLayout)
-            //case .barrierDestroyed(let barrierId):
-            //    self.deleteBarrier(barrierId)
             case .triggerAdded(let trigger):
                 self.cacheTrigger(trigger, layout: state.boardLayout)
             case .triggerDestroyed(let triggerId):
@@ -81,8 +81,11 @@ class DebugRenderer: SKNode, GameRenderer {
         for trigger in state.boardState.triggers {
             switch (trigger.type) {
             case .barrier(_):
-                let barrierNode = self.barrierCache[trigger.id]!
+                let barrierNode = self.barrierNodeCache[trigger.id]!
                 barrierNode.position.y = point(x: 0.0, y: trigger.position).y
+            case .empty:
+                let emptyNode = self.emptyNodeCache[trigger.id]!
+                emptyNode.position.y = point(x: 0.0, y: trigger.position).y
             default:
                 break // @TODO: support updating of all trigger types
             }
@@ -100,21 +103,43 @@ class DebugRenderer: SKNode, GameRenderer {
             let node = BarrierNode(layout: layout, width: Double(self.cachedFrame.width))
             node.drawOnce(barrier: barrier)
             addChild(node)
-            self.barrierCache[trigger.id] = node
+            self.barrierNodeCache[trigger.id] = node
+        case .empty:
+            let node = EmptyNode(frameMinX: Double(cachedFrame.minX),
+                                 frameMaxX: Double(cachedFrame.maxX))
+            node.drawOnce()
+            addChild(node)
+            self.emptyNodeCache[trigger.id] = node
         default:
             // @TODO: support all types of triggers
-            print("trigger type:", trigger, "is currently unsupported.")
+            break
+        }
+        
+        self.triggerCache[trigger.id] = trigger.type
+    }
+    
+    // @TODO: make sure memory is ok (garbage collection)
+    // would also be good to pool these objects
+    private func deleteTrigger(_ id: Int) {
+        // @BUG: this is asking for trouble
+        if let triggerType = self.triggerCache[id] {
+            switch (triggerType) {
+            case .barrier(_):
+                let node = self.barrierNodeCache[id]!
+                node.removeFromParent()
+                self.barrierNodeCache[id] = nil
+            case .empty:
+                let node = self.emptyNodeCache[id]!
+                node.removeFromParent()
+                self.emptyNodeCache[id] = nil
+            default: break
+            }
         }
     }
     
-    private func deleteTrigger(_ id: Int) {
-        let node = self.barrierCache[id]!
-        node.removeFromParent()
-        self.barrierCache[id] = nil
-    }
-    
+    // @TODO: move this to BarrierNode clase
     private func passBarrier(_ barrierId: Int) {
-        let node = self.barrierCache[barrierId]!
+        let node = self.barrierNodeCache[barrierId]!
         node.run(SKAction.sequence([
             SKAction.run { node.makeColor(.white) },
             SKAction.wait(forDuration: 0.05),
@@ -123,7 +148,7 @@ class DebugRenderer: SKNode, GameRenderer {
     }
     
     private func hitBarrier(_ barrierId: Int) {
-        let node = self.barrierCache[barrierId]!
+        let node = self.barrierNodeCache[barrierId]!
         node.run(SKAction.sequence([
             SKAction.run { node.makeColor(.white) },
             SKAction.wait(forDuration: 0.05),

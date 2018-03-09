@@ -19,13 +19,33 @@ struct Pattern {
 }
 
 protocol Sequencer {
-    func getNextPattern() -> Pattern
+    //func getNextPattern() -> Pattern
+    func getNextTrigger() -> TriggerType
     func isDone() -> Bool
 }
 
 class RandomSequencer: Sequencer {
+
+    func getNextTrigger() -> TriggerType {
+        let random = Double.random()
+        
+        if random < 0.4 {
+            return .empty
+        } else if random < 0.7 {
+            return .barrier(self.generateRandomBarrier())
+        } else {
+            return .modifier(self.generateRandomModifierRow())
+        }
+    }
+
+    func generateRandomModifierRow() -> ModifierRow {
+        let randomIndex = Int.random(min: 0, max: 2)
+        var modifiers = [ModifierType](repeating: .none, count: 3)
+        modifiers[randomIndex] = Double.random() < 0.5 ? .speedUp : .speedDown
+        return ModifierRow(pattern: modifiers)
+    }
     
-    func getNextPattern() -> Pattern {
+    func generateRandomBarrier() -> Barrier {
         var gates = [Gate]()
         var allClosed = true
         var allOpen = true
@@ -41,9 +61,9 @@ class RandomSequencer: Sequencer {
             else { gates.append(gate) }
         }
         
-        return Pattern(data: gates)
+        return Barrier(pattern: gates, status: .idle)
     }
-    
+ 
     func isDone() -> Bool {
         return false // @HARDCODED: random sequencer will never run out of patterns
     }

@@ -77,6 +77,7 @@ class BarrierNode: SKNode {
             }
         }
         
+        //return barrierGraphic
         self.graphic = barrierGraphic
         addChild(self.graphic!)
     }

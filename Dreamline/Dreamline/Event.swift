@@ -14,8 +14,11 @@ import Foundation
 enum Event {
     case triggerAdded(Trigger)
     case triggerDestroyed(Int)
+    
     case barrierPass(Int)
     case barrierHit(Int)
+    
+    case modifierGet(Int)
     
     case enteredLane(Lane)
     case exitedLane(Lane)

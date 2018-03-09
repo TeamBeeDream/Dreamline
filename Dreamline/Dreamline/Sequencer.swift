@@ -61,7 +61,7 @@ class RandomSequencer: Sequencer {
             else { gates.append(gate) }
         }
         
-        return Barrier(pattern: gates, status: .idle)
+        return Barrier(pattern: gates)
     }
  
     func isDone() -> Bool {

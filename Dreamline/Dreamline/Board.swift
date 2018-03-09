@@ -22,24 +22,27 @@ enum TriggerType {
 struct Trigger {
     let id: Int
     var position: Double
+    var status: TriggerStatus
     var type: TriggerType
 }
 
 extension Trigger {
     func clone() -> Trigger {
-        return Trigger(id: self.id, position: self.position, type: self.type)
+        return Trigger(id: self.id,
+                       position: self.position,
+                       status: self.status,
+                       type: self.type)
     }
 }
 
-enum BarrierStatus {
+enum TriggerStatus {
     case idle // @RENAME
     case pass
     case hit
 }
 
 struct Barrier {
-    let pattern: [Gate]
-    var status: BarrierStatus
+    let pattern: [Gate] // only this left, huh
 }
 
 enum ModifierType {
@@ -54,7 +57,7 @@ struct ModifierRow {
 
 extension Barrier {
     func clone() -> Barrier {
-        return Barrier(pattern: self.pattern, status: self.status)
+        return Barrier(pattern: self.pattern)
     }
 }
 
@@ -164,6 +167,7 @@ class DefaultBoard: Board {
             let triggerType = sequencer.getNextTrigger()
             let newTrigger = Trigger(id: updatedTotalTriggerCount,
                                      position: layout.spawnPosition,
+                                     status: .idle,
                                      type: triggerType)
             updatedTriggers_Added.append(newTrigger)
             raisedEvents.append(.triggerAdded(newTrigger))
@@ -197,13 +201,29 @@ class DefaultBoard: Board {
                     raisedEvents.append(.barrierPass(trigger.id))
                 }
                 
-                var updatedBarrier = barrier.clone()
-                updatedBarrier.status = .hit
+                updatedTrigger.status = updatedStatus
                 
-                updatedTrigger.type = .barrier(updatedBarrier) // this is a little weird
+            case .modifier(let row):
+                
+                let updatedStatus = modifierDidCollide(row: row,
+                                                       position: trigger.position,
+                                                       step: step,
+                                                       layout: layout,
+                                                       positioner: positioner,
+                                                       originalPosition: originalPosition,
+                                                       updatedPosition: updatedPosition,
+                                                       config: config) // too many
+                
+                switch (updatedStatus) {
+                case .hit:
+                    raisedEvents.append(.modifierGet(trigger.id))
+                default:
+                    break
+                }
+                
+                updatedTrigger.status = updatedStatus
                 
             default:
-                // @TODO: support collision for other types
                 break
             }
             
@@ -233,7 +253,7 @@ class DefaultBoard: Board {
                                       originalPosition: Position,
                                       updatedPosition: Position,
                                       positioner: Positioner,
-                                      config: GameConfig) -> BarrierStatus {
+                                      config: GameConfig) -> TriggerStatus {
         let barrierY0 = position - step
         let barrierY1 = position
         
@@ -277,5 +297,43 @@ class DefaultBoard: Board {
         // didHit is not a good name
         if !didHit { return .pass }
         else { return .hit }
+    }
+    
+    private func modifierDidCollide(row: ModifierRow,
+                                    position: Double,
+                                    step: Double,
+                                    layout: BoardLayout,
+                                    positioner: Positioner,
+                                    originalPosition: Position,
+                                    updatedPosition: Position,
+                                    config: GameConfig) -> TriggerStatus {
+        let barrierY0 = position - step
+        let barrierY1 = position
+        
+        // determine if player crossed barrier
+        let crossed = barrierY0 < layout.playerPosition && barrierY1 > layout.playerPosition
+        if !crossed { // didn't collide
+            return .idle // no change
+        }
+        
+        // calculate pass through
+        let relOriginY = layout.playerPosition - barrierY0
+        let t = relOriginY / step
+        let xPos = lerp(t, min: originalPosition.offset, max: updatedPosition.offset)
+        
+        // sample barrier at xPos
+        let pState = PositionerState(currentOffset: xPos) // this is silly
+        let dPos = positioner.getPosition(state: pState, config: config)
+        
+        let withinTolerance = dPos.withinTolerance
+        let nearest = dPos.lane + 1
+        
+        let hit = row.pattern[nearest]
+        
+        if hit == .none {
+            return .pass
+        } else {
+            return withinTolerance ? .hit : .pass
+        }
     }
 }

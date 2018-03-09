@@ -167,6 +167,45 @@ class DefaultBoard: Board {
         }
         
         // @TODO: step: handle collision and raise events
+        // @CLEANUP: the nested switches are hard to read
+        var updatedTriggers_Collision = [Trigger]()
+        for trigger in updatedTriggers_Moved { // this is post-move
+            
+            var updatedTrigger = trigger.clone()
+            
+            switch (trigger.type) {
+            case .barrier(let barrier):
+                
+                let updatedStatus = barrierCollisionTest(barrier: barrier,
+                                        position: trigger.position,
+                                        step: step,
+                                        layout: layout,
+                                        originalPosition: originalPosition,
+                                        updatedPosition: updatedPosition,
+                                        positioner: positioner,
+                                        config: config)
+                
+                switch (updatedStatus) {
+                case .idle:
+                    break
+                case .hit:
+                    raisedEvents.append(.barrierHit(trigger.id))
+                case .pass:
+                    raisedEvents.append(.barrierPass(trigger.id))
+                }
+                
+                var updatedBarrier = barrier.clone()
+                updatedBarrier.status = .hit
+                
+                updatedTrigger.type = .barrier(updatedBarrier) // this is a little weird
+                
+            default:
+                // @TODO: support collision for other types
+                break
+            }
+            
+            updatedTriggers_Collision.append(updatedTrigger)
+        }
         
         // composite updated state
         var updatedTriggers = [Trigger]()
@@ -182,115 +221,58 @@ class DefaultBoard: Board {
         return (updatedState, raisedEvents)
     }
     
-    // @CLEANUP: remove this when collision is reimplemented
-    // this is just here for reference
-    /*
-    func update(state: BoardState,
-                config: GameConfig,
-                layout: BoardLayout,
-                sequencer: Sequencer,
-                positioner: Positioner,
-                originalPosition: Position,
-                updatedPosition: Position,
-                dt: Double) -> (BoardState, [Event]) {
+    // @CLEANUP: reduce number of params
+    // @CLEANUP: also, this function is kinda ugly
+    private func barrierCollisionTest(barrier: Barrier,
+                                      position: Double,
+                                      step: Double,
+                                      layout: BoardLayout,
+                                      originalPosition: Position,
+                                      updatedPosition: Position,
+                                      positioner: Positioner,
+                                      config: GameConfig) -> BarrierStatus {
+        let barrierY0 = position - step
+        let barrierY1 = position
         
-        let step = dt * config.boardScrollSpeed
-        var events = [Event]()
-        var newBarrierCount = state.barrierCount
-        
-        // MOVE ALL BARRIERS, DESTROY INVALID ONES
-        var remainingBarriers = [Barrier]()
-        for barrier in state.barriers {
-            let newPosition = barrier.position + step
-            if newPosition > layout.destroyPosition {
-                events.append(.barrierDestroyed(barrier.id))
-                continue
-            }
-            
-            var newBarrier = barrier.clone()
-            newBarrier.position = newPosition
-            remainingBarriers.append(newBarrier)
+        // determine if player crossed barrier
+        let crossed = barrierY0 < layout.playerPosition && barrierY1 > layout.playerPosition
+        if !crossed { // didn't collide
+            return .idle // no change
         }
         
-        // ADD NEW BARRIER IF NECESSARY
-        // @FIXME: make sure new barrier is positioned correctly
-        var distance = state.distanceSinceLastBarrier + step
-        if distance > state.distanceBetweenBarriers {
-            distance = 0.0 // @HACK
-            newBarrierCount += 1
-            let newBarrier = Barrier(
-                id: newBarrierCount,
-                pattern: sequencer.getNextPattern(),
-                position: layout.spawnPosition,
-                status: .idle)
-            remainingBarriers.append(newBarrier) // @CLEANUP
-            events.append(.barrierAdded(newBarrier))
-        }
+        // calculate pass through
+        let relOriginY = layout.playerPosition - barrierY0
+        let t = relOriginY / step
+        let xPos = lerp(t, min: originalPosition.offset, max: updatedPosition.offset)
         
-        // COLLISION
-        // @CLEANUP: this is so hard to understand
-        var updatedBarriers = [Barrier]()
-        for barrier in remainingBarriers {
-            
-            let barrierY0 = barrier.position - step
-            let barrierY1 = barrier.position
-            
-            // determine if player crossed barrier
-            let crossed = barrierY0 < layout.playerPosition && barrierY1 > layout.playerPosition
-            if !crossed { // didn't collide
-                updatedBarriers.append(barrier.clone()) // this is weird
-                continue
-            }
-            
-            // calculate pass through
-            let relOriginY = layout.playerPosition - barrierY0
-            let t = relOriginY / step
-            let xPos = lerp(t, min: originalPosition.offset, max: updatedPosition.offset)
-            
-            // sample barrier at xPos
-            let pState = PositionerState(currentOffset: xPos) // this is silly
-            let dPos = positioner.getPosition(state: pState, config: config)
-            
-            let crossedLanes = originalPosition.lane != updatedPosition.lane
-            let withinTolerance = dPos.withinTolerance
-            let nearest = dPos.lane + 1
-            
-            var newBarrier = barrier.clone()
-            var didHit = false
-            
-            if crossedLanes {
-                // check if both lanes are open
-                let open0 = barrier.pattern.data[originalPosition.lane + 1] == .open
-                let open1 = barrier.pattern.data[updatedPosition.lane + 1] == .open
-                if open0 && open1 {
-                    // no need to check tolerance
-                    didHit = barrier.pattern.data[nearest] != .open
-                } else {
-                    // include tolerance
-                    didHit = barrier.pattern.data[nearest] != .open && withinTolerance
-                }
+        // sample barrier at xPos
+        let pState = PositionerState(currentOffset: xPos) // this is silly
+        let dPos = positioner.getPosition(state: pState, config: config)
+        
+        let crossedLanes = originalPosition.lane != updatedPosition.lane
+        let withinTolerance = dPos.withinTolerance
+        let nearest = dPos.lane + 1
+        
+        var didHit = false
+        
+        if crossedLanes {
+            // check if both lanes are open
+            let open0 = barrier.pattern[originalPosition.lane + 1] == .open
+            let open1 = barrier.pattern[updatedPosition.lane + 1] == .open
+            if open0 && open1 {
+                // no need to check tolerance
+                didHit = barrier.pattern[nearest] != .open
             } else {
-                // simple check
-                didHit = barrier.pattern.data[nearest] != .open
+                // include tolerance
+                didHit = barrier.pattern[nearest] != .open && withinTolerance
             }
-            
-            
-            if !didHit {
-                newBarrier.status = .pass
-                events.append(.barrierPass(newBarrier.id))
-            } else {
-                newBarrier.status = .hit
-                events.append(.barrierHit(newBarrier.id))
-            }
-            updatedBarriers.append(newBarrier)
+        } else {
+            // simple check
+            didHit = barrier.pattern[nearest] != .open
         }
         
-        var updatedState = state.clone()
-        updatedState.barriers = updatedBarriers
-        updatedState.barrierCount = newBarrierCount
-        updatedState.totalDistance = state.totalDistance + step
-        updatedState.distanceSinceLastBarrier = distance
-        return (updatedState, events)
+        // didHit is not a good name
+        if !didHit { return .pass }
+        else { return .hit }
     }
- */
 }

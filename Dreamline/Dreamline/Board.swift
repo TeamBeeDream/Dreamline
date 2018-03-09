@@ -9,6 +9,26 @@
 import Foundation
 import UIKit
 
+enum TriggerType {
+    case barrier(Barrier)
+    case modifier(ModifierRow)
+}
+
+// @RENAME: this is close
+// name needs to imply that it's a line that you cross
+// and when you cross it, it changes something about the state
+struct Trigger {
+    let id: Int
+    var position: Double
+    var type: TriggerType
+}
+
+extension Trigger {
+    func clone() -> Trigger {
+        return Trigger(id: self.id, position: self.position, type: self.type)
+    }
+}
+
 enum BarrierStatus {
     case idle // @RENAME
     case pass
@@ -16,18 +36,22 @@ enum BarrierStatus {
 }
 
 struct Barrier {
-    let id: Int
-    let pattern: Pattern
-    var position: Double
+    let pattern: [Gate]
     var status: BarrierStatus
+}
+
+enum ModifierType {
+    case speedUp
+    case speedDown
+}
+
+struct ModifierRow {
+    let pattern: [ModifierType]
 }
 
 extension Barrier {
     func clone() -> Barrier {
-        return Barrier(id: self.id,
-                       pattern: self.pattern,
-                       position: self.position,
-                       status: self.status)
+        return Barrier(pattern: self.pattern, status: self.status)
     }
 }
 
@@ -39,41 +63,37 @@ struct BoardLayout {
 }
 
 struct BoardState {
-    var barriers: [Barrier]
+    var triggers: [Trigger]
     var totalDistance: Double
-    var distanceSinceLastBarrier: Double
-    var distanceBetweenBarriers: Double // @TODO: might make this a config
-    var barrierCount: Int
+    var distanceSinceLastTrigger: Double
+    var totalTriggerCount: Int // @CLEANUP: this is used for assigning unique int ids
     
-    init(distanceBetweenBarriers: Double) {
-        self.barriers = [Barrier]()
+    init() {
+        self.triggers = [Trigger]()
         self.totalDistance = 0.0
-        self.distanceBetweenBarriers = distanceBetweenBarriers
-        self.distanceSinceLastBarrier = 0.0
-        self.barrierCount = 0
+        self.distanceSinceLastTrigger = 0.0
+        self.totalTriggerCount = 0
     }
 }
 
 // @CLEANUP, should probably use factory method
 extension BoardState {
-    private init(barriers: [Barrier],
+    private init(triggers: [Trigger],
                  totalDistance: Double,
-                 distanceSinceLastBarrier: Double,
-                 distanceBetweenBarriers: Double,
-                 barrierCount: Int) {
-        self.barriers = barriers
+                 totalTriggerCount: Int,
+                 distanceSinceLastTrigger: Double) {
+        
+        self.triggers = triggers
         self.totalDistance = totalDistance
-        self.distanceSinceLastBarrier = distanceSinceLastBarrier
-        self.distanceBetweenBarriers = distanceBetweenBarriers
-        self.barrierCount = barrierCount
+        self.totalTriggerCount = totalTriggerCount
+        self.distanceSinceLastTrigger = distanceSinceLastTrigger
     }
     
     func clone() -> BoardState {
-        return BoardState(barriers: self.barriers,
+        return BoardState(triggers: self.triggers,
                           totalDistance: self.totalDistance,
-                          distanceSinceLastBarrier: self.distanceSinceLastBarrier,
-                          distanceBetweenBarriers: self.distanceBetweenBarriers,
-                          barrierCount: self.barrierCount)
+                          totalTriggerCount: self.totalTriggerCount,
+                          distanceSinceLastTrigger: self.distanceSinceLastTrigger)
     }
 }
 
@@ -96,7 +116,75 @@ protocol Board {
 // - handles collisions
 class DefaultBoard: Board {
     
-    // @CLEANUP: this method needs another pass for clarity
+    func update(state: BoardState,
+                config: GameConfig,
+                layout: BoardLayout,
+                sequencer: Sequencer,
+                positioner: Positioner,
+                originalPosition: Position,
+                updatedPosition: Position,
+                dt: Double) -> (BoardState, [Event]) {
+        
+        // constants
+        let step = dt * config.boardScrollSpeed
+        
+        // updated information @CLEANUP
+        var raisedEvents = [Event]()
+        var updatedTotalTriggerCount = state.totalTriggerCount
+        
+        // step: move all triggers
+        // @TODO: can probably move this into a private func
+        var updatedTriggers_Moved = [Trigger]()
+        for trigger in state.triggers {
+            let updatedPosition = trigger.position + step
+            if updatedPosition > layout.destroyPosition {
+                // if below the cutoff, exclude from the updated list
+                // and raise a 'destroyed' event
+                raisedEvents.append(.triggerDestroyed(trigger.id))
+                continue
+            } else {
+                // if still active, update position
+                // and add to updated list
+                var updatedTrigger = trigger.clone()
+                updatedTrigger.position = updatedPosition
+                updatedTriggers_Moved.append(updatedTrigger)
+            }
+        }
+        
+        // step: add new trigger if necessary
+        // @TODO: make this deterministic
+        var updatedTriggers_Added = [Trigger]()
+        var distance = state.distanceSinceLastTrigger + step
+        if distance > config.boardDistanceBetweenTriggers {
+            distance = 0.0 // @HACK: this is used later in this function, very fragile
+            updatedTotalTriggerCount += 1
+            let barrier = Barrier(pattern: sequencer.getNextPattern().data, status: .idle)
+            let newTrigger = Trigger(id: updatedTotalTriggerCount,
+                                     position: layout.spawnPosition,
+                                     type: .barrier(barrier)) // @HARDCODED
+            updatedTriggers_Added.append(newTrigger)
+            raisedEvents.append(.triggerAdded(newTrigger))
+        }
+        
+        // @TODO: step: handle collision and raise events
+        
+        // composite updated state
+        var updatedTriggers = [Trigger]()
+        updatedTriggers.append(contentsOf: updatedTriggers_Moved)
+        updatedTriggers.append(contentsOf: updatedTriggers_Added)
+        
+        var updatedState = state.clone() // memory inefficient
+        updatedState.triggers = updatedTriggers
+        updatedState.totalTriggerCount = updatedTotalTriggerCount
+        updatedState.distanceSinceLastTrigger = distance // @CLEANUP
+        updatedState.totalDistance = state.totalDistance + step
+        
+        return (updatedState, raisedEvents)
+    }
+    
+    // @CLEANUP: remove this when collision is reimplemented
+    // this is just here for reference
+    /*
     func update(state: BoardState,
                 config: GameConfig,
                 layout: BoardLayout,
@@ -204,4 +292,5 @@ class DefaultBoard: Board {
         updatedState.distanceSinceLastBarrier = distance
         return (updatedState, events)
     }
+ */
 }

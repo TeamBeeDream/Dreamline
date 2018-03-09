@@ -12,8 +12,8 @@ import Foundation
 // a dynamic delegate system, i'd rather it just be a piece of data
 // maybe 'update'?  'message'?
 enum Event {
-    case barrierAdded(Barrier)
-    case barrierDestroyed(Int) // id of barrier
+    case triggerAdded(Trigger)
+    case triggerDestroyed(Int)
     case barrierPass(Int)
     case barrierHit(Int)
     

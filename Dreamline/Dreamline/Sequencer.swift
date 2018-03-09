@@ -13,6 +13,7 @@ enum Gate {
     case closed
 }
 
+// @REMOVE: this only works with barriers, no longer generic enough
 struct Pattern {
     let data: [Gate]
 }

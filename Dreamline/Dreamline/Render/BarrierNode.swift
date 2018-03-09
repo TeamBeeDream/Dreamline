@@ -43,7 +43,7 @@ class BarrierNode: SKNode {
         let wallColor = self.wallColor(barrier.status)
         let gateColor = self.gateColor(barrier.status)
         
-        let data = self.barrierDataToBoolArray(data: barrier.pattern.data)
+        let data = self.barrierDataToBoolArray(data: barrier.pattern)
         for i in 1...4 {
             let prev = data[i-1]
             let curr = data[i]
@@ -77,7 +77,6 @@ class BarrierNode: SKNode {
             }
         }
         
-        //return barrierGraphic
         self.graphic = barrierGraphic
         addChild(self.graphic!)
     }

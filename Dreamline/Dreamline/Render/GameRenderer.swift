@@ -61,22 +61,31 @@ class DebugRenderer: SKNode, GameRenderer {
         // 1. loop through event queue
         for event in events {
             switch (event) {
-            case .barrierAdded(let barrier):
-                self.cacheBarrier(barrier, layout: state.boardLayout)
-            case .barrierDestroyed(let barrierId):
-                self.deleteBarrier(barrierId)
-            case .barrierPass(let id):
-                self.passBarrier(id)
-            case .barrierHit(let id):
-                self.hitBarrier(id)
+            //case .barrierAdded(let barrier):
+            //    self.cacheBarrier(barrier, layout: state.boardLayout)
+            //case .barrierDestroyed(let barrierId):
+            //    self.deleteBarrier(barrierId)
+            case .triggerAdded(let trigger):
+                self.cacheTrigger(trigger, layout: state.boardLayout)
+            case .triggerDestroyed(let triggerId):
+                self.deleteTrigger(triggerId)
+            case .barrierPass(let triggerId):
+                self.passBarrier(triggerId)
+            case .barrierHit(let triggerId):
+                self.hitBarrier(triggerId)
             default: break
             }
         }
         
         // 2. update all barriers
-        for barrierData in state.boardState.barriers {
-            let barrierNode = self.barrierCache[barrierData.id]!
-            barrierNode.position.y = point(x: 0.0, y: barrierData.position).y
+        for trigger in state.boardState.triggers {
+            switch (trigger.type) {
+            case .barrier(_):
+                let barrierNode = self.barrierCache[trigger.id]!
+                barrierNode.position.y = point(x: 0.0, y: trigger.position).y
+            default:
+                break // @TODO: support updating of all trigger types
+            }
         }
         
         // 3. update player
@@ -85,14 +94,20 @@ class DebugRenderer: SKNode, GameRenderer {
         self.playerNode.position = point(x: offset, y: state.boardLayout.playerPosition)
     }
     
-    private func cacheBarrier(_ barrier: Barrier, layout: BoardLayout) {
-        let node = BarrierNode(layout: layout, width: Double(self.cachedFrame.width))
-        node.drawOnce(barrier: barrier)
-        addChild(node)
-        self.barrierCache[barrier.id] = node
+    private func cacheTrigger(_ trigger: Trigger, layout: BoardLayout) {
+        switch (trigger.type) {
+        case .barrier(let barrier):
+            let node = BarrierNode(layout: layout, width: Double(self.cachedFrame.width))
+            node.drawOnce(barrier: barrier)
+            addChild(node)
+            self.barrierCache[trigger.id] = node
+        default:
+            // @TODO: support all types of triggers
+            print("trigger type:", trigger, "is currently unsupported.")
+        }
     }
     
-    private func deleteBarrier(_ id: Int) {
+    private func deleteTrigger(_ id: Int) {
         let node = self.barrierCache[id]!
         node.removeFromParent()
         self.barrierCache[id] = nil

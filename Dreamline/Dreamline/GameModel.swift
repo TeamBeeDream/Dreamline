@@ -46,8 +46,7 @@ extension ModelState {
                 currentOffset: 0.0),
             targetOffset: 0.0,
             board: DefaultBoard(),
-            boardState: BoardState(
-                distanceBetweenBarriers: 0.7),
+            boardState: BoardState(),
             boardLayout: BoardLayout(
                 spawnPosition: -1.1,
                 destroyPosition: 1.1,

@@ -14,6 +14,7 @@ struct GameConfig {
     var positionerMoveDuration: Double
     
     var boardScrollSpeed: Double // @TODO: min and max speed
+    var boardDistanceBetweenTriggers: Double
 }
 
 extension GameConfig {
@@ -21,7 +22,8 @@ extension GameConfig {
         return GameConfig(
             positionerTolerance: self.positionerTolerance,
             positionerMoveDuration: self.positionerMoveDuration,
-            boardScrollSpeed: self.boardScrollSpeed)
+            boardScrollSpeed: self.boardScrollSpeed,
+            boardDistanceBetweenTriggers: self.boardDistanceBetweenTriggers)
     }
 }
 
@@ -30,6 +32,7 @@ class GameConfigFactory {
         return GameConfig(
             positionerTolerance: 0.2,
             positionerMoveDuration: 0.1,
-            boardScrollSpeed: 1.0)
+            boardScrollSpeed: 1.0,
+            boardDistanceBetweenTriggers: 0.7)
     }
 }

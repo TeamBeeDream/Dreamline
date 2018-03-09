@@ -30,7 +30,7 @@ class BarrierNode: SKNode {
     
     // @TODO: move to separate class (in graphics folder)
     // @RENAME
-    func drawOnce(barrier: Barrier) {
+    func drawOnce(barrier: Barrier, status: TriggerStatus) {
         // @CLEANUP, this code is hard to understand
         let occupied = 1.0 - self.layout.laneOffset * 2
         let margin = (self.boardWidth * occupied) / 2.0
@@ -40,10 +40,10 @@ class BarrierNode: SKNode {
         let wallY: Double = 0
         
         let barrierGraphic = SKNode()
-        let wallColor = self.wallColor(barrier.status)
-        let gateColor = self.gateColor(barrier.status)
+        let wallColor = self.wallColor(status)
+        let gateColor = self.gateColor(status)
         
-        let data = self.barrierDataToBoolArray(data: barrier.pattern.data)
+        let data = self.barrierDataToBoolArray(data: barrier.pattern)
         for i in 1...4 {
             let prev = data[i-1]
             let curr = data[i]
@@ -107,7 +107,7 @@ class BarrierNode: SKNode {
         return SKAction.fadeAlpha(to: 0.0, duration: 0.4)
     }
     
-    private func wallColor(_ status: BarrierStatus) -> SKColor {
+    private func wallColor(_ status: TriggerStatus) -> SKColor {
         switch (status) {
         case .idle:
             return SKColor.magenta
@@ -118,7 +118,7 @@ class BarrierNode: SKNode {
         }
     }
     
-    private func gateColor(_ status: BarrierStatus) -> SKColor {
+    private func gateColor(_ status: TriggerStatus) -> SKColor {
         switch (status) {
         case .idle:
             return SKColor.cyan

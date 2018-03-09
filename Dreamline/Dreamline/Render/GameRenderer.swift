@@ -29,19 +29,12 @@ class DebugRenderer: SKNode, GameRenderer {
     // smooth animation so it feels soft.
     
     var playerNode: SKNode
-    var triggerCache: [Int: TriggerType]
-    var emptyNodeCache: [Int: EmptyNode]
-    var barrierNodeCache: [Int: BarrierNode]
-    var modifierNodeCache: [Int: ModifierNode]
-    var cachedFrame: CGRect
+    var cachedNodes = GenericNodeCache()
+    var cachedFrame: CGRect // @FIXME
     
     // @CLEANUP: this is ugly
     init(frame: CGRect) {
         self.cachedFrame = frame
-        self.triggerCache = [Int: TriggerType]()
-        self.barrierNodeCache = [Int: BarrierNode]()
-        self.emptyNodeCache = [Int: EmptyNode]()
-        self.modifierNodeCache = [Int: ModifierNode]()
         let radius = CGFloat(0.2) * (320.0) / 4.0 // @HARDCODED
         let playerGraphic = SKShapeNode(circleOfRadius: radius)
         playerGraphic.lineWidth = 0
@@ -49,6 +42,7 @@ class DebugRenderer: SKNode, GameRenderer {
         self.playerNode = playerGraphic
         super.init() // this is super awkward
         self.awake()
+        self.addChild(self.cachedNodes)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -56,7 +50,7 @@ class DebugRenderer: SKNode, GameRenderer {
     }
     
     private func awake() {
-        self.playerNode.position = self.point(x: -9999.9, y: -9999.9) // haha
+        self.playerNode.position = self.point(x: -9999.9, y: -9999.9) // haha, gross
         addChild(self.playerNode)
     }
     
@@ -71,29 +65,14 @@ class DebugRenderer: SKNode, GameRenderer {
                 self.cacheTrigger(trigger, layout: state.boardLayout)
             case .triggerDestroyed(let triggerId):
                 self.deleteTrigger(triggerId)
-            case .barrierPass(let triggerId):
-                self.passBarrier(triggerId)
-            case .barrierHit(let triggerId):
-                self.hitBarrier(triggerId)
-            case .modifierGet(let triggerId):
-                self.collectModifier(triggerId)
             default: break
             }
         }
         
         // 2. update all barriers
         for trigger in state.boardState.triggers {
-            switch (trigger.type) {
-            case .barrier(_):
-                let barrierNode = self.barrierNodeCache[trigger.id]!
-                barrierNode.position.y = point(x: 0.0, y: trigger.position).y
-            case .empty:
-                let emptyNode = self.emptyNodeCache[trigger.id]!
-                emptyNode.position.y = point(x: 0.0, y: trigger.position).y
-            case .modifier(_):
-                let modifierNode = self.modifierNodeCache[trigger.id]!
-                modifierNode.position.y = point(x: 0.0, y: trigger.position).y
-            }
+            let position = point(x: 0.0, y: trigger.position).y
+            self.cachedNodes.updateNodePosition(triggerId: trigger.id, position: position)
         }
         
         // 3. update player
@@ -107,14 +86,12 @@ class DebugRenderer: SKNode, GameRenderer {
         case .barrier(let barrier):
             let node = BarrierNode(layout: layout, width: Double(self.cachedFrame.width))
             node.drawOnce(barrier: barrier, status: trigger.status)
-            addChild(node)
-            self.barrierNodeCache[trigger.id] = node
+            self.cachedNodes.addNode(node, data: trigger)
         case .empty:
             let node = EmptyNode(frameMinX: Double(cachedFrame.minX),
                                  frameMaxX: Double(cachedFrame.maxX))
             node.drawOnce()
-            addChild(node)
-            self.emptyNodeCache[trigger.id] = node
+            self.cachedNodes.addNode(node, data: trigger)
         case .modifier(let modifierRow):
             let node = ModifierNode()
             var positions = [CGPoint]() // i don't like this
@@ -122,59 +99,14 @@ class DebugRenderer: SKNode, GameRenderer {
             positions.append(point(x: 0.0, y: 0.0))
             positions.append(point(x: layout.laneOffset, y: 0.0))
             node.drawOnce(row: modifierRow, positions: positions)
-            addChild(node)
-            self.modifierNodeCache[trigger.id] = node
+            self.cachedNodes.addNode(node, data: trigger)
         }
-        
-        self.triggerCache[trigger.id] = trigger.type
     }
     
     // @TODO: make sure memory is ok (garbage collection)
     // would also be good to pool these objects
     private func deleteTrigger(_ id: Int) {
-        // @BUG: this is asking for trouble
-        if let triggerType = self.triggerCache[id] {
-            switch (triggerType) {
-            case .barrier(_):
-                let node = self.barrierNodeCache[id]!
-                node.removeFromParent()
-                self.barrierNodeCache[id] = nil
-            case .empty:
-                let node = self.emptyNodeCache[id]!
-                node.removeFromParent()
-                self.emptyNodeCache[id] = nil
-            case .modifier(_):
-                let node = self.modifierNodeCache[id]!
-                node.removeFromParent()
-                self.modifierNodeCache[id] = nil
-            }
-        }
-    }
-    
-    // @TODO: move this to BarrierNode clase
-    private func passBarrier(_ triggerId: Int) {
-        let node = self.barrierNodeCache[triggerId]!
-        node.run(SKAction.sequence([
-            SKAction.run { node.makeColor(.white) },
-            SKAction.wait(forDuration: 0.05),
-            SKAction.run { node.makeColor(.green) },
-            SKAction.fadeAlpha(to: 0.0, duration: 0.3)]))
-    }
-    
-    private func hitBarrier(_ triggerId: Int) {
-        let node = self.barrierNodeCache[triggerId]!
-        node.run(SKAction.sequence([
-            SKAction.run { node.makeColor(.white) },
-            SKAction.wait(forDuration: 0.05),
-            SKAction.run { node.makeColor(.red) },
-            SKAction.fadeAlpha(to: 0.0, duration: 0.5)]))
-    }
-    
-    private func collectModifier(_ triggerId: Int) {
-        let node = self.modifierNodeCache[triggerId]!
-        node.run(SKAction.group([
-            SKAction.scale(by: 2.0, duration: 0.25),
-            SKAction.fadeAlpha(to: 0.0, duration: 0.25)]))
+        self.cachedNodes.deleteNode(triggerId: id)
     }
     
     // @CLEANUP: this method should probably be static somewhere

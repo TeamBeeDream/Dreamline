@@ -27,6 +27,7 @@
 		69BC37582051864F002F7383 /* BarrierNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69BC37572051864F002F7383 /* BarrierNode.swift */; };
 		69EFB59420531150005B3325 /* EmptyNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFB59320531150005B3325 /* EmptyNode.swift */; };
 		69EFB5962053152F005B3325 /* ModifierNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFB5952053152F005B3325 /* ModifierNode.swift */; };
+		69EFB598205329A0005B3325 /* NodeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFB597205329A0005B3325 /* NodeCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		69BC37572051864F002F7383 /* BarrierNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarrierNode.swift; sourceTree = "<group>"; };
 		69EFB59320531150005B3325 /* EmptyNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyNode.swift; sourceTree = "<group>"; };
 		69EFB5952053152F005B3325 /* ModifierNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifierNode.swift; sourceTree = "<group>"; };
+		69EFB597205329A0005B3325 /* NodeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +170,7 @@
 				69BC37572051864F002F7383 /* BarrierNode.swift */,
 				69EFB59320531150005B3325 /* EmptyNode.swift */,
 				69EFB5952053152F005B3325 /* ModifierNode.swift */,
+				69EFB597205329A0005B3325 /* NodeCache.swift */,
 			);
 			path = Render;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */,
 				699FC58A204E09A700DB09B4 /* Positioner.swift in Sources */,
 				6989D7792050330D00E790F0 /* Event.swift in Sources */,
+				69EFB598205329A0005B3325 /* NodeCache.swift in Sources */,
 				69AB5E8E204EF0E200093B33 /* Sequencer.swift in Sources */,
 				699FC58E204E1A8F00DB09B4 /* GameModel.swift in Sources */,
 				69EFB5962053152F005B3325 /* ModifierNode.swift in Sources */,

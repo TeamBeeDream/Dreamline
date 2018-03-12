@@ -34,19 +34,23 @@ protocol ScoreUpdater {
 // @RENAME
 class DefaultScoreUpdater: ScoreUpdater {
     func updateScore(state: Score, config: GameConfig, events: [Event]) -> Score {
-        // iterate through all events and update score
         
         var updatedScore = state.clone()
         
         for event in events {
             switch (event) {
             case .barrierPass(_):
-                // @TODO: use config to determine how many points should be added to score
-                updatedScore.points += 1 // @HARDCODED
+                updatedScore.points += howManyPoints(speed: config.boardScrollSpeed)
             default: break
             }
         }
         
         return updatedScore
+    }
+    
+    // @HARDCODED: converts ScrollSpeed enum to point value
+    // should probably be defined somewhere else
+    private func howManyPoints(speed: ScrollSpeed) -> Int {
+        return ScrollSpeedData.getData()[speed]!.points // hahaha
     }
 }

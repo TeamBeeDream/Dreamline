@@ -18,7 +18,7 @@ enum Event {
     case barrierPass(Int)
     case barrierHit(Int)
     
-    case modifierGet(Int)
+    case modifierGet(Int, ModifierType)
     
     case enteredLane(Lane)
     case exitedLane(Lane)

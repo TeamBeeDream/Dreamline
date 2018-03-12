@@ -48,8 +48,8 @@ class GameViewController: UIViewController {
             self.startScene = StartScene(manager: self, view: view)
             self.startScene!.scaleMode = .aspectFit
             
-            self.gameScene = GameScene(manager: self, view: view)
-            self.gameScene!.scaleMode = .aspectFit
+            //self.gameScene = GameScene(manager: self, view: view)
+            //self.gameScene!.scaleMode = .aspectFit
         } else { assert( false ) }
         
         // move to first view
@@ -92,6 +92,9 @@ extension GameViewController: SceneManager {
     
     func moveToGameScene() {
         if let view = self.view as! SKView? {
+            // temp, completely reset game instance each time
+            self.gameScene = GameScene(manager: self, view: view)
+            
             let transition = SKTransition.doorsOpenVertical(withDuration: 1.0)
             transition.pausesIncomingScene = false
             transition.pausesOutgoingScene = true
@@ -113,7 +116,6 @@ extension GameViewController: SceneManager {
             // method gets called twice.
             
             view.presentScene(scoreScene, transition: transition)
-            print("transition")
         }
     }
 }

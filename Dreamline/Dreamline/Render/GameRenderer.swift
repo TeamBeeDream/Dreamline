@@ -12,14 +12,7 @@ import SpriteKit
 
 protocol GameRenderer {
     func render(state: ModelState, score: Score, config: GameConfig, events: [Event])
-}
-
-// @HACK: i'm using this as a placeholder so i don't have to
-// make an init() func for GameController, which is silly (and will be fixed)
-class DummyRenderer: GameRenderer {
-    func render(state: ModelState, score: Score, config: GameConfig, events: [Event]) {
-        // do nothing
-    }
+    func free()
 }
 
 // TODO: move to own file
@@ -94,6 +87,14 @@ class DebugRenderer: SKNode, GameRenderer {
         
         // 4. update score
         self.scoreText.text = String(score.points)
+    }
+    
+    func free() {
+        // @TODO: clear caches
+        self.cachedNodes.free()
+        
+        self.removeAllActions()
+        self.removeAllChildren()
     }
     
     private func cacheTrigger(_ trigger: Trigger, layout: BoardLayout) {

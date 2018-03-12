@@ -56,6 +56,13 @@ class GameScene: CustomScene {
         self.removeInput(count: self.numInputs) // @TODO: make clearInput() method
     }
     
+    deinit {
+        // @ROBUSTNESS: ensure all memory is freed
+        self.renderer!.free()
+        self.removeAllActions()
+        self.removeAllChildren()
+    }
+    
     override func update(_ currentTime: TimeInterval) {
         var dt = currentTime - self.previousTime
         self.previousTime = currentTime

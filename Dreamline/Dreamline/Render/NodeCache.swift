@@ -15,6 +15,7 @@ protocol NodeCache {
     func addNode(_ node: SKNode, data: Trigger)
     func deleteNode(triggerId: Int)
     func updateNodePosition(triggerId: Int, position: CGFloat)
+    func free()
 }
 
 class GenericNodeCache: SKNode, NodeCache {
@@ -39,5 +40,11 @@ class GenericNodeCache: SKNode, NodeCache {
         
         let node = self.cachedNodes[triggerId]!
         node.position.y = position
+    }
+    
+    func free() {
+        self.removeAllActions()
+        self.removeAllChildren()
+        self.cachedNodes.removeAll()
     }
 }

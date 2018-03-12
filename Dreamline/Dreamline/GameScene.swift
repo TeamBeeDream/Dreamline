@@ -7,20 +7,21 @@
 //
 
 import SpriteKit
-import GameplayKit
 
 // @RENAME: this is the controller
 // this class should be able to take in a set of
 // interfaced objects and just run, so we can
 // reuse this at different parts of the game
 // ex: demo mode, soap testing, etc
-class GameController: SKScene {
+// but since this is tied to CustomScene
+// it may be more difficult than its worth
+class GameScene: CustomScene {
     
     // @TODO: should probably pass these in on construction
     // i.e. manage setting them up at a higher level
     var model: GameModel = DefaultGameModel()
     var rulesetModifier: RulesetModifier = DefaultRulesetModifier()
-    var renderer: GameRenderer = DummyRenderer() // @FIXME: gross
+    var renderer: GameRenderer?
     var scoreUpdater: ScoreUpdater = DefaultScoreUpdater()
     
     var state: ModelState = ModelState.getDefault()
@@ -28,16 +29,38 @@ class GameController: SKScene {
     var config: GameConfig = GameConfigFactory.getDefault()
     var ruleset: Ruleset = RulesetFactory.getDefault()
     
-    // TEMP
+    // private state
     var previousTime: TimeInterval = 0
-    var tmpPlayerNode = SKShapeNode()
-    var barrierNodes = [SKNode]()
-    var fadeCutoff = 0.175
     var numInputs: Int = 0
     
-    override func didMove(to view: SKView) {
-        self.renderer = DebugRenderer(frame: self.frame) // annoying that i have to set this up here
+    override func onInit() {
+        self.renderer = DebugRenderer(frame: self.frame)
         addChild(self.renderer as! SKNode)
+    }
+    
+    override func didMove(to view: SKView) {
+        // this is the "reset" function
+        // called each time the manager
+        // transitions to this scene.
+        
+        // @BUG: should reset the game
+        // or just have the viewcontroller
+        // make a new instance, I'm not sure
+        // what the benefits of either are.
+    }
+    
+    override func willMove(from view: SKView) {
+        // @BUG: input needs to be reset,
+        // when we transition away from this
+        // scene, any remaining touches will need to be cleared
+        self.removeInput(count: self.numInputs) // @TODO: make clearInput() method
+    }
+    
+    deinit {
+        // @ROBUSTNESS: ensure all memory is freed
+        self.renderer!.free()
+        self.removeAllActions()
+        self.removeAllChildren()
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -64,7 +87,18 @@ class GameController: SKScene {
         self.config = updatedConfig // @TODO: should config changes be done here or in the model?
         self.score = updatedScore
         
-        self.renderer.render(state: updatedState, score: self.score, config: config, events: events)
+        // this optional is dangerous :(
+        self.renderer!.render(state: state, score: score, config: config, events: events)
+        
+        // scene stuff
+        // @TODO: move this to own function or something
+        for event in events {
+            switch (event) {
+            case .barrierHit(_):
+                self.manager.moveToScoreScene(score: self.score.points)
+            default: break
+            }
+        }
     }
 }
 
@@ -72,7 +106,7 @@ class GameController: SKScene {
 // input should probably be its own class,
 // need to figure out how to properly update it
 // for now, this input is hardcoded here
-extension GameController {
+extension GameScene {
     private func addInput(_ lane: Int) {
         state.targetOffset = Double(lane)
         self.numInputs += 1

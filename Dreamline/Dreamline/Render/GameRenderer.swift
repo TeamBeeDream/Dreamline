@@ -12,21 +12,11 @@ import SpriteKit
 
 protocol GameRenderer {
     func render(state: ModelState, score: Score, config: GameConfig, events: [Event])
-}
-
-// @HACK: i'm using this as a placeholder so i don't have to
-// make an init() func for GameController, which is silly (and will be fixed)
-class DummyRenderer: GameRenderer {
-    func render(state: ModelState, score: Score, config: GameConfig, events: [Event]) {
-        // do nothing
-    }
+    func free()
 }
 
 // TODO: move to own file
 class DebugRenderer: SKNode, GameRenderer {
-    // @NOTE: I think Xcode has smoothing on all
-    // of its UI, or everything has artificially
-    // smooth animation so it feels soft.
     
     var playerNode: SKNode
     var cachedNodes = GenericNodeCache()
@@ -48,7 +38,6 @@ class DebugRenderer: SKNode, GameRenderer {
         self.scoreText.color = SKColor.white
         
         super.init() // this is super awkward
-        
         
         self.awake()
         self.addChild(self.cachedNodes)
@@ -94,6 +83,13 @@ class DebugRenderer: SKNode, GameRenderer {
         self.scoreText.text = String(score.points)
     }
     
+    func free() {
+        self.cachedNodes.free()
+        
+        self.removeAllActions()
+        self.removeAllChildren()
+    }
+    
     private func cacheTrigger(_ trigger: Trigger, layout: BoardLayout) {
         switch (trigger.type) {
         case .barrier(let barrier):
@@ -116,8 +112,6 @@ class DebugRenderer: SKNode, GameRenderer {
         }
     }
     
-    // @TODO: make sure memory is ok (garbage collection)
-    // would also be good to pool these objects
     private func deleteTrigger(_ id: Int) {
         self.cachedNodes.deleteNode(triggerId: id)
     }

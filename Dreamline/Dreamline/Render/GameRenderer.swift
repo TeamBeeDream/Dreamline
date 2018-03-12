@@ -80,7 +80,9 @@ class DebugRenderer: SKNode, GameRenderer {
         }
         
         // 2. update all barriers
+        //print("total:", state.boardState.triggers.count)
         for trigger in state.boardState.triggers {
+            //print("updating node:", trigger.id)
             let position = point(x: 0.0, y: trigger.position).y
             self.cachedNodes.updateNodePosition(triggerId: trigger.id, position: position)
         }

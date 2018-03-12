@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import GameplayKit
 
 // @RENAME: this is the controller
 // this class should be able to take in a set of
@@ -15,6 +14,8 @@ import GameplayKit
 // reuse this at different parts of the game
 // ex: demo mode, soap testing, etc
 class GameController: SKScene {
+    
+    let sceneManager: SceneManager
     
     // @TODO: should probably pass these in on construction
     // i.e. manage setting them up at a higher level
@@ -35,9 +36,26 @@ class GameController: SKScene {
     var fadeCutoff = 0.175
     var numInputs: Int = 0
     
-    override func didMove(to view: SKView) {
-        self.renderer = DebugRenderer(frame: self.frame) // annoying that i have to set this up here
+    // can probably move this to an abstract class
+    init(manager: SceneManager, view: SKView) {
+        self.sceneManager = manager
+        super.init(size: view.frame.size)
+        
+        print("init game")
+        self.renderer = DebugRenderer(frame: view.frame) // annoying that i have to set this up here
         addChild(self.renderer as! SKNode)
+    }
+    
+    deinit {
+        print("deinit game")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func didMove(to view: SKView) {
+        print("moved to game")
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -64,7 +82,17 @@ class GameController: SKScene {
         self.config = updatedConfig // @TODO: should config changes be done here or in the model?
         self.score = updatedScore
         
-        self.renderer.render(state: updatedState, score: self.score, config: config, events: events)
+        self.renderer.render(state: state, score: score, config: config, events: events)
+        
+        // scene stuff
+        // @TODO: move this to own function or something
+        for event in events {
+            switch (event) {
+            case .barrierHit(_):
+                self.sceneManager.moveToStartScene()
+            default: break
+            }
+        }
     }
 }
 

@@ -10,28 +10,51 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
+enum Scene {
+    case start
+    case game
+    case score
+}
+
+protocol SceneManager {
+    func moveToStartScene()
+    func moveToGameScene()
+}
+
 // @RENAME: "GameView..." was autofilled
+// this class is connected to the Main.storyboard stuff
+// so it's tough to do an init()
 class GameViewController: UIViewController {
 
+    // scenes
+    var currentScene: SKScene?
+    var upcomingScene: SKScene?
+    
+    //var startScene = StartScene()
+    var startScene: StartScene?
+    var gameScene: GameController?
+    
+    // this is closest thing to init
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // @TODO: For now launch the game view.
+        // setup view / scenes
         if let view = self.view as! SKView? {
-            
-            // This is the important bit vvv
-            let scene = GameController(size: view.frame.size)
-            
-            scene.scaleMode = .aspectFit
             view.showsFPS = true
             view.showsNodeCount = true
-            view.presentScene(scene) // @TODO: Add transition.
-        } else {
-            // @TODO: Do better error handling.
-            print("ERROR....");
-        }
+            
+            // setup scenes
+            self.startScene = StartScene(manager: self, view: view)
+            self.startScene!.scaleMode = .aspectFit
+            
+            self.gameScene = GameController(manager: self, view: view)
+            self.gameScene!.scaleMode = .aspectFit
+        } else { assert( false ) }
+        
+        // move to first view
+        self.moveToStartScene() // @HARDCODED
     }
-
+    
     override var shouldAutorotate: Bool {
         return false
     }
@@ -53,3 +76,27 @@ class GameViewController: UIViewController {
         return true
     }
 }
+
+// @TODO: bolster scene management
+extension GameViewController: SceneManager {
+    func moveToStartScene() {
+        if let view = self.view as! SKView! {
+            let transition = SKTransition.doorsOpenVertical(withDuration: 1.0)
+            transition.pausesIncomingScene = true
+            transition.pausesOutgoingScene = true
+            
+            view.presentScene(self.startScene!, transition: transition)
+        }
+    }
+    
+    func moveToGameScene() {
+        if let view = self.view as! SKView? {
+            let transition = SKTransition.doorsOpenVertical(withDuration: 1.0)
+            transition.pausesIncomingScene = true
+            transition.pausesOutgoingScene = true
+            
+            view.presentScene(self.gameScene!, transition: transition)
+        }
+    }
+}
+

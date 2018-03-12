@@ -17,9 +17,6 @@ protocol GameRenderer {
 
 // TODO: move to own file
 class DebugRenderer: SKNode, GameRenderer {
-    // @NOTE: I think Xcode has smoothing on all
-    // of its UI, or everything has artificially
-    // smooth animation so it feels soft.
     
     var playerNode: SKNode
     var cachedNodes = GenericNodeCache()
@@ -41,7 +38,6 @@ class DebugRenderer: SKNode, GameRenderer {
         self.scoreText.color = SKColor.white
         
         super.init() // this is super awkward
-        
         
         self.awake()
         self.addChild(self.cachedNodes)
@@ -73,9 +69,7 @@ class DebugRenderer: SKNode, GameRenderer {
         }
         
         // 2. update all barriers
-        //print("total:", state.boardState.triggers.count)
         for trigger in state.boardState.triggers {
-            //print("updating node:", trigger.id)
             let position = point(x: 0.0, y: trigger.position).y
             self.cachedNodes.updateNodePosition(triggerId: trigger.id, position: position)
         }
@@ -90,7 +84,6 @@ class DebugRenderer: SKNode, GameRenderer {
     }
     
     func free() {
-        // @TODO: clear caches
         self.cachedNodes.free()
         
         self.removeAllActions()
@@ -119,8 +112,6 @@ class DebugRenderer: SKNode, GameRenderer {
         }
     }
     
-    // @TODO: make sure memory is ok (garbage collection)
-    // would also be good to pool these objects
     private func deleteTrigger(_ id: Int) {
         self.cachedNodes.deleteNode(triggerId: id)
     }

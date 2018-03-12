@@ -11,13 +11,13 @@ import UIKit
 import SpriteKit
 
 protocol GameRenderer {
-    func render(state: ModelState, config: GameConfig, events: [Event])
+    func render(state: ModelState, score: Score, config: GameConfig, events: [Event])
 }
 
 // @HACK: i'm using this as a placeholder so i don't have to
 // make an init() func for GameController, which is silly (and will be fixed)
 class DummyRenderer: GameRenderer {
-    func render(state: ModelState, config: GameConfig, events: [Event]) {
+    func render(state: ModelState, score: Score, config: GameConfig, events: [Event]) {
         // do nothing
     }
 }
@@ -32,6 +32,8 @@ class DebugRenderer: SKNode, GameRenderer {
     var cachedNodes = GenericNodeCache()
     var cachedFrame: CGRect // @FIXME
     
+    var scoreText: SKLabelNode
+    
     // @CLEANUP: this is ugly
     init(frame: CGRect) {
         self.cachedFrame = frame
@@ -40,9 +42,17 @@ class DebugRenderer: SKNode, GameRenderer {
         playerGraphic.lineWidth = 0
         playerGraphic.fillColor = SKColor.red
         self.playerNode = playerGraphic
+        
+        self.scoreText = SKLabelNode()
+        self.scoreText.position = CGPoint(x: frame.midX, y: frame.maxX - 50.0)
+        self.scoreText.color = SKColor.white
+        
         super.init() // this is super awkward
+        
+        
         self.awake()
         self.addChild(self.cachedNodes)
+        self.addChild(self.scoreText)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -54,7 +64,7 @@ class DebugRenderer: SKNode, GameRenderer {
         addChild(self.playerNode)
     }
     
-    func render(state: ModelState, config: GameConfig, events: [Event]) {
+    func render(state: ModelState, score: Score, config: GameConfig, events: [Event]) {
         // @TODO: could probably break these out to different methods
         // ex: handleEvents, updateEntities, updatePlayer, etc.
         
@@ -79,6 +89,9 @@ class DebugRenderer: SKNode, GameRenderer {
         let position = state.positioner.getPosition(state: state.positionerState, config: config)
         let offset = position.offset * state.boardLayout.laneOffset
         self.playerNode.position = point(x: offset, y: state.boardLayout.playerPosition)
+        
+        // 4. update score
+        self.scoreText.text = String(score.points)
     }
     
     private func cacheTrigger(_ trigger: Trigger, layout: BoardLayout) {

@@ -132,7 +132,8 @@ class DefaultBoard: Board {
                 dt: Double) -> (BoardState, [Event]) {
         
         // constants
-        let step = dt * config.boardScrollSpeed
+        //let step = dt * config.boardScrollSpeed
+        let step = dt * ScrollSpeedData.getData()[config.boardScrollSpeed]!.speed
         
         // updated information @CLEANUP
         var raisedEvents = [Event]()
@@ -205,7 +206,7 @@ class DefaultBoard: Board {
                 
             case .modifier(let row):
                 
-                let updatedStatus = modifierDidCollide(row: row,
+                let (updatedStatus, modifierType) = modifierDidCollide(row: row,
                                                        position: trigger.position,
                                                        step: step,
                                                        layout: layout,
@@ -216,7 +217,7 @@ class DefaultBoard: Board {
                 
                 switch (updatedStatus) {
                 case .hit:
-                    raisedEvents.append(.modifierGet(trigger.id))
+                    raisedEvents.append(.modifierGet(trigger.id, modifierType))
                 default:
                     break
                 }
@@ -306,14 +307,14 @@ class DefaultBoard: Board {
                                     positioner: Positioner,
                                     originalPosition: Position,
                                     updatedPosition: Position,
-                                    config: GameConfig) -> TriggerStatus {
+                                    config: GameConfig) -> (TriggerStatus, ModifierType) {
         let barrierY0 = position - step
         let barrierY1 = position
         
         // determine if player crossed barrier
         let crossed = barrierY0 < layout.playerPosition && barrierY1 > layout.playerPosition
         if !crossed { // didn't collide
-            return .idle // no change
+            return (.idle, .none) // no change
         }
         
         // calculate pass through
@@ -328,12 +329,13 @@ class DefaultBoard: Board {
         let withinTolerance = dPos.withinTolerance
         let nearest = dPos.lane + 1
         
+        // @RENAME: this is the actual modifier that you collided with (its type)
         let hit = row.pattern[nearest]
         
         if hit == .none {
-            return .pass
+            return (.pass, hit)
         } else {
-            return withinTolerance ? .hit : .pass
+            return withinTolerance ? (.hit, hit) : (.pass, hit)
         }
     }
 }

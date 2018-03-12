@@ -21,8 +21,10 @@ class GameController: SKScene {
     var model: GameModel = DefaultGameModel()
     var rulesetModifier: RulesetModifier = DefaultRulesetModifier()
     var renderer: GameRenderer = DummyRenderer() // @FIXME: gross
+    var scoreUpdater: ScoreUpdater = DefaultScoreUpdater()
     
     var state: ModelState = ModelState.getDefault()
+    var score: Score = ScoreFactory.getNew()
     var config: GameConfig = GameConfigFactory.getDefault()
     var ruleset: Ruleset = RulesetFactory.getDefault()
     
@@ -43,12 +45,26 @@ class GameController: SKScene {
         self.previousTime = currentTime
         if dt > 1.0 { dt = 1.0/60.0 }
         
-        let (updatedState, events) = model.update(state: state, config: config, dt: dt)
-        let updatedConfig = rulesetModifier.updateRuleset(ruleset: ruleset, config: config, events: events)
+        // update
+        let (updatedState, events) = model.update(
+            state: state,
+            config: config,
+            dt: dt)
+        let updatedConfig = rulesetModifier.updateRuleset(
+            ruleset: ruleset,
+            config: config,
+            events: events)
+        let updatedScore = scoreUpdater.updateScore(
+            state: score,
+            config: updatedConfig,
+            events: events)
+        
+        // composite
         self.state = updatedState
         self.config = updatedConfig // @TODO: should config changes be done here or in the model?
+        self.score = updatedScore
         
-        self.renderer.render(state: updatedState, config: config, events: events)
+        self.renderer.render(state: updatedState, score: self.score, config: config, events: events)
     }
 }
 

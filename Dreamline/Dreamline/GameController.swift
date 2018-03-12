@@ -13,15 +13,13 @@ import SpriteKit
 // interfaced objects and just run, so we can
 // reuse this at different parts of the game
 // ex: demo mode, soap testing, etc
-class GameController: SKScene {
-    
-    let sceneManager: SceneManager
+class GameController: CustomScene {
     
     // @TODO: should probably pass these in on construction
     // i.e. manage setting them up at a higher level
     var model: GameModel = DefaultGameModel()
     var rulesetModifier: RulesetModifier = DefaultRulesetModifier()
-    var renderer: GameRenderer = DummyRenderer() // @FIXME: gross
+    var renderer: GameRenderer?
     var scoreUpdater: ScoreUpdater = DefaultScoreUpdater()
     
     var state: ModelState = ModelState.getDefault()
@@ -36,26 +34,22 @@ class GameController: SKScene {
     var fadeCutoff = 0.175
     var numInputs: Int = 0
     
-    // can probably move this to an abstract class
-    init(manager: SceneManager, view: SKView) {
-        self.sceneManager = manager
-        super.init(size: view.frame.size)
-        
-        print("init game")
-        self.renderer = DebugRenderer(frame: view.frame) // annoying that i have to set this up here
+    override func onInit() {
+        self.renderer = DebugRenderer(frame: self.frame)
         addChild(self.renderer as! SKNode)
     }
     
-    deinit {
-        print("deinit game")
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func didMove(to view: SKView) {
-        print("moved to game")
+        // this is the "reset" function
+        // called each time the manager
+        // transitions to this scene.
+    }
+    
+    override func willMove(from view: SKView) {
+        // @BUG: input needs to be reset,
+        // when we transition away from this
+        // scene, any remaining touches will need to be cleared
+        self.removeInput(count: self.numInputs) // @TODO: make clearInput() method
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -82,14 +76,15 @@ class GameController: SKScene {
         self.config = updatedConfig // @TODO: should config changes be done here or in the model?
         self.score = updatedScore
         
-        self.renderer.render(state: state, score: score, config: config, events: events)
+        // this optional is dangerous :(
+        self.renderer!.render(state: state, score: score, config: config, events: events)
         
         // scene stuff
         // @TODO: move this to own function or something
         for event in events {
             switch (event) {
             case .barrierHit(_):
-                self.sceneManager.moveToStartScene()
+                self.manager.moveToStartScene()
             default: break
             }
         }

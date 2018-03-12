@@ -8,20 +8,7 @@
 
 import SpriteKit
 
-class StartScene: SKScene {
-    
-    var sceneState: Scene = .start
-    var sceneManager: SceneManager
-    
-    init(manager: SceneManager, view: SKView) {
-        self.sceneManager = manager
-        super.init(size: view.frame.size)
-    }
-    
-    // this is dumb
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+class StartScene: CustomScene {
     
     override func didMove(to view: SKView) {
         backgroundColor = SKColor.red
@@ -29,7 +16,7 @@ class StartScene: SKScene {
         self.run(SKAction.sequence([
             SKAction.wait(forDuration: 2.0),
             SKAction.run {
-                self.sceneManager.moveToGameScene()
+                self.manager.moveToGameScene()
             }]))
     }
 }

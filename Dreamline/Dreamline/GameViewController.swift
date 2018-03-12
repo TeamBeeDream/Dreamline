@@ -10,15 +10,10 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-enum Scene {
-    case start
-    case game
-    case score
-}
-
 protocol SceneManager {
     func moveToStartScene()
     func moveToGameScene()
+    //func moveToScoreScene()
 }
 
 // @RENAME: "GameView..." was autofilled
@@ -27,6 +22,10 @@ protocol SceneManager {
 class GameViewController: UIViewController {
 
     // scenes
+    // @NOTE: these are both CustomScenes now,
+    // so it may make sense to use an enum to
+    // switch to a new state instead of pre-
+    // defined methods
     var currentScene: SKScene?
     var upcomingScene: SKScene?
     

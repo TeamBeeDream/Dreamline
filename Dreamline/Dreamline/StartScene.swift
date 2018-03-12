@@ -11,12 +11,15 @@ import SpriteKit
 class StartScene: CustomScene {
     
     override func didMove(to view: SKView) {
-        backgroundColor = SKColor.red
+        backgroundColor = SKColor.black
         
-        self.run(SKAction.sequence([
-            SKAction.wait(forDuration: 2.0),
-            SKAction.run {
-                self.manager.moveToGameScene()
-            }]))
+        let text = SKLabelNode(text: "tap to play")
+        text.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        text.color = SKColor.white
+        self.addChild(text)
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.manager.moveToGameScene()
     }
 }

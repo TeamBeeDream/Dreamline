@@ -23,6 +23,6 @@ class CustomScene: SKScene {
     }
     
     func onInit() {
-        preconditionFailure("Override this method")
+        // default, do nothing
     }
 }

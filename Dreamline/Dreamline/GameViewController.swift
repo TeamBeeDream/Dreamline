@@ -13,7 +13,7 @@ import GameplayKit
 protocol SceneManager {
     func moveToStartScene()
     func moveToGameScene()
-    //func moveToScoreScene()
+    func moveToScoreScene(score: Int)
 }
 
 // @RENAME: "GameView..." was autofilled
@@ -25,13 +25,15 @@ class GameViewController: UIViewController {
     // @NOTE: these are both CustomScenes now,
     // so it may make sense to use an enum to
     // switch to a new state instead of pre-
-    // defined methods
+    // defined methods.
+    // however, since data needs to be passed
+    // between states, having generics may be
+    // tricky, could use state object, but eh
     var currentScene: SKScene?
     var upcomingScene: SKScene?
     
-    //var startScene = StartScene()
     var startScene: StartScene?
-    var gameScene: GameController?
+    var gameScene: GameScene?
     
     // this is closest thing to init
     override func viewDidLoad() {
@@ -46,7 +48,7 @@ class GameViewController: UIViewController {
             self.startScene = StartScene(manager: self, view: view)
             self.startScene!.scaleMode = .aspectFit
             
-            self.gameScene = GameController(manager: self, view: view)
+            self.gameScene = GameScene(manager: self, view: view)
             self.gameScene!.scaleMode = .aspectFit
         } else { assert( false ) }
         
@@ -91,10 +93,27 @@ extension GameViewController: SceneManager {
     func moveToGameScene() {
         if let view = self.view as! SKView? {
             let transition = SKTransition.doorsOpenVertical(withDuration: 1.0)
-            transition.pausesIncomingScene = true
+            transition.pausesIncomingScene = false
             transition.pausesOutgoingScene = true
             
             view.presentScene(self.gameScene!, transition: transition)
+        }
+    }
+    
+    func moveToScoreScene(score: Int) {
+        if let view = self.view as! SKView? {
+            // create new score view (don't hold in memory)
+            let scoreScene = ScoreScene(manager: self, view: view, score: score)
+            
+            let transition = SKTransition.flipHorizontal(withDuration: 0.5)
+            transition.pausesIncomingScene = true
+            transition.pausesOutgoingScene = true // @BUG
+            // if the game scene happens to hit another barrier
+            // while transitioning to the score scene, then this
+            // method gets called twice.
+            
+            view.presentScene(scoreScene, transition: transition)
+            print("transition")
         }
     }
 }

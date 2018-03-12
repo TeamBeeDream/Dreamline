@@ -13,7 +13,9 @@ import SpriteKit
 // interfaced objects and just run, so we can
 // reuse this at different parts of the game
 // ex: demo mode, soap testing, etc
-class GameController: CustomScene {
+// but since this is tied to CustomScene
+// it may be more difficult than its worth
+class GameScene: CustomScene {
     
     // @TODO: should probably pass these in on construction
     // i.e. manage setting them up at a higher level
@@ -27,11 +29,8 @@ class GameController: CustomScene {
     var config: GameConfig = GameConfigFactory.getDefault()
     var ruleset: Ruleset = RulesetFactory.getDefault()
     
-    // TEMP
+    // private state
     var previousTime: TimeInterval = 0
-    var tmpPlayerNode = SKShapeNode()
-    var barrierNodes = [SKNode]()
-    var fadeCutoff = 0.175
     var numInputs: Int = 0
     
     override func onInit() {
@@ -43,6 +42,11 @@ class GameController: CustomScene {
         // this is the "reset" function
         // called each time the manager
         // transitions to this scene.
+        
+        // @BUG: should reset the game
+        // or just have the viewcontroller
+        // make a new instance, I'm not sure
+        // what the benefits of either are.
     }
     
     override func willMove(from view: SKView) {
@@ -84,7 +88,7 @@ class GameController: CustomScene {
         for event in events {
             switch (event) {
             case .barrierHit(_):
-                self.manager.moveToStartScene()
+                self.manager.moveToScoreScene(score: self.score.points)
             default: break
             }
         }
@@ -95,7 +99,7 @@ class GameController: CustomScene {
 // input should probably be its own class,
 // need to figure out how to properly update it
 // for now, this input is hardcoded here
-extension GameController {
+extension GameScene {
     private func addInput(_ lane: Int) {
         state.targetOffset = Double(lane)
         self.numInputs += 1

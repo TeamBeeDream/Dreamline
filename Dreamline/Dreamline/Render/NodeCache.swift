@@ -15,6 +15,7 @@ protocol NodeCache {
     func addNode(_ node: SKNode, data: Trigger)
     func deleteNode(triggerId: Int)
     func updateNodePosition(triggerId: Int, position: CGFloat)
+    func fadeOutNode(triggerId: Int)
     func free()
 }
 
@@ -40,6 +41,13 @@ class GenericNodeCache: SKNode, NodeCache {
         
         let node = self.cachedNodes[triggerId]!
         node.position.y = position
+    }
+    
+    func fadeOutNode(triggerId: Int) {
+        assert(self.cachedNodes[triggerId] != nil)
+        
+        let node = self.cachedNodes[triggerId]!
+        node.run(SKAction.fadeOut(withDuration: 0.2))
     }
     
     func free() {

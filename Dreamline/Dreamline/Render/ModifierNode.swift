@@ -13,7 +13,7 @@ class ModifierNode: SKNode {
     
     func drawOnce(row: ModifierRow, positions: [CGPoint]) {
         
-        for (i, modifier) in row.pattern.enumerated() {
+        for (i, modifier) in row.modifiers.enumerated() {
             switch (modifier) {
             case .none:
                 break

@@ -34,10 +34,10 @@ class DebugRenderer: SKNode, GameRenderer {
         self.cachedFrame = frame
         
         // Create player node
-        let radius = CGFloat(0.2) * (320.0) / 4.0 // @HARDCODED
+        let radius = CGFloat(0.1) * (320.0) / 4.0 // @HARDCODED
         let playerGraphic = SKShapeNode(circleOfRadius: radius)
         playerGraphic.lineWidth = 0
-        playerGraphic.fillColor = SKColor.red
+        playerGraphic.fillColor = SKColor(red: 244.0/255.0, green: 157.0/255.0, blue: 55.0/255.0, alpha: 1.0)
         self.playerNode = playerGraphic
         
         // Create score text
@@ -74,6 +74,10 @@ class DebugRenderer: SKNode, GameRenderer {
                 self.cacheTrigger(trigger, layout: state.boardLayout)
             case .triggerDestroyed(let triggerId):
                 self.deleteTrigger(triggerId)
+            case .barrierPass(let triggerId):
+                self.fadeOutTrigger(triggerId)
+            case .modifierGet(let triggerId, _):
+                self.fadeOutTrigger(triggerId)
             default: break
             }
         }
@@ -136,6 +140,11 @@ class DebugRenderer: SKNode, GameRenderer {
     private func deleteTrigger(_ id: Int) {
         
         self.cachedNodes.deleteNode(triggerId: id)
+    }
+    
+    private func fadeOutTrigger(_ id: Int) {
+        
+        self.cachedNodes.fadeOutNode(triggerId: id)
     }
 }
 

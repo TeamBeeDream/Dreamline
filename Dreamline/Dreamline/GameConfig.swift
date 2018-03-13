@@ -9,11 +9,11 @@
 import Foundation
 
 enum ScrollSpeed: Double {
-    case sp1
-    case sp2
-    case sp3
-    case sp4
-    case sp5
+    case mach1
+    case mach2
+    case mach3
+    case mach4
+    case mach5
 }
 
 struct SpeedInfo {
@@ -26,11 +26,11 @@ struct SpeedInfo {
 class ScrollSpeedData {
     static func getData() -> [ScrollSpeed: SpeedInfo] {
         var dict = [ScrollSpeed: SpeedInfo]()
-        dict[.sp1] = SpeedInfo(index: 0, speed: 1.2, points: 1)
-        dict[.sp2] = SpeedInfo(index: 1, speed: 1.5, points: 1)
-        dict[.sp3] = SpeedInfo(index: 2, speed: 2.0, points: 2)
-        dict[.sp4] = SpeedInfo(index: 3, speed: 2.6, points: 2)
-        dict[.sp5] = SpeedInfo(index: 4, speed: 3.0, points: 3)
+        dict[.mach1] = SpeedInfo(index: 0, speed: 1.2, points: 1)
+        dict[.mach2] = SpeedInfo(index: 1, speed: 1.5, points: 1)
+        dict[.mach3] = SpeedInfo(index: 2, speed: 2.0, points: 2)
+        dict[.mach4] = SpeedInfo(index: 3, speed: 2.6, points: 2)
+        dict[.mach5] = SpeedInfo(index: 4, speed: 3.0, points: 3)
         
         return dict
     }
@@ -45,11 +45,11 @@ class ScrollSpeedData {
         if index > 4 { i = 4 }
         
         var values = [ScrollSpeed]()
-        values.append(.sp1)
-        values.append(.sp2)
-        values.append(.sp3)
-        values.append(.sp4)
-        values.append(.sp5)
+        values.append(.mach1)
+        values.append(.mach2)
+        values.append(.mach3)
+        values.append(.mach4)
+        values.append(.mach5)
         
         return values[i]
     }
@@ -79,7 +79,7 @@ class GameConfigFactory {
         return GameConfig(
             positionerTolerance: 0.2,
             positionerMoveDuration: 0.1,
-            boardScrollSpeed: .sp1, //1.0,
+            boardScrollSpeed: .mach1,
             boardDistanceBetweenTriggers: 0.7)
     }
 }

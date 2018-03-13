@@ -103,12 +103,14 @@ class AuthoredSequencer: Sequencer {
     func getNextTrigger(config: GameConfig) -> [TriggerType] {
         
         if queue.isEmpty {
-            return [.empty] // @TODO, generate new patterns
+            // @TODO: Sequence patterns dynamically
+            queue.append(self.newTunnelPattern())
+            queue.append(self.newGapPattern(count: 3))
+            queue.append(self.newBarragePattern())
+            queue.append(self.newGapPattern(count: 3))
         }
         
         // otherwise, pull from queue
-        //let group = queue[queue.count-1]
-        //var group = queue.popLast()!
         var originalGroup = queue.removeFirst()
         var updatedGroup = originalGroup.clone()
         let nextTrigger = originalGroup.triggers[originalGroup.index]
@@ -136,11 +138,68 @@ class AuthoredSequencer: Sequencer {
     
     private func newBoostPattern() -> Group {
         let leftBoost: [TriggerType] = [.modifier(ModifierRow(modifiers: [.speedUp, .none, .none]))]
-        
         let rightBoost: [TriggerType] = [.modifier(ModifierRow(modifiers: [.none, .none, .speedUp]))]
         
-        var triggers = [[TriggerType]]()
-        triggers.append(contentsOf: [leftBoost, rightBoost, leftBoost]) // @TODO: Chirality support
+        let triggers = [leftBoost, rightBoost, leftBoost] // @TODO: Chirality support
         return Group(pattern: .boost, triggers: triggers, index: 0)
+    }
+    
+    private func newTunnelPattern() -> Group {
+        let left: [TriggerType]   = [.barrier(Barrier(gates: [.open, .closed, .closed]))]
+        let center: [TriggerType] = [.barrier(Barrier(gates: [.closed, .open, .closed]))]
+        let right: [TriggerType]  = [.barrier(Barrier(gates: [.closed, .closed, .open]))]
+        
+        let triggers = [left, left, center, center, right, right, left, center]
+        return Group(pattern: .tunnel, triggers: triggers, index: 0)
+    }
+    
+    private func newBarragePattern() -> Group {
+        var triggers = [[TriggerType]]()
+        for _ in 1...10 { // @HARDCODED
+            let random = Double.random()
+            if random < 0.075 {
+                triggers.append([.empty])
+            } else if random < 0.8 {
+                triggers.append([generateRandomBarrier()])
+            } else {
+                triggers.append([generateRandomModifierRow()])
+            }
+        }
+        
+        return Group(pattern: .barrage, triggers: triggers, index: 0)
+    }
+    
+    func generateRandomModifierRow() -> TriggerType {
+        let randomIndex = Int.random(min: 0, max: 2)
+        var modifiers = [ModifierType](repeating: .none, count: 3)
+        modifiers[randomIndex] = Double.random() < 0.5 ? .speedUp : .speedDown
+        return .modifier(ModifierRow(modifiers: modifiers))
+    }
+    
+    func generateRandomBarrier() -> TriggerType {
+        var gates = [Gate]()
+        var allClosed = true
+        var allOpen = true
+        for i in 1...3 {
+            let gate = self.randomGate()
+            if gate == .open { allClosed = allClosed && false }
+            if gate == .closed { allOpen = allOpen && false }
+            
+            // @CLEANUP: this code ensures that every gate has at least
+            // one opening or one closing, hard to understand
+            if i == 3 && allClosed { gates.append(.open) }
+            else if i == 3 && allOpen { gates.append(.closed) }
+            else { gates.append(gate) }
+        }
+        
+        return .barrier(Barrier(gates: gates))
+    }
+    
+    private func randomGate() -> Gate {
+        if Double.random() > 0.5 {
+            return .open
+        } else {
+            return .closed
+        }
     }
 }

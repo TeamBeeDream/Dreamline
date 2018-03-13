@@ -108,6 +108,8 @@ class AuthoredSequencer: Sequencer {
             queue.append(self.newGapPattern(count: 3))
             queue.append(self.newBarragePattern())
             queue.append(self.newGapPattern(count: 3))
+            queue.append(self.newPacerPattern())
+            queue.append(self.newGapPattern(count: 3))
         }
         
         // otherwise, pull from queue
@@ -154,6 +156,15 @@ class AuthoredSequencer: Sequencer {
     }
     
     private func newBarragePattern() -> Group {
+        var triggers = [[TriggerType]]()
+        for _ in 1...10 { // @HARDCODED
+            triggers.append([generateRandomBarrier()])
+        }
+        
+        return Group(pattern: .barrage, triggers: triggers, index: 0)
+    }
+    
+    private func newPacerPattern() -> Group {
         var triggers = [[TriggerType]]()
         for _ in 1...10 { // @HARDCODED
             let random = Double.random()

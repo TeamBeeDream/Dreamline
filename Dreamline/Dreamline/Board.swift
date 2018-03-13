@@ -42,7 +42,7 @@ enum TriggerStatus {
 }
 
 struct Barrier {
-    let pattern: [Gate] // only this left, huh
+    let gates: [Gate] // only this left, huh
 }
 
 enum ModifierType {
@@ -52,12 +52,12 @@ enum ModifierType {
 }
 
 struct ModifierRow {
-    let pattern: [ModifierType]
+    let modifiers: [ModifierType]
 }
 
 extension Barrier {
     func clone() -> Barrier {
-        return Barrier(pattern: self.pattern)
+        return Barrier(gates: self.gates)
     }
 }
 
@@ -164,13 +164,15 @@ class DefaultBoard: Board {
         if distance > config.boardDistanceBetweenTriggers {
             distance = 0.0 // @HACK: this is used later in this function, very fragile
             updatedTotalTriggerCount += 1
-            let triggerType = sequencer.getNextTrigger()
-            let newTrigger = Trigger(id: updatedTotalTriggerCount,
-                                     position: layout.spawnPosition,
-                                     status: .idle,
-                                     type: triggerType)
-            updatedTriggers_Added.append(newTrigger)
-            raisedEvents.append(.triggerAdded(newTrigger))
+            let triggers = sequencer.getNextTrigger(config: config)
+            for triggerType in triggers {
+                let newTrigger = Trigger(id: updatedTotalTriggerCount,
+                                         position: layout.spawnPosition,
+                                         status: .idle,
+                                         type: triggerType)
+                updatedTriggers_Added.append(newTrigger)
+                raisedEvents.append(.triggerAdded(newTrigger))
+            }
         }
         
         // @TODO: step: handle collision and raise events
@@ -280,18 +282,18 @@ class DefaultBoard: Board {
         
         if crossedLanes {
             // check if both lanes are open
-            let open0 = barrier.pattern[originalPosition.lane + 1] == .open
-            let open1 = barrier.pattern[updatedPosition.lane + 1] == .open
+            let open0 = barrier.gates[originalPosition.lane + 1] == .open
+            let open1 = barrier.gates[updatedPosition.lane + 1] == .open
             if open0 && open1 {
                 // no need to check tolerance
-                didHit = barrier.pattern[nearest] != .open
+                didHit = barrier.gates[nearest] != .open
             } else {
                 // include tolerance
-                didHit = barrier.pattern[nearest] != .open && withinTolerance
+                didHit = barrier.gates[nearest] != .open && withinTolerance
             }
         } else {
             // simple check
-            didHit = barrier.pattern[nearest] != .open
+            didHit = barrier.gates[nearest] != .open
         }
         
         // didHit is not a good name
@@ -329,7 +331,7 @@ class DefaultBoard: Board {
         let nearest = dPos.lane + 1
         
         // @RENAME: this is the actual modifier that you collided with (its type)
-        let hit = row.pattern[nearest]
+        let hit = row.modifiers[nearest]
         
         if hit == .none {
             return (.pass, hit)

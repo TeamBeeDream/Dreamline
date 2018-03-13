@@ -9,6 +9,9 @@
 import Foundation
 
 // @TODO: rename
+// @NOTE: it's a little weird that
+//        pure data state is mixed
+//        in with interfaced funcs
 struct ModelState {
     
     var positioner: Positioner
@@ -57,7 +60,8 @@ extension ModelState {
                 destroyPosition: 1.1,
                 playerPosition: 0.5,
                 laneOffset: 0.65),
-            sequencer: RandomSequencer())
+            sequencer: AuthoredSequencer())
+            //sequencer: RandomSequencer())
     }
 }
 

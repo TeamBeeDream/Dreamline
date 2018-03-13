@@ -8,6 +8,7 @@
 
 import Foundation
 
+// @TODO: This whole class needs to be refactored
 class Highscore: NSObject, NSCoding {
     
     var name: String
@@ -19,13 +20,14 @@ class Highscore: NSObject, NSCoding {
         return highscore
     }
     
+    // @HARDCODED
     struct PropertyKey {
         static let name = "hsName"
         static let score = "hsScore"
     }
     
     static var DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
-    static let ArchiveUrl = DocumentsDirectory.appendingPathComponent("highscores")
+    static let ArchiveUrl = DocumentsDirectory.appendingPathComponent("highscores") // @HARDCODED
     
     init(name: String, score: Int) {
         self.name = name

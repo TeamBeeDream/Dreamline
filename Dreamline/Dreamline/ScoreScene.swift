@@ -22,6 +22,7 @@ class ScoreScene: CustomScene {
         self.score = score
         super.init(manager: manager, view: view)
         
+        // @FIXME
         if ScoreScene.clearHighscoresOnInit {
             self.clearHighscores()
             ScoreScene.clearHighscoresOnInit = false
@@ -52,7 +53,7 @@ class ScoreScene: CustomScene {
         let encodedData = NSKeyedArchiver.archivedData(withRootObject: highscores)
         
         let userDefaults = UserDefaults.standard
-        userDefaults.set(encodedData, forKey: "highscore")
+        userDefaults.set(encodedData, forKey: "highscore") // @HARDCODED
         userDefaults.synchronize()
     }
     
@@ -68,14 +69,24 @@ class ScoreScene: CustomScene {
         let scoreText = SKLabelNode(text: "you got \(self.score)")
         scoreText.position = self.frame.point(x: 0, y: -0.6)
         scoreText.fontColor = SKColor.white
+        scoreText.alpha = 0.0
+        scoreText.run(SKAction.fadeIn(withDuration: 0.45))
         self.addChild(scoreText)
         
         // draw highscores
-        for i in 0...min(self.highscores!.count - 1, 4) {
-            let highscore = self.highscores![i]
+        var sortedHighscores = self.highscores!.sorted(by: { $0.score > $1.score })
+        for i in 0...min(sortedHighscores.count - 1, 4) {
+            let highscore = sortedHighscores[i]
             let hsLabel = SKLabelNode(text: "\(highscore.name) : \(highscore.score)")
             hsLabel.position = self.frame.point(x: 0, y: -0.2 + Double(i) * 0.2)
             hsLabel.fontColor = (highscore.name == self.scoreName) ? SKColor.yellow : SKColor.white
+            hsLabel.yScale = 0.0
+            hsLabel.alpha = 0.0
+            hsLabel.run(SKAction.sequence([
+                SKAction.wait(forDuration: 0.2 + Double(i) * 0.3),
+                SKAction.group([
+                    SKAction.fadeIn(withDuration: 0.65),
+                    SKAction.scaleY(to: 1.0, duration: 0.5)])]))
             self.addChild(hsLabel)
         }
     }

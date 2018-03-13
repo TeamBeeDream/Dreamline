@@ -26,11 +26,11 @@ struct SpeedInfo {
 class ScrollSpeedData {
     static func getData() -> [ScrollSpeed: SpeedInfo] {
         var dict = [ScrollSpeed: SpeedInfo]()
-        dict[.mach1] = SpeedInfo(index: 0, speed: 1.2, points: 1)
-        dict[.mach2] = SpeedInfo(index: 1, speed: 1.5, points: 1)
-        dict[.mach3] = SpeedInfo(index: 2, speed: 2.0, points: 2)
-        dict[.mach4] = SpeedInfo(index: 3, speed: 2.6, points: 2)
-        dict[.mach5] = SpeedInfo(index: 4, speed: 3.0, points: 3)
+        dict[.mach1] = SpeedInfo(index: 0, speed: 1.0, points: 1)
+        dict[.mach2] = SpeedInfo(index: 1, speed: 1.2, points: 1)
+        dict[.mach3] = SpeedInfo(index: 2, speed: 1.6, points: 2)
+        dict[.mach4] = SpeedInfo(index: 3, speed: 2.0, points: 2)
+        dict[.mach5] = SpeedInfo(index: 4, speed: 2.5, points: 3)
         
         return dict
     }
@@ -80,6 +80,6 @@ class GameConfigFactory {
             positionerTolerance: 0.2,
             positionerMoveDuration: 0.1,
             boardScrollSpeed: .mach1,
-            boardDistanceBetweenTriggers: 0.7)
+            boardDistanceBetweenTriggers: 0.5)
     }
 }

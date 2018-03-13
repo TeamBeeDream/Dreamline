@@ -32,6 +32,6 @@ class ScoreScene: CustomScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.manager.moveToStartScene()
+        self.manager.transitionToStartScene()
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 
 // @TODO: rename
 struct ModelState {
+    
     var positioner: Positioner
     var positionerState: PositionerState
     var targetOffset: Double
@@ -22,7 +23,9 @@ struct ModelState {
 }
 
 extension ModelState {
+    
     func clone() -> ModelState {
+        
         return ModelState(
             positioner: self.positioner,
             positionerState: self.positionerState,
@@ -38,8 +41,10 @@ extension ModelState {
 
 // @TODO: convert this to a factory class
 extension ModelState {
+    
     // @CLEANUP: temp factory method
     static func getDefault() -> ModelState {
+        
         return ModelState(
             positioner: UserPositioner(),
             positionerState: PositionerState(
@@ -57,12 +62,14 @@ extension ModelState {
 }
 
 protocol GameModel {
+    
     // @TODO: add ruleset
     func update(state: ModelState, config: GameConfig, dt: Double) -> (ModelState, [Event])
 }
 
 // @TODO: rename
 class DefaultGameModel: GameModel {
+    
     func update(state: ModelState, config: GameConfig, dt: Double) -> (ModelState, [Event]) {
         
         // Update positioner

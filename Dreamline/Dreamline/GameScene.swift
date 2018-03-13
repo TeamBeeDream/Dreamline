@@ -8,64 +8,72 @@
 
 import SpriteKit
 
-// @RENAME: this is the controller
-// this class should be able to take in a set of
-// interfaced objects and just run, so we can
-// reuse this at different parts of the game
-// ex: demo mode, soap testing, etc
-// but since this is tied to CustomScene
-// it may be more difficult than its worth
+// @NOTE: This class is fairly fixed right now
+//        We should probably inject these objects
+//        into this class, so that way we can test
+//        different configurations of implementations
+//        I.e. swap out user input with mock input
 class GameScene: CustomScene {
     
-    // @TODO: should probably pass these in on construction
-    // i.e. manage setting them up at a higher level
+    // These are all the things that need updates
     var model: GameModel = DefaultGameModel()
     var rulesetModifier: RulesetModifier = DefaultRulesetModifier()
     var renderer: GameRenderer?
     var scoreUpdater: ScoreUpdater = DefaultScoreUpdater()
     
+    // These are the pieces of state (just data)
     var state: ModelState = ModelState.getDefault()
     var score: Score = ScoreFactory.getNew()
     var config: GameConfig = GameConfigFactory.getDefault()
     var ruleset: Ruleset = RulesetFactory.getDefault()
     
-    // private state
-    var previousTime: TimeInterval = 0
-    var numInputs: Int = 0
+    // Internal state
+    private var timeOfPreviousFrame: TimeInterval = 0
+    private var numInputs: Int = 0
     
     override func onInit() {
+        
+        // Create the renderer and add it to the view
         self.renderer = DebugRenderer(frame: self.frame)
         addChild(self.renderer as! SKNode)
+        // @NOTE: It's interesting that the DebugRenderer needs
+        //        to be initialized here.  The dependency is
+        //        the frame of this view, the renderer can't
+        //        be created without it, hence why this can't
+        //        be instantiated until after GameScene's init
+        
+        self.backgroundColor = SKColor(red: 57.0/255.0, green: 61.0/255.0, blue: 63.0/255.0, alpha: 1.0)
     }
     
     override func didMove(to view: SKView) {
-        // this is the "reset" function
-        // called each time the manager
-        // transitions to this scene.
         
-        // @BUG: should reset the game
-        // or just have the viewcontroller
-        // make a new instance, I'm not sure
-        // what the benefits of either are.
+        // This is called whenever this scene is incoming
+        // So if this instance already existed, it
+        // will resume wherever it was last left off
     }
     
     override func willMove(from view: SKView) {
-        // @BUG: input needs to be reset,
-        // when we transition away from this
-        // scene, any remaining touches will need to be cleared
+        
+        // @BUG: Input needs to be reset,
+        // When we transition away from this scene,
+        // any remaining touches will need to be cleared
+        // Or else the input gets stuck and the total
+        // number of touches can never get back to 0
         self.removeInput(count: self.numInputs) // @TODO: make clearInput() method
     }
     
     deinit {
-        // @ROBUSTNESS: ensure all memory is freed
+        
+        // @ROBUSTNESS: Ensure all memory is freed
         self.renderer!.free()
         self.removeAllActions()
         self.removeAllChildren()
     }
     
     override func update(_ currentTime: TimeInterval) {
-        var dt = currentTime - self.previousTime
-        self.previousTime = currentTime
+        
+        var dt = currentTime - self.timeOfPreviousFrame
+        self.timeOfPreviousFrame = currentTime
         if dt > 1.0 { dt = 1.0/60.0 }
         
         // update
@@ -95,7 +103,7 @@ class GameScene: CustomScene {
         for event in events {
             switch (event) {
             case .barrierHit(_):
-                self.manager.moveToScoreScene(score: self.score.points)
+                self.manager.transitionToScoreScene(score: self.score.points)
             default: break
             }
         }
@@ -108,15 +116,24 @@ class GameScene: CustomScene {
 // for now, this input is hardcoded here
 extension GameScene {
     private func addInput(_ lane: Int) {
+        
+        // Add input, change target position to newest input
         state.targetOffset = Double(lane)
         self.numInputs += 1
     }
     
     private func removeInput(count: Int) {
+        
+        // Remove input, if 0 touches then change target position to 0 (center)
         self.numInputs -= count
         if (self.numInputs == 0) {
             state.targetOffset = 0.0
         }
+    }
+    
+    private func clearInput() {
+        
+        self.removeInput(count: self.numInputs)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

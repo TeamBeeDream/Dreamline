@@ -29,7 +29,7 @@ class RandomSequencer: Sequencer {
     func getNextTrigger() -> TriggerType {
         let random = Double.random()
         
-        if random < 0.4 {
+        if random < 0.2 {
             return .empty
         } else if random < 0.7 {
             return .barrier(self.generateRandomBarrier())

@@ -132,7 +132,6 @@ class DefaultBoard: Board {
                 dt: Double) -> (BoardState, [Event]) {
         
         // constants
-        //let step = dt * config.boardScrollSpeed
         let step = dt * ScrollSpeedData.getData()[config.boardScrollSpeed]!.speed
         
         // updated information @CLEANUP

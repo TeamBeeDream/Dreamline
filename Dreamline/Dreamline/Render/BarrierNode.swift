@@ -17,21 +17,24 @@ class BarrierNode: SKNode {
     var bits: [SKShapeNode]
     
     init(layout: BoardLayout, width: Double) {
+        
         self.layout = layout
         self.boardWidth = width
         self.bits = [SKShapeNode]()
+        
         super.init()
     }
     
-    // @NOTE: I don't like this
     required init?(coder aDecoder: NSCoder) {
+        
         fatalError("init(coder:) has not been implemented")
     }
     
-    // @TODO: move to separate class (in graphics folder)
-    // @RENAME
+    // @TODO: Move to separate class (in graphics folder)
+    // @RENAME: Imply that this should be called before using it
     func drawOnce(barrier: Barrier, status: TriggerStatus) {
-        // @CLEANUP, this code is hard to understand
+        
+        // @CLEANUP: This code is hard to understand
         let occupied = 1.0 - self.layout.laneOffset * 2
         let margin = (self.boardWidth * occupied) / 2.0
         let width = self.boardWidth - (margin * 2.0)
@@ -77,40 +80,15 @@ class BarrierNode: SKNode {
             }
         }
         
-        //return barrierGraphic
         self.graphic = barrierGraphic
         addChild(self.graphic!)
     }
     
-    func makeColor(_ color: SKColor) {
-        // gross
-        var updatedBits = [SKShapeNode]()
-        
-        for node in self.bits {
-            node.removeFromParent()
-            let updatedNode = node.copy() as! SKShapeNode
-            updatedNode.strokeColor = color
-            updatedBits.append(updatedNode)
-            addChild(updatedNode)
-        }
-        
-        self.bits = updatedBits
-    }
-    
-    
-    // @TODO: would be interesting to put this in a generic 'actions' class
-    private func getFadeAction() -> SKAction {
-        return SKAction.fadeAlpha(to: 0.0, duration: 0.3)
-    }
-    
-    private func getBadAnimation() -> SKAction {
-        return SKAction.fadeAlpha(to: 0.0, duration: 0.4)
-    }
-    
     private func wallColor(_ status: TriggerStatus) -> SKColor {
+        
         switch (status) {
         case .idle:
-            return SKColor.magenta
+            return SKColor(red: 231.0/255.0, green: 109.0/255.0, blue: 131.0/255.0, alpha: 1.0)
         case .pass:
             return SKColor.green
         case .hit:
@@ -119,9 +97,10 @@ class BarrierNode: SKNode {
     }
     
     private func gateColor(_ status: TriggerStatus) -> SKColor {
+        
         switch (status) {
         case .idle:
-            return SKColor.cyan
+            return SKColor(red: 218.0/255.0, green: 221.0/255.0, blue: 216.0/255.0, alpha: 1.0)
         case .pass:
             return SKColor.green
         case .hit:
@@ -130,6 +109,7 @@ class BarrierNode: SKNode {
     }
     
     private func barrierDataToBoolArray(data: [Gate]) -> [Bool] {
+        
         assert(data.count == 3) // @ROBUSTNESS: expects data array to have exactly 3 values
         var result = [Bool](repeating: false, count: 5)
         result[0] = false
@@ -147,6 +127,7 @@ class BarrierNode: SKNode {
                             to: CGPoint,
                             color: SKColor,
                             width: CGFloat = 2.0) -> SKShapeNode {
+        
         let node = SKShapeNode()
         let path = UIBezierPath()
         path.move(to: from)
@@ -155,32 +136,5 @@ class BarrierNode: SKNode {
         node.strokeColor = color
         node.lineWidth = width
         return node
-    }
-    
-    // @NOTE: interesting, when you put a member variable
-    // directly about the only function that uses it.
-    // Functions have this space where they can store
-    // information indefinitely.  You can leave it, or do
-    // things like update it once per frame.  No longer
-    // have to look at two different spots.
-    // This is fragile, but the form reflects that,
-    // this is ugly, like a growth that raises of the top
-    // and when it gets bigger it looks unstable.
-    private let fadeCutoff: Double = 0.2 // this is a constant, so not as useful as a var
-    func getFadeAmount(y: Double) -> CGFloat { // also this is a weird spot for this
-        if y < self.layout.spawnPosition { return 0.0 }
-        if y > self.layout.destroyPosition { return 0.0 }
-        
-        if y < self.layout.spawnPosition + fadeCutoff {
-            let t = ((self.layout.spawnPosition + fadeCutoff) - y) / fadeCutoff
-            return CGFloat(lerp(t, min: 1.0, max: 0.0))
-        }
-        
-        if y > self.layout.destroyPosition - fadeCutoff {
-            let t = (y - (self.layout.destroyPosition - fadeCutoff)) / fadeCutoff
-            return CGFloat(lerp(t, min: 1.0, max: 0.0))
-        }
-        
-        return 1.0
     }
 }

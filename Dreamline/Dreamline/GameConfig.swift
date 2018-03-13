@@ -26,11 +26,11 @@ struct SpeedInfo {
 class ScrollSpeedData {
     static func getData() -> [ScrollSpeed: SpeedInfo] {
         var dict = [ScrollSpeed: SpeedInfo]()
-        dict[.sp1] = SpeedInfo(index: 0, speed: 1.0, points: 1)
-        dict[.sp2] = SpeedInfo(index: 1, speed: 1.2, points: 1)
-        dict[.sp3] = SpeedInfo(index: 2, speed: 1.4, points: 2)
-        dict[.sp4] = SpeedInfo(index: 3, speed: 1.6, points: 2)
-        dict[.sp5] = SpeedInfo(index: 4, speed: 1.8, points: 3)
+        dict[.sp1] = SpeedInfo(index: 0, speed: 1.2, points: 1)
+        dict[.sp2] = SpeedInfo(index: 1, speed: 1.5, points: 1)
+        dict[.sp3] = SpeedInfo(index: 2, speed: 2.0, points: 2)
+        dict[.sp4] = SpeedInfo(index: 3, speed: 2.6, points: 2)
+        dict[.sp5] = SpeedInfo(index: 4, speed: 3.0, points: 3)
         
         return dict
     }

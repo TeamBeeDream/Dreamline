@@ -117,7 +117,7 @@ extension DreamlineViewController: SceneManager {
         
         // @CLEANUP: This transition could be stored somewhere else
         //           Like a 'resource' manager, use enum as key
-        let transition = SKTransition.doorsOpenVertical(withDuration: 1.0)
+        let transition = SKTransition.moveIn(with: SKTransitionDirection.down, duration: 1.0)
         // Pause outgoing scene, expected to be a StartScene
         transition.pausesOutgoingScene = true
         // Pause incoming GameScene

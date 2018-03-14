@@ -35,12 +35,19 @@ protocol Positioner {
 // @TODO: new name for this
 class UserPositioner: Positioner {
     func update(state: PositionerState, config: GameConfig, targetOffset: Double, dt: Double) -> (PositionerState, [Event]) {
+        // Calculate new state
         let diff = targetOffset - state.currentOffset
         let step = clamp(dt / config.positionerMoveDuration, min: 0.0, max: 1.0)
         let delta = step * diff
-        
         let updatedState = PositionerState(currentOffset: state.currentOffset + delta)
-        let events = [Event]() // @TODO: implement position events
+        
+        // Generate events
+        var events = [Event]()
+        let oldPosition = self.getPosition(state: state, config: config)
+        let currPosition = self.getPosition(state: updatedState, config: config)
+        if oldPosition.lane != currPosition.lane {
+            events.append(.changedLanes)
+        }
         
         return (updatedState, events)
     }

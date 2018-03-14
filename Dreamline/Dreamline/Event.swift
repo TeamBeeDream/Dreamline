@@ -20,6 +20,5 @@ enum Event {
     
     case modifierGet(Int, ModifierType)
     
-    case enteredLane(Lane)
-    case exitedLane(Lane)
+    case changedLanes
 }

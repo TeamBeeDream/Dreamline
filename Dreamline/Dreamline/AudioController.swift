@@ -24,7 +24,7 @@ class AudioNode: SKNode, AudioController {
         self.bingSound = SKAction.playSoundFileNamed("Pickup_Coin.wav", waitForCompletion: false)
         self.powerupSound = SKAction.playSoundFileNamed("Powerup.wav", waitForCompletion: false)
         self.deathSound = SKAction.playSoundFileNamed("Death.wav", waitForCompletion: false)
-        self.blipSound = SKAction.playSoundFileNamed("Blip.wav", waitForCompletion: false)
+        self.blipSound = SKAction.playSoundFileNamed("Blip.wav", waitForCompletion: true)
         
         super.init()
     }

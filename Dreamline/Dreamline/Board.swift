@@ -163,9 +163,10 @@ class DefaultBoard: Board {
         var distance = state.distanceSinceLastTrigger + step
         if distance > config.boardDistanceBetweenTriggers {
             distance = 0.0 // @HACK: this is used later in this function, very fragile
-            updatedTotalTriggerCount += 1
+            
             let triggers = sequencer.getNextTrigger(config: config)
             for triggerType in triggers {
+                updatedTotalTriggerCount += 1
                 let newTrigger = Trigger(id: updatedTotalTriggerCount,
                                          position: layout.spawnPosition,
                                          status: .idle,

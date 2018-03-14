@@ -110,6 +110,8 @@ class AuthoredSequencer: Sequencer {
             queue.append(self.newGapPattern(count: 3))
             queue.append(self.newPacerPattern())
             queue.append(self.newGapPattern(count: 3))
+            queue.append(self.newSpeedTrapPattern())
+            queue.append(self.newGapPattern(count: 3))
         }
         
         // otherwise, pull from queue
@@ -144,6 +146,14 @@ class AuthoredSequencer: Sequencer {
         
         let triggers = [leftBoost, rightBoost, leftBoost] // @TODO: Chirality support
         return Group(pattern: .boost, triggers: triggers, index: 0)
+    }
+    
+    private func newSpeedTrapPattern() -> Group {
+        let barrier: TriggerType = .barrier(Barrier(gates: [.closed, .open, .closed]))
+        let modifier: TriggerType = .modifier(ModifierRow(modifiers: [.none, .speedUp, .none]))
+        
+        let triggers = [[barrier, modifier]]
+        return Group(pattern: .speedTrap, triggers: triggers, index: 0)
     }
     
     private func newTunnelPattern() -> Group {

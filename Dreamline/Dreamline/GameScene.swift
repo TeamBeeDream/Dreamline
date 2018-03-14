@@ -19,6 +19,7 @@ class GameScene: CustomScene {
     var model: GameModel = DefaultGameModel()
     var rulesetModifier: RulesetModifier = DefaultRulesetModifier()
     var renderer: GameRenderer?
+    var audio: AudioController?
     var scoreUpdater: ScoreUpdater = DefaultScoreUpdater()
     
     // These are the pieces of state (just data)
@@ -32,7 +33,6 @@ class GameScene: CustomScene {
     private var numInputs: Int = 0
     
     override func onInit() {
-        
         // Create the renderer and add it to the view
         self.renderer = DebugRenderer(frame: self.frame)
         addChild(self.renderer as! SKNode)
@@ -42,18 +42,19 @@ class GameScene: CustomScene {
         //        be created without it, hence why this can't
         //        be instantiated until after GameScene's init
         
+        self.audio = AudioNode()
+        addChild(self.audio as! SKNode)
+        
         self.backgroundColor = SKColor(red: 57.0/255.0, green: 61.0/255.0, blue: 63.0/255.0, alpha: 1.0)
     }
     
     override func didMove(to view: SKView) {
-        
         // This is called whenever this scene is incoming
         // So if this instance already existed, it
         // will resume wherever it was last left off
     }
     
     override func willMove(from view: SKView) {
-        
         // @BUG: Input needs to be reset,
         // When we transition away from this scene,
         // any remaining touches will need to be cleared
@@ -63,7 +64,6 @@ class GameScene: CustomScene {
     }
     
     deinit {
-        
         // @ROBUSTNESS: Ensure all memory is freed
         self.renderer!.free()
         self.removeAllActions()
@@ -71,6 +71,7 @@ class GameScene: CustomScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        // Update all of the modules
         
         var dt = currentTime - self.timeOfPreviousFrame
         self.timeOfPreviousFrame = currentTime
@@ -97,6 +98,7 @@ class GameScene: CustomScene {
         
         // this optional is dangerous :(
         self.renderer!.render(state: state, score: score, config: config, events: events)
+        self.audio!.processEvents(events)
         
         // scene stuff
         // @TODO: move this to own function or something

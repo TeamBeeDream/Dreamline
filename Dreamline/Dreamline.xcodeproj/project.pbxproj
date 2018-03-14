@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		693DF52C205995C6002C4821 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693DF52B205995C6002C4821 /* AudioController.swift */; };
+		693DF52F205997ED002C4821 /* Pickup_Coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF52E205997ED002C4821 /* Pickup_Coin.wav */; };
+		693DF53120599961002C4821 /* Powerup.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF53020599961002C4821 /* Powerup.wav */; };
+		693DF533205999DC002C4821 /* Death.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF532205999DC002C4821 /* Death.wav */; };
+		693DF53520599AAA002C4821 /* Blip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF53420599AAA002C4821 /* Blip.wav */; };
 		6940158C205070AF0047C80E /* GameConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6940158B205070AF0047C80E /* GameConfig.swift */; };
 		6940158E205078D70047C80E /* GameRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6940158D205078D70047C80E /* GameRenderer.swift */; };
 		69410B652056D620001EAB89 /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69410B642056D620001EAB89 /* Scoring.swift */; };
@@ -53,6 +58,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		693DF52B205995C6002C4821 /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
+		693DF52E205997ED002C4821 /* Pickup_Coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pickup_Coin.wav; sourceTree = "<group>"; };
+		693DF53020599961002C4821 /* Powerup.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Powerup.wav; sourceTree = "<group>"; };
+		693DF532205999DC002C4821 /* Death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Death.wav; sourceTree = "<group>"; };
+		693DF53420599AAA002C4821 /* Blip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Blip.wav; sourceTree = "<group>"; };
 		6940158B205070AF0047C80E /* GameConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConfig.swift; sourceTree = "<group>"; };
 		6940158D205078D70047C80E /* GameRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameRenderer.swift; sourceTree = "<group>"; };
 		69410B642056D620001EAB89 /* Scoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
@@ -112,6 +122,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		693DF52D205997E0002C4821 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				693DF53420599AAA002C4821 /* Blip.wav */,
+				693DF532205999DC002C4821 /* Death.wav */,
+				693DF53020599961002C4821 /* Powerup.wav */,
+				693DF52E205997ED002C4821 /* Pickup_Coin.wav */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		699FC549204E053600DB09B4 = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +162,7 @@
 				699FC55B204E053600DB09B4 /* GameScene.swift */,
 				699AE3872057135C007BA2E2 /* ScoreScene.swift */,
 				699AE38520570D5D007BA2E2 /* CustomScene.swift */,
+				693DF52B205995C6002C4821 /* AudioController.swift */,
 				69BC375620518612002F7383 /* Render */,
 				699FC58D204E1A8F00DB09B4 /* GameModel.swift */,
 				6940158B205070AF0047C80E /* GameConfig.swift */,
@@ -154,6 +176,7 @@
 				69AB5E91204F251700093B33 /* Math.swift */,
 				699FC55F204E053600DB09B4 /* Main.storyboard */,
 				699FC564204E053600DB09B4 /* LaunchScreen.storyboard */,
+				693DF52D205997E0002C4821 /* Resources */,
 				699FC562204E053600DB09B4 /* Assets.xcassets */,
 				699FC567204E053600DB09B4 /* Info.plist */,
 			);
@@ -300,6 +323,10 @@
 				699FC561204E053600DB09B4 /* Main.storyboard in Resources */,
 				699FC563204E053600DB09B4 /* Assets.xcassets in Resources */,
 				699FC566204E053600DB09B4 /* LaunchScreen.storyboard in Resources */,
+				693DF52F205997ED002C4821 /* Pickup_Coin.wav in Resources */,
+				693DF53520599AAA002C4821 /* Blip.wav in Resources */,
+				693DF53120599961002C4821 /* Powerup.wav in Resources */,
+				693DF533205999DC002C4821 /* Death.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -324,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				693DF52C205995C6002C4821 /* AudioController.swift in Sources */,
 				699AE38620570D5D007BA2E2 /* CustomScene.swift in Sources */,
 				699FC55C204E053600DB09B4 /* GameScene.swift in Sources */,
 				6940158C205070AF0047C80E /* GameConfig.swift in Sources */,

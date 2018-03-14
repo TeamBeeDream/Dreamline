@@ -77,7 +77,7 @@ class GameScene: CustomScene {
         self.timeOfPreviousFrame = currentTime
         if dt > 1.0 { dt = 1.0/60.0 }
         
-        // update
+        // Update
         let (updatedState, events) = model.update(
             state: state,
             config: config,
@@ -91,16 +91,16 @@ class GameScene: CustomScene {
             config: updatedConfig,
             events: events)
         
-        // composite
+        // Composite
         self.state = updatedState
         self.config = updatedConfig // @TODO: should config changes be done here or in the model?
         self.score = updatedScore
         
-        // this optional is dangerous :(
+        // This optional is dangerous :(
         self.renderer!.render(state: state, score: score, config: config, events: events)
         self.audio!.processEvents(events)
         
-        // scene stuff
+        // Scene stuff
         // @TODO: move this to own function or something
         for event in events {
             switch (event) {
@@ -116,25 +116,24 @@ class GameScene: CustomScene {
 // input should probably be its own class,
 // need to figure out how to properly update it
 // for now, this input is hardcoded here
+// @NOTE: This code mutates the state,
+//        we should use clone() instead
 extension GameScene {
     private func addInput(_ lane: Int) {
-        
         // Add input, change target position to newest input
-        state.targetOffset = Double(lane)
+        state.positionState.target = Double(lane)
         self.numInputs += 1
     }
     
     private func removeInput(count: Int) {
-        
         // Remove input, if 0 touches then change target position to 0 (center)
         self.numInputs -= count
         if (self.numInputs == 0) {
-            state.targetOffset = 0.0
+            state.positionState.setTarget(Lane.center)
         }
     }
     
     private func clearInput() {
-        
         self.removeInput(count: self.numInputs)
     }
     

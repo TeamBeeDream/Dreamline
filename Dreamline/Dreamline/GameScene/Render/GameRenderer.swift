@@ -71,7 +71,7 @@ class DebugRenderer: SKNode, GameRenderer {
             switch (event) {
                 
             case .triggerAdded(let trigger):
-                self.cacheTrigger(trigger, layout: state.boardLayout)
+                self.cacheTrigger(trigger, layout: state.boardState.layout)
             case .triggerDestroyed(let triggerId):
                 self.deleteTrigger(triggerId)
             case .barrierPass(let triggerId):
@@ -90,11 +90,12 @@ class DebugRenderer: SKNode, GameRenderer {
         }
         
         // Update temp player node
-        let position = state.positioner.getPosition(state: state.positionerState,
-                                                    config: config)
-        let offset = position.offset * state.boardLayout.laneOffset
+        //let position = state.positioner.getPosition(state: state.positionerState,
+        //                                            config: config)
+        
+        let offset = state.positionState.offset * state.boardState.layout.laneOffset
         self.playerNode.position = self.cachedFrame.point(x: offset,
-                                         y: state.boardLayout.playerPosition)
+                                         y: state.boardState.layout.playerPosition)
         
         // Update Score Text
         self.scoreText.text = String(score.points)

@@ -13,7 +13,7 @@ extension Int {
     static func random(min: Int, max: Int) -> Int {
         let range = max - min
         let randValue = Int(arc4random_uniform(UInt32(range)))
-        return Int(randValue + min) // @TODO: use call to random()
+        return Int(randValue + min)
     }
 }
 

@@ -7,110 +7,15 @@
 //
 
 import Foundation
-import UIKit
-
-// @RENAME: this is more than just the type, it IS the data
-enum TriggerType {
-    case barrier(Barrier)
-    case modifier(ModifierRow)
-    case empty // not sure if this is a good idea
-}
-
-// @RENAME: this is close
-// name needs to imply that it's a line that you cross
-// and when you cross it, it changes something about the state
-struct Trigger {
-    let id: Int
-    var position: Double
-    var status: TriggerStatus
-    var type: TriggerType
-}
-
-extension Trigger {
-    func clone() -> Trigger {
-        return Trigger(id: self.id,
-                       position: self.position,
-                       status: self.status,
-                       type: self.type)
-    }
-}
-
-enum TriggerStatus {
-    case idle // @RENAME
-    case pass
-    case hit
-}
-
-struct Barrier {
-    let gates: [Gate] // only this left, huh
-}
-
-enum ModifierType {
-    case speedUp
-    case speedDown
-    case none // this is a little weird
-}
-
-struct ModifierRow {
-    let modifiers: [ModifierType]
-}
-
-extension Barrier {
-    func clone() -> Barrier {
-        return Barrier(gates: self.gates)
-    }
-}
-
-struct BoardLayout {
-    var spawnPosition: Double
-    var destroyPosition: Double
-    var playerPosition: Double
-    var laneOffset: Double
-}
-
-struct BoardState {
-    var triggers: [Trigger]
-    var totalDistance: Double
-    var distanceSinceLastTrigger: Double
-    var totalTriggerCount: Int // @CLEANUP: this is used for assigning unique int ids
-    
-    init() {
-        self.triggers = [Trigger]()
-        self.totalDistance = 0.0
-        self.distanceSinceLastTrigger = 0.0
-        self.totalTriggerCount = 0
-    }
-}
-
-// @CLEANUP, should probably use factory method
-extension BoardState {
-    private init(triggers: [Trigger],
-                 totalDistance: Double,
-                 totalTriggerCount: Int,
-                 distanceSinceLastTrigger: Double) {
-        
-        self.triggers = triggers
-        self.totalDistance = totalDistance
-        self.totalTriggerCount = totalTriggerCount
-        self.distanceSinceLastTrigger = distanceSinceLastTrigger
-    }
-    
-    func clone() -> BoardState {
-        return BoardState(triggers: self.triggers,
-                          totalDistance: self.totalDistance,
-                          totalTriggerCount: self.totalTriggerCount,
-                          distanceSinceLastTrigger: self.distanceSinceLastTrigger)
-    }
-}
 
 protocol Board {
     func update(state: BoardState,
                 config: GameConfig,
-                layout: BoardLayout,
                 sequencer: Sequencer,
                 positioner: Positioner,
-                originalPosition: Position,
-                updatedPosition: Position,
+                
+                originalPosition: PositionState,
+                updatedPosition: PositionState,
                 dt: Double) -> (BoardState, [Event])
 }
 
@@ -124,11 +29,10 @@ class DefaultBoard: Board {
     
     func update(state: BoardState,
                 config: GameConfig,
-                layout: BoardLayout,
                 sequencer: Sequencer,
                 positioner: Positioner,
-                originalPosition: Position,
-                updatedPosition: Position,
+                originalPosition: PositionState,
+                updatedPosition: PositionState,
                 dt: Double) -> (BoardState, [Event]) {
         
         // constants
@@ -143,7 +47,7 @@ class DefaultBoard: Board {
         var updatedTriggers_Moved = [Trigger]()
         for trigger in state.triggers {
             let updatedPosition = trigger.position + step
-            if updatedPosition > layout.destroyPosition {
+            if updatedPosition > state.layout.destroyPosition {
                 // if below the cutoff, exclude from the updated list
                 // and raise a 'destroyed' event
                 raisedEvents.append(.triggerDestroyed(trigger.id))
@@ -168,7 +72,7 @@ class DefaultBoard: Board {
             for triggerType in triggers {
                 updatedTotalTriggerCount += 1
                 let newTrigger = Trigger(id: updatedTotalTriggerCount,
-                                         position: layout.spawnPosition,
+                                         position: state.layout.spawnPosition,
                                          status: .idle,
                                          type: triggerType)
                 updatedTriggers_Added.append(newTrigger)
@@ -185,11 +89,10 @@ class DefaultBoard: Board {
             
             switch (trigger.type) {
             case .barrier(let barrier):
-                
                 let updatedStatus = barrierCollisionTest(barrier: barrier,
                                         position: trigger.position,
                                         step: step,
-                                        layout: layout,
+                                        layout: state.layout,
                                         originalPosition: originalPosition,
                                         updatedPosition: updatedPosition,
                                         positioner: positioner,
@@ -211,7 +114,7 @@ class DefaultBoard: Board {
                 let (updatedStatus, modifierType) = modifierDidCollide(row: row,
                                                        position: trigger.position,
                                                        step: step,
-                                                       layout: layout,
+                                                       layout: state.layout,
                                                        positioner: positioner,
                                                        originalPosition: originalPosition,
                                                        updatedPosition: updatedPosition,
@@ -253,8 +156,8 @@ class DefaultBoard: Board {
                                       position: Double,
                                       step: Double,
                                       layout: BoardLayout,
-                                      originalPosition: Position,
-                                      updatedPosition: Position,
+                                      originalPosition: PositionState,
+                                      updatedPosition: PositionState,
                                       positioner: Positioner,
                                       config: GameConfig) -> TriggerStatus {
         let barrierY0 = position - step
@@ -272,12 +175,23 @@ class DefaultBoard: Board {
         let xPos = lerp(t, min: originalPosition.offset, max: updatedPosition.offset)
         
         // sample barrier at xPos
-        let pState = PositionerState(currentOffset: xPos) // this is silly
-        let dPos = positioner.getPosition(state: pState, config: config)
+        let pState = PositionState(offset: xPos,
+                                   target: updatedPosition.target,
+                                   lane: 0, withinTolerance: true) // @FIXME @FIXME @FIXME
+       
+        //let dPos = positioner.getPosition(state: pState, config: config)
+        let nearest = round(pState.offset)
+        let distance = fabs(pState.offset - nearest)
+        let within = distance < config.positionerTolerance // @TODO: only allow within if nearest == target
+        let dPos = PositionState(offset: xPos,
+                                 target: updatedPosition.target,
+                                 lane: Int(nearest),
+                                 withinTolerance: within)
+        
         
         let crossedLanes = originalPosition.lane != updatedPosition.lane
         let withinTolerance = dPos.withinTolerance
-        let nearest = dPos.lane + 1
+        let nearestL = dPos.lane + 1    // @BUG, anything after this line needs to be using nearestL
         
         var didHit = false
         
@@ -287,14 +201,14 @@ class DefaultBoard: Board {
             let open1 = barrier.gates[updatedPosition.lane + 1] == .open
             if open0 && open1 {
                 // no need to check tolerance
-                didHit = barrier.gates[nearest] != .open
+                didHit = barrier.gates[nearestL] != .open
             } else {
                 // include tolerance
-                didHit = barrier.gates[nearest] != .open && withinTolerance
+                didHit = barrier.gates[nearestL] != .open && withinTolerance
             }
         } else {
             // simple check
-            didHit = barrier.gates[nearest] != .open
+            didHit = barrier.gates[nearestL] != .open
         }
         
         // didHit is not a good name
@@ -307,8 +221,8 @@ class DefaultBoard: Board {
                                     step: Double,
                                     layout: BoardLayout,
                                     positioner: Positioner,
-                                    originalPosition: Position,
-                                    updatedPosition: Position,
+                                    originalPosition: PositionState,
+                                    updatedPosition: PositionState,
                                     config: GameConfig) -> (TriggerStatus, ModifierType) {
         let barrierY0 = position - step
         let barrierY1 = position
@@ -325,14 +239,20 @@ class DefaultBoard: Board {
         let xPos = lerp(t, min: originalPosition.offset, max: updatedPosition.offset)
         
         // sample barrier at xPos
-        let pState = PositionerState(currentOffset: xPos) // this is silly
-        let dPos = positioner.getPosition(state: pState, config: config)
+        var pState = originalPosition.clone()
+        pState.offset = xPos
+        let nearest = round(pState.offset)
+        let distance = fabs(pState.offset - nearest)
+        let within = distance < config.positionerTolerance // @TODO: only allow within if nearest == target
+        let dPos = PositionState(offset: xPos,
+                                 target: updatedPosition.target,
+                                 lane: Int(nearest),
+                                 withinTolerance: within)
         
         let withinTolerance = dPos.withinTolerance
-        let nearest = dPos.lane + 1
         
         // @RENAME: this is the actual modifier that you collided with (its type)
-        let hit = row.modifiers[nearest]
+        let hit = row.modifiers[dPos.lane + 1]
         
         if hit == .none {
             return (.pass, hit)

@@ -23,6 +23,8 @@ struct SpeedInfo {
 }
 
 // @HACK: this is a pretty janky way to store/deliver information
+// @TODO: Probably best to move this to a ruleset struct so it can be
+//        dynamically defined
 class ScrollSpeedData {
     static func getData() -> [ScrollSpeed: SpeedInfo] {
         var dict = [ScrollSpeed: SpeedInfo]()

@@ -17,7 +17,7 @@ class GameScene: CustomScene {
     
     // These are all the things that need updates
     var model: GameModel = DefaultGameModel()
-    var rulesetModifier: RulesetModifier = DefaultRulesetModifier()
+    var configurator: Configurator = DefaultConfigurator()
     var renderer: GameRenderer?
     var audio: AudioController?
     var scoreUpdater: ScoreUpdater = DefaultScoreUpdater()
@@ -26,7 +26,6 @@ class GameScene: CustomScene {
     var state: ModelState = ModelState.getDefault()
     var score: Score = ScoreFactory.getNew()
     var config: GameConfig = GameConfigFactory.getDefault()
-    var ruleset: Ruleset = RulesetFactory.getDefault()
     
     // Internal state
     private var timeOfPreviousFrame: TimeInterval = 0
@@ -72,7 +71,6 @@ class GameScene: CustomScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Update all of the modules
-        
         var dt = currentTime - self.timeOfPreviousFrame
         self.timeOfPreviousFrame = currentTime
         if dt > 1.0 { dt = 1.0/60.0 }
@@ -82,8 +80,7 @@ class GameScene: CustomScene {
             state: state,
             config: config,
             dt: dt)
-        let updatedConfig = rulesetModifier.updateRuleset(
-            ruleset: ruleset,
+        let updatedConfig = configurator.updateConfig(
             config: config,
             events: events)
         let updatedScore = scoreUpdater.updateScore(

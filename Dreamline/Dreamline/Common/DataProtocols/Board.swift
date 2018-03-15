@@ -11,6 +11,7 @@ import Foundation
 protocol Board {
     func update(state: BoardState,
                 config: GameConfig,
+                ruleset: Ruleset,
                 sequencer: Sequencer,
                 positioner: Positioner,
                 
@@ -29,16 +30,17 @@ class DefaultBoard: Board {
     
     func update(state: BoardState,
                 config: GameConfig,
+                ruleset: Ruleset,
                 sequencer: Sequencer,
                 positioner: Positioner,
                 originalPosition: PositionState,
                 updatedPosition: PositionState,
                 dt: Double) -> (BoardState, [Event]) {
         
-        // constants
-        let step = dt * ScrollSpeedData.getData()[config.boardScrollSpeed]!.speed
+        // Constants
+        let step = dt * ruleset.speedLookup[config.boardScrollSpeed]!.speed // This is a little awkward
         
-        // updated information @CLEANUP
+        // Updated information @CLEANUP
         var raisedEvents = [Event]()
         var updatedTotalTriggerCount = state.totalTriggerCount
         

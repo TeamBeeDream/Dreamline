@@ -26,6 +26,7 @@ class GameScene: CustomScene {
     var state: ModelState = ModelState.getDefault()
     var score: Score = ScoreFactory.getNew()
     var config: GameConfig = GameConfigFactory.getDefault()
+    var ruleset: Ruleset = RulesetFactory.getDefault()
     
     // Internal state
     private var timeOfPreviousFrame: TimeInterval = 0
@@ -79,13 +80,16 @@ class GameScene: CustomScene {
         let (updatedState, events) = model.update(
             state: state,
             config: config,
+            ruleset: ruleset,
             dt: dt)
         let updatedConfig = configurator.updateConfig(
             config: config,
+            ruleset: ruleset,
             events: events)
         let updatedScore = scoreUpdater.updateScore(
             state: score,
             config: updatedConfig,
+            ruleset: ruleset,
             events: events)
         
         // Composite

@@ -10,12 +10,12 @@ import Foundation
 
 protocol GameModel {
     // @TODO: add ruleset
-    func update(state: ModelState, config: GameConfig, dt: Double) -> (ModelState, [Event])
+    func update(state: ModelState, config: GameConfig, ruleset: Ruleset, dt: Double) -> (ModelState, [Event])
 }
 
 // @TODO: rename
 class DefaultGameModel: GameModel {
-    func update(state: ModelState, config: GameConfig, dt: Double) -> (ModelState, [Event]) {
+    func update(state: ModelState, config: GameConfig, ruleset: Ruleset, dt: Double) -> (ModelState, [Event]) {
         // Update positioner
         let (updatedPositionState, positionEvents) = state.positioner.update(
             state: state.positionState,
@@ -26,6 +26,7 @@ class DefaultGameModel: GameModel {
         let (updatedBoardState, boardEvents) = state.board.update(
             state: state.boardState,
             config: config,
+            ruleset: ruleset,
             sequencer: state.sequencer,
             positioner: state.positioner,
             originalPosition: state.positionState,

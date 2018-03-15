@@ -8,6 +8,16 @@
 
 import Foundation
 
+// @CLEANUP: Move this somewhere better
+// Should this have all of the data?
+enum ScrollSpeed: Int {
+    case mach1 = 0
+    case mach2 = 1
+    case mach3 = 2
+    case mach4 = 3
+    case mach5 = 4
+}
+
 // @RENAME: this is more than just the type, it IS the data
 enum TriggerType {
     case barrier(Barrier)

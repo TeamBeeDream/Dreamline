@@ -186,6 +186,12 @@ public func clamp<T: Clampable>(_ value: T, min: T, max: T) -> T {
 
 // MARK: Clampable implementations
 
+extension Int: Clampable {
+    public func clamp(min: Int, max: Int) -> Int {
+        return Swift.min(Swift.max(self, Swift.min(min, max)), Swift.max(min, max))
+    }
+}
+
 extension Double: Clampable {
     
     /// Clamp

@@ -8,55 +8,6 @@
 
 import Foundation
 
-enum ScrollSpeed: Double {
-    case mach1
-    case mach2
-    case mach3
-    case mach4
-    case mach5
-}
-
-struct SpeedInfo {
-    let index: Int
-    let speed: Double
-    let points: Int
-}
-
-// @HACK: this is a pretty janky way to store/deliver information
-// @TODO: Probably best to move this to a ruleset struct so it can be
-//        dynamically defined
-class ScrollSpeedData {
-    static func getData() -> [ScrollSpeed: SpeedInfo] {
-        var dict = [ScrollSpeed: SpeedInfo]()
-        dict[.mach1] = SpeedInfo(index: 0, speed: 1.0, points: 1)
-        dict[.mach2] = SpeedInfo(index: 1, speed: 1.2, points: 1)
-        dict[.mach3] = SpeedInfo(index: 2, speed: 1.6, points: 2)
-        dict[.mach4] = SpeedInfo(index: 3, speed: 2.0, points: 2)
-        dict[.mach5] = SpeedInfo(index: 4, speed: 2.5, points: 3)
-        
-        return dict
-    }
-    
-    // @HACK
-    static func getSpeed(index: Int) -> ScrollSpeed {
-        //assert(index >= 0 && index <= 4)
-        // @BAD: clamping is not great
-        //let i = clamp(index, min: 0, max: 4)
-        var i = index
-        if index < 0 { i = 0 }
-        if index > 4 { i = 4 }
-        
-        var values = [ScrollSpeed]()
-        values.append(.mach1)
-        values.append(.mach2)
-        values.append(.mach3)
-        values.append(.mach4)
-        values.append(.mach5)
-        
-        return values[i]
-    }
-}
-
 // @RENAME, maybe 'GameModifiers', 'Mutations' ...
 struct GameConfig {
     var positionerTolerance: Double

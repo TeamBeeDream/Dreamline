@@ -9,17 +9,17 @@
 import Foundation
 
 protocol Configurator {
-    func updateConfig(config: GameConfig, events: [Event]) -> GameConfig
+    func updateConfig(config: GameConfig, ruleset: Ruleset, events: [Event]) -> GameConfig
 }
 
 
 class DefaultConfigurator: Configurator {
-    func updateConfig(config: GameConfig, events: [Event]) -> GameConfig {
+    func updateConfig(config: GameConfig, ruleset: Ruleset, events: [Event]) -> GameConfig {
         var updatedConfig = config.clone()
         for event in events {
             switch (event) {
             case .modifierGet(_, let type):
-                updatedConfig.boardScrollSpeed = newSpeed(current: config.boardScrollSpeed, modifier: type)
+                updatedConfig.boardScrollSpeed = newSpeed(current: config.boardScrollSpeed, table: ruleset.speedLookup, modifier: type)
             default:
                 break
             }
@@ -27,16 +27,18 @@ class DefaultConfigurator: Configurator {
         return updatedConfig
     }
     
-    private func newSpeed(current: ScrollSpeed, modifier: ModifierType) -> ScrollSpeed {
-        // @TODO: Maybe this data should be stored in the ruleset instead of fixed
-        //        on the data struct itself?
-        let dataTable = ScrollSpeedData.getData() // @CLEANUP: This is silly
-        let index = dataTable[current]!.index
-        
+    private func newSpeed(current: ScrollSpeed,
+                          table: [ScrollSpeed: SpeedInfo],
+                          modifier: ModifierType) -> ScrollSpeed {
         switch modifier {
-        case .none: return current
-        case .speedUp: return ScrollSpeedData.getSpeed(index: index + 1)
-        case .speedDown: return ScrollSpeedData.getSpeed(index: index - 1)
+        case .none:
+            return current
+        case .speedUp:
+            let index = clamp(current.rawValue + 1, min: 0, max: 4) // @HARCODED: Min + max
+            return ScrollSpeed(rawValue: index)!
+        case .speedDown:
+            let index = clamp(current.rawValue - 1, min: 0, max: 4)
+            return ScrollSpeed(rawValue: index)!
         }
     }
 }

@@ -42,6 +42,7 @@
 		69EFB59420531150005B3325 /* EmptyNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFB59320531150005B3325 /* EmptyNode.swift */; };
 		69EFB5962053152F005B3325 /* ModifierNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFB5952053152F005B3325 /* ModifierNode.swift */; };
 		69EFB598205329A0005B3325 /* NodeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFB597205329A0005B3325 /* NodeCache.swift */; };
+		69FC8A39205C460000E3829E /* dreamline_mainloop_rough.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,7 @@
 		69EFB59320531150005B3325 /* EmptyNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyNode.swift; sourceTree = "<group>"; };
 		69EFB5952053152F005B3325 /* ModifierNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifierNode.swift; sourceTree = "<group>"; };
 		69EFB597205329A0005B3325 /* NodeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCache.swift; sourceTree = "<group>"; };
+		69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreamline_mainloop_rough.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +135,7 @@
 		693DF52D205997E0002C4821 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */,
 				693DF53420599AAA002C4821 /* Blip.wav */,
 				693DF532205999DC002C4821 /* Death.wav */,
 				693DF53020599961002C4821 /* Powerup.wav */,
@@ -369,6 +372,7 @@
 				699FC566204E053600DB09B4 /* LaunchScreen.storyboard in Resources */,
 				693DF52F205997ED002C4821 /* Pickup_Coin.wav in Resources */,
 				693DF53520599AAA002C4821 /* Blip.wav in Resources */,
+				69FC8A39205C460000E3829E /* dreamline_mainloop_rough.mp3 in Resources */,
 				693DF53120599961002C4821 /* Powerup.wav in Resources */,
 				693DF533205999DC002C4821 /* Death.wav in Resources */,
 			);

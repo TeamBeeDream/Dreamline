@@ -71,7 +71,7 @@ class RandomSequencer: Sequencer {
 class AuthoredSequencer: Sequencer {
     private enum Pattern {
         case start          // intro at the beginning of every round
-        case boost     // at the beginning, gives you choice to speed up right away
+        case boost          // at the beginning, gives you choice to speed up right away
         case speedTrap      // a trigger that forces you to change speed
         case tunnel         // a set of barriers that only have one open gate each
         case barrage        // a random set of barriers, difficult to get through

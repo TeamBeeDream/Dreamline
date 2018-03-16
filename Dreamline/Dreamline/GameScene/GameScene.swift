@@ -52,6 +52,12 @@ class GameScene: CustomScene {
         // This is called whenever this scene is incoming
         // So if this instance already existed, it
         // will resume wherever it was last left off
+        
+        // @HACK: Need a better way to fire off round begin event
+        //        Should probably be at the end of an animation
+        //        I'm using this to start the main music loop
+        //        (hence why only the audio is being updated)
+        self.audio!.processEvents([.roundBegin])
     }
     
     override func willMove(from view: SKView) {
@@ -61,6 +67,9 @@ class GameScene: CustomScene {
         // Or else the input gets stuck and the total
         // number of touches can never get back to 0
         self.removeInput(count: self.numInputs) // @TODO: make clearInput() method
+        
+        // @HACK: Stop music
+        self.audio!.processEvents([.roundEnd])
     }
     
     deinit {

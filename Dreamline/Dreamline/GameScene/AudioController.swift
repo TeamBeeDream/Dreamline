@@ -18,7 +18,6 @@ class AudioNode: SKNode, AudioController {
     private let powerupSound: SKAction
     private let slowdownSound: SKAction
     private let deathSound: SKAction
-    private let blipSound: SKAction
     
     //private let musicSound: SKAction
     private let musicNode: SKAudioNode
@@ -30,7 +29,6 @@ class AudioNode: SKNode, AudioController {
         self.powerupSound = SKAction.playSoundFileNamed("Powerup.wav", waitForCompletion: false)
         self.slowdownSound = SKAction.playSoundFileNamed("slowdown_effect.mp3", waitForCompletion: false)
         self.deathSound = SKAction.playSoundFileNamed("Death.wav", waitForCompletion: false)
-        self.blipSound = SKAction.playSoundFileNamed("Blip.wav", waitForCompletion: true)
         self.musicNode = SKAudioNode(fileNamed: "dreamline_mainloop_rough.mp3")
         self.musicNode.autoplayLooped = true
         
@@ -59,8 +57,6 @@ class AudioNode: SKNode, AudioController {
                 }
             case .barrierHit(_):
                 self.playSound(self.deathSound)
-            case .changedLanes:
-                self.playSound(self.blipSound)
             default: break
             }
         }

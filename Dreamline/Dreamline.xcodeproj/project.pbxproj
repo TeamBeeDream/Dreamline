@@ -11,7 +11,6 @@
 		693DF52F205997ED002C4821 /* Pickup_Coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF52E205997ED002C4821 /* Pickup_Coin.wav */; };
 		693DF53120599961002C4821 /* Powerup.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF53020599961002C4821 /* Powerup.wav */; };
 		693DF533205999DC002C4821 /* Death.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF532205999DC002C4821 /* Death.wav */; };
-		693DF53520599AAA002C4821 /* Blip.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF53420599AAA002C4821 /* Blip.wav */; };
 		693E1BAF2059A7FE008DBACE /* ModelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693E1BAE2059A7FE008DBACE /* ModelState.swift */; };
 		693E1BB12059B17F008DBACE /* PositionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693E1BB02059B17F008DBACE /* PositionState.swift */; };
 		693E1BB32059B919008DBACE /* BoardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693E1BB22059B919008DBACE /* BoardState.swift */; };
@@ -70,7 +69,6 @@
 		693DF52E205997ED002C4821 /* Pickup_Coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pickup_Coin.wav; sourceTree = "<group>"; };
 		693DF53020599961002C4821 /* Powerup.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Powerup.wav; sourceTree = "<group>"; };
 		693DF532205999DC002C4821 /* Death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Death.wav; sourceTree = "<group>"; };
-		693DF53420599AAA002C4821 /* Blip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Blip.wav; sourceTree = "<group>"; };
 		693E1BAE2059A7FE008DBACE /* ModelState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelState.swift; sourceTree = "<group>"; };
 		693E1BB02059B17F008DBACE /* PositionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionState.swift; sourceTree = "<group>"; };
 		693E1BB22059B919008DBACE /* BoardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardState.swift; sourceTree = "<group>"; };
@@ -143,7 +141,6 @@
 			isa = PBXGroup;
 			children = (
 				69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */,
-				693DF53420599AAA002C4821 /* Blip.wav */,
 				693DF532205999DC002C4821 /* Death.wav */,
 				693DF53020599961002C4821 /* Powerup.wav */,
 				693DF52E205997ED002C4821 /* Pickup_Coin.wav */,
@@ -415,7 +412,6 @@
 				699FC566204E053600DB09B4 /* LaunchScreen.storyboard in Resources */,
 				693DF52F205997ED002C4821 /* Pickup_Coin.wav in Resources */,
 				69FC8A3F205C4DA000E3829E /* slowdown_effect.mp3 in Resources */,
-				693DF53520599AAA002C4821 /* Blip.wav in Resources */,
 				69FC8A39205C460000E3829E /* dreamline_mainloop_rough.mp3 in Resources */,
 				693DF53120599961002C4821 /* Powerup.wav in Resources */,
 				693DF533205999DC002C4821 /* Death.wav in Resources */,

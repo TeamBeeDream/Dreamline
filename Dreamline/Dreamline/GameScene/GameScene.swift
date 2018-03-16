@@ -31,6 +31,7 @@ class GameScene: CustomScene {
     // Internal state
     private var timeOfPreviousFrame: TimeInterval = 0
     private var numInputs: Int = 0
+    private var isDead = false
     
     override func onInit() {
         // Create the renderer and add it to the view
@@ -80,10 +81,17 @@ class GameScene: CustomScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        
         // Update all of the modules
         var dt = currentTime - self.timeOfPreviousFrame
         self.timeOfPreviousFrame = currentTime
         if dt > 1.0 { dt = 1.0/60.0 }
+        
+        // @HACK: Need a better way to handle when the player has died
+        //        Should probably be a FSM
+        if self.isDead {
+            dt *= 0.2
+        }
         
         // Update
         let (updatedState, events) = model.update(
@@ -111,11 +119,20 @@ class GameScene: CustomScene {
         self.audio!.processEvents(events)
         
         // Scene stuff
-        // @TODO: move this to own function or something
+        // @TODO: Move this to own function or something
+        // @HACK: I don't like how the controller is responsible for
+        //        invoking the end of the game round, should probably
+        //        be in the modle update function
         for event in events {
             switch (event) {
             case .barrierHit(_):
-                self.manager.transitionToScoreScene(score: self.score.points)
+                self.renderer!.killPlayer() // @HACK
+                self.run(SKAction.sequence([
+                    SKAction.wait(forDuration: 1.0),
+                    SKAction.run {
+                        self.manager.transitionToScoreScene(score: self.score.points)
+                    }]))
+                self.isDead = true
             default: break
             }
         }
@@ -130,12 +147,18 @@ class GameScene: CustomScene {
 //        we should use clone() instead
 extension GameScene {
     private func addInput(_ lane: Int) {
+        // @HACK
+        if self.isDead { return }
+        
         // Add input, change target position to newest input
         state.positionState.target = Double(lane)
         self.numInputs += 1
     }
     
     private func removeInput(count: Int) {
+        // @HACK
+        if self.isDead { return }
+        
         // Remove input, if 0 touches then change target position to 0 (center)
         self.numInputs -= count
         if (self.numInputs == 0) {

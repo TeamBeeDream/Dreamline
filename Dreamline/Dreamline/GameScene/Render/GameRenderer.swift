@@ -12,6 +12,7 @@ import SpriteKit
 
 protocol GameRenderer {
     func render(state: ModelState, score: Score, config: GameConfig, events: [Event])
+    func killPlayer() // @HACK
     func free()
 }
 
@@ -99,6 +100,12 @@ class DebugRenderer: SKNode, GameRenderer {
         
         // Update Score Text
         self.scoreText.text = String(score.points)
+    }
+    
+    func killPlayer() {
+        self.playerNode.run(SKAction.group([
+            SKAction.scale(to: 0, duration: 0.45),
+            SKAction.fadeOut(withDuration: 0.45)]))
     }
     
     func free() {

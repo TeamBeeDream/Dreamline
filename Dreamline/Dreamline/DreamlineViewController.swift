@@ -10,6 +10,7 @@ import SpriteKit
 
 // @CLEANUP: Should this be here or in another file?
 protocol SceneManager {
+    func transitionToTitleScene()
     func transitionToStartScene()
     func transitionToGameScene()
     func transitionToScoreScene(score: Int)
@@ -28,9 +29,6 @@ protocol SceneManager {
 //          Maybe something like 'DreamlineBase' or 'DreamlineProgram'
 //          Whatever it is, it should indicate that this is the 'bottom' of the program
 class DreamlineViewController: UIViewController {
-
-    var currentScene: CustomScene?
-    var upcomingScene: CustomScene?
     
     var skview: SKView {
         
@@ -45,8 +43,8 @@ class DreamlineViewController: UIViewController {
         self.skview.showsFPS = true
         self.skview.showsNodeCount = true
         
-        // :Transition to 'start' scene
-        self.transitionToStartScene()
+        // :Transition to 'title' scene
+        self.transitionToTitleScene()
         // @HARDCODED: There could be some sort of switch here
         //             Could be a way to launch game in "develop mode" vs "master mode"
         //             How should this information be added to the children objects
@@ -87,6 +85,14 @@ class DreamlineViewController: UIViewController {
 //        Manage menory by cachine CustomScenes
 extension DreamlineViewController: SceneManager {
     
+    func transitionToTitleScene() {
+        let titleScene = TitleScene(manager: self, view: self.skview)
+        titleScene.scaleMode = .aspectFit
+        
+        self.skview.presentScene(titleScene)
+    }
+    
+    // @TODO: Pass transition type in
     func transitionToStartScene() {
         
         // Transition to a new StartScene
@@ -99,7 +105,7 @@ extension DreamlineViewController: SceneManager {
         
         // @CLEANUP: This transition could be stored somewhere else
         //           Like a 'resource' manager, use enum as key
-        let transition = SKTransition.doorsOpenVertical(withDuration: 1.0)
+        let transition = SKTransition.crossFade(withDuration: 0.5)
         // Pause outgoing scene, can't tell what it is :(
         transition.pausesOutgoingScene = true
         // Pause incoming StartScene

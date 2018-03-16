@@ -11,6 +11,7 @@ import SpriteKit
 // @CLEANUP: Should this be here or in another file?
 protocol SceneManager {
     func transitionToTitleScene()
+    func transitionToInfoScene()
     func transitionToStartScene()
     func transitionToGameScene()
     func transitionToScoreScene(score: Int)
@@ -90,6 +91,15 @@ extension DreamlineViewController: SceneManager {
         titleScene.scaleMode = .aspectFit
         
         self.skview.presentScene(titleScene)
+    }
+    
+    func transitionToInfoScene() {
+        let infoScene = AlphaInfoScene(manager: self, view: self.skview)
+        infoScene.scaleMode = .aspectFit
+        
+        let transition = SKTransition.crossFade(withDuration: 0.5)
+        
+        self.skview.presentScene(infoScene, transition: transition)
     }
     
     // @TODO: Pass transition type in

@@ -45,6 +45,6 @@ class TitleScene: CustomScene {
         
         self.run(SKAction.sequence([
             SKAction.wait(forDuration: 7),
-            SKAction.run { self.manager.transitionToStartScene() }]))
+            SKAction.run { self.manager.transitionToInfoScene() }]))
     }
 }

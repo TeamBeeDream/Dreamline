@@ -41,7 +41,7 @@ class UserPositioner: Positioner {
         let oldPosition = state
         let updatedPosition = calcState(state: updatedState, config: config)
         if oldPosition.lane != updatedPosition.lane {
-            events.append(.changedLanes)
+            events.append(.laneChange)
         }
         
         return (updatedState, events)

@@ -42,57 +42,57 @@ class DefaultBoard: Board {
         
         // Updated information @CLEANUP
         var raisedEvents = [Event]()
-        var updatedTotalTriggerCount = state.totalTriggerCount
+        var updatedTotalEntityCount = state.totalEntityCount
         
         // step: move all triggers
         // @TODO: can probably move this into a private func
-        var updatedTriggers_Moved = [Trigger]()
-        for trigger in state.triggers {
-            let updatedPosition = trigger.position + step
+        var updatedEntities_Moved = [Entity]()
+        for entity in state.entities {
+            let updatedPosition = entity.position + step
             if updatedPosition > state.layout.destroyPosition {
                 // if below the cutoff, exclude from the updated list
                 // and raise a 'destroyed' event
-                raisedEvents.append(.triggerDestroyed(trigger.id))
+                raisedEvents.append(.entityDestroy(entity.id))
                 continue
             } else {
                 // if still active, update position
                 // and add to updated list
-                var updatedTrigger = trigger.clone()
-                updatedTrigger.position = updatedPosition
-                updatedTriggers_Moved.append(updatedTrigger)
+                var updatedEntity = entity.clone()
+                updatedEntity.position = updatedPosition
+                updatedEntities_Moved.append(updatedEntity)
             }
         }
         
         // step: add new trigger if necessary
         // @TODO: make this deterministic
-        var updatedTriggers_Added = [Trigger]()
-        var distance = state.distanceSinceLastTrigger + step
-        if distance > config.boardDistanceBetweenTriggers {
+        var updatedEntities_Added = [Entity]()
+        var distance = state.distanceSinceLastEntity + step
+        if distance > config.boardDistanceBetweenEntities {
             distance = 0.0 // @HACK: this is used later in this function, very fragile
             
-            let triggers = sequencer.getNextTrigger(config: config)
-            for triggerType in triggers {
-                updatedTotalTriggerCount += 1
-                let newTrigger = Trigger(id: updatedTotalTriggerCount,
+            let entities = sequencer.getNextEntity(config: config)
+            for triggerData in entities {
+                updatedTotalEntityCount += 1
+                let newEntity = Entity(id: updatedTotalEntityCount,
                                          position: state.layout.spawnPosition,
-                                         status: .idle,
-                                         type: triggerType)
-                updatedTriggers_Added.append(newTrigger)
-                raisedEvents.append(.triggerAdded(newTrigger))
+                                         status: .active,
+                                         data: triggerData)
+                updatedEntities_Added.append(newEntity)
+                raisedEvents.append(.entityAdd(newEntity))
             }
         }
         
         // @TODO: step: handle collision and raise events
         // @CLEANUP: the nested switches are hard to read
-        var updatedTriggers_Collision = [Trigger]()
-        for trigger in updatedTriggers_Moved { // this is post-move
+        var updatedEntities_Collision = [Entity]()
+        for entity in updatedEntities_Moved { // this is post-move
             
-            var updatedTrigger = trigger.clone()
+            var updatedEntity = entity.clone()
             
-            switch (trigger.type) {
+            switch (entity.data) {
             case .barrier(let barrier):
                 let updatedStatus = barrierCollisionTest(barrier: barrier,
-                                        position: trigger.position,
+                                        position: entity.position,
                                         step: step,
                                         layout: state.layout,
                                         originalPosition: originalPosition,
@@ -101,20 +101,20 @@ class DefaultBoard: Board {
                                         config: config)
                 
                 switch (updatedStatus) {
-                case .idle:
+                case .active:
                     break
                 case .hit:
-                    raisedEvents.append(.barrierHit(trigger.id))
+                    raisedEvents.append(.barrierHit(entity.id))
                 case .pass:
-                    raisedEvents.append(.barrierPass(trigger.id))
+                    raisedEvents.append(.barrierPass(entity.id))
                 }
                 
-                updatedTrigger.status = updatedStatus
+                updatedEntity.status = updatedStatus
                 
             case .modifier(let row):
                 
                 let (updatedStatus, modifierType) = modifierDidCollide(row: row,
-                                                       position: trigger.position,
+                                                       position: entity.position,
                                                        step: step,
                                                        layout: state.layout,
                                                        positioner: positioner,
@@ -124,29 +124,29 @@ class DefaultBoard: Board {
                 
                 switch (updatedStatus) {
                 case .hit:
-                    raisedEvents.append(.modifierGet(trigger.id, modifierType))
+                    raisedEvents.append(.modifierGet(entity.id, modifierType))
                 default:
                     break
                 }
                 
-                updatedTrigger.status = updatedStatus
+                updatedEntity.status = updatedStatus
                 
             default:
                 break
             }
             
-            updatedTriggers_Collision.append(updatedTrigger)
+            updatedEntities_Collision.append(updatedEntity)
         }
         
         // composite updated state
-        var updatedTriggers = [Trigger]()
-        updatedTriggers.append(contentsOf: updatedTriggers_Moved)
-        updatedTriggers.append(contentsOf: updatedTriggers_Added)
+        var updatedEntities = [Entity]()
+        updatedEntities.append(contentsOf: updatedEntities_Moved)
+        updatedEntities.append(contentsOf: updatedEntities_Added)
         
         var updatedState = state.clone() // memory inefficient
-        updatedState.triggers = updatedTriggers
-        updatedState.totalTriggerCount = updatedTotalTriggerCount
-        updatedState.distanceSinceLastTrigger = distance // @CLEANUP
+        updatedState.entities = updatedEntities
+        updatedState.totalEntityCount = updatedTotalEntityCount
+        updatedState.distanceSinceLastEntity = distance // @CLEANUP
         updatedState.totalDistance = state.totalDistance + step
         
         return (updatedState, raisedEvents)
@@ -161,14 +161,14 @@ class DefaultBoard: Board {
                                       originalPosition: PositionState,
                                       updatedPosition: PositionState,
                                       positioner: Positioner,
-                                      config: GameConfig) -> TriggerStatus {
+                                      config: GameConfig) -> EntityStatus {
         let barrierY0 = position - step
         let barrierY1 = position
         
         // determine if player crossed barrier
         let crossed = barrierY0 < layout.playerPosition && barrierY1 > layout.playerPosition
         if !crossed { // didn't collide
-            return .idle // no change
+            return .active // no change
         }
         
         // calculate pass through
@@ -225,14 +225,14 @@ class DefaultBoard: Board {
                                     positioner: Positioner,
                                     originalPosition: PositionState,
                                     updatedPosition: PositionState,
-                                    config: GameConfig) -> (TriggerStatus, ModifierType) {
+                                    config: GameConfig) -> (EntityStatus, ModifierType) {
         let barrierY0 = position - step
         let barrierY1 = position
         
         // determine if player crossed barrier
         let crossed = barrierY0 < layout.playerPosition && barrierY1 > layout.playerPosition
         if !crossed { // didn't collide
-            return (.idle, .none) // no change
+            return (.active, .none) // no change
         }
         
         // calculate pass through

@@ -32,7 +32,7 @@ class BarrierNode: SKNode {
     
     // @TODO: Move to separate class (in graphics folder)
     // @RENAME: Imply that this should be called before using it
-    func drawOnce(barrier: Barrier, status: TriggerStatus) {
+    func drawOnce(barrier: Barrier, status: EntityStatus) {
         
         // @CLEANUP: This code is hard to understand
         let occupied = 1.0 - self.layout.laneOffset * 2
@@ -84,10 +84,10 @@ class BarrierNode: SKNode {
         addChild(self.graphic!)
     }
     
-    private func wallColor(_ status: TriggerStatus) -> SKColor {
+    private func wallColor(_ status: EntityStatus) -> SKColor {
         
         switch (status) {
-        case .idle:
+        case .active:
             return SKColor(red: 231.0/255.0, green: 109.0/255.0, blue: 131.0/255.0, alpha: 1.0)
         case .pass:
             return SKColor.green
@@ -96,10 +96,10 @@ class BarrierNode: SKNode {
         }
     }
     
-    private func gateColor(_ status: TriggerStatus) -> SKColor {
+    private func gateColor(_ status: EntityStatus) -> SKColor {
         
         switch (status) {
-        case .idle:
+        case .active:
             return SKColor(red: 218.0/255.0, green: 221.0/255.0, blue: 216.0/255.0, alpha: 1.0)
         case .pass:
             return SKColor.green

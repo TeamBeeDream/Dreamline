@@ -8,22 +8,6 @@
 
 import Foundation
 
-struct Score {
-    var points: Int
-}
-
-extension Score {
-    func clone() -> Score {
-        return Score(points: self.points)
-    }
-}
-
-class ScoreFactory {
-    static func getNew() -> Score {
-        return Score(points: 0)
-    }
-}
-
 // @RENAME
 // should probably have a term for "set of functions
 // that modifies the state"

@@ -9,26 +9,38 @@
 import Foundation
 
 protocol GameModel {
-    // @TODO: add ruleset
-    func update(state: ModelState, config: GameConfig, ruleset: Ruleset, dt: Double) -> (ModelState, [Event])
+    func update(state: ModelState,
+                config: GameConfig,
+                ruleset: Ruleset,
+                positioner: Positioner,
+                board: Board,
+                sequencer: Sequencer,
+                dt: Double) -> (ModelState, [Event])
 }
 
 // @TODO: rename
 class DefaultGameModel: GameModel {
-    func update(state: ModelState, config: GameConfig, ruleset: Ruleset, dt: Double) -> (ModelState, [Event]) {
+    func update(state: ModelState,
+                config: GameConfig,
+                ruleset: Ruleset,
+                positioner: Positioner,
+                board: Board,
+                sequencer: Sequencer,
+                dt: Double) -> (ModelState, [Event]) {
+        
         // Update positioner
-        let (updatedPositionState, positionEvents) = state.positioner.update(
+        let (updatedPositionState, positionEvents) = positioner.update(
             state: state.positionState,
             config: config,
             dt: dt)
         
         // Update board
-        let (updatedBoardState, boardEvents) = state.board.update(
+        let (updatedBoardState, boardEvents) = board.update(
             state: state.boardState,
             config: config,
             ruleset: ruleset,
-            sequencer: state.sequencer,
-            positioner: state.positioner,
+            sequencer: sequencer,
+            positioner: positioner,
             originalPosition: state.positionState,
             updatedPosition: updatedPositionState,
             dt: dt)

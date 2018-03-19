@@ -15,13 +15,13 @@ enum Event {
     case roundBegin
     case roundEnd
     
-    case triggerAdded(Trigger)
-    case triggerDestroyed(Int)
+    case entityAdd(Entity)
+    case entityDestroy(Int)
     
     case barrierPass(Int)
     case barrierHit(Int)
     
     case modifierGet(Int, ModifierType)
     
-    case changedLanes
+    case laneChange
 }

@@ -14,7 +14,7 @@ struct GameConfig {
     var positionerMoveDuration: Double
     
     var boardScrollSpeed: Speed
-    var boardDistanceBetweenTriggers: Double
+    var boardDistanceBetweenEntities: Double
 }
 
 extension GameConfig {
@@ -23,7 +23,7 @@ extension GameConfig {
             positionerTolerance: self.positionerTolerance,
             positionerMoveDuration: self.positionerMoveDuration,
             boardScrollSpeed: self.boardScrollSpeed,
-            boardDistanceBetweenTriggers: self.boardDistanceBetweenTriggers)
+            boardDistanceBetweenEntities: self.boardDistanceBetweenEntities)
     }
 }
 
@@ -33,6 +33,6 @@ class GameConfigFactory {
             positionerTolerance: 0.2,
             positionerMoveDuration: 0.1,
             boardScrollSpeed: .mach1,
-            boardDistanceBetweenTriggers: 0.7)
+            boardDistanceBetweenEntities: 0.7)
     }
 }

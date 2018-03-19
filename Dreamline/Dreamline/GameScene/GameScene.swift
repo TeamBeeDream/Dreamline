@@ -15,20 +15,25 @@ import SpriteKit
 //        I.e. swap out user input with mock input
 class GameScene: CustomScene {
     
-    // These are all the things that need updates
-    var model: GameModel = DefaultGameModel()
-    var configurator: Configurator = DefaultConfigurator()
-    var renderer: GameRenderer?
-    var audio: AudioController?
-    var scoreUpdater: ScoreUpdater = DefaultScoreUpdater()
-    
-    // These are the pieces of state (just data)
-    var state: ModelState = ModelState.getDefault()
+    // Data
+    var state: ModelState = ModelStateFactory.getDefault()
     var score: Score = ScoreFactory.getNew()
     var config: GameConfig = GameConfigFactory.getDefault()
     var ruleset: Ruleset = RulesetFactory.getDefault()
     
-    // Internal state
+    // Protocols
+    var model: GameModel = DefaultGameModel()
+    var positioner: Positioner = UserPositioner()
+    var board: Board = DefaultBoard()
+    var sequencer: Sequencer = AuthoredSequencer()
+    var configurator: Configurator = DefaultConfigurator()
+    var scoreUpdater: ScoreUpdater = DefaultScoreUpdater()
+    
+    // View Modules
+    var renderer: GameRenderer?
+    var audio: AudioController?
+    
+    // GameScene State
     private var timeOfPreviousFrame: TimeInterval = 0
     private var numInputs: Int = 0
     private var isDead = false
@@ -98,6 +103,9 @@ class GameScene: CustomScene {
             state: state,
             config: config,
             ruleset: ruleset,
+            positioner: positioner,
+            board: board,
+            sequencer: sequencer,
             dt: dt)
         let updatedConfig = configurator.updateConfig(
             config: config,

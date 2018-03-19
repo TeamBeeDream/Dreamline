@@ -9,7 +9,6 @@
 import SpriteKit
 
 class CustomScene: SKScene {
-    
     let manager: SceneManager
     
     init(manager: SceneManager, view: SKView) {
@@ -18,11 +17,9 @@ class CustomScene: SKScene {
         self.onInit()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        fatalError()
-    }
+    required init?(coder aDecoder: NSCoder) { fatalError() }
     
-    func onInit() {
-        // default, do nothing
-    }
+    // This can be overriden by subclasses
+    // Called at the end of init()
+    func onInit() {}
 }

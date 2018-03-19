@@ -12,10 +12,10 @@ import SpriteKit
 // for now these just take in generic SKNodes
 // if need be, swap with protocol for more functionality
 protocol NodeCache {
-    func addNode(_ node: SKNode, data: Trigger)
-    func deleteNode(triggerId: Int)
-    func updateNodePosition(triggerId: Int, position: CGFloat)
-    func fadeOutNode(triggerId: Int)
+    func addNode(_ node: SKNode, entity: Entity)
+    func deleteNode(id: Int)
+    func updateNodePosition(id: Int, position: CGFloat)
+    func fadeOutNode(id: Int)
     func free()
 }
 
@@ -23,30 +23,30 @@ class GenericNodeCache: SKNode, NodeCache {
     
     var cachedNodes = [Int: SKNode]()
     
-    func addNode(_ node: SKNode, data: Trigger) {
-        self.cachedNodes[data.id] = node
+    func addNode(_ node: SKNode, entity: Entity) {
+        self.cachedNodes[entity.id] = node
         self.addChild(node)
     }
     
-    func deleteNode(triggerId: Int) {
-        assert(self.cachedNodes[triggerId] != nil)
+    func deleteNode(id: Int) {
+        assert(self.cachedNodes[id] != nil)
         
-        let node = self.cachedNodes[triggerId]!
+        let node = self.cachedNodes[id]!
         node.removeFromParent() // double check that this doesn't have any weird side effects
-        self.cachedNodes.removeValue(forKey: triggerId)
+        self.cachedNodes.removeValue(forKey: id)
     }
     
-    func updateNodePosition(triggerId: Int, position: CGFloat) {
-        assert(self.cachedNodes[triggerId] != nil)
+    func updateNodePosition(id: Int, position: CGFloat) {
+        assert(self.cachedNodes[id] != nil)
         
-        let node = self.cachedNodes[triggerId]!
+        let node = self.cachedNodes[id]!
         node.position.y = position
     }
     
-    func fadeOutNode(triggerId: Int) {
-        assert(self.cachedNodes[triggerId] != nil)
+    func fadeOutNode(id: Int) {
+        assert(self.cachedNodes[id] != nil)
         
-        let node = self.cachedNodes[triggerId]!
+        let node = self.cachedNodes[id]!
         node.run(SKAction.fadeOut(withDuration: 0.2))
     }
     

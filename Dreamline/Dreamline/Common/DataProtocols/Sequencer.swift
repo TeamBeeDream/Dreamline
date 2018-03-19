@@ -14,7 +14,7 @@ enum Gate {
 }
 
 protocol Sequencer {
-    func getNextTrigger(config: GameConfig) -> [TriggerType]
+    func getNextEntity(config: GameConfig) -> [EntityData]
 }
 
 // @NOTE: This is a temporary solution
@@ -22,7 +22,7 @@ protocol Sequencer {
 //        the AuthoredSequencer is complete
 class RandomSequencer: Sequencer {
 
-    func getNextTrigger(config: GameConfig) -> [TriggerType] {
+    func getNextEntity(config: GameConfig) -> [EntityData] {
         let random = Double.random()
         if random < 0.2 {
             return [.empty]
@@ -81,7 +81,7 @@ class AuthoredSequencer: Sequencer {
     
     private struct Group {
         var pattern: Pattern
-        var triggers: [[TriggerType]]
+        var triggers: [[EntityData]]
         var index: Int
         
         func clone() -> Group {
@@ -100,8 +100,7 @@ class AuthoredSequencer: Sequencer {
         queue.append(self.newBoostPattern())
     }
     
-    func getNextTrigger(config: GameConfig) -> [TriggerType] {
-        
+    func getNextEntity(config: GameConfig) -> [EntityData] {
         if queue.isEmpty {
             // @TODO: Sequence patterns dynamically
             queue.append(self.newTunnelPattern())
@@ -129,44 +128,44 @@ class AuthoredSequencer: Sequencer {
     }
     
     private func newStartPattern() -> Group {
-        let barrier: [TriggerType] = [.barrier(Barrier(gates: [.closed, .open, .closed]))]
-        let triggers = [[TriggerType]](repeating: barrier, count: 3)
+        let barrier: [EntityData] = [.barrier(Barrier(gates: [.closed, .open, .closed]))]
+        let triggers = [[EntityData]](repeating: barrier, count: 3)
         return Group(pattern: .start, triggers: triggers, index: 0)
     }
     
     private func newGapPattern(count: Int) -> Group {
-        let emptyTrigger: [TriggerType] = [.empty]
-        let triggers = [[TriggerType]](repeating: emptyTrigger, count: count)
+        let emptyTrigger: [EntityData] = [.empty]
+        let triggers = [[EntityData]](repeating: emptyTrigger, count: count)
         return Group(pattern: .gap, triggers: triggers, index: 0)
     }
     
     private func newBoostPattern() -> Group {
-        let leftBoost: [TriggerType] = [.modifier(ModifierRow(modifiers: [.speedUp, .none, .none]))]
-        let rightBoost: [TriggerType] = [.modifier(ModifierRow(modifiers: [.none, .none, .speedUp]))]
+        let leftBoost: [EntityData] = [.modifier(ModifierRow(modifiers: [.speedUp, .none, .none]))]
+        let rightBoost: [EntityData] = [.modifier(ModifierRow(modifiers: [.none, .none, .speedUp]))]
         
         let triggers = [leftBoost, rightBoost, leftBoost] // @TODO: Chirality support
         return Group(pattern: .boost, triggers: triggers, index: 0)
     }
     
     private func newSpeedTrapPattern() -> Group {
-        let barrier: TriggerType = .barrier(Barrier(gates: [.closed, .open, .closed]))
-        let modifier: TriggerType = .modifier(ModifierRow(modifiers: [.none, .speedUp, .none]))
+        let barrier: EntityData = .barrier(Barrier(gates: [.closed, .open, .closed]))
+        let modifier: EntityData = .modifier(ModifierRow(modifiers: [.none, .speedUp, .none]))
         
         let triggers = [[barrier, modifier]]
         return Group(pattern: .speedTrap, triggers: triggers, index: 0)
     }
     
     private func newTunnelPattern() -> Group {
-        let left: [TriggerType]   = [.barrier(Barrier(gates: [.open, .closed, .closed]))]
-        let center: [TriggerType] = [.barrier(Barrier(gates: [.closed, .open, .closed]))]
-        let right: [TriggerType]  = [.barrier(Barrier(gates: [.closed, .closed, .open]))]
+        let left: [EntityData]   = [.barrier(Barrier(gates: [.open, .closed, .closed]))]
+        let center: [EntityData] = [.barrier(Barrier(gates: [.closed, .open, .closed]))]
+        let right: [EntityData]  = [.barrier(Barrier(gates: [.closed, .closed, .open]))]
         
         let triggers = [left, left, center, center, right, right, left, center]
         return Group(pattern: .tunnel, triggers: triggers, index: 0)
     }
     
     private func newBarragePattern() -> Group {
-        var triggers = [[TriggerType]]()
+        var triggers = [[EntityData]]()
         for _ in 1...10 { // @HARDCODED
             triggers.append([generateRandomBarrier()])
         }
@@ -175,7 +174,7 @@ class AuthoredSequencer: Sequencer {
     }
     
     private func newPacerPattern() -> Group {
-        var triggers = [[TriggerType]]()
+        var triggers = [[EntityData]]()
         for _ in 1...10 { // @HARDCODED
             let random = Double.random()
             if random < 0.075 {
@@ -190,14 +189,14 @@ class AuthoredSequencer: Sequencer {
         return Group(pattern: .barrage, triggers: triggers, index: 0)
     }
     
-    func generateRandomModifierRow() -> TriggerType {
+    func generateRandomModifierRow() -> EntityData {
         let randomIndex = Int.random(min: 0, max: 2)
         var modifiers = [ModifierType](repeating: .none, count: 3)
         modifiers[randomIndex] = Double.random() < 0.5 ? .speedUp : .speedDown
         return .modifier(ModifierRow(modifiers: modifiers))
     }
     
-    func generateRandomBarrier() -> TriggerType {
+    func generateRandomBarrier() -> EntityData {
         var gates = [Gate]()
         var allClosed = true
         var allOpen = true

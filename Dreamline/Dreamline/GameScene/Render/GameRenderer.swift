@@ -90,22 +90,22 @@ class DebugRenderer: SKNode, GameRenderer {
         for event in events {
             switch (event) {
                 
-            case .triggerAdded(let trigger):
-                self.cacheTrigger(trigger, layout: state.boardState.layout)
-            case .triggerDestroyed(let triggerId):
-                self.deleteTrigger(triggerId)
-            case .barrierPass(let triggerId):
-                self.fadeOutTrigger(triggerId)
-            case .modifierGet(let triggerId, _):
-                self.fadeOutTrigger(triggerId)
+            case .entityAdd(let entity):
+                self.cacheEntity(entity, layout: state.boardState.layout)
+            case .entityDestroy(let entityId):
+                self.deleteEntity(entityId)
+            case .barrierPass(let entityId):
+                self.fadeOutEntity(entityId)
+            case .modifierGet(let entityId, _):
+                self.fadeOutEntity(entityId)
             default: break
             }
         }
         
         // Update all BarrierNodes
-        for trigger in state.boardState.triggers {
-            let position = self.cachedFrame.point(x: 0.0, y: trigger.position).y
-            self.cachedNodes.updateNodePosition(triggerId: trigger.id,
+        for entity in state.boardState.entities {
+            let position = self.cachedFrame.point(x: 0.0, y: entity.position).y
+            self.cachedNodes.updateNodePosition(id: entity.id,
                                                 position: position)
         }
         
@@ -151,18 +151,18 @@ class DebugRenderer: SKNode, GameRenderer {
         self.removeAllChildren()
     }
     
-    private func cacheTrigger(_ trigger: Trigger, layout: BoardLayout) {
-        switch (trigger.type) {
+    private func cacheEntity(_ entity: Entity, layout: BoardLayout) {
+        switch (entity.data) {
         case .barrier(let barrier):
             let node = BarrierNode(layout: layout,
                                    width: Double(self.cachedFrame.width))
-            node.drawOnce(barrier: barrier, status: trigger.status)
-            self.cachedNodes.addNode(node, data: trigger)
+            node.drawOnce(barrier: barrier, status: entity.status)
+            self.cachedNodes.addNode(node, entity: entity)
         case .empty:
             let node = EmptyNode()
             node.drawOnce(frameMinX: self.cachedFrame.minX,
                           frameMaxX: self.cachedFrame.maxX)
-            self.cachedNodes.addNode(node, data: trigger)
+            self.cachedNodes.addNode(node, entity: entity)
         case .modifier(let modifierRow):
             
             // @NOTE: This is a little awkward
@@ -175,16 +175,16 @@ class DebugRenderer: SKNode, GameRenderer {
             
             let node = ModifierNode()
             node.drawOnce(row: modifierRow, positions: positions)
-            self.cachedNodes.addNode(node, data: trigger)
+            self.cachedNodes.addNode(node, entity: entity)
         }
     }
     
-    private func deleteTrigger(_ id: Int) {
-        self.cachedNodes.deleteNode(triggerId: id)
+    private func deleteEntity(_ id: Int) {
+        self.cachedNodes.deleteNode(id: id)
     }
     
-    private func fadeOutTrigger(_ id: Int) {
-        self.cachedNodes.fadeOutNode(triggerId: id)
+    private func fadeOutEntity(_ id: Int) {
+        self.cachedNodes.fadeOutNode(id: id)
     }
 }
 

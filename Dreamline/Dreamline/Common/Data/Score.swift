@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ Score for a round
+ */
 struct Score {
     var points: Int
 }

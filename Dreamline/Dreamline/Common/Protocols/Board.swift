@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ Board manager
+ */
 protocol Board {
     func update(state: BoardState,
                 config: GameConfig,
@@ -20,14 +23,8 @@ protocol Board {
                 dt: Double) -> (BoardState, [Event])
 }
 
-// @TODO: better name
-// the name should reflect the specific rules this implementation follows:
-// - continuously scrolls
-// - adds new barriers
-// - removes old barriers
-// - handles collisions
+// @CLEANUP: Refactor for clarity
 class DefaultBoard: Board {
-    
     func update(state: BoardState,
                 config: GameConfig,
                 ruleset: Ruleset,

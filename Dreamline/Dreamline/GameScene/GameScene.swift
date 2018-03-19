@@ -23,7 +23,7 @@ class GameScene: CustomScene {
     
     // Protocols
     var model: GameModel = DefaultGameModel()
-    var positioner: Positioner = UserPositioner()
+    var positioner: Positioner = DefaultPositioner()
     var board: Board = DefaultBoard()
     var sequencer: Sequencer = AuthoredSequencer()
     var configurator: Configurator = DefaultConfigurator()

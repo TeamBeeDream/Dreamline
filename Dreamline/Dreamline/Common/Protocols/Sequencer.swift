@@ -8,11 +8,9 @@
 
 import Foundation
 
-enum Gate {
-    case open
-    case closed
-}
-
+/**
+ Generates a sequence of entities
+ */
 protocol Sequencer {
     func getNextEntity(config: GameConfig) -> [EntityData]
 }
@@ -21,7 +19,6 @@ protocol Sequencer {
 //        It's really only meant for testing before
 //        the AuthoredSequencer is complete
 class RandomSequencer: Sequencer {
-
     func getNextEntity(config: GameConfig) -> [EntityData] {
         let random = Double.random()
         if random < 0.2 {
@@ -68,32 +65,14 @@ class RandomSequencer: Sequencer {
     }
 }
 
+// @TODO: Make more dynamic
+//        Right now the results of this sequencer are predictable
+// @NOTE: This is sequencer experienced by the player
 class AuthoredSequencer: Sequencer {
-    private enum Pattern {
-        case start          // intro at the beginning of every round
-        case boost          // at the beginning, gives you choice to speed up right away
-        case speedTrap      // a trigger that forces you to change speed
-        case tunnel         // a set of barriers that only have one open gate each
-        case barrage        // a random set of barriers, difficult to get through
-        case pacer          // a random set of barriers, majority of patterns
-        case gap            // a gap consisting of empty triggers
-    }
-    
-    private struct Group {
-        var pattern: Pattern
-        var triggers: [[EntityData]]
-        var index: Int
-        
-        func clone() -> Group {
-            return Group(pattern: self.pattern, triggers: self.triggers, index: self.index)
-        }
-    }
-    
-    // internal state
     private var queue = [Group]()
     
     init() {
-        // add start pattern to queue
+        // Always do the same thing at the beginning
         queue.append(self.newGapPattern(count: 3))
         queue.append(self.newStartPattern())
         queue.append(self.newGapPattern(count: 1))
@@ -113,46 +92,46 @@ class AuthoredSequencer: Sequencer {
             queue.append(self.newGapPattern(count: 3))
         }
         
-        // otherwise, pull from queue
+        // Pull next entity from queue
         var originalGroup = queue.removeFirst()
         var updatedGroup = originalGroup.clone()
-        let nextTrigger = originalGroup.triggers[originalGroup.index]
+        let nextEntity = originalGroup.entities[originalGroup.index]
         
         // if group still has triggers
-        if originalGroup.index + 1 < originalGroup.triggers.count {
+        if originalGroup.index + 1 < originalGroup.entities.count {
             updatedGroup.index += 1
             queue.insert(updatedGroup, at: 0)
         }
         
-        return nextTrigger
+        return nextEntity
     }
     
     private func newStartPattern() -> Group {
         let barrier: [EntityData] = [.barrier(Barrier(gates: [.closed, .open, .closed]))]
-        let triggers = [[EntityData]](repeating: barrier, count: 3)
-        return Group(pattern: .start, triggers: triggers, index: 0)
+        let entities = [[EntityData]](repeating: barrier, count: 3)
+        return Group(pattern: .start, entities: entities, index: 0)
     }
     
     private func newGapPattern(count: Int) -> Group {
-        let emptyTrigger: [EntityData] = [.empty]
-        let triggers = [[EntityData]](repeating: emptyTrigger, count: count)
-        return Group(pattern: .gap, triggers: triggers, index: 0)
+        let emptyEntity: [EntityData] = [.empty]
+        let entities = [[EntityData]](repeating: emptyEntity, count: count)
+        return Group(pattern: .gap, entities: entities, index: 0)
     }
     
     private func newBoostPattern() -> Group {
         let leftBoost: [EntityData] = [.modifier(ModifierRow(modifiers: [.speedUp, .none, .none]))]
         let rightBoost: [EntityData] = [.modifier(ModifierRow(modifiers: [.none, .none, .speedUp]))]
         
-        let triggers = [leftBoost, rightBoost, leftBoost] // @TODO: Chirality support
-        return Group(pattern: .boost, triggers: triggers, index: 0)
+        let entities = [leftBoost, rightBoost, leftBoost] // @TODO: Chirality support
+        return Group(pattern: .boost, entities: entities, index: 0)
     }
     
     private func newSpeedTrapPattern() -> Group {
         let barrier: EntityData = .barrier(Barrier(gates: [.closed, .open, .closed]))
         let modifier: EntityData = .modifier(ModifierRow(modifiers: [.none, .speedUp, .none]))
         
-        let triggers = [[barrier, modifier]]
-        return Group(pattern: .speedTrap, triggers: triggers, index: 0)
+        let entities = [[barrier, modifier]]
+        return Group(pattern: .speedTrap, entities: entities, index: 0)
     }
     
     private func newTunnelPattern() -> Group {
@@ -160,33 +139,33 @@ class AuthoredSequencer: Sequencer {
         let center: [EntityData] = [.barrier(Barrier(gates: [.closed, .open, .closed]))]
         let right: [EntityData]  = [.barrier(Barrier(gates: [.closed, .closed, .open]))]
         
-        let triggers = [left, left, center, center, right, right, left, center]
-        return Group(pattern: .tunnel, triggers: triggers, index: 0)
+        let entities = [left, left, center, center, right, right, left, center]
+        return Group(pattern: .tunnel, entities: entities, index: 0)
     }
     
     private func newBarragePattern() -> Group {
-        var triggers = [[EntityData]]()
+        var entities = [[EntityData]]()
         for _ in 1...10 { // @HARDCODED
-            triggers.append([generateRandomBarrier()])
+            entities.append([generateRandomBarrier()])
         }
         
-        return Group(pattern: .barrage, triggers: triggers, index: 0)
+        return Group(pattern: .barrage, entities: entities, index: 0)
     }
     
     private func newPacerPattern() -> Group {
-        var triggers = [[EntityData]]()
+        var entities = [[EntityData]]()
         for _ in 1...10 { // @HARDCODED
             let random = Double.random()
             if random < 0.075 {
-                triggers.append([.empty])
+                entities.append([.empty])
             } else if random < 0.8 {
-                triggers.append([generateRandomBarrier()])
+                entities.append([generateRandomBarrier()])
             } else {
-                triggers.append([generateRandomModifierRow()])
+                entities.append([generateRandomModifierRow()])
             }
         }
         
-        return Group(pattern: .barrage, triggers: triggers, index: 0)
+        return Group(pattern: .barrage, entities: entities, index: 0)
     }
     
     func generateRandomModifierRow() -> EntityData {
@@ -220,6 +199,30 @@ class AuthoredSequencer: Sequencer {
             return .open
         } else {
             return .closed
+        }
+    }
+}
+
+extension AuthoredSequencer {
+    private enum Pattern {
+        case start          // intro at the beginning of every round
+        case boost          // at the beginning, gives you choice to speed up right away
+        case speedTrap      // a trigger that forces you to change speed
+        case tunnel         // a set of barriers that only have one open gate each
+        case barrage        // a random set of barriers, difficult to get through
+        case pacer          // a random set of barriers, majority of patterns
+        case gap            // a gap consisting of empty triggers
+    }
+    
+    private struct Group {
+        var pattern: Pattern
+        var entities: [[EntityData]]
+        var index: Int
+        
+        func clone() -> Group {
+            return Group(pattern: self.pattern,
+                         entities: self.entities,
+                         index: self.index)
         }
     }
 }

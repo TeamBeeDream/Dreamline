@@ -12,7 +12,6 @@ protocol Configurator {
     func updateConfig(config: GameConfig, ruleset: Ruleset, events: [Event]) -> GameConfig
 }
 
-
 class DefaultConfigurator: Configurator {
     func updateConfig(config: GameConfig, ruleset: Ruleset, events: [Event]) -> GameConfig {
         var updatedConfig = config.clone()

@@ -8,9 +8,8 @@
 
 import Foundation
 
-// @TODO: rename, the word 'event' is too commonly associated with
-// a dynamic delegate system, i'd rather it just be a piece of data
-// maybe 'update'?  'message'?
+// @TODO: 'Event' feels to generic
+//        This data represents a change in state
 enum Event {
     case roundBegin
     case roundEnd

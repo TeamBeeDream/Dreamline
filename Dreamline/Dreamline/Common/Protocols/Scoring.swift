@@ -8,9 +8,6 @@
 
 import Foundation
 
-// @RENAME
-// should probably have a term for "set of functions
-// that modifies the state"
 protocol ScoreUpdater {
     func updateScore(state: Score, config: GameConfig, ruleset: Ruleset, events: [Event]) -> Score
 }
@@ -18,9 +15,7 @@ protocol ScoreUpdater {
 // @RENAME
 class DefaultScoreUpdater: ScoreUpdater {
     func updateScore(state: Score, config: GameConfig, ruleset: Ruleset, events: [Event]) -> Score {
-        
         var updatedScore = state.clone()
-        
         for event in events {
             switch (event) {
             case .barrierPass(_):
@@ -28,7 +23,6 @@ class DefaultScoreUpdater: ScoreUpdater {
             default: break
             }
         }
-        
         return updatedScore
     }
 }

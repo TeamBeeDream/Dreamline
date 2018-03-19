@@ -57,6 +57,11 @@ extension Barrier {
     }
 }
 
+enum Gate {
+    case open
+    case closed
+}
+
 // MARK: Modifiers
 
 /**

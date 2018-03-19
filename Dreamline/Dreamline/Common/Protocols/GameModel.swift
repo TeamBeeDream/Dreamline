@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ Main update tick for game
+ */
 protocol GameModel {
     func update(state: ModelState,
                 config: GameConfig,
@@ -18,7 +21,6 @@ protocol GameModel {
                 dt: Double) -> (ModelState, [Event])
 }
 
-// @TODO: rename
 class DefaultGameModel: GameModel {
     func update(state: ModelState,
                 config: GameConfig,

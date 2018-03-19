@@ -17,6 +17,12 @@ protocol SceneManager {
     func transitionToScoreScene(score: Int)
 }
 
+// @HACK: Need some way to force the skipping of intro during development
+//        In the furture this should be some sort of configuration
+extension DreamlineViewController {
+    static let DEBUG: Bool = true
+}
+
 // @IDEA:
 // In the other model, the update tick was called
 // every frame interval, but since we can't do that
@@ -45,7 +51,11 @@ class DreamlineViewController: UIViewController {
         self.skview.showsNodeCount = true
         
         // :Transition to 'title' scene
-        self.transitionToTitleScene()
+        if DreamlineViewController.DEBUG {
+            self.transitionToStartScene()
+        } else {
+            self.transitionToTitleScene()
+        }
         // @HARDCODED: There could be some sort of switch here
         //             Could be a way to launch game in "develop mode" vs "master mode"
         //             How should this information be added to the children objects

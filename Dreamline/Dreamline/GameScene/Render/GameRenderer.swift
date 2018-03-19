@@ -23,6 +23,7 @@ class DebugRenderer: SKNode, GameRenderer {
     var cachedFrame: CGRect
     
     var playerNode: SKNode
+    var playerPrevPos: Double
     var scoreText: SKLabelNode
     
     init(frame: CGRect) {
@@ -35,11 +36,10 @@ class DebugRenderer: SKNode, GameRenderer {
         self.cachedFrame = frame
         
         // Create player node
-        let radius = CGFloat(0.1) * (320.0) / 4.0 // @HARDCODED
-        let playerGraphic = SKShapeNode(circleOfRadius: radius)
-        playerGraphic.lineWidth = 0
-        playerGraphic.fillColor = SKColor(red: 244.0/255.0, green: 157.0/255.0, blue: 55.0/255.0, alpha: 1.0)
-        self.playerNode = playerGraphic
+        let player = SKSpriteNode(imageNamed: "Player")
+        player.size = CGSize(width: 20, height: 20) // @HARDCODED
+        self.playerNode = player
+        self.playerPrevPos = 0.0
         
         // Create score text
         self.scoreText = SKLabelNode()
@@ -91,12 +91,13 @@ class DebugRenderer: SKNode, GameRenderer {
         }
         
         // Update temp player node
-        //let position = state.positioner.getPosition(state: state.positionerState,
-        //                                            config: config)
-        
         let offset = state.positionState.offset * state.boardState.layout.laneOffset
         self.playerNode.position = self.cachedFrame.point(x: offset,
                                          y: state.boardState.layout.playerPosition)
+        
+        let diff = state.positionState.offset - self.playerPrevPos
+        self.playerNode.zRotation = CGFloat(diff * -3.0) // @HARDCODED
+        self.playerPrevPos = state.positionState.offset
         
         // Update Score Text
         self.scoreText.text = String(score.points)
@@ -104,12 +105,11 @@ class DebugRenderer: SKNode, GameRenderer {
     
     func killPlayer() {
         self.playerNode.run(SKAction.group([
-            SKAction.scale(to: 0, duration: 0.45),
+            SKAction.scale(to: 2.0, duration: 0.45),
             SKAction.fadeOut(withDuration: 0.45)]))
     }
     
     func free() {
-        
         self.cachedNodes.free()
         
         self.removeAllActions()
@@ -117,7 +117,6 @@ class DebugRenderer: SKNode, GameRenderer {
     }
     
     private func cacheTrigger(_ trigger: Trigger, layout: BoardLayout) {
-        
         switch (trigger.type) {
         case .barrier(let barrier):
             let node = BarrierNode(layout: layout,
@@ -146,26 +145,21 @@ class DebugRenderer: SKNode, GameRenderer {
     }
     
     private func deleteTrigger(_ id: Int) {
-        
         self.cachedNodes.deleteNode(triggerId: id)
     }
     
     private func fadeOutTrigger(_ id: Int) {
-        
         self.cachedNodes.fadeOutNode(triggerId: id)
     }
 }
 
 // @CLEANUP: Move to Math(?)
 extension CGRect {
-    
     func point(x: Double, y: Double) -> CGPoint {
-        
         return point(x: CGFloat(x), y: CGFloat(y))
     }
     
     func point(x: CGFloat, y: CGFloat) -> CGPoint {
-        
         let convertedX = self.midX + (x * self.width / 2.0)
         let convertedY = self.midY - (y * self.height / 2.0)
         return CGPoint(x: convertedX, y: convertedY)

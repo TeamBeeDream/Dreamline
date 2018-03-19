@@ -10,15 +10,12 @@ import SpriteKit
 
 class ScoreScene: CustomScene {
     
-    let scoreName: String
     let score: Int
     var highscores: [Highscore]?
     
     static var clearHighscoresOnInit = false // @HARDCODED
     
     init(manager: SceneManager, view: SKView, score: Int) {
-        
-        self.scoreName = Highscore.generateRandomName()
         self.score = score
         super.init(manager: manager, view: view)
         
@@ -28,7 +25,7 @@ class ScoreScene: CustomScene {
             ScoreScene.clearHighscoresOnInit = false
         }
         self.highscores = self.loadHighscores()
-        self.highscores!.append(Highscore(name: self.scoreName, score: score))
+        self.highscores!.append(Highscore(score: score))
         self.saveHighscores(highscores: self.highscores!)
     }
     
@@ -66,20 +63,27 @@ class ScoreScene: CustomScene {
         
         backgroundColor = SKColor.black
         
-        let scoreText = SKLabelNode(text: "you got \(self.score)")
+        let scoreText = SKLabelNode(text: "You got \(self.score)!")
         scoreText.position = self.frame.point(x: 0, y: -0.6)
-        scoreText.fontColor = SKColor.white
+        scoreText.fontColor = SKColor.yellow
         scoreText.alpha = 0.0
         scoreText.run(SKAction.fadeIn(withDuration: 0.45))
         self.addChild(scoreText)
+        
+        let subtitleText = SKLabelNode(text: "Previous scores:")
+        subtitleText.position = self.frame.point(x: 0, y: -0.3)
+        subtitleText.fontColor = SKColor.white
+        subtitleText.alpha = 0.0
+        subtitleText.run(SKAction.fadeIn(withDuration: 0.65))
+        self.addChild(subtitleText)
         
         // draw highscores
         var sortedHighscores = self.highscores!.sorted(by: { $0.score > $1.score })
         for i in 0...min(sortedHighscores.count - 1, 4) {
             let highscore = sortedHighscores[i]
-            let hsLabel = SKLabelNode(text: "\(highscore.name) : \(highscore.score)")
-            hsLabel.position = self.frame.point(x: 0, y: -0.2 + Double(i) * 0.2)
-            hsLabel.fontColor = (highscore.name == self.scoreName) ? SKColor.yellow : SKColor.white
+            let hsLabel = SKLabelNode(text: "\(highscore.score)")
+            hsLabel.position = self.frame.point(x: 0, y: -0.1 + Double(i) * 0.2)
+            hsLabel.fontColor = (highscore.score == self.score) ? SKColor.yellow : SKColor.white
             hsLabel.yScale = 0.0
             hsLabel.alpha = 0.0
             hsLabel.run(SKAction.sequence([

@@ -14,7 +14,7 @@ struct ModelState {
     // @NOTE: Maybe the ModelState shouldn't contain both
     //        state and the protocols that mutate it
     
-    var positionState: PositionState        // @State (includes targetOffset)
+    var positionState: PositionState            // @State
     var boardState: BoardState                  // @State
 
     // Should this be here at all?

@@ -22,9 +22,14 @@ class DebugRenderer: SKNode, GameRenderer {
     var cachedNodes = GenericNodeCache()
     var cachedFrame: CGRect
     
+    // TEMP GRAPHICS
     var playerNode: SKNode
     var playerPrevPos: Double
     var scoreText: SKLabelNode
+    var thumbButtonLeft: SKSpriteNode
+    var thumbButtonRight: SKSpriteNode
+    let alphaLow: CGFloat = 0.2
+    let alphaHigh: CGFloat = 0.5
     
     init(frame: CGRect) {
         
@@ -46,12 +51,26 @@ class DebugRenderer: SKNode, GameRenderer {
         self.scoreText.position = CGPoint(x: frame.midX, y: frame.maxX - 50.0)
         self.scoreText.color = SKColor.white
         
+        // Create thumb buttons
+        let button = SKSpriteNode(imageNamed: "ThumbButton")
+        button.size = CGSize(width: 60, height: 60)
+        button.alpha = self.alphaLow
+        
+        self.thumbButtonLeft = button.copy() as! SKSpriteNode
+        self.thumbButtonLeft.position = frame.point(x: -0.5, y: 0.8)
+        self.thumbButtonRight = button.copy() as! SKSpriteNode
+        self.thumbButtonRight.xScale = -1.0
+        self.thumbButtonRight.position = frame.point(x: 0.5, y: 0.8)
+        
+        
         super.init() // Awkward how this has to happen in the middle
         
         // Add everything to the view
         self.addChild(self.playerNode)
         self.addChild(self.cachedNodes)
         self.addChild(self.scoreText)
+        self.addChild(self.thumbButtonLeft)
+        self.addChild(self.thumbButtonRight)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -101,6 +120,22 @@ class DebugRenderer: SKNode, GameRenderer {
         
         // Update Score Text
         self.scoreText.text = String(score.points)
+        
+        // Update thumb buttons
+        let target = state.positionState.target
+        if target > 0.0 {
+            // Right
+            self.thumbButtonLeft.alpha = self.alphaLow
+            self.thumbButtonRight.alpha = self.alphaHigh
+        } else if target < 0.0 {
+            // Left
+            self.thumbButtonLeft.alpha = self.alphaHigh
+            self.thumbButtonRight.alpha = self.alphaLow
+        } else {
+            // Center
+            self.thumbButtonLeft.alpha = self.alphaLow
+            self.thumbButtonRight.alpha = self.alphaLow
+        }
     }
     
     func killPlayer() {

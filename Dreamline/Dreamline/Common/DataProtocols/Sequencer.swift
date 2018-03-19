@@ -96,7 +96,7 @@ class AuthoredSequencer: Sequencer {
         // add start pattern to queue
         queue.append(self.newGapPattern(count: 3))
         queue.append(self.newStartPattern())
-        queue.append(self.newGapPattern(count: 3))
+        queue.append(self.newGapPattern(count: 1))
         queue.append(self.newBoostPattern())
     }
     

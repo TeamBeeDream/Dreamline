@@ -8,24 +8,29 @@
 
 import Foundation
 
+// @ROBUSTNESS: Should probably find a better way to couple
+//              Speed enum to actual usable data
 struct SpeedInfo {
     let speed: Double
     let points: Int
 }
 
 struct Ruleset {
-    var speedLookup: [ScrollSpeed: SpeedInfo]
+    var speedLookup: [Speed: SpeedInfo]
 }
 
 class RulesetFactory {
     static func getDefault() -> Ruleset {
-        
-        var speedLookup = [ScrollSpeed: SpeedInfo]()
-        speedLookup[.mach1] = SpeedInfo(speed: 1.0, points: 1)
-        speedLookup[.mach2] = SpeedInfo(speed: 1.2, points: 1)
-        speedLookup[.mach3] = SpeedInfo(speed: 1.6, points: 2)
-        speedLookup[.mach4] = SpeedInfo(speed: 2.0, points: 2)
-        speedLookup[.mach5] = SpeedInfo(speed: 2.3, points: 3)
+        var speedLookup = [Speed: SpeedInfo]()
+        speedLookup[.mach1] = SpeedInfo(speed: 0.8, points: 1)
+        speedLookup[.mach2] = SpeedInfo(speed: 0.9, points: 1)
+        speedLookup[.mach3] = SpeedInfo(speed: 1.1, points: 2)
+        speedLookup[.mach4] = SpeedInfo(speed: 1.3, points: 2)
+        speedLookup[.mach5] = SpeedInfo(speed: 1.5, points: 3)
+        speedLookup[.mach6] = SpeedInfo(speed: 1.8, points: 3)
+        speedLookup[.mach7] = SpeedInfo(speed: 2.0, points: 4)
+        speedLookup[.mach8] = SpeedInfo(speed: 2.1, points: 4)
+        speedLookup[.mach9] = SpeedInfo(speed: 2.2, points: 5)
         
         return Ruleset(speedLookup: speedLookup)
     }

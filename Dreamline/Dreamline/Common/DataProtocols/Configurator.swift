@@ -27,18 +27,18 @@ class DefaultConfigurator: Configurator {
         return updatedConfig
     }
     
-    private func newSpeed(current: ScrollSpeed,
-                          table: [ScrollSpeed: SpeedInfo],
-                          modifier: ModifierType) -> ScrollSpeed {
+    private func newSpeed(current: Speed,
+                          table: [Speed: SpeedInfo],
+                          modifier: ModifierType) -> Speed {
         switch modifier {
         case .none:
             return current
         case .speedUp:
-            let index = clamp(current.rawValue + 1, min: 0, max: 4) // @HARCODED: Min + max
-            return ScrollSpeed(rawValue: index)!
+            let index = clamp(current.rawValue + 1, min: 0, max: Speed.count-1)
+            return Speed(rawValue: index)!
         case .speedDown:
-            let index = clamp(current.rawValue - 1, min: 0, max: 4)
-            return ScrollSpeed(rawValue: index)!
+            let index = clamp(current.rawValue - 1, min: 0, max: Speed.count-1)
+            return Speed(rawValue: index)!
         }
     }
 }

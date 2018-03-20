@@ -109,7 +109,7 @@ extension DreamlineViewController: SceneManager {
     }
     
     func transitionToInfoScene() {
-        let infoScene = AlphaInfoScene(manager: self, view: self.skview)
+        let infoScene = BetaInfoScene(manager: self, view: self.skview)
         infoScene.scaleMode = .aspectFit
         
         let transition = SKTransition.crossFade(withDuration: 0.5)

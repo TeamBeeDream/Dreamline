@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class AlphaInfoScene: CustomScene {
+class BetaInfoScene: CustomScene {
     
     override func onInit() {
         self.backgroundColor = SKColor(red: 244.0/255.0, green: 152.0/255.0, blue: 156.0/255.0, alpha: 1.0)
@@ -25,22 +25,9 @@ class AlphaInfoScene: CustomScene {
             "in later versions.",
             "",
             "",
+            "",
             "Tap to continue"
         ])
-        
-        /*
-        self.addText(text: "Welcome to the Dreamline Alpha", line: 0)
-        
-        self.addText(text: "Please keep in mind that the graphics", line: 2)
-        self.addText(text: "and audio are temporary, they will", line: 3)
-        self.addText(text: "be improved in later updates", line: 4)
-        
-        self.addText(text: "To play, tap the left side", line: 6)
-        self.addText(text: "of the screen to move left", line: 7)
-        self.addText(text: "Tap right to move right", line: 8)
-        
-        self.addText(text: "Tap to continue", line: 12)
- */
     }
     
     private func display(_ lines: [String]) {

@@ -20,7 +20,7 @@ protocol SceneManager {
 // @HACK: Need some way to force the skipping of intro during development
 //        In the furture this should be some sort of configuration
 extension DreamlineViewController {
-    static let DEBUG: Bool = true
+    static let DEBUG: Bool = false
 }
 
 // @IDEA:
@@ -47,8 +47,13 @@ class DreamlineViewController: UIViewController {
         super.viewDidLoad()
         
         // Setup skview
-        self.skview.showsFPS = true
-        self.skview.showsNodeCount = true
+        if DreamlineViewController.DEBUG {
+            self.skview.showsFPS = true
+            self.skview.showsNodeCount = true
+        } else {
+            self.skview.showsFPS = false
+            self.skview.showsNodeCount = false
+        }
         
         // :Transition to 'title' scene
         if DreamlineViewController.DEBUG {

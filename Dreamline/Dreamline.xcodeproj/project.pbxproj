@@ -36,6 +36,9 @@
 		699FC57C204E053600DB09B4 /* DreamlineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC57B204E053600DB09B4 /* DreamlineUITests.swift */; };
 		699FC58A204E09A700DB09B4 /* Positioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC589204E09A700DB09B4 /* Positioner.swift */; };
 		699FC58E204E1A8F00DB09B4 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC58D204E1A8F00DB09B4 /* GameModel.swift */; };
+		69A44BBE2062D47000F0F2D8 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 69A44BBD2062D47000F0F2D8 /* Shaders.metal */; };
+		69A44BC02062ECDD00F0F2D8 /* MKTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A44BBF2062ECDD00F0F2D8 /* MKTest.swift */; };
+		69A44BC22062EED500F0F2D8 /* SKTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A44BC12062EED500F0F2D8 /* SKTest.swift */; };
 		69AB5E8E204EF0E200093B33 /* Sequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E8D204EF0E200093B33 /* Sequencer.swift */; };
 		69AB5E90204EF84400093B33 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E8F204EF84400093B33 /* Board.swift */; };
 		69AB5E92204F251700093B33 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E91204F251700093B33 /* Math.swift */; };
@@ -103,6 +106,9 @@
 		699FC57D204E053600DB09B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		699FC589204E09A700DB09B4 /* Positioner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Positioner.swift; sourceTree = "<group>"; };
 		699FC58D204E1A8F00DB09B4 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
+		69A44BBD2062D47000F0F2D8 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		69A44BBF2062ECDD00F0F2D8 /* MKTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKTest.swift; sourceTree = "<group>"; };
+		69A44BC12062EED500F0F2D8 /* SKTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKTest.swift; sourceTree = "<group>"; };
 		69AB5E8D204EF0E200093B33 /* Sequencer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequencer.swift; sourceTree = "<group>"; };
 		69AB5E8F204EF84400093B33 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		69AB5E91204F251700093B33 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
@@ -238,6 +244,9 @@
 				69FC8A42205C563700E3829E /* StartScene */,
 				699FC555204E053600DB09B4 /* AppDelegate.swift */,
 				699FC55D204E053600DB09B4 /* DreamlineViewController.swift */,
+				69A44BC12062EED500F0F2D8 /* SKTest.swift */,
+				69A44BBF2062ECDD00F0F2D8 /* MKTest.swift */,
+				69A44BBD2062D47000F0F2D8 /* Shaders.metal */,
 				699FC55F204E053600DB09B4 /* Main.storyboard */,
 				699FC564204E053600DB09B4 /* LaunchScreen.storyboard */,
 				693DF52D205997E0002C4821 /* Resources */,
@@ -474,9 +483,12 @@
 				69EFB5962053152F005B3325 /* ModifierNode.swift in Sources */,
 				693FD4C0206039CB00B96978 /* Speed.swift in Sources */,
 				693FD4C4206051E400B96978 /* Entity.swift in Sources */,
+				69A44BC22062EED500F0F2D8 /* SKTest.swift in Sources */,
+				69A44BC02062ECDD00F0F2D8 /* MKTest.swift in Sources */,
 				693E1BAF2059A7FE008DBACE /* ModelState.swift in Sources */,
 				694197B7205AB22000AD4349 /* Ruleset.swift in Sources */,
 				69AB5E92204F251700093B33 /* Math.swift in Sources */,
+				69A44BBE2062D47000F0F2D8 /* Shaders.metal in Sources */,
 				693E1BB32059B919008DBACE /* BoardState.swift in Sources */,
 				69BC37582051864F002F7383 /* BarrierNode.swift in Sources */,
 			);

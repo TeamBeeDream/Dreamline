@@ -6,6 +6,7 @@ target 'Dreamline' do
   use_frameworks!
 
   # Pods for Dreamline
+  pod 'Firebase/Core'
 
   target 'DreamlineTests' do
     inherit! :search_paths

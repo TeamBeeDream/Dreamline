@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2D7E020800708879D48E5BB2 /* Pods_Dreamline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4631872D78D3667E10BD3DC /* Pods_Dreamline.framework */; };
+		6913F852206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
+		6913F853206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
+		6913F854206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
 		693DF52C205995C6002C4821 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693DF52B205995C6002C4821 /* AudioController.swift */; };
 		693DF52F205997ED002C4821 /* Pickup_Coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF52E205997ED002C4821 /* Pickup_Coin.wav */; };
 		693DF53120599961002C4821 /* Powerup.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF53020599961002C4821 /* Powerup.wav */; };
@@ -74,6 +77,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6913F851206C3600001FBAAB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		693DF52B205995C6002C4821 /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
 		693DF52E205997ED002C4821 /* Pickup_Coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pickup_Coin.wav; sourceTree = "<group>"; };
 		693DF53020599961002C4821 /* Powerup.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Powerup.wav; sourceTree = "<group>"; };
@@ -269,6 +273,7 @@
 				693DF52D205997E0002C4821 /* Resources */,
 				699FC562204E053600DB09B4 /* Assets.xcassets */,
 				699FC567204E053600DB09B4 /* Info.plist */,
+				6913F851206C3600001FBAAB /* GoogleService-Info.plist */,
 			);
 			path = Dreamline;
 			sourceTree = "<group>";
@@ -476,6 +481,7 @@
 			files = (
 				699FC561204E053600DB09B4 /* Main.storyboard in Resources */,
 				699FC563204E053600DB09B4 /* Assets.xcassets in Resources */,
+				6913F852206C3601001FBAAB /* GoogleService-Info.plist in Resources */,
 				699FC566204E053600DB09B4 /* LaunchScreen.storyboard in Resources */,
 				693DF52F205997ED002C4821 /* Pickup_Coin.wav in Resources */,
 				69FC8A3F205C4DA000E3829E /* slowdown_effect.mp3 in Resources */,
@@ -489,6 +495,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6913F853206C3601001FBAAB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +503,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6913F854206C3601001FBAAB /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,9 +612,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Dreamline/Pods-Dreamline-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

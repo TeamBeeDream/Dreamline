@@ -25,7 +25,7 @@ class GameScene: CustomScene {
     var model: GameModel = DefaultGameModel()
     var positioner: Positioner = DefaultPositioner()
     var board: Board = DefaultBoard()
-    var sequencer: Sequencer = AuthoredSequencer()
+    var sequencer: Sequencer = AuthoredSequencer(maxPatterns: 2)
     var configurator: Configurator = DefaultConfigurator()
     var scoreUpdater: ScoreUpdater = DefaultScoreUpdater()
     
@@ -128,23 +128,30 @@ class GameScene: CustomScene {
         
         // Scene stuff
         // @TODO: Move this to own function or something
-        // @HACK: I don't like how the controller is responsible for
-        //        invoking the end of the game round, should probably
-        //        be in the modle update function
+        // @FIXME: GameScene should not be responsible for
+        //         controlling sequence of events
+        //         It should just send events to VC
         for event in events {
             switch (event) {
             case .barrierHit(_):
                 self.renderer!.killPlayer() // @HACK
-                self.run(SKAction.sequence([
-                    SKAction.wait(forDuration: 1.0),
-                    SKAction.run {
-                        // @FIXME
-                        self.manager.transitionToScoreScene(score: self.score.points)
-                    }]))
-                self.isDead = true
+            case .modifierGet(_, _): // @HACK: Using single speed modifier to trigger round end
+                // @HACK: This is sent by the Board protocol
+                self.renderer!.roundOver() // @HACK
+                self.roundOver()
             default: break
             }
         }
+    }
+    
+    private func roundOver() {
+        self.run(SKAction.sequence([
+            SKAction.wait(forDuration: 1.0),
+            SKAction.run {
+                // @FIXME
+                self.manager.transitionToScoreScene(score: self.score.points)
+            }]))
+        self.isDead = true
     }
 }
 

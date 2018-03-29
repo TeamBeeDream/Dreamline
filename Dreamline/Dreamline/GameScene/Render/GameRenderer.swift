@@ -13,6 +13,7 @@ import SpriteKit
 protocol GameRenderer {
     func render(state: ModelState, score: Score, config: GameConfig, events: [Event])
     func killPlayer() // @HACK
+    func roundOver() // @HACK
     func free()
 }
 
@@ -48,7 +49,7 @@ class DebugRenderer: SKNode, GameRenderer {
         
         // Create score text
         self.scoreText = SKLabelNode()
-        self.scoreText.position = CGPoint(x: frame.midX, y: frame.maxX - 50.0)
+        self.scoreText.position = CGPoint(x: frame.midX, y: frame.midY)
         self.scoreText.color = SKColor.white
         
         // Create thumb buttons
@@ -138,10 +139,32 @@ class DebugRenderer: SKNode, GameRenderer {
         }
     }
     
+    // @RENAME: All this method does is play the kill animation
     func killPlayer() {
+        let fadeOut = SKAction.fadeOut(withDuration: 0.15)
+        let fadeIn = SKAction.fadeIn(withDuration: 0)
+        
+        // @TEMP
+        self.playerNode.run(SKAction.repeat(SKAction.sequence([fadeOut, fadeIn]), count: 4))
+        
+        /*
         self.playerNode.run(SKAction.group([
             SKAction.scale(to: 2.0, duration: 0.45),
             SKAction.fadeOut(withDuration: 0.45)]))
+        */
+    }
+    
+    func roundOver() {
+        let titleLabel = SKLabelNode(text: "ROUND OVER")
+        titleLabel.position = CGPoint(x: cachedFrame.midX, y: cachedFrame.midY)
+        titleLabel.fontColor = .white
+        titleLabel.alpha = 0
+        titleLabel.fontSize = 40
+        self.addChild(titleLabel)
+        titleLabel.run(SKAction.fadeIn(withDuration: 0.1))
+        // @NOTE: Having to remember to use cachedFrame is annoying
+        
+        self.scoreText.run(SKAction.fadeOut(withDuration: 0))
     }
     
     func free() {

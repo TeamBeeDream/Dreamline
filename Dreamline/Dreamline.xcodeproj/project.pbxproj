@@ -11,6 +11,7 @@
 		6913F852206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
 		6913F853206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
 		6913F854206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
+		69387F49206D6D990092A076 /* FeedbackScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69387F48206D6D990092A076 /* FeedbackScene.swift */; };
 		693DF52C205995C6002C4821 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693DF52B205995C6002C4821 /* AudioController.swift */; };
 		693DF52F205997ED002C4821 /* Pickup_Coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF52E205997ED002C4821 /* Pickup_Coin.wav */; };
 		693DF53120599961002C4821 /* Powerup.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF53020599961002C4821 /* Powerup.wav */; };
@@ -33,16 +34,12 @@
 		699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC555204E053600DB09B4 /* AppDelegate.swift */; };
 		699FC55C204E053600DB09B4 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC55B204E053600DB09B4 /* GameScene.swift */; };
 		699FC55E204E053600DB09B4 /* DreamlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC55D204E053600DB09B4 /* DreamlineViewController.swift */; };
-		699FC561204E053600DB09B4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 699FC55F204E053600DB09B4 /* Main.storyboard */; };
 		699FC563204E053600DB09B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 699FC562204E053600DB09B4 /* Assets.xcassets */; };
 		699FC566204E053600DB09B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 699FC564204E053600DB09B4 /* LaunchScreen.storyboard */; };
 		699FC571204E053600DB09B4 /* DreamlineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC570204E053600DB09B4 /* DreamlineTests.swift */; };
 		699FC57C204E053600DB09B4 /* DreamlineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC57B204E053600DB09B4 /* DreamlineUITests.swift */; };
 		699FC58A204E09A700DB09B4 /* Positioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC589204E09A700DB09B4 /* Positioner.swift */; };
 		699FC58E204E1A8F00DB09B4 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC58D204E1A8F00DB09B4 /* GameModel.swift */; };
-		69A44BBE2062D47000F0F2D8 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 69A44BBD2062D47000F0F2D8 /* Shaders.metal */; };
-		69A44BC02062ECDD00F0F2D8 /* MKTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A44BBF2062ECDD00F0F2D8 /* MKTest.swift */; };
-		69A44BC22062EED500F0F2D8 /* SKTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A44BC12062EED500F0F2D8 /* SKTest.swift */; };
 		69AB5E8E204EF0E200093B33 /* Sequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E8D204EF0E200093B33 /* Sequencer.swift */; };
 		69AB5E90204EF84400093B33 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E8F204EF84400093B33 /* Board.swift */; };
 		69AB5E92204F251700093B33 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E91204F251700093B33 /* Math.swift */; };
@@ -78,6 +75,7 @@
 
 /* Begin PBXFileReference section */
 		6913F851206C3600001FBAAB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		69387F48206D6D990092A076 /* FeedbackScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackScene.swift; sourceTree = "<group>"; };
 		693DF52B205995C6002C4821 /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
 		693DF52E205997ED002C4821 /* Pickup_Coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pickup_Coin.wav; sourceTree = "<group>"; };
 		693DF53020599961002C4821 /* Powerup.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Powerup.wav; sourceTree = "<group>"; };
@@ -101,7 +99,6 @@
 		699FC555204E053600DB09B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		699FC55B204E053600DB09B4 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		699FC55D204E053600DB09B4 /* DreamlineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamlineViewController.swift; sourceTree = "<group>"; };
-		699FC560204E053600DB09B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		699FC562204E053600DB09B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		699FC565204E053600DB09B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		699FC567204E053600DB09B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -113,9 +110,6 @@
 		699FC57D204E053600DB09B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		699FC589204E09A700DB09B4 /* Positioner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Positioner.swift; sourceTree = "<group>"; };
 		699FC58D204E1A8F00DB09B4 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
-		69A44BBD2062D47000F0F2D8 /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-		69A44BBF2062ECDD00F0F2D8 /* MKTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKTest.swift; sourceTree = "<group>"; };
-		69A44BC12062EED500F0F2D8 /* SKTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKTest.swift; sourceTree = "<group>"; };
 		69AB5E8D204EF0E200093B33 /* Sequencer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sequencer.swift; sourceTree = "<group>"; };
 		69AB5E8F204EF84400093B33 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		69AB5E91204F251700093B33 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
@@ -168,6 +162,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		69387F47206D6D870092A076 /* FeedbackScene */ = {
+			isa = PBXGroup;
+			children = (
+				69387F48206D6D990092A076 /* FeedbackScene.swift */,
+			);
+			path = FeedbackScene;
+			sourceTree = "<group>";
+		};
 		693DF52D205997E0002C4821 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -263,12 +265,9 @@
 				693E1BB42059B9B2008DBACE /* GameScene */,
 				69FC8A41205C562400E3829E /* ScoreScene */,
 				69FC8A42205C563700E3829E /* StartScene */,
+				69387F47206D6D870092A076 /* FeedbackScene */,
 				699FC555204E053600DB09B4 /* AppDelegate.swift */,
 				699FC55D204E053600DB09B4 /* DreamlineViewController.swift */,
-				69A44BC12062EED500F0F2D8 /* SKTest.swift */,
-				69A44BBF2062ECDD00F0F2D8 /* MKTest.swift */,
-				69A44BBD2062D47000F0F2D8 /* Shaders.metal */,
-				699FC55F204E053600DB09B4 /* Main.storyboard */,
 				699FC564204E053600DB09B4 /* LaunchScreen.storyboard */,
 				693DF52D205997E0002C4821 /* Resources */,
 				699FC562204E053600DB09B4 /* Assets.xcassets */,
@@ -479,7 +478,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				699FC561204E053600DB09B4 /* Main.storyboard in Resources */,
 				699FC563204E053600DB09B4 /* Assets.xcassets in Resources */,
 				6913F852206C3601001FBAAB /* GoogleService-Info.plist in Resources */,
 				699FC566204E053600DB09B4 /* LaunchScreen.storyboard in Resources */,
@@ -667,6 +665,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				693DF52C205995C6002C4821 /* AudioController.swift in Sources */,
+				69387F49206D6D990092A076 /* FeedbackScene.swift in Sources */,
 				699AE38620570D5D007BA2E2 /* CustomScene.swift in Sources */,
 				699FC55C204E053600DB09B4 /* GameScene.swift in Sources */,
 				6940158C205070AF0047C80E /* GameConfig.swift in Sources */,
@@ -692,12 +691,9 @@
 				69EFB5962053152F005B3325 /* ModifierNode.swift in Sources */,
 				693FD4C0206039CB00B96978 /* Speed.swift in Sources */,
 				693FD4C4206051E400B96978 /* Entity.swift in Sources */,
-				69A44BC22062EED500F0F2D8 /* SKTest.swift in Sources */,
-				69A44BC02062ECDD00F0F2D8 /* MKTest.swift in Sources */,
 				693E1BAF2059A7FE008DBACE /* ModelState.swift in Sources */,
 				694197B7205AB22000AD4349 /* Ruleset.swift in Sources */,
 				69AB5E92204F251700093B33 /* Math.swift in Sources */,
-				69A44BBE2062D47000F0F2D8 /* Shaders.metal in Sources */,
 				693E1BB32059B919008DBACE /* BoardState.swift in Sources */,
 				69BC37582051864F002F7383 /* BarrierNode.swift in Sources */,
 			);
@@ -735,14 +731,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		699FC55F204E053600DB09B4 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				699FC560204E053600DB09B4 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		699FC564204E053600DB09B4 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -869,7 +857,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z7TZH6S9GB;
 				INFOPLIST_FILE = Dreamline/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.teambeedream.dreamline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -886,7 +874,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = Z7TZH6S9GB;
 				INFOPLIST_FILE = Dreamline/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.teambeedream.dreamline;
 				PRODUCT_NAME = "$(TARGET_NAME)";

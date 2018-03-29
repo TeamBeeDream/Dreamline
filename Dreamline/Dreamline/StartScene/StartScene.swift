@@ -21,7 +21,7 @@ class StartScene: CustomScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        // @FIXME
         self.manager.transitionToGameScene()
     }
 }

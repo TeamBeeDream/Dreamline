@@ -6,37 +6,21 @@
 //  Copyright © 2018 Team BeeDream. All rights reserved.
 //
 
-import MetalKit
 import SpriteKit
 
-// @CLEANUP: Should this be here or in another file?
-protocol SceneManager {
-    func transitionToTitleScene()
-    func transitionToInfoScene()
-    func transitionToStartScene()
-    func transitionToGameScene()
-    func transitionToScoreScene(score: Int)
-}
-
-// @HACK: Need some way to force the skipping of intro during development
-//        In the furture this should be some sort of configuration
-extension DreamlineViewController {
-    static let DEBUG: Bool = false
-}
-
-// @IDEA:
-// In the other model, the update tick was called
-// every frame interval, but since we can't do that
-// at this level, we can trigger update by events
-// calling functions in this class
-
-// this class is connected to the Main.storyboard stuff
-// so it's tough to do an init()
-// this is basically rock bottom of the program
-// @RENAME: I'm not sure if this is a 'ViewController' per se
-//          Maybe something like 'DreamlineBase' or 'DreamlineProgram'
-//          Whatever it is, it should indicate that this is the 'bottom' of the program
 class DreamlineViewController: UIViewController {
+    
+    // MARK: Private Properties
+    
+    private var skview: SKView!
+    
+    // MARK: Init and Deinit
+    
+    static func make() -> DreamlineViewController {
+        return DreamlineViewController()
+    }
+    
+    // MARK: UIViewController Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,31 +31,17 @@ class DreamlineViewController: UIViewController {
         //        This class will be responsible for managing the
         //        FSM that controlls the subviews
         
-        // Add metalKit view
-        let device = MTLCreateSystemDefaultDevice()
-        let graphicsView = MKTest(frame: self.view.frame, device: device!)
-        self.view.addSubview(graphicsView)
+        // Add SpriteKit view
+        let skview = SKView(frame: self.view.frame)
+        self.view.addSubview(skview)
+        self.skview = skview
         
-        // Add spritekit view
-        let uiView = SKTest(frame: self.view.frame)
-        self.view.addSubview(uiView)
-        
-        // Start update timer
-        let timer = CADisplayLink(target: self, selector: #selector(update))
-        timer.preferredFramesPerSecond = 60 // @HARDCODED
-        timer.add(to: .main, forMode: .defaultRunLoopMode)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        //self.transitionToTitleScene()
+        self.transitionToFeedbackScene(got: 1, total: 1)
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
+        return UIInterfaceOrientationMask.portrait
     }
     
     override var shouldAutorotate: Bool {
@@ -83,14 +53,46 @@ class DreamlineViewController: UIViewController {
     }
 }
 
-// @TODO: Tie this to manager interface.
-extension DreamlineViewController {
-    @objc func update(displayLink: CADisplayLink) {
-        // @TODO: Handle update tick.
+protocol SceneManager {
+    func transitionToTitleScene()
+    func transitionToInfoScene()
+    func transitionToStartScene()
+    func transitionToGameScene()
+    func transitionToScoreScene(score: Int)
+    func transitionToFeedbackScene(got: Int, total: Int)
+}
+
+extension DreamlineViewController: SceneManager {
+    private func transition() -> SKTransition {
+        return SKTransition.crossFade(withDuration: 0.3)
+    }
+    
+    func transitionToTitleScene() {
+        self.skview.presentScene(TitleScene(manager: self, size: self.skview.frame.size), transition: self.transition())
+    }
+    
+    func transitionToInfoScene() {
+        self.skview.presentScene(BetaInfoScene(manager: self, size: self.skview.frame.size), transition: self.transition())
+    }
+    
+    func transitionToStartScene() {
+        self.skview.presentScene(StartScene(manager: self, size: self.skview.frame.size), transition: self.transition())
+    }
+    
+    func transitionToGameScene() {
+        self.skview.presentScene(GameScene(manager: self, size: self.skview.frame.size), transition: self.transition())
+    }
+    
+    func transitionToScoreScene(score: Int) {
+        self.skview.presentScene(ScoreScene(manager: self, size: self.skview.frame.size,   score: score), transition: self.transition())
+    }
+    
+    func transitionToFeedbackScene(got: Int, total: Int) {
         
-        //let dt = displayLink.targetTimestamp - displayLink.timestamp
-        //let actualFramesPerSecond = 1 / dt
-        //print("FPS: \(actualFramesPerSecond) - DT: \(dt)")
+        let percentage = Double(got) / Double(total)
+        
+        let scene = FeedbackScene.make(manager: self, size: self.skview.frame.size, percentage: percentage)
+        self.skview.presentScene(scene, transition: self.transition())
     }
 }
 

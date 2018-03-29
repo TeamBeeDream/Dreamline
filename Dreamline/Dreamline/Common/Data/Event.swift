@@ -8,8 +8,8 @@
 
 import Foundation
 
-// @TODO: 'Event' feels to generic
-//        This data represents a change in state
+// @RENAME: 'Event' feels to generic
+//          This data represents a change in state
 enum Event {
     case roundBegin
     case roundEnd
@@ -23,4 +23,10 @@ enum Event {
     case modifierGet(Int, ModifierType)
     
     case laneChange
+}
+
+// @RENAME: This is an event that is handled by the top-level VC
+enum SceneEvent {
+    case next       // advance to next scene
+    case back       // revert to previous scene
 }

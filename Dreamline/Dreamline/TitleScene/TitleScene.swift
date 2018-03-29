@@ -21,10 +21,10 @@ class TitleScene: CustomScene {
     }
     
     override func didMove(to view: SKView) {
-        let delay = SKAction.wait(forDuration: 1.0)
-        let fadeIn = SKAction.fadeIn(withDuration: 2.0)
-        let hold = SKAction.wait(forDuration: 2.5)
-        let fadeOut = SKAction.fadeOut(withDuration: 1.25)
+        let delay = SKAction.wait(forDuration: 0.5)
+        let fadeIn = SKAction.fadeIn(withDuration: 1.0)
+        let hold = SKAction.wait(forDuration: 1.0)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.75)
         
         let size = self.frame.width * 0.2
         
@@ -43,8 +43,10 @@ class TitleScene: CustomScene {
         title.run(SKAction.sequence([delay, fadeIn, hold, fadeOut]))
         self.addChild(title)
         
+        // @TODO: Should only have to pass .next instead of
+        //        specifying exactly which scene to move to
         self.run(SKAction.sequence([
-            SKAction.wait(forDuration: 7),
+            SKAction.wait(forDuration: 4),
             SKAction.run { self.manager.transitionToInfoScene() }]))
     }
 }

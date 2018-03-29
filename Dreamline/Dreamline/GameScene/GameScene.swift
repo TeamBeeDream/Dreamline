@@ -25,7 +25,7 @@ class GameScene: CustomScene {
     var model: GameModel = DefaultGameModel()
     var positioner: Positioner = DefaultPositioner()
     var board: Board = DefaultBoard()
-    var sequencer: Sequencer = AuthoredSequencer()
+    var sequencer: Sequencer = AuthoredSequencer(maxPatterns: 2)
     var configurator: Configurator = DefaultConfigurator()
     var scoreUpdater: ScoreUpdater = DefaultScoreUpdater()
     
@@ -37,6 +37,8 @@ class GameScene: CustomScene {
     private var timeOfPreviousFrame: TimeInterval = 0
     private var numInputs: Int = 0
     private var isDead = false
+    private var totalBarriers: Int = 0
+    private var passedBarriers: Int = 0
     
     override func onInit() {
         // Create the renderer and add it to the view
@@ -128,22 +130,35 @@ class GameScene: CustomScene {
         
         // Scene stuff
         // @TODO: Move this to own function or something
-        // @HACK: I don't like how the controller is responsible for
-        //        invoking the end of the game round, should probably
-        //        be in the modle update function
+        // @FIXME: GameScene should not be responsible for
+        //         controlling sequence of events
+        //         It should just send events to VC
         for event in events {
             switch (event) {
+            case .barrierPass(_):
+                self.passedBarriers += 1
+                self.totalBarriers += 1
             case .barrierHit(_):
+                self.totalBarriers += 1
                 self.renderer!.killPlayer() // @HACK
-                self.run(SKAction.sequence([
-                    SKAction.wait(forDuration: 1.0),
-                    SKAction.run {
-                        self.manager.transitionToScoreScene(score: self.score.points)
-                    }]))
-                self.isDead = true
+            case .modifierGet(_, _): // @HACK: Using single speed modifier to trigger round end
+                // @HACK: This is sent by the Board protocol
+                self.renderer!.roundOver() // @HACK
+                self.roundOver()
             default: break
             }
         }
+    }
+    
+    private func roundOver() {
+        self.run(SKAction.sequence([
+            SKAction.wait(forDuration: 1.0),
+            SKAction.run {
+                // @FIXME
+                //self.manager.transitionToScoreScene(score: self.score.points)
+                self.manager.transitionToFeedbackScene(got: self.passedBarriers, total: self.totalBarriers)
+            }]))
+        self.isDead = true
     }
 }
 

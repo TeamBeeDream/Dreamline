@@ -13,12 +13,17 @@ import Foundation
  */
 protocol Sequencer {
     func getNextEntity(config: GameConfig) -> [EntityData]
+    func hasNext() -> Bool
 }
 
 // @NOTE: This is a temporary solution
 //        It's really only meant for testing before
 //        the AuthoredSequencer is complete
 class RandomSequencer: Sequencer {
+    func hasNext() -> Bool {
+        return true
+    }
+    
     func getNextEntity(config: GameConfig) -> [EntityData] {
         let random = Double.random()
         if random < 0.2 {
@@ -71,25 +76,35 @@ class RandomSequencer: Sequencer {
 class AuthoredSequencer: Sequencer {
     private var queue = [Group]()
     
-    init() {
+    private let maxPatterns: Int
+    private var patternCount: Int = 0
+    
+    init(maxPatterns: Int) {
+        self.maxPatterns = maxPatterns
+        
         // Always do the same thing at the beginning
-        queue.append(self.newGapPattern(count: 3))
-        queue.append(self.newStartPattern())
-        queue.append(self.newGapPattern(count: 1))
-        queue.append(self.newBoostPattern())
+        self.queueGroup(self.newGapPattern(count: 3))
+        self.queueGroup(self.newStartPattern())
+        //self.queueGroup(self.newGapPattern(count: 1))
+        //self.queueGroup(self.newBoostPattern())
+    }
+    
+    func hasNext() -> Bool {
+        return patternCount < maxPatterns
     }
     
     func getNextEntity(config: GameConfig) -> [EntityData] {
         if queue.isEmpty {
             // @TODO: Sequence patterns dynamically
-            queue.append(self.newTunnelPattern())
-            queue.append(self.newGapPattern(count: 3))
-            queue.append(self.newBarragePattern())
-            queue.append(self.newGapPattern(count: 3))
-            queue.append(self.newPacerPattern())
-            queue.append(self.newGapPattern(count: 3))
-            queue.append(self.newSpeedTrapPattern())
-            queue.append(self.newGapPattern(count: 3))
+            self.queueGroup(self.newTunnelPattern())
+            self.queueGroup(self.newGapPattern(count: 3))
+            self.queueGroup(self.newBarragePattern())
+            self.queueGroup(self.newGapPattern(count: 3))
+            self.queueGroup(self.newPacerPattern())
+            self.queueGroup(self.newGapPattern(count: 3))
+            self.queueGroup(self.newSpeedTrapPattern())
+            self.queueGroup(self.newGapPattern(count: 10))
+            self.patternCount += 1
         }
         
         // Pull next entity from queue
@@ -104,6 +119,10 @@ class AuthoredSequencer: Sequencer {
         }
         
         return nextEntity
+    }
+    
+    private func queueGroup(_ group: Group) {
+        queue.append(group)
     }
     
     private func newStartPattern() -> Group {
@@ -156,6 +175,13 @@ class AuthoredSequencer: Sequencer {
         var entities = [[EntityData]]()
         for _ in 1...10 { // @HARDCODED
             let random = Double.random()
+            if random < 0.2 {
+                entities.append([.empty])
+            } else {
+                entities.append([generateRandomBarrier()])
+            }
+            
+            /*
             if random < 0.075 {
                 entities.append([.empty])
             } else if random < 0.8 {
@@ -163,17 +189,20 @@ class AuthoredSequencer: Sequencer {
             } else {
                 entities.append([generateRandomModifierRow()])
             }
+            */
         }
         
         return Group(pattern: .barrage, entities: entities, index: 0)
     }
     
+    /*
     func generateRandomModifierRow() -> EntityData {
         let randomIndex = Int.random(min: 0, max: 2)
         var modifiers = [ModifierType](repeating: .none, count: 3)
         modifiers[randomIndex] = Double.random() < 0.5 ? .speedUp : .speedDown
         return .modifier(ModifierRow(modifiers: modifiers))
     }
+ */
     
     func generateRandomBarrier() -> EntityData {
         var gates = [Gate]()

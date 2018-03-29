@@ -8,6 +8,10 @@
 
 import SpriteKit
 
+protocol SceneManager {
+    
+}
+
 class CustomScene: SKScene {
     let manager: SceneManager
     

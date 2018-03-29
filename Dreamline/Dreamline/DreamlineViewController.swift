@@ -6,23 +6,7 @@
 //  Copyright © 2018 Team BeeDream. All rights reserved.
 //
 
-import MetalKit
 import SpriteKit
-
-// @CLEANUP: Should this be here or in another file?
-protocol SceneManager {
-    func transitionToTitleScene()
-    func transitionToInfoScene()
-    func transitionToStartScene()
-    func transitionToGameScene()
-    func transitionToScoreScene(score: Int)
-}
-
-// @HACK: Need some way to force the skipping of intro during development
-//        In the furture this should be some sort of configuration
-extension DreamlineViewController {
-    static let DEBUG: Bool = false
-}
 
 // @IDEA:
 // In the other model, the update tick was called
@@ -46,20 +30,6 @@ class DreamlineViewController: UIViewController {
         //        from here, views manage their own resources
         //        This class will be responsible for managing the
         //        FSM that controlls the subviews
-        
-        // Add metalKit view
-        let device = MTLCreateSystemDefaultDevice()
-        let graphicsView = MKTest(frame: self.view.frame, device: device!)
-        self.view.addSubview(graphicsView)
-        
-        // Add spritekit view
-        let uiView = SKTest(frame: self.view.frame)
-        self.view.addSubview(uiView)
-        
-        // Start update timer
-        let timer = CADisplayLink(target: self, selector: #selector(update))
-        timer.preferredFramesPerSecond = 60 // @HARDCODED
-        timer.add(to: .main, forMode: .defaultRunLoopMode)
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,15 +52,3 @@ class DreamlineViewController: UIViewController {
         return true
     }
 }
-
-// @TODO: Tie this to manager interface.
-extension DreamlineViewController {
-    @objc func update(displayLink: CADisplayLink) {
-        // @TODO: Handle update tick.
-        
-        //let dt = displayLink.targetTimestamp - displayLink.timestamp
-        //let actualFramesPerSecond = 1 / dt
-        //print("FPS: \(actualFramesPerSecond) - DT: \(dt)")
-    }
-}
-

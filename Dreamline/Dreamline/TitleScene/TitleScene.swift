@@ -43,8 +43,11 @@ class TitleScene: CustomScene {
         title.run(SKAction.sequence([delay, fadeIn, hold, fadeOut]))
         self.addChild(title)
         
+        // @FIXME
+        /*
         self.run(SKAction.sequence([
             SKAction.wait(forDuration: 7),
             SKAction.run { self.manager.transitionToInfoScene() }]))
+        */
     }
 }

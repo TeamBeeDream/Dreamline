@@ -8,16 +8,28 @@
 
 import SpriteKit
 
+// @TODO: Move this file somewhere other than Common/
+// This should probably also not be subclassed
+// Instead it should wrap the SKScene
 class CustomScene: SKScene {
     
-    init(view: SKView) {
-        super.init(size: view.frame.size)
+    // MARK: Private Properties
+    
+    var manager: SceneManager
+    
+    // MARK: Init
+    
+    init(manager: SceneManager, size: CGSize) {
+        self.manager = manager
+        super.init(size: size)
+        
         self.onInit()
     }
     
-    required init?(coder aDecoder: NSCoder) { fatalError() }
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
-    // This can be overriden by subclasses
-    // Called at the end of init()
+    // Should be implemented by child classes
     func onInit() {}
 }

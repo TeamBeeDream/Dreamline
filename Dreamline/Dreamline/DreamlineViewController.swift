@@ -8,19 +8,11 @@
 
 import SpriteKit
 
-// @IDEA:
-// In the other model, the update tick was called
-// every frame interval, but since we can't do that
-// at this level, we can trigger update by events
-// calling functions in this class
-
-// this class is connected to the Main.storyboard stuff
-// so it's tough to do an init()
-// this is basically rock bottom of the program
-// @RENAME: I'm not sure if this is a 'ViewController' per se
-//          Maybe something like 'DreamlineBase' or 'DreamlineProgram'
-//          Whatever it is, it should indicate that this is the 'bottom' of the program
 class DreamlineViewController: UIViewController {
+    
+    // MARK: Private Properties
+    
+    private var skview: SKView!
     
     // MARK: Init and Deinit
     
@@ -41,20 +33,14 @@ class DreamlineViewController: UIViewController {
         
         // Add SpriteKit view
         let skview = SKView(frame: self.view.frame)
-        skview.presentScene(GameScene(view: skview))
         self.view.addSubview(skview)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+        self.skview = skview
+        
+        self.transitionToTitleScene()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
+        return UIInterfaceOrientationMask.portrait
     }
     
     override var shouldAutorotate: Bool {
@@ -65,3 +51,38 @@ class DreamlineViewController: UIViewController {
         return true
     }
 }
+
+protocol SceneManager {
+    func transitionToTitleScene()
+    func transitionToInfoScene()
+    func transitionToStartScene()
+    func transitionToGameScene()
+    func transitionToScoreScene(score: Int)
+}
+
+extension DreamlineViewController: SceneManager {
+    private func transition() -> SKTransition {
+        return SKTransition.crossFade(withDuration: 0.3)
+    }
+    
+    func transitionToTitleScene() {
+        self.skview.presentScene(TitleScene(manager: self, size: self.skview.frame.size), transition: self.transition())
+    }
+    
+    func transitionToInfoScene() {
+        self.skview.presentScene(BetaInfoScene(manager: self, size: self.skview.frame.size), transition: self.transition())
+    }
+    
+    func transitionToStartScene() {
+        self.skview.presentScene(StartScene(manager: self, size: self.skview.frame.size), transition: self.transition())
+    }
+    
+    func transitionToGameScene() {
+        self.skview.presentScene(GameScene(manager: self, size: self.skview.frame.size), transition: self.transition())
+    }
+    
+    func transitionToScoreScene(score: Int) {
+        self.skview.presentScene(ScoreScene(manager: self, size: self.skview.frame.size,   score: score), transition: self.transition())
+    }
+}
+

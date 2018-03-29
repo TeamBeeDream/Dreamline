@@ -15,9 +15,10 @@ class ScoreScene: CustomScene {
     
     static var clearHighscoresOnInit = false // @HARDCODED
     
-    init(view: SKView, score: Int) {
+    // @TODO: Find better way to pass data in at creation
+    init(manager: SceneManager, size: CGSize, score: Int) {
         self.score = score
-        super.init(view: view)
+        super.init(manager: manager, size: size)
         
         // @FIXME
         if ScoreScene.clearHighscoresOnInit {
@@ -97,7 +98,7 @@ class ScoreScene: CustomScene {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // @FIXME
-        //self.manager.transitionToStartScene()
+        self.manager.transitionToStartScene()
     }
 }
 

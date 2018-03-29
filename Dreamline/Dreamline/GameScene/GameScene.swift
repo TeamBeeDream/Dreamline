@@ -139,7 +139,7 @@ class GameScene: CustomScene {
                     SKAction.wait(forDuration: 1.0),
                     SKAction.run {
                         // @FIXME
-                        //self.manager.transitionToScoreScene(score: self.score.points)
+                        self.manager.transitionToScoreScene(score: self.score.points)
                     }]))
                 self.isDead = true
             default: break

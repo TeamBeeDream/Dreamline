@@ -50,7 +50,7 @@ class BetaInfoScene: CustomScene {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         // @FIXME
-        //self.manager.transitionToStartScene()
+        self.manager.transitionToStartScene()
         self.isPaused = true
     }
 }

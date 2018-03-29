@@ -37,6 +37,8 @@ class GameScene: CustomScene {
     private var timeOfPreviousFrame: TimeInterval = 0
     private var numInputs: Int = 0
     private var isDead = false
+    private var totalBarriers: Int = 0
+    private var passedBarriers: Int = 0
     
     override func onInit() {
         // Create the renderer and add it to the view
@@ -133,7 +135,11 @@ class GameScene: CustomScene {
         //         It should just send events to VC
         for event in events {
             switch (event) {
+            case .barrierPass(_):
+                self.passedBarriers += 1
+                self.totalBarriers += 1
             case .barrierHit(_):
+                self.totalBarriers += 1
                 self.renderer!.killPlayer() // @HACK
             case .modifierGet(_, _): // @HACK: Using single speed modifier to trigger round end
                 // @HACK: This is sent by the Board protocol
@@ -149,7 +155,8 @@ class GameScene: CustomScene {
             SKAction.wait(forDuration: 1.0),
             SKAction.run {
                 // @FIXME
-                self.manager.transitionToScoreScene(score: self.score.points)
+                //self.manager.transitionToScoreScene(score: self.score.points)
+                self.manager.transitionToFeedbackScene(got: self.passedBarriers, total: self.totalBarriers)
             }]))
         self.isDead = true
     }

@@ -59,6 +59,7 @@ protocol SceneManager {
     func transitionToStartScene()
     func transitionToGameScene()
     func transitionToScoreScene(score: Int)
+    func transitionToFeedbackScene(got: Int, total: Int)
 }
 
 extension DreamlineViewController: SceneManager {
@@ -84,6 +85,14 @@ extension DreamlineViewController: SceneManager {
     
     func transitionToScoreScene(score: Int) {
         self.skview.presentScene(ScoreScene(manager: self, size: self.skview.frame.size,   score: score), transition: self.transition())
+    }
+    
+    func transitionToFeedbackScene(got: Int, total: Int) {
+        
+        let percentage = Double(got) / Double(total)
+        
+        let scene = FeedbackScene.make(manager: self, size: self.skview.frame.size, percentage: percentage)
+        self.skview.presentScene(scene, transition: self.transition())
     }
 }
 

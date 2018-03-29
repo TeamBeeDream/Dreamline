@@ -30,7 +30,7 @@ class ModelStateFactory {
         let layout = BoardLayout(
             spawnPosition: -1.1,
             destroyPosition: 1.1,
-            playerPosition: 0.5,
+            playerPosition: 0.1,
             laneOffset: 0.65)
         
         return ModelState(

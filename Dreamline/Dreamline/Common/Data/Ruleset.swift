@@ -22,7 +22,8 @@ struct Ruleset {
 class RulesetFactory {
     static func getDefault() -> Ruleset {
         var speedLookup = [Speed: SpeedInfo]()
-        speedLookup[.mach1] = SpeedInfo(speed: 0.8, points: 1)
+        //speedLookup[.mach1] = SpeedInfo(speed: 0.8, points: 1)
+        speedLookup[.mach1] = SpeedInfo(speed: 2.0, points: 1) // @HACK
         speedLookup[.mach2] = SpeedInfo(speed: 0.9, points: 1)
         speedLookup[.mach3] = SpeedInfo(speed: 1.1, points: 2)
         speedLookup[.mach4] = SpeedInfo(speed: 1.3, points: 2)

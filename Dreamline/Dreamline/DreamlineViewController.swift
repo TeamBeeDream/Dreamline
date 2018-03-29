@@ -22,6 +22,14 @@ import SpriteKit
 //          Whatever it is, it should indicate that this is the 'bottom' of the program
 class DreamlineViewController: UIViewController {
     
+    // MARK: Init and Deinit
+    
+    static func make() -> DreamlineViewController {
+        return DreamlineViewController()
+    }
+    
+    // MARK: UIViewController Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,6 +38,11 @@ class DreamlineViewController: UIViewController {
         //        from here, views manage their own resources
         //        This class will be responsible for managing the
         //        FSM that controlls the subviews
+        
+        // Add SpriteKit view
+        let skview = SKView(frame: self.view.frame)
+        skview.presentScene(GameScene(view: skview))
+        self.view.addSubview(skview)
     }
 
     override func didReceiveMemoryWarning() {

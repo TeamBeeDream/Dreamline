@@ -15,9 +15,9 @@ class ScoreScene: CustomScene {
     
     static var clearHighscoresOnInit = false // @HARDCODED
     
-    init(manager: SceneManager, view: SKView, score: Int) {
+    init(view: SKView, score: Int) {
         self.score = score
-        super.init(manager: manager, view: view)
+        super.init(view: view)
         
         // @FIXME
         if ScoreScene.clearHighscoresOnInit {

@@ -8,15 +8,9 @@
 
 import SpriteKit
 
-protocol SceneManager {
-    
-}
-
 class CustomScene: SKScene {
-    let manager: SceneManager
     
-    init(manager: SceneManager, view: SKView) {
-        self.manager = manager
+    init(view: SKView) {
         super.init(size: view.frame.size)
         self.onInit()
     }

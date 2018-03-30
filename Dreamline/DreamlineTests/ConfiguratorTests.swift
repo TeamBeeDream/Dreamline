@@ -32,7 +32,7 @@ class DefaultConfiguratorTests: XCTestCase {
         let config = self.configurator.updateConfig(config: self.config,
                                                     ruleset: self.ruleset,
                                                     events: events)
-        XCTAssert(config.boardScrollSpeed == self.config.boardScrollSpeed
+        XCTAssert(config.boardScrollSpeed == self.config.boardScrollSpeed)
     }
     
     func testUpdateConfig_ModifierNone() {

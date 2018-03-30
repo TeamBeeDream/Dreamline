@@ -37,8 +37,8 @@ class DreamlineViewController: UIViewController {
         self.view.addSubview(skview)
         self.skview = skview
         
-        //self.transitionToTitleScene()
-        self.transitionToGameScene()
+        self.transitionToTitleScene()
+        //self.transitionToGameScene()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

@@ -127,7 +127,7 @@ class DynamicSequencer: Sequencer {
             self.queueGroup(self.newGapPattern(count: 3))
             self.queueGroup(self.newPacerPattern(difficulty: difficulty, length: 10))
             self.queueGroup(self.newGapPattern(count: 3))
-            self.queueGroup(self.newSpeedTrapPattern())
+            self.queueGroup(self.newThresholdPattern())
             self.queueGroup(self.newGapPattern(count: 10))
             self.patternCount += 1
         }
@@ -230,6 +230,12 @@ class DynamicSequencer: Sequencer {
         return Group(pattern: .barrage, entities: entities, index: 0)
     }
     
+    private func newThresholdPattern() -> Group {
+        let threshold = [EntityData.threshold]
+        let entities = [threshold]
+        return Group(pattern: .threshold, entities: entities, index: 0)
+    }
+    
     private func generateRandomBarrier(difficulty: Double) -> EntityData {
         assert(difficulty >= 0.0)
         assert(difficulty <= 1.0)
@@ -282,6 +288,7 @@ extension DynamicSequencer {
         case barrage        // a random set of barriers, difficult to get through
         case pacer          // a random set of barriers, majority of patterns
         case gap            // a gap consisting of empty triggers
+        case threshold      // a threshold
     }
     
     private struct Group {

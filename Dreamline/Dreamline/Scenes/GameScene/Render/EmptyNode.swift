@@ -6,7 +6,6 @@
 //  Copyright © 2018 Team BeeDream. All rights reserved.
 //
 
-import Foundation
 import SpriteKit
 
 // @TODO: Factory for nodes like this

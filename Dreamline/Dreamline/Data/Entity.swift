@@ -24,6 +24,7 @@ struct Entity {
 enum EntityData {
     case barrier(Barrier)
     case modifier(ModifierRow)
+    case threshold
     case empty
 }
 
@@ -44,9 +45,6 @@ extension Entity {
 
 // MARK: Barrier
 
-/**
- Wall with gates
- */
 struct Barrier {
     let gates: [Gate]
 }
@@ -64,9 +62,6 @@ enum Gate {
 
 // MARK: Modifiers
 
-/**
- Speed modifier data
- */
 struct ModifierRow {
     let modifiers: [ModifierType]
 }

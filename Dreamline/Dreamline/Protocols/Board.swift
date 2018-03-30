@@ -127,6 +127,13 @@ class DefaultBoard: Board {
                 
                 updatedEntity.status = updatedStatus
                 
+            case .threshold:
+                let didHit = thresholdDidCollide(position: entity.position,
+                                                 step: step,
+                                                 layout: state.layout,
+                                                 config: config)
+                if didHit { raisedEvents.append(.thresholdCross) }
+                
             default:
                 break
             }
@@ -257,5 +264,17 @@ class DefaultBoard: Board {
         } else {
             return withinTolerance ? (.hit, hit) : (.pass, hit)
         }
+    }
+    
+    private func thresholdDidCollide(position: Double,
+                                     step: Double,
+                                     layout: BoardLayout,
+                                     config: GameConfig) -> Bool {
+        let barrierY0 = position - step
+        let barrierY1 = position
+        
+        // determine if player crossed barrier
+        let crossed = barrierY0 < layout.playerPosition && barrierY1 > layout.playerPosition
+        return crossed
     }
 }

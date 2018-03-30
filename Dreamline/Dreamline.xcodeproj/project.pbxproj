@@ -11,6 +11,7 @@
 		6913F852206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
 		6913F853206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
 		6913F854206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
+		6923FF85206E97D60058A25F /* ThresholdNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6923FF84206E97D60058A25F /* ThresholdNode.swift */; };
 		69387F49206D6D990092A076 /* FeedbackScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69387F48206D6D990092A076 /* FeedbackScene.swift */; };
 		693DF52C205995C6002C4821 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 693DF52B205995C6002C4821 /* AudioController.swift */; };
 		693DF52F205997ED002C4821 /* Pickup_Coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF52E205997ED002C4821 /* Pickup_Coin.wav */; };
@@ -79,6 +80,7 @@
 
 /* Begin PBXFileReference section */
 		6913F851206C3600001FBAAB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		6923FF84206E97D60058A25F /* ThresholdNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThresholdNode.swift; sourceTree = "<group>"; };
 		69387F48206D6D990092A076 /* FeedbackScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackScene.swift; sourceTree = "<group>"; };
 		693DF52B205995C6002C4821 /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
 		693DF52E205997ED002C4821 /* Pickup_Coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pickup_Coin.wav; sourceTree = "<group>"; };
@@ -323,6 +325,7 @@
 				69EFB59320531150005B3325 /* EmptyNode.swift */,
 				69EFB5952053152F005B3325 /* ModifierNode.swift */,
 				69EFB597205329A0005B3325 /* NodeCache.swift */,
+				6923FF84206E97D60058A25F /* ThresholdNode.swift */,
 			);
 			path = Render;
 			sourceTree = "<group>";
@@ -697,6 +700,7 @@
 				699FC55E204E053600DB09B4 /* DreamlineViewController.swift in Sources */,
 				69EFB59420531150005B3325 /* EmptyNode.swift in Sources */,
 				699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */,
+				6923FF85206E97D60058A25F /* ThresholdNode.swift in Sources */,
 				696091FC2056F92E0051B251 /* StartScene.swift in Sources */,
 				699AE3882057135C007BA2E2 /* ScoreScene.swift in Sources */,
 				694197B5205AAF9600AD4349 /* Configurator.swift in Sources */,

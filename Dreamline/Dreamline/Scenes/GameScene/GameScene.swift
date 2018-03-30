@@ -150,8 +150,7 @@ class GameScene: CustomScene {
             case .barrierHit(_):
                 self.totalBarriers += 1
                 self.renderer!.killPlayer() // @HACK
-            case .modifierGet(_, _): // @HACK: Using single speed modifier to trigger round end
-                // @HACK: This is sent by the Board protocol
+            case .thresholdCross: // @TEMPORARY
                 self.renderer!.roundOver() // @HACK
                 self.roundOver()
             default: break

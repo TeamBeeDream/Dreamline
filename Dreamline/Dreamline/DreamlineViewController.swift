@@ -38,8 +38,8 @@ class DreamlineViewController: UIViewController {
         self.skview = skview
         
         //self.transitionToTitleScene()
-        self.transitionToGameScene()
-        //self.transitionToFeedbackScene(got: 1, total: 1)
+        //self.transitionToGameScene()
+        self.transitionToFeedbackScene(got: 1, total: 1)
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -107,7 +107,7 @@ extension DreamlineViewController: SceneManager {
         let newSpeed = Speed(rawValue: speedIndex)!
         self.currentSpeed = newSpeed
         
-        self.transitionToGameScene()
+        self.transitionToStartScene()
     }
 }
 

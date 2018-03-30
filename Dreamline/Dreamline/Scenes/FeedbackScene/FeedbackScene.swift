@@ -25,17 +25,19 @@ class FeedbackScene: CustomScene {
     }
     
     override func didMove(to view: SKView) {
-        self.backgroundColor = .white
+        self.backgroundColor = SKColor(red: 220.0/255.0,
+                                       green: 190.0/255.0,
+                                       blue: 211.0/255.0,
+                                       alpha: 1.0)
         
-        let percentage = Double(round(10 * (self.percentage * 100)) / 10) // @HACK
-        let label = SKLabelNode(text: "\(percentage)%")
+        let label = SKLabelNode(text: "Round Complete")
         label.position = view.frame.point(x: 0.0, y: -0.7)
         label.fontColor = .darkText
         label.fontSize = 36
         self.addChild(label)
         
         let desc = SKLabelNode(text: "Please rate the difficulty")
-        desc.position = view.frame.point(x: 0.0, y: -0.6)
+        desc.position = view.frame.point(x: 0.0, y: -0.4)
         desc.fontColor = .darkText
         desc.fontSize = 20
         self.addChild(desc)
@@ -43,19 +45,22 @@ class FeedbackScene: CustomScene {
         let buttonWidth = view.frame.width * 0.85
         let buttonHeight = view.frame.height * 0.15
         let buttonSize = CGSize(width: buttonWidth, height: buttonHeight)
-        let buttonColor = SKColor.gray
+        let buttonColor = SKColor(red: 121.0/255.0,
+                                  green: 163.0/255.0,
+                                  blue: 145.0/255.0,
+                                  alpha: 1.0)
         
         let hardButton = DButton.make(text: "Too hard",
                                       size: buttonSize,
                                       color: buttonColor)
-        hardButton.position = view.frame.point(x: 0.0, y: 0.0)
+        hardButton.position = view.frame.point(x: 0.0, y: 0.4)
         self.addChild(hardButton)
         self.hardButton = hardButton
         
         let easyButton = DButton.make(text: "Too easy",
                                       size: buttonSize,
                                       color: buttonColor)
-        easyButton.position = view.frame.point(x: 0.0, y: 0.4)
+        easyButton.position = view.frame.point(x: 0.0, y: 0.0)
         self.addChild(easyButton)
         self.easyButton = easyButton
         
@@ -129,7 +134,7 @@ class DButton: SKNode {
                           width: size.width,
                           height: size.height)
         
-        let buttonBG = SKShapeNode(rect: rect)
+        let buttonBG = SKShapeNode(rect: rect, cornerRadius: 5.0)
         buttonBG.fillColor = color
         buttonBG.strokeColor = .clear
         button.addChild(buttonBG)

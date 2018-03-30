@@ -40,6 +40,14 @@ class GameScene: CustomScene {
     private var totalBarriers: Int = 0
     private var passedBarriers: Int = 0
     
+    // MARK: Init
+    
+    static func make(manager: SceneManager, size: CGSize, speed: Speed) -> GameScene {
+        let scene = GameScene(manager: manager, size: size)
+        scene.config.boardScrollSpeed = speed
+        return scene
+    }
+    
     override func onInit() {
         // Create the renderer and add it to the view
         self.renderer = DebugRenderer(frame: self.frame)
@@ -55,6 +63,8 @@ class GameScene: CustomScene {
         
         self.backgroundColor = SKColor(red: 57.0/255.0, green: 61.0/255.0, blue: 63.0/255.0, alpha: 1.0)
     }
+    
+    // MARK: SKScene Methods
     
     override func didMove(to view: SKView) {
         // This is called whenever this scene is incoming

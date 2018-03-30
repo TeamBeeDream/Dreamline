@@ -13,6 +13,7 @@ class DreamlineViewController: UIViewController {
     // MARK: Private Properties
     
     private var skview: SKView!
+    private var currentSpeed: Speed = .mach1 // @HACK @TEMPORARY
     
     // MARK: Init and Deinit
     
@@ -61,6 +62,7 @@ protocol SceneManager {
     func transitionToGameScene()
     func transitionToScoreScene(score: Int)
     func transitionToFeedbackScene(got: Int, total: Int)
+    func transitionFromFeedbackScene(response: Feedback) // @HACK
 }
 
 extension DreamlineViewController: SceneManager {
@@ -81,7 +83,8 @@ extension DreamlineViewController: SceneManager {
     }
     
     func transitionToGameScene() {
-        self.skview.presentScene(GameScene(manager: self, size: self.skview.frame.size), transition: self.transition())
+        let scene = GameScene.make(manager: self, size: self.skview.frame.size, speed: self.currentSpeed)
+        self.skview.presentScene(scene, transition: self.transition())
     }
     
     func transitionToScoreScene(score: Int) {
@@ -94,6 +97,17 @@ extension DreamlineViewController: SceneManager {
         
         let scene = FeedbackScene.make(manager: self, size: self.skview.frame.size, percentage: percentage)
         self.skview.presentScene(scene, transition: self.transition())
+    }
+    
+    func transitionFromFeedbackScene(response: Feedback) {
+        
+        let diff = response.rawValue - 1 // -1, 0, +1
+        
+        let speedIndex = clamp(self.currentSpeed.rawValue + diff, min: 0, max: Speed.count - 1)
+        let newSpeed = Speed(rawValue: speedIndex)!
+        self.currentSpeed = newSpeed
+        
+        self.transitionToGameScene()
     }
 }
 

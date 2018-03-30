@@ -75,28 +75,27 @@ class FeedbackScene: CustomScene {
             let fastFade = SKAction.fadeOut(withDuration: 0.3)
             //let slowFade = SKAction.fadeOut(withDuration: 1.3)
             
+            var response: Feedback = .justRight
             if self.hardButton.contains(loc) {
-                self.sendAnalytics(response: .tooHard)
-                //self.hardButton.run(slowFade)
+                response = .tooHard
                 self.easyButton.run(fastFade)
                 self.rightButton.run(fastFade)
             } else if self.easyButton.contains(loc) {
-                self.sendAnalytics(response: .tooEasy)
+                response = .tooEasy
                 self.hardButton.run(fastFade)
-                //self.easyButton.run(slowFade)
                 self.rightButton.run(fastFade)
             } else if self.rightButton.contains(loc) {
-                self.sendAnalytics(response: .justRight)
+                response = .justRight
                 self.hardButton.run(fastFade)
                 self.easyButton.run(fastFade)
-                //self.rightButton.run(slowFade)
             }
             
             self.listening = false
             self.run(SKAction.sequence([
                 SKAction.wait(forDuration: 1.0),
                 SKAction.run {
-                    self.manager.transitionToStartScene()
+                    self.sendAnalytics(response: response)
+                    self.manager.transitionFromFeedbackScene(response: response)
                 }]))
         }
     }
@@ -114,9 +113,9 @@ class FeedbackScene: CustomScene {
 }
 
 enum Feedback: Int {
-    case tooEasy = 0
+    case tooHard = 0
     case justRight = 1
-    case tooHard = 2
+    case tooEasy = 2
 }
 
 class DButton: SKNode {

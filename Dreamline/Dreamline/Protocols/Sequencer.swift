@@ -114,7 +114,9 @@ class DynamicSequencer: Sequencer {
     // MARK: Sequencer Methods
     
     func getNextEntity(config: GameConfig) -> [EntityData] {
-        let difficulty = Double(config.boardScrollSpeed.rawValue) / Double(Speed.count)
+        // @HACK
+        let ruleset = RulesetFactory.getDefault()
+        let difficulty = ruleset.speedLookup[config.boardScrollSpeed]!.difficulty
         
         if queue.isEmpty {
             // @TODO: Sequence patterns dynamically

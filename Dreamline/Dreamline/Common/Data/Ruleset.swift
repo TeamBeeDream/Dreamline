@@ -35,4 +35,19 @@ class RulesetFactory {
         
         return Ruleset(speedLookup: speedLookup)
     }
+    
+    static func getMock() -> Ruleset {
+        var speedLookup = [Speed: SpeedInfo]()
+        speedLookup[.mach1] = SpeedInfo(speed: 1.0, points: 1)
+        speedLookup[.mach2] = SpeedInfo(speed: 2.0, points: 2)
+        speedLookup[.mach3] = SpeedInfo(speed: 3.0, points: 3)
+        speedLookup[.mach4] = SpeedInfo(speed: 4.0, points: 4)
+        speedLookup[.mach5] = SpeedInfo(speed: 5.0, points: 5)
+        speedLookup[.mach6] = SpeedInfo(speed: 6.0, points: 6)
+        speedLookup[.mach7] = SpeedInfo(speed: 7.0, points: 7)
+        speedLookup[.mach8] = SpeedInfo(speed: 8.0, points: 8)
+        speedLookup[.mach9] = SpeedInfo(speed: 9.0, points: 9)
+        
+        return Ruleset(speedLookup: speedLookup)
+    }
 }

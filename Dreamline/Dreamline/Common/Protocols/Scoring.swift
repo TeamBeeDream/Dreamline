@@ -9,17 +9,26 @@
 import Foundation
 
 protocol ScoreUpdater {
-    func updateScore(state: Score, config: GameConfig, ruleset: Ruleset, events: [Event]) -> Score
+    func updateScore(state: Score, config: GameConfig, events: [Event]) -> Score
 }
 
 // @RENAME
 class DefaultScoreUpdater: ScoreUpdater {
-    func updateScore(state: Score, config: GameConfig, ruleset: Ruleset, events: [Event]) -> Score {
+    
+    // MARK: Init
+    
+    static func make() -> ScoreUpdater {
+        return DefaultScoreUpdater()
+    }
+    
+    // MARK: ScoreUpdater Methods
+    
+    func updateScore(state: Score, config: GameConfig, events: [Event]) -> Score {
         var updatedScore = state.clone()
         for event in events {
             switch (event) {
             case .barrierPass(_):
-                updatedScore.points += ruleset.speedLookup[config.boardScrollSpeed]!.points
+                updatedScore.points += config.pointsPerBarrier
             default: break
             }
         }

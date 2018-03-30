@@ -31,12 +31,16 @@
 		6989D7792050330D00E790F0 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6989D7782050330D00E790F0 /* Event.swift */; };
 		699AE38620570D5D007BA2E2 /* CustomScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699AE38520570D5D007BA2E2 /* CustomScene.swift */; };
 		699AE3882057135C007BA2E2 /* ScoreScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699AE3872057135C007BA2E2 /* ScoreScene.swift */; };
+		699EB42D206DAFDA00693CB8 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42C206DAFDA00693CB8 /* Random.swift */; };
+		699EB42F206DB51200693CB8 /* RandomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42E206DB51200693CB8 /* RandomTests.swift */; };
+		699EB431206DB8C600693CB8 /* ScoringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB430206DB8C600693CB8 /* ScoringTests.swift */; };
+		699EB433206DBDDC00693CB8 /* ConfiguratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB432206DBDDC00693CB8 /* ConfiguratorTests.swift */; };
 		699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC555204E053600DB09B4 /* AppDelegate.swift */; };
 		699FC55C204E053600DB09B4 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC55B204E053600DB09B4 /* GameScene.swift */; };
 		699FC55E204E053600DB09B4 /* DreamlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC55D204E053600DB09B4 /* DreamlineViewController.swift */; };
 		699FC563204E053600DB09B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 699FC562204E053600DB09B4 /* Assets.xcassets */; };
 		699FC566204E053600DB09B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 699FC564204E053600DB09B4 /* LaunchScreen.storyboard */; };
-		699FC571204E053600DB09B4 /* DreamlineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC570204E053600DB09B4 /* DreamlineTests.swift */; };
+		699FC571204E053600DB09B4 /* SequencerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC570204E053600DB09B4 /* SequencerTests.swift */; };
 		699FC57C204E053600DB09B4 /* DreamlineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC57B204E053600DB09B4 /* DreamlineUITests.swift */; };
 		699FC58A204E09A700DB09B4 /* Positioner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC589204E09A700DB09B4 /* Positioner.swift */; };
 		699FC58E204E1A8F00DB09B4 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC58D204E1A8F00DB09B4 /* GameModel.swift */; };
@@ -95,6 +99,10 @@
 		6989D7782050330D00E790F0 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		699AE38520570D5D007BA2E2 /* CustomScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScene.swift; sourceTree = "<group>"; };
 		699AE3872057135C007BA2E2 /* ScoreScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreScene.swift; sourceTree = "<group>"; };
+		699EB42C206DAFDA00693CB8 /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
+		699EB42E206DB51200693CB8 /* RandomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTests.swift; sourceTree = "<group>"; };
+		699EB430206DB8C600693CB8 /* ScoringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringTests.swift; sourceTree = "<group>"; };
+		699EB432206DBDDC00693CB8 /* ConfiguratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguratorTests.swift; sourceTree = "<group>"; };
 		699FC552204E053600DB09B4 /* Dreamline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dreamline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		699FC555204E053600DB09B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		699FC55B204E053600DB09B4 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
@@ -103,7 +111,7 @@
 		699FC565204E053600DB09B4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		699FC567204E053600DB09B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		699FC56C204E053600DB09B4 /* DreamlineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DreamlineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		699FC570204E053600DB09B4 /* DreamlineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamlineTests.swift; sourceTree = "<group>"; };
+		699FC570204E053600DB09B4 /* SequencerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequencerTests.swift; sourceTree = "<group>"; };
 		699FC572204E053600DB09B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		699FC577204E053600DB09B4 /* DreamlineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DreamlineUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		699FC57B204E053600DB09B4 /* DreamlineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamlineUITests.swift; sourceTree = "<group>"; };
@@ -188,6 +196,7 @@
 			children = (
 				69AB5E91204F251700093B33 /* Math.swift */,
 				699AE38520570D5D007BA2E2 /* CustomScene.swift */,
+				699EB42C206DAFDA00693CB8 /* Random.swift */,
 				693E1BAC2059A7A9008DBACE /* Data */,
 				693E1BAD2059A7B7008DBACE /* Protocols */,
 			);
@@ -280,7 +289,10 @@
 		699FC56F204E053600DB09B4 /* DreamlineTests */ = {
 			isa = PBXGroup;
 			children = (
-				699FC570204E053600DB09B4 /* DreamlineTests.swift */,
+				699FC570204E053600DB09B4 /* SequencerTests.swift */,
+				699EB42E206DB51200693CB8 /* RandomTests.swift */,
+				699EB430206DB8C600693CB8 /* ScoringTests.swift */,
+				699EB432206DBDDC00693CB8 /* ConfiguratorTests.swift */,
 				699FC572204E053600DB09B4 /* Info.plist */,
 			);
 			path = DreamlineTests;
@@ -689,6 +701,7 @@
 				69AB5E8E204EF0E200093B33 /* Sequencer.swift in Sources */,
 				699FC58E204E1A8F00DB09B4 /* GameModel.swift in Sources */,
 				69EFB5962053152F005B3325 /* ModifierNode.swift in Sources */,
+				699EB42D206DAFDA00693CB8 /* Random.swift in Sources */,
 				693FD4C0206039CB00B96978 /* Speed.swift in Sources */,
 				693FD4C4206051E400B96978 /* Entity.swift in Sources */,
 				693E1BAF2059A7FE008DBACE /* ModelState.swift in Sources */,
@@ -703,7 +716,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				699FC571204E053600DB09B4 /* DreamlineTests.swift in Sources */,
+				699EB433206DBDDC00693CB8 /* ConfiguratorTests.swift in Sources */,
+				699EB42F206DB51200693CB8 /* RandomTests.swift in Sources */,
+				699EB431206DB8C600693CB8 /* ScoringTests.swift in Sources */,
+				699FC571204E053600DB09B4 /* SequencerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

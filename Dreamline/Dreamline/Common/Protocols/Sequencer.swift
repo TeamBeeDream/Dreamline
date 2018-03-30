@@ -13,19 +13,33 @@ import Foundation
  */
 protocol Sequencer {
     func getNextEntity(config: GameConfig) -> [EntityData]
-    func hasNext() -> Bool
 }
 
 // @NOTE: This is a temporary solution
 //        It's really only meant for testing before
 //        the AuthoredSequencer is complete
 class RandomSequencer: Sequencer {
-    func hasNext() -> Bool {
-        return true
+    
+    // MARK: Private Properties
+    
+    var random: Random!
+    
+    // MARK: Init
+    
+    static func make() -> RandomSequencer {
+        return RandomSequencer.make(random: RealRandom())
     }
     
+    static func make(random: Random) -> RandomSequencer {
+        let sequencer = RandomSequencer()
+        sequencer.random = random
+        return sequencer
+    }
+    
+    // MARK: Sequencer Methods
+    
     func getNextEntity(config: GameConfig) -> [EntityData] {
-        let random = Double.random()
+        let random = self.random.next()
         if random < 0.2 {
             return [.empty]
         } else if random < 0.7 {
@@ -36,9 +50,9 @@ class RandomSequencer: Sequencer {
     }
 
     func generateRandomModifierRow() -> ModifierRow {
-        let randomIndex = Int.random(min: 0, max: 2)
+        let randomIndex = self.random.nextInt(min: 0, max: 2)
         var modifiers = [ModifierType](repeating: .none, count: 3)
-        modifiers[randomIndex] = Double.random() < 0.5 ? .speedUp : .speedDown
+        modifiers[randomIndex] = self.random.next() < 0.5 ? .speedUp : .speedDown
         return ModifierRow(modifiers: modifiers)
     }
     
@@ -62,7 +76,7 @@ class RandomSequencer: Sequencer {
     }
     
     private func randomGate() -> Gate {
-        if Double.random() > 0.5 {
+        if self.random.next() > 0.5 {
             return .open
         } else {
             return .closed
@@ -73,25 +87,34 @@ class RandomSequencer: Sequencer {
 // @TODO: Make more dynamic
 //        Right now the results of this sequencer are predictable
 // @NOTE: This is sequencer experienced by the player
-class AuthoredSequencer: Sequencer {
-    private var queue = [Group]()
+class DynamicSequencer: Sequencer {
     
-    private let maxPatterns: Int
+    var random: Random!
+    
+    // MARK: Private Properties
+    
+    private var queue = [Group]()
     private var patternCount: Int = 0
     
-    init(maxPatterns: Int) {
-        self.maxPatterns = maxPatterns
-        
+    // MARK: Init
+    
+    static func make() -> DynamicSequencer {
+        return DynamicSequencer.make(random: RealRandom())
+    }
+    
+    static func make(random: Random) -> DynamicSequencer {
+        let sequencer = DynamicSequencer()
+        sequencer.random = random
+        return sequencer
+    }
+    
+    init() {
         // Always do the same thing at the beginning
         self.queueGroup(self.newGapPattern(count: 3))
         self.queueGroup(self.newStartPattern())
-        //self.queueGroup(self.newGapPattern(count: 1))
-        //self.queueGroup(self.newBoostPattern())
     }
     
-    func hasNext() -> Bool {
-        return patternCount < maxPatterns
-    }
+    // MARK: Sequencer Methods
     
     func getNextEntity(config: GameConfig) -> [EntityData] {
         if queue.isEmpty {
@@ -120,6 +143,8 @@ class AuthoredSequencer: Sequencer {
         
         return nextEntity
     }
+    
+    // MARK: Private Methods
     
     private func queueGroup(_ group: Group) {
         queue.append(group)
@@ -174,37 +199,18 @@ class AuthoredSequencer: Sequencer {
     private func newPacerPattern() -> Group {
         var entities = [[EntityData]]()
         for _ in 1...10 { // @HARDCODED
-            let random = Double.random()
+            let random = self.random.next()
             if random < 0.2 {
                 entities.append([.empty])
             } else {
                 entities.append([generateRandomBarrier()])
             }
-            
-            /*
-            if random < 0.075 {
-                entities.append([.empty])
-            } else if random < 0.8 {
-                entities.append([generateRandomBarrier()])
-            } else {
-                entities.append([generateRandomModifierRow()])
-            }
-            */
         }
         
         return Group(pattern: .barrage, entities: entities, index: 0)
     }
     
-    /*
-    func generateRandomModifierRow() -> EntityData {
-        let randomIndex = Int.random(min: 0, max: 2)
-        var modifiers = [ModifierType](repeating: .none, count: 3)
-        modifiers[randomIndex] = Double.random() < 0.5 ? .speedUp : .speedDown
-        return .modifier(ModifierRow(modifiers: modifiers))
-    }
- */
-    
-    func generateRandomBarrier() -> EntityData {
+    private func generateRandomBarrier() -> EntityData {
         var gates = [Gate]()
         var allClosed = true
         var allOpen = true
@@ -224,7 +230,7 @@ class AuthoredSequencer: Sequencer {
     }
     
     private func randomGate() -> Gate {
-        if Double.random() > 0.5 {
+        if self.random.next() > 0.5 {
             return .open
         } else {
             return .closed
@@ -232,7 +238,7 @@ class AuthoredSequencer: Sequencer {
     }
 }
 
-extension AuthoredSequencer {
+extension DynamicSequencer {
     private enum Pattern {
         case start          // intro at the beginning of every round
         case boost          // at the beginning, gives you choice to speed up right away

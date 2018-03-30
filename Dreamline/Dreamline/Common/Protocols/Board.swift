@@ -66,21 +66,15 @@ class DefaultBoard: Board {
         var distance = state.distanceSinceLastEntity + step
         if distance > config.boardDistanceBetweenEntities {
             distance = 0.0 // @HACK: this is used later in this function, very fragile
-            
-            // @HACK: this hasNext call is strange
-            if !sequencer.hasNext() {
-                //raisedEvents.append(.roundEnd) // @FIXME
-            } else {
-                let entities = sequencer.getNextEntity(config: config)
-                for triggerData in entities {
-                    updatedTotalEntityCount += 1
-                    let newEntity = Entity(id: updatedTotalEntityCount,
-                                             position: state.layout.spawnPosition,
-                                             status: .active,
-                                             data: triggerData)
-                    updatedEntities_Added.append(newEntity)
-                    raisedEvents.append(.entityAdd(newEntity))
-                }
+            let entities = sequencer.getNextEntity(config: config)
+            for triggerData in entities {
+                updatedTotalEntityCount += 1
+                let newEntity = Entity(id: updatedTotalEntityCount,
+                                         position: state.layout.spawnPosition,
+                                         status: .active,
+                                         data: triggerData)
+                updatedEntities_Added.append(newEntity)
+                raisedEvents.append(.entityAdd(newEntity))
             }
         }
         

@@ -15,6 +15,8 @@ struct GameConfig {
     
     var boardScrollSpeed: Speed
     var boardDistanceBetweenEntities: Double
+    
+    var pointsPerBarrier: Int
 }
 
 extension GameConfig {
@@ -23,7 +25,8 @@ extension GameConfig {
             positionerTolerance: self.positionerTolerance,
             positionerMoveDuration: self.positionerMoveDuration,
             boardScrollSpeed: self.boardScrollSpeed,
-            boardDistanceBetweenEntities: self.boardDistanceBetweenEntities)
+            boardDistanceBetweenEntities: self.boardDistanceBetweenEntities,
+            pointsPerBarrier: self.pointsPerBarrier)
     }
 }
 
@@ -33,6 +36,16 @@ class GameConfigFactory {
             positionerTolerance: 0.2,
             positionerMoveDuration: 0.1,
             boardScrollSpeed: .mach1,
-            boardDistanceBetweenEntities: 0.7)
+            boardDistanceBetweenEntities: 0.7,
+            pointsPerBarrier: 1)
+    }
+    
+    static func getMock() -> GameConfig {
+        return GameConfig(
+            positionerTolerance: 0.0,
+            positionerMoveDuration: 0.0,
+            boardScrollSpeed: .mach1,
+            boardDistanceBetweenEntities: 0.0,
+            pointsPerBarrier: 0)
     }
 }

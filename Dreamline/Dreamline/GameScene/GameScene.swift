@@ -25,9 +25,9 @@ class GameScene: CustomScene {
     var model: GameModel = DefaultGameModel()
     var positioner: Positioner = DefaultPositioner()
     var board: Board = DefaultBoard()
-    var sequencer: Sequencer = AuthoredSequencer(maxPatterns: 2)
-    var configurator: Configurator = DefaultConfigurator()
-    var scoreUpdater: ScoreUpdater = DefaultScoreUpdater()
+    var sequencer: Sequencer = DynamicSequencer.make()
+    var configurator: Configurator = DefaultConfigurator.make()
+    var scoreUpdater: ScoreUpdater = DefaultScoreUpdater.make()
     
     // View Modules
     var renderer: GameRenderer?
@@ -116,7 +116,6 @@ class GameScene: CustomScene {
         let updatedScore = scoreUpdater.updateScore(
             state: score,
             config: updatedConfig,
-            ruleset: ruleset,
             events: events)
         
         // Composite

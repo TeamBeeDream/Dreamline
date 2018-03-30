@@ -8,9 +8,6 @@
 
 import Foundation
 
-/**
- Generates a sequence of entities
- */
 protocol Sequencer {
     func getNextEntity(config: GameConfig) -> [EntityData]
 }
@@ -99,7 +96,7 @@ class DynamicSequencer: Sequencer {
     // MARK: Init
     
     static func make() -> DynamicSequencer {
-        return DynamicSequencer.make(random: RealRandom())
+        return DynamicSequencer.make(random: RealRandom()) // By default, use real random
     }
     
     static func make(random: Random) -> DynamicSequencer {
@@ -117,13 +114,16 @@ class DynamicSequencer: Sequencer {
     // MARK: Sequencer Methods
     
     func getNextEntity(config: GameConfig) -> [EntityData] {
+        let difficulty = Double(config.boardScrollSpeed.rawValue) / Double(Speed.count)
+        
         if queue.isEmpty {
             // @TODO: Sequence patterns dynamically
-            self.queueGroup(self.newTunnelPattern())
+            // @HARDCODED
+            self.queueGroup(self.newTunnelPattern(difficulty: difficulty, length: 10))
             self.queueGroup(self.newGapPattern(count: 3))
-            self.queueGroup(self.newBarragePattern())
+            self.queueGroup(self.newBarragePattern(difficulty: difficulty, length: 10))
             self.queueGroup(self.newGapPattern(count: 3))
-            self.queueGroup(self.newPacerPattern())
+            self.queueGroup(self.newPacerPattern(difficulty: difficulty, length: 10))
             self.queueGroup(self.newGapPattern(count: 3))
             self.queueGroup(self.newSpeedTrapPattern())
             self.queueGroup(self.newGapPattern(count: 10))
@@ -135,7 +135,7 @@ class DynamicSequencer: Sequencer {
         var updatedGroup = originalGroup.clone()
         let nextEntity = originalGroup.entities[originalGroup.index]
         
-        // if group still has triggers
+        // If group still has triggers
         if originalGroup.index + 1 < originalGroup.entities.count {
             updatedGroup.index += 1
             queue.insert(updatedGroup, at: 0)
@@ -162,14 +162,6 @@ class DynamicSequencer: Sequencer {
         return Group(pattern: .gap, entities: entities, index: 0)
     }
     
-    private func newBoostPattern() -> Group {
-        let leftBoost: [EntityData] = [.modifier(ModifierRow(modifiers: [.speedUp, .none, .none]))]
-        let rightBoost: [EntityData] = [.modifier(ModifierRow(modifiers: [.none, .none, .speedUp]))]
-        
-        let entities = [leftBoost, rightBoost, leftBoost] // @TODO: Chirality support
-        return Group(pattern: .boost, entities: entities, index: 0)
-    }
-    
     private func newSpeedTrapPattern() -> Group {
         let barrier: EntityData = .barrier(Barrier(gates: [.closed, .open, .closed]))
         let modifier: EntityData = .modifier(ModifierRow(modifiers: [.none, .speedUp, .none]))
@@ -178,52 +170,93 @@ class DynamicSequencer: Sequencer {
         return Group(pattern: .speedTrap, entities: entities, index: 0)
     }
     
-    private func newTunnelPattern() -> Group {
+    private func newTunnelPattern(difficulty: Double, length: Int) -> Group {
+        assert(difficulty >= 0.0)
+        assert(difficulty <= 1.0)
+        
         let left: [EntityData]   = [.barrier(Barrier(gates: [.open, .closed, .closed]))]
         let center: [EntityData] = [.barrier(Barrier(gates: [.closed, .open, .closed]))]
         let right: [EntityData]  = [.barrier(Barrier(gates: [.closed, .closed, .open]))]
         
-        let entities = [left, left, center, center, right, right, left, center]
-        return Group(pattern: .tunnel, entities: entities, index: 0)
+        var entities = [[EntityData]]()
+        for _ in 1...length {
+            // @HACK: What this does is pick a random number, and if
+            // that number is greater than the given difficulty,
+            // it will then randomly pick either left or right
+            // otherwise it will return center
+            let randomValue = self.random.next()
+            if randomValue > difficulty {
+                entities.append(center)
+            } else {
+                let side = self.random.next()
+                if side > 0.5 { entities.append(left) }
+                else { entities.append(right) }
+            }
+        }
+        
+        return Group(pattern: .tunnel,
+                     entities: entities,
+                     index: 0)
     }
     
-    private func newBarragePattern() -> Group {
+    private func newBarragePattern(difficulty: Double, length: Int) -> Group {
+        assert(difficulty >= 0.0)
+        assert(difficulty <= 1.0)
+        
         var entities = [[EntityData]]()
-        for _ in 1...10 { // @HARDCODED
-            entities.append([generateRandomBarrier()])
+        for _ in 1...length {
+            entities.append([generateRandomBarrier(difficulty: difficulty)])
         }
         
         return Group(pattern: .barrage, entities: entities, index: 0)
     }
     
-    private func newPacerPattern() -> Group {
+    private func newPacerPattern(difficulty: Double, length: Int) -> Group {
+        assert(difficulty >= 0.0)
+        assert(difficulty <= 1.0)
+        
         var entities = [[EntityData]]()
-        for _ in 1...10 { // @HARDCODED
+        for _ in 1...length {
             let random = self.random.next()
             if random < 0.2 {
                 entities.append([.empty])
             } else {
-                entities.append([generateRandomBarrier()])
+                entities.append([generateRandomBarrier(difficulty: difficulty)])
             }
         }
         
         return Group(pattern: .barrage, entities: entities, index: 0)
     }
     
-    private func generateRandomBarrier() -> EntityData {
+    private func generateRandomBarrier(difficulty: Double) -> EntityData {
+        assert(difficulty >= 0.0)
+        assert(difficulty <= 1.0)
+        
         var gates = [Gate]()
-        var allClosed = true
-        var allOpen = true
-        for i in 1...3 {
-            let gate = self.randomGate()
-            if gate == .open { allClosed = allClosed && false }
-            if gate == .closed { allOpen = allOpen && false }
+        
+        // @HACK: This either only opens a single gate
+        // or it opens both the left or right.
+        let randomValue = self.random.next()
+        if randomValue < difficulty {
+            let rPos = self.random.next()
+            if rPos < 0.33 {
+                gates.append(.open)
+                gates.append(.closed)
+                gates.append(.closed)
+            } else if rPos < 0.66 {
+                gates.append(.closed)
+                gates.append(.open)
+                gates.append(.closed)
+            } else {
+                gates.append(.closed)
+                gates.append(.closed)
+                gates.append(.open)
+            }
+        } else {
             
-            // @CLEANUP: this code ensures that every gate has at least
-            // one opening or one closing, hard to understand
-            if i == 3 && allClosed { gates.append(.open) }
-            else if i == 3 && allOpen { gates.append(.closed) }
-            else { gates.append(gate) }
+            gates.append(.open)
+            gates.append(.closed)
+            gates.append(.open)
         }
         
         return .barrier(Barrier(gates: gates))

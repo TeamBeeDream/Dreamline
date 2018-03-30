@@ -9,6 +9,20 @@
 import Foundation
 import UIKit
 
+// MARK: Sign
+
+extension Double {
+    func sign() -> Int {
+        return (self < 0.0 ? -1 : 1)
+    }
+}
+
+extension Int {
+    func sign() -> Int {
+        return (self < 0 ? -1 : 1)
+    }
+}
+
 // MARK: Lerpable protocol
 
 public protocol Lerpable {

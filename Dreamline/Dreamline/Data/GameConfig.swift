@@ -35,7 +35,7 @@ class GameConfigFactory {
         return GameConfig(
             positionerTolerance: 0.2,
             positionerMoveDuration: 0.1,
-            boardScrollSpeed: .mach1,
+            boardScrollSpeed: .mach3,
             boardDistanceBetweenEntities: 0.7,
             pointsPerBarrier: 1)
     }

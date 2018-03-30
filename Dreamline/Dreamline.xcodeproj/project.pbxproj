@@ -170,6 +170,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6923FF83206E8A6B0058A25F /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				699AE38520570D5D007BA2E2 /* CustomScene.swift */,
+				69FC8A3C205C495A00E3829E /* TitleScene */,
+				69FC8A40205C560D00E3829E /* BetaInfoScene */,
+				693E1BB42059B9B2008DBACE /* GameScene */,
+				69FC8A41205C562400E3829E /* ScoreScene */,
+				69FC8A42205C563700E3829E /* StartScene */,
+				69387F47206D6D870092A076 /* FeedbackScene */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
 		69387F47206D6D870092A076 /* FeedbackScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -191,16 +205,13 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		693E1BAB2059A79A008DBACE /* Common */ = {
+		693E1BAB2059A79A008DBACE /* Util */ = {
 			isa = PBXGroup;
 			children = (
 				69AB5E91204F251700093B33 /* Math.swift */,
-				699AE38520570D5D007BA2E2 /* CustomScene.swift */,
 				699EB42C206DAFDA00693CB8 /* Random.swift */,
-				693E1BAC2059A7A9008DBACE /* Data */,
-				693E1BAD2059A7B7008DBACE /* Protocols */,
 			);
-			path = Common;
+			path = Util;
 			sourceTree = "<group>";
 		};
 		693E1BAC2059A7A9008DBACE /* Data */ = {
@@ -268,13 +279,10 @@
 		699FC554204E053600DB09B4 /* Dreamline */ = {
 			isa = PBXGroup;
 			children = (
-				693E1BAB2059A79A008DBACE /* Common */,
-				69FC8A3C205C495A00E3829E /* TitleScene */,
-				69FC8A40205C560D00E3829E /* BetaInfoScene */,
-				693E1BB42059B9B2008DBACE /* GameScene */,
-				69FC8A41205C562400E3829E /* ScoreScene */,
-				69FC8A42205C563700E3829E /* StartScene */,
-				69387F47206D6D870092A076 /* FeedbackScene */,
+				693E1BAC2059A7A9008DBACE /* Data */,
+				693E1BAD2059A7B7008DBACE /* Protocols */,
+				693E1BAB2059A79A008DBACE /* Util */,
+				6923FF83206E8A6B0058A25F /* Scenes */,
 				699FC555204E053600DB09B4 /* AppDelegate.swift */,
 				699FC55D204E053600DB09B4 /* DreamlineViewController.swift */,
 				699FC564204E053600DB09B4 /* LaunchScreen.storyboard */,

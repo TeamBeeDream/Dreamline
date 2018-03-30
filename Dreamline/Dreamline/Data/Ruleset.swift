@@ -36,6 +36,7 @@ class RulesetFactory {
         return Ruleset(speedLookup: speedLookup)
     }
     
+    // @CLEANUP: This should probably in DreamlineTests
     static func getMock() -> Ruleset {
         var speedLookup = [Speed: SpeedInfo]()
         speedLookup[.mach1] = SpeedInfo(speed: 1.0, points: 1)

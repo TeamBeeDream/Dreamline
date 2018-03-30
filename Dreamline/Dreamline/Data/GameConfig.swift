@@ -40,6 +40,7 @@ class GameConfigFactory {
             pointsPerBarrier: 1)
     }
     
+    // @CLEANUP: This should probably be in DreamlineTests
     static func getMock() -> GameConfig {
         return GameConfig(
             positionerTolerance: 0.0,

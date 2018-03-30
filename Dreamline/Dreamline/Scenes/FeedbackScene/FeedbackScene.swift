@@ -12,15 +12,19 @@ import Firebase
 class FeedbackScene: CustomScene {
     
     var percentage: Double = 0.0
+    var difficulty: Double = 0.0
+    
     var hardButton: DButton!
     var easyButton: DButton!
     var rightButton: DButton!
     
     var listening: Bool = true
     
-    static func make(manager: SceneManager, size: CGSize, percentage: Double) -> FeedbackScene {
+    static func make(manager: SceneManager, size: CGSize,
+                     percentage: Double, difficulty: Double) -> FeedbackScene {
         let scene = FeedbackScene(manager: manager, size: size)
         scene.percentage = percentage
+        scene.difficulty = difficulty
         return scene
     }
     
@@ -106,7 +110,8 @@ class FeedbackScene: CustomScene {
     }
     
     func sendAnalytics(response: Feedback) {
-        let difficulty = 0
+        print(self.difficulty)
+        let difficulty = self.difficulty
         let percentage = self.percentage
         let feedback = response.rawValue
         

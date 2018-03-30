@@ -38,8 +38,7 @@ class DreamlineViewController: UIViewController {
         self.skview = skview
         
         //self.transitionToTitleScene()
-        //self.transitionToGameScene()
-        self.transitionToFeedbackScene(got: 1, total: 1)
+        self.transitionToGameScene()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -61,7 +60,7 @@ protocol SceneManager {
     func transitionToStartScene()
     func transitionToGameScene()
     func transitionToScoreScene(score: Int)
-    func transitionToFeedbackScene(got: Int, total: Int)
+    func transitionToFeedbackScene(got: Int, total: Int, difficulty: Double)
     func transitionFromFeedbackScene(response: Feedback) // @HACK
 }
 
@@ -88,14 +87,15 @@ extension DreamlineViewController: SceneManager {
     }
     
     func transitionToScoreScene(score: Int) {
-        self.skview.presentScene(ScoreScene(manager: self, size: self.skview.frame.size,   score: score), transition: self.transition())
+        self.skview.presentScene(ScoreScene(manager: self, size: self.skview.frame.size, score: score), transition: self.transition())
     }
     
-    func transitionToFeedbackScene(got: Int, total: Int) {
+    func transitionToFeedbackScene(got: Int, total: Int, difficulty: Double) {
         
         let percentage = Double(got) / Double(total)
         
-        let scene = FeedbackScene.make(manager: self, size: self.skview.frame.size, percentage: percentage)
+        let scene = FeedbackScene.make(manager: self, size: self.skview.frame.size,
+                                       percentage: percentage, difficulty: difficulty)
         self.skview.presentScene(scene, transition: self.transition())
     }
     

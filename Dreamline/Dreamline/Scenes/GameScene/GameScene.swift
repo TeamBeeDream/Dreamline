@@ -25,9 +25,9 @@ class GameScene: CustomScene {
     var model: GameModel = DefaultGameModel()
     var positioner: Positioner = DefaultPositioner()
     var board: Board = DefaultBoard()
-    var sequencer: Sequencer = AuthoredSequencer(maxPatterns: 2)
-    var configurator: Configurator = DefaultConfigurator()
-    var scoreUpdater: ScoreUpdater = DefaultScoreUpdater()
+    var sequencer: Sequencer = DynamicSequencer.make()
+    var configurator: Configurator = DefaultConfigurator.make()
+    var scoreUpdater: ScoreUpdater = DefaultScoreUpdater.make()
     
     // View Modules
     var renderer: GameRenderer?
@@ -39,6 +39,14 @@ class GameScene: CustomScene {
     private var isDead = false
     private var totalBarriers: Int = 0
     private var passedBarriers: Int = 0
+    
+    // MARK: Init
+    
+    static func make(manager: SceneManager, size: CGSize, speed: Speed) -> GameScene {
+        let scene = GameScene(manager: manager, size: size)
+        scene.config.boardScrollSpeed = speed
+        return scene
+    }
     
     override func onInit() {
         // Create the renderer and add it to the view
@@ -55,6 +63,8 @@ class GameScene: CustomScene {
         
         self.backgroundColor = SKColor(red: 57.0/255.0, green: 61.0/255.0, blue: 63.0/255.0, alpha: 1.0)
     }
+    
+    // MARK: SKScene Methods
     
     override func didMove(to view: SKView) {
         // This is called whenever this scene is incoming
@@ -116,7 +126,6 @@ class GameScene: CustomScene {
         let updatedScore = scoreUpdater.updateScore(
             state: score,
             config: updatedConfig,
-            ruleset: ruleset,
             events: events)
         
         // Composite
@@ -141,8 +150,7 @@ class GameScene: CustomScene {
             case .barrierHit(_):
                 self.totalBarriers += 1
                 self.renderer!.killPlayer() // @HACK
-            case .modifierGet(_, _): // @HACK: Using single speed modifier to trigger round end
-                // @HACK: This is sent by the Board protocol
+            case .thresholdCross: // @TEMPORARY
                 self.renderer!.roundOver() // @HACK
                 self.roundOver()
             default: break
@@ -155,8 +163,10 @@ class GameScene: CustomScene {
             SKAction.wait(forDuration: 1.0),
             SKAction.run {
                 // @FIXME
-                //self.manager.transitionToScoreScene(score: self.score.points)
-                self.manager.transitionToFeedbackScene(got: self.passedBarriers, total: self.totalBarriers)
+                let difficulty = self.ruleset.speedLookup[self.config.boardScrollSpeed]!.difficulty // @CLEANUP
+                self.manager.transitionToFeedbackScene(got: self.passedBarriers,
+                                                       total: self.totalBarriers,
+                                                       difficulty: difficulty)
             }]))
         self.isDead = true
     }

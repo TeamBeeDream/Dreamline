@@ -13,6 +13,7 @@ class DreamlineViewController: UIViewController {
     // MARK: Private Properties
     
     private var skview: SKView!
+    private var currentSpeed: Speed = .mach1 // @HACK @TEMPORARY
     
     // MARK: Init and Deinit
     
@@ -36,8 +37,8 @@ class DreamlineViewController: UIViewController {
         self.view.addSubview(skview)
         self.skview = skview
         
-        //self.transitionToTitleScene()
-        self.transitionToFeedbackScene(got: 1, total: 1)
+        self.transitionToTitleScene()
+        //self.transitionToGameScene()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -59,7 +60,8 @@ protocol SceneManager {
     func transitionToStartScene()
     func transitionToGameScene()
     func transitionToScoreScene(score: Int)
-    func transitionToFeedbackScene(got: Int, total: Int)
+    func transitionToFeedbackScene(got: Int, total: Int, difficulty: Double)
+    func transitionFromFeedbackScene(response: Feedback) // @HACK
 }
 
 extension DreamlineViewController: SceneManager {
@@ -80,19 +82,32 @@ extension DreamlineViewController: SceneManager {
     }
     
     func transitionToGameScene() {
-        self.skview.presentScene(GameScene(manager: self, size: self.skview.frame.size), transition: self.transition())
+        let scene = GameScene.make(manager: self, size: self.skview.frame.size, speed: self.currentSpeed)
+        self.skview.presentScene(scene, transition: self.transition())
     }
     
     func transitionToScoreScene(score: Int) {
-        self.skview.presentScene(ScoreScene(manager: self, size: self.skview.frame.size,   score: score), transition: self.transition())
+        self.skview.presentScene(ScoreScene(manager: self, size: self.skview.frame.size, score: score), transition: self.transition())
     }
     
-    func transitionToFeedbackScene(got: Int, total: Int) {
+    func transitionToFeedbackScene(got: Int, total: Int, difficulty: Double) {
         
         let percentage = Double(got) / Double(total)
         
-        let scene = FeedbackScene.make(manager: self, size: self.skview.frame.size, percentage: percentage)
+        let scene = FeedbackScene.make(manager: self, size: self.skview.frame.size,
+                                       percentage: percentage, difficulty: difficulty)
         self.skview.presentScene(scene, transition: self.transition())
+    }
+    
+    func transitionFromFeedbackScene(response: Feedback) {
+        
+        let diff = response.rawValue - 1 // -1, 0, +1
+        
+        let speedIndex = clamp(self.currentSpeed.rawValue + diff, min: 0, max: Speed.count - 1)
+        let newSpeed = Speed(rawValue: speedIndex)!
+        self.currentSpeed = newSpeed
+        
+        self.transitionToStartScene()
     }
 }
 

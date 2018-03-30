@@ -16,10 +16,10 @@ enum Speed: Int {
     case mach3 = 2
     case mach4 = 3
     case mach5 = 4
-    case mach6 = 5
-    case mach7 = 6
-    case mach8 = 7
-    case mach9 = 8
+//    case mach6 = 5
+//    case mach7 = 6
+//    case mach8 = 7
+//    case mach9 = 8
 }
 
 // @HACK: This is super awkward
@@ -27,5 +27,5 @@ enum Speed: Int {
 //        cases there are, but there's no built-in
 //        way to determine that
 extension Speed {
-    static let count: Int = 9 // @HARDCODED
+    static let count: Int = 6 // @HARDCODED
 }

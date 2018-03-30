@@ -13,18 +13,31 @@ protocol Configurator {
 }
 
 class DefaultConfigurator: Configurator {
+    
+    // MARK: Init
+    
+    static func make() -> Configurator {
+        return DefaultConfigurator()
+    }
+    
+    // MARK: Configurator Methods
+    
     func updateConfig(config: GameConfig, ruleset: Ruleset, events: [Event]) -> GameConfig {
         var updatedConfig = config.clone()
         for event in events {
             switch (event) {
             case .modifierGet(_, let type):
-                updatedConfig.boardScrollSpeed = newSpeed(current: config.boardScrollSpeed, table: ruleset.speedLookup, modifier: type)
+                let newSpeed = self.newSpeed(current: config.boardScrollSpeed, table: ruleset.speedLookup, modifier: type)
+                updatedConfig.boardScrollSpeed = newSpeed
+                updatedConfig.pointsPerBarrier = ruleset.speedLookup[newSpeed]!.points
             default:
                 break
             }
         }
         return updatedConfig
     }
+    
+    // MARK: Private Methods
     
     private func newSpeed(current: Speed,
                           table: [Speed: SpeedInfo],

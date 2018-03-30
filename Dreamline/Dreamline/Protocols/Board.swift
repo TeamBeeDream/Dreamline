@@ -66,21 +66,15 @@ class DefaultBoard: Board {
         var distance = state.distanceSinceLastEntity + step
         if distance > config.boardDistanceBetweenEntities {
             distance = 0.0 // @HACK: this is used later in this function, very fragile
-            
-            // @HACK: this hasNext call is strange
-            if !sequencer.hasNext() {
-                //raisedEvents.append(.roundEnd) // @FIXME
-            } else {
-                let entities = sequencer.getNextEntity(config: config)
-                for triggerData in entities {
-                    updatedTotalEntityCount += 1
-                    let newEntity = Entity(id: updatedTotalEntityCount,
-                                             position: state.layout.spawnPosition,
-                                             status: .active,
-                                             data: triggerData)
-                    updatedEntities_Added.append(newEntity)
-                    raisedEvents.append(.entityAdd(newEntity))
-                }
+            let entities = sequencer.getNextEntity(config: config)
+            for triggerData in entities {
+                updatedTotalEntityCount += 1
+                let newEntity = Entity(id: updatedTotalEntityCount,
+                                         position: state.layout.spawnPosition,
+                                         status: .active,
+                                         data: triggerData)
+                updatedEntities_Added.append(newEntity)
+                raisedEvents.append(.entityAdd(newEntity))
             }
         }
         
@@ -132,6 +126,13 @@ class DefaultBoard: Board {
                 }
                 
                 updatedEntity.status = updatedStatus
+                
+            case .threshold:
+                let didHit = thresholdDidCollide(position: entity.position,
+                                                 step: step,
+                                                 layout: state.layout,
+                                                 config: config)
+                if didHit { raisedEvents.append(.thresholdCross) }
                 
             default:
                 break
@@ -263,5 +264,17 @@ class DefaultBoard: Board {
         } else {
             return withinTolerance ? (.hit, hit) : (.pass, hit)
         }
+    }
+    
+    private func thresholdDidCollide(position: Double,
+                                     step: Double,
+                                     layout: BoardLayout,
+                                     config: GameConfig) -> Bool {
+        let barrierY0 = position - step
+        let barrierY1 = position
+        
+        // determine if player crossed barrier
+        let crossed = barrierY0 < layout.playerPosition && barrierY1 > layout.playerPosition
+        return crossed
     }
 }

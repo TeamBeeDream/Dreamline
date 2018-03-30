@@ -50,7 +50,7 @@ class DebugRenderer: SKNode, GameRenderer {
         // Create score text
         self.scoreText = SKLabelNode()
         self.scoreText.position = CGPoint(x: frame.midX, y: frame.midY)
-        self.scoreText.color = SKColor.white
+        self.scoreText.fontColor = .clear
         
         // Create thumb buttons
         let button = SKSpriteNode(imageNamed: "ThumbButton")
@@ -58,10 +58,10 @@ class DebugRenderer: SKNode, GameRenderer {
         button.alpha = self.alphaLow
         
         self.thumbButtonLeft = button.copy() as! SKSpriteNode
-        self.thumbButtonLeft.position = frame.point(x: -0.5, y: 0.8)
+        self.thumbButtonLeft.position = frame.point(x: -0.5, y: 0.6)
         self.thumbButtonRight = button.copy() as! SKSpriteNode
         self.thumbButtonRight.xScale = -1.0
-        self.thumbButtonRight.position = frame.point(x: 0.5, y: 0.8)
+        self.thumbButtonRight.position = frame.point(x: 0.5, y: 0.6)
         
         
         super.init() // Awkward how this has to happen in the middle
@@ -185,6 +185,9 @@ class DebugRenderer: SKNode, GameRenderer {
             let node = EmptyNode()
             node.drawOnce(frameMinX: self.cachedFrame.minX,
                           frameMaxX: self.cachedFrame.maxX)
+            self.cachedNodes.addNode(node, entity: entity)
+        case .threshold:
+            let node = ThresholdNode.make(frame: self.cachedFrame)
             self.cachedNodes.addNode(node, entity: entity)
         case .modifier(let modifierRow):
             

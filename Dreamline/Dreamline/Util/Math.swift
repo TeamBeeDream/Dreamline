@@ -9,21 +9,17 @@
 import Foundation
 import UIKit
 
-extension Int {
-    static func random(min: Int, max: Int) -> Int {
-        let range = max - min
-        let randValue = Int(arc4random_uniform(UInt32(range)))
-        return Int(randValue + min)
+// MARK: Sign
+
+extension Double {
+    func sign() -> Int {
+        return (self < 0.0 ? -1 : 1)
     }
 }
 
-extension Double {
-    static func random() -> Double {
-        return Double(arc4random()) / 0xFFFFFFFF
-    }
-    
-    static func random(min: Double, max: Double) -> Double {
-        return random() * (max - min) + min
+extension Int {
+    func sign() -> Int {
+        return (self < 0 ? -1 : 1)
     }
 }
 

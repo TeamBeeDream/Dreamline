@@ -9,6 +9,8 @@
 import SpriteKit
 import Firebase
 
+// @TEMPORARY: This scene is only for the beta
+// it should be removed before the final release
 class FeedbackScene: CustomScene {
     
     var percentage: Double = 0.0
@@ -82,7 +84,6 @@ class FeedbackScene: CustomScene {
         for t in touches {
             let loc = t.location(in: self)
             let fastFade = SKAction.fadeOut(withDuration: 0.3)
-            //let slowFade = SKAction.fadeOut(withDuration: 1.3)
             
             var response: Feedback = .justRight
             if self.hardButton.contains(loc) {
@@ -110,7 +111,6 @@ class FeedbackScene: CustomScene {
     }
     
     func sendAnalytics(response: Feedback) {
-        print(self.difficulty)
         let difficulty = self.difficulty
         let percentage = self.percentage
         let feedback = response.rawValue
@@ -129,26 +129,22 @@ enum Feedback: Int {
 }
 
 class DButton: SKNode {
-    
     static func make(text: String, size: CGSize, color: UIColor) -> DButton {
-        
-        let button = DButton()
-        
         let rect = CGRect(x: size.width * -0.5,
                           y: size.height * -0.5,
                           width: size.width,
                           height: size.height)
-        
         let buttonBG = SKShapeNode(rect: rect, cornerRadius: 5.0)
         buttonBG.fillColor = color
         buttonBG.strokeColor = .clear
-        button.addChild(buttonBG)
         
         let label = SKLabelNode(text: text)
         label.position = CGPoint(x: 0, y: -label.fontSize * 0.35)
         label.fontColor = .white
-        button.addChild(label)
         
+        let button = DButton()
+        button.addChild(buttonBG)
+        button.addChild(label)
         return button
     }
 }

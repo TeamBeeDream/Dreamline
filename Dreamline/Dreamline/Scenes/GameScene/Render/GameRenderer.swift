@@ -50,7 +50,7 @@ class DebugRenderer: SKNode, GameRenderer {
         // Create score text
         self.scoreText = SKLabelNode()
         self.scoreText.position = CGPoint(x: frame.midX, y: frame.midY)
-        self.scoreText.color = SKColor.white
+        self.scoreText.color = .clear
         
         // Create thumb buttons
         let button = SKSpriteNode(imageNamed: "ThumbButton")

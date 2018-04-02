@@ -115,7 +115,8 @@ class FeedbackScene: CustomScene {
         let percentage = self.percentage
         let feedback = response.rawValue
         
-        Analytics.logEvent("feedback", parameters: [
+        // @TEMPORARY
+        Analytics.logEvent("beta_feedback", parameters: [
             "difficulty": difficulty as NSObject,
             "percentage": percentage as NSObject,
             "response": feedback as NSObject])

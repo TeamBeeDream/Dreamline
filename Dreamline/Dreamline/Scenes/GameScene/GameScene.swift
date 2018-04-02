@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import Firebase
 
 // @NOTE: This class is fairly fixed right now
 //        We should probably inject these objects
@@ -43,6 +44,11 @@ class GameScene: CustomScene {
     // MARK: Init
     
     static func make(manager: SceneManager, size: CGSize, speed: Speed) -> GameScene {
+        
+        // @ROBUSTNESS
+        // This probably shouldn't be in the class itself, but for now it's good enough.
+        Analytics.logEvent("game_started", parameters: nil)
+        
         let scene = GameScene(manager: manager, size: size)
         scene.config.boardScrollSpeed = speed
         return scene

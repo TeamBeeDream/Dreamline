@@ -34,6 +34,7 @@ class DreamlineViewController: UIViewController {
         
         // Add SpriteKit view
         let skview = SKView(frame: self.view.frame)
+        skview.isMultipleTouchEnabled = true
         self.view.addSubview(skview)
         self.skview = skview
         

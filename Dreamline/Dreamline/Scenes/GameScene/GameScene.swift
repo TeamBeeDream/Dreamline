@@ -29,6 +29,7 @@ class GameScene: CustomScene {
     var sequencer: Sequencer = DynamicSequencer.make()
     var configurator: Configurator = DefaultConfigurator.make()
     var scoreUpdater: ScoreUpdater = DefaultScoreUpdater.make()
+    var focus: Focus = DefaultFocus.make()
     
     // View Modules
     var renderer: GameRenderer?
@@ -124,6 +125,7 @@ class GameScene: CustomScene {
             positioner: positioner,
             board: board,
             sequencer: sequencer,
+            focus: focus,
             dt: dt)
         let updatedConfig = configurator.updateConfig(
             config: config,

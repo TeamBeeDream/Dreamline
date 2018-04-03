@@ -53,6 +53,8 @@
 		69EFB59420531150005B3325 /* EmptyNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFB59320531150005B3325 /* EmptyNode.swift */; };
 		69EFB5962053152F005B3325 /* ModifierNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFB5952053152F005B3325 /* ModifierNode.swift */; };
 		69EFB598205329A0005B3325 /* NodeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFB597205329A0005B3325 /* NodeCache.swift */; };
+		69FBDD542073D86C009E2F86 /* FocusState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FBDD532073D86C009E2F86 /* FocusState.swift */; };
+		69FBDD562073D9F7009E2F86 /* Focus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FBDD552073D9F7009E2F86 /* Focus.swift */; };
 		69FC8A39205C460000E3829E /* dreamline_mainloop_rough.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */; };
 		69FC8A3B205C495500E3829E /* TitleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FC8A3A205C495500E3829E /* TitleScene.swift */; };
 		69FC8A3F205C4DA000E3829E /* slowdown_effect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */; };
@@ -128,6 +130,8 @@
 		69EFB59320531150005B3325 /* EmptyNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyNode.swift; sourceTree = "<group>"; };
 		69EFB5952053152F005B3325 /* ModifierNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifierNode.swift; sourceTree = "<group>"; };
 		69EFB597205329A0005B3325 /* NodeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCache.swift; sourceTree = "<group>"; };
+		69FBDD532073D86C009E2F86 /* FocusState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusState.swift; sourceTree = "<group>"; };
+		69FBDD552073D9F7009E2F86 /* Focus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Focus.swift; sourceTree = "<group>"; };
 		69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreamline_mainloop_rough.mp3; sourceTree = "<group>"; };
 		69FC8A3A205C495500E3829E /* TitleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScene.swift; sourceTree = "<group>"; };
 		69FC8A3D205C4CB400E3829E /* slowdown_effect.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = slowdown_effect.aif; sourceTree = "<group>"; };
@@ -229,6 +233,7 @@
 				69BE00BC205768FB00E45C52 /* Highscore.swift */,
 				693FD4BF206039CB00B96978 /* Speed.swift */,
 				693FD4C3206051E400B96978 /* Entity.swift */,
+				69FBDD532073D86C009E2F86 /* FocusState.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -242,6 +247,7 @@
 				699FC589204E09A700DB09B4 /* Positioner.swift */,
 				69410B642056D620001EAB89 /* Scoring.swift */,
 				694197B4205AAF9600AD4349 /* Configurator.swift */,
+				69FBDD552073D9F7009E2F86 /* Focus.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -697,6 +703,7 @@
 				69FC8A3B205C495500E3829E /* TitleScene.swift in Sources */,
 				69AB5E90204EF84400093B33 /* Board.swift in Sources */,
 				69BE00BD205768FB00E45C52 /* Highscore.swift in Sources */,
+				69FBDD542073D86C009E2F86 /* FocusState.swift in Sources */,
 				699FC55E204E053600DB09B4 /* DreamlineViewController.swift in Sources */,
 				69EFB59420531150005B3325 /* EmptyNode.swift in Sources */,
 				699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */,
@@ -704,6 +711,7 @@
 				696091FC2056F92E0051B251 /* StartScene.swift in Sources */,
 				699AE3882057135C007BA2E2 /* ScoreScene.swift in Sources */,
 				694197B5205AAF9600AD4349 /* Configurator.swift in Sources */,
+				69FBDD562073D9F7009E2F86 /* Focus.swift in Sources */,
 				693E1BB12059B17F008DBACE /* PositionState.swift in Sources */,
 				69410B652056D620001EAB89 /* Scoring.swift in Sources */,
 				699FC58A204E09A700DB09B4 /* Positioner.swift in Sources */,

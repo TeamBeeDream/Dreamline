@@ -36,6 +36,17 @@ class DefaultFocus: Focus {
         var updatedState = state.clone()
         var raisedEvents = [Event]()
         
+        // Update delay
+        let newDelay = state.delay - dt
+        if newDelay < 0.0 {
+            raisedEvents.append(.focusGain)
+            let maxLevel = 3 // @HARDCODED, @TODO: Get from config
+            updatedState.level = min(state.level + 1, maxLevel)
+            updatedState.delay = 1 // @HARDCODED, @TODO: Get from config
+        } else {
+            updatedState.delay = newDelay
+        }
+        
         // @CLEANUP: Move these pieces to separate functions
         for event in events {
             switch event {
@@ -49,18 +60,11 @@ class DefaultFocus: Focus {
                 updatedState.level = max(0, level)
                 updatedState.delay = 1 // @HARDCODED, @TODO: Get from config
                 
-            // @NOTE: If nothing happened, lower the delay by dt
-            // If the delay is below zero, raise the level by one and raise .focusRaise
-            // @BUG: Keeps updating delay even when above max level
             default:
-                let newDelay = state.delay - dt
-                if newDelay < 0.0 {
-                    raisedEvents.append(.focusGain)
-                    let maxLevel = 3 // @HARDCODED, @TODO: Get from config
-                    updatedState.level = min(state.level + 1, maxLevel)
-                    updatedState.delay = 1 // @HARDCODED, @TODO: Get from config
-                }
+                break
+                
             }
+            
         }
         
         return (updatedState, raisedEvents)

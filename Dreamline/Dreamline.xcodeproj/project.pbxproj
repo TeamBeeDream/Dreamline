@@ -55,6 +55,7 @@
 		69EFB598205329A0005B3325 /* NodeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFB597205329A0005B3325 /* NodeCache.swift */; };
 		69FBDD542073D86C009E2F86 /* FocusState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FBDD532073D86C009E2F86 /* FocusState.swift */; };
 		69FBDD562073D9F7009E2F86 /* Focus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FBDD552073D9F7009E2F86 /* Focus.swift */; };
+		69FBDD582073FD26009E2F86 /* FocusNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FBDD572073FD26009E2F86 /* FocusNode.swift */; };
 		69FC8A39205C460000E3829E /* dreamline_mainloop_rough.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */; };
 		69FC8A3B205C495500E3829E /* TitleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FC8A3A205C495500E3829E /* TitleScene.swift */; };
 		69FC8A3F205C4DA000E3829E /* slowdown_effect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */; };
@@ -132,6 +133,7 @@
 		69EFB597205329A0005B3325 /* NodeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCache.swift; sourceTree = "<group>"; };
 		69FBDD532073D86C009E2F86 /* FocusState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusState.swift; sourceTree = "<group>"; };
 		69FBDD552073D9F7009E2F86 /* Focus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Focus.swift; sourceTree = "<group>"; };
+		69FBDD572073FD26009E2F86 /* FocusNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusNode.swift; sourceTree = "<group>"; };
 		69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreamline_mainloop_rough.mp3; sourceTree = "<group>"; };
 		69FC8A3A205C495500E3829E /* TitleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScene.swift; sourceTree = "<group>"; };
 		69FC8A3D205C4CB400E3829E /* slowdown_effect.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = slowdown_effect.aif; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 				69EFB5952053152F005B3325 /* ModifierNode.swift */,
 				69EFB597205329A0005B3325 /* NodeCache.swift */,
 				6923FF84206E97D60058A25F /* ThresholdNode.swift */,
+				69FBDD572073FD26009E2F86 /* FocusNode.swift */,
 			);
 			path = Render;
 			sourceTree = "<group>";
@@ -717,6 +720,7 @@
 				699FC58A204E09A700DB09B4 /* Positioner.swift in Sources */,
 				6989D7792050330D00E790F0 /* Event.swift in Sources */,
 				69EFB598205329A0005B3325 /* NodeCache.swift in Sources */,
+				69FBDD582073FD26009E2F86 /* FocusNode.swift in Sources */,
 				69FC8A44205C564900E3829E /* BetaInfoScene.swift in Sources */,
 				69AB5E8E204EF0E200093B33 /* Sequencer.swift in Sources */,
 				699FC58E204E1A8F00DB09B4 /* GameModel.swift in Sources */,

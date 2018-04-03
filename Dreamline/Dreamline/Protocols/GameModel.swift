@@ -61,6 +61,7 @@ class DefaultGameModel: GameModel {
         // Update focus
         let (updatedFocusState, focusEvents) = focus.update(
             state: state.focusState,
+            dt: dt,
             events: raisedEvents,
             config: config)
         updatedState.focusState = updatedFocusState

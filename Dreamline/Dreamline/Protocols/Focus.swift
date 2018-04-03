@@ -11,7 +11,10 @@ import Foundation
 protocol Focus {
     // @NOTE: Should probably minimize the connection to GameConfig
     // and just pass in the necessary values
-    func update(state: FocusState, events: [Event], config: GameConfig) -> (FocusState, [Event])
+    func update(state: FocusState,
+                dt: Double,
+                events: [Event],
+                config: GameConfig) -> (FocusState, [Event])
 }
 
 // @RENAME
@@ -25,19 +28,38 @@ class DefaultFocus: Focus {
     
     // MARK: Focus Methods
     
-    func update(state: FocusState, events: [Event], config: GameConfig) -> (FocusState, [Event]) {
+    func update(state: FocusState,
+                dt: Double,
+                events: [Event],
+                config: GameConfig) -> (FocusState, [Event]) {
         
         var updatedState = state.clone()
         var raisedEvents = [Event]()
         
+        // @CLEANUP: Move these pieces to separate functions
         for event in events {
             switch event {
+                
+            // @NOTE: When you hit a barrier, lower the focus level by 1
+            // If out of levels, raise .focusGone event
             case .barrierHit(_):
-                if state.isMin() { raisedEvents.append(.focusGone) }
-                updatedState.current -= 1 // @BUG
-                print("focus: \(updatedState.current)")
+                let level = state.level - 1
+                raisedEvents.append(.focusLoss)
+                if level < 0 { raisedEvents.append(.focusGone) }
+                updatedState.level = max(0, level)
+                updatedState.delay = 1 // @HARDCODED, @TODO: Get from config
+                
+            // @NOTE: If nothing happened, lower the delay by dt
+            // If the delay is below zero, raise the level by one and raise .focusRaise
+            // @BUG: Keeps updating delay even when above max level
             default:
-                break
+                let newDelay = state.delay - dt
+                if newDelay < 0.0 {
+                    raisedEvents.append(.focusGain)
+                    let maxLevel = 3 // @HARDCODED, @TODO: Get from config
+                    updatedState.level = min(state.level + 1, maxLevel)
+                    updatedState.delay = 1 // @HARDCODED, @TODO: Get from config
+                }
             }
         }
         

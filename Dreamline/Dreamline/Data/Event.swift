@@ -27,6 +27,8 @@ enum Event {
     case laneChange
     
     case focusGone // @RENAME
+    case focusGain
+    case focusLoss
 }
 
 // @RENAME: This is an event that is handled by the top-level VC

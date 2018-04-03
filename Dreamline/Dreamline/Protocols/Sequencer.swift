@@ -10,75 +10,11 @@ import Foundation
 
 protocol Sequencer {
     func getNextEntity(config: GameConfig) -> [EntityData]
-}
-
-// @NOTE: This is a temporary solution
-//        It's really only meant for testing before
-//        the AuthoredSequencer is complete
-class RandomSequencer: Sequencer {
-    
-    // MARK: Private Properties
-    
-    var random: Random!
-    
-    // MARK: Init
-    
-    static func make() -> RandomSequencer {
-        return RandomSequencer.make(random: RealRandom())
-    }
-    
-    static func make(random: Random) -> RandomSequencer {
-        let sequencer = RandomSequencer()
-        sequencer.random = random
-        return sequencer
-    }
-    
-    // MARK: Sequencer Methods
-    
-    func getNextEntity(config: GameConfig) -> [EntityData] {
-        let random = self.random.next()
-        if random < 0.2 {
-            return [.empty]
-        } else if random < 0.7 {
-            return [.barrier(self.generateRandomBarrier())]
-        } else {
-            return [.modifier(self.generateRandomModifierRow())]
-        }
-    }
-
-    func generateRandomModifierRow() -> ModifierRow {
-        let randomIndex = self.random.nextInt(min: 0, max: 2)
-        var modifiers = [ModifierType](repeating: .none, count: 3)
-        modifiers[randomIndex] = self.random.next() < 0.5 ? .speedUp : .speedDown
-        return ModifierRow(modifiers: modifiers)
-    }
-    
-    func generateRandomBarrier() -> Barrier {
-        var gates = [Gate]()
-        var allClosed = true
-        var allOpen = true
-        for i in 1...3 {
-            let gate = self.randomGate()
-            if gate == .open { allClosed = allClosed && false }
-            if gate == .closed { allOpen = allOpen && false }
-            
-            // @CLEANUP: this code ensures that every gate has at least
-            // one opening or one closing, hard to understand
-            if i == 3 && allClosed { gates.append(.open) }
-            else if i == 3 && allOpen { gates.append(.closed) }
-            else { gates.append(gate) }
-        }
-        
-        return Barrier(gates: gates)
-    }
-    
-    private func randomGate() -> Gate {
-        if self.random.next() > 0.5 {
-            return .open
-        } else {
-            return .closed
-        }
-    }
+    // @TODO: How many entities should this spit out at once?
+    // rn, it just keeps generating them, but it's hard to manage
+    // chunked patterns
+    // Also, the config determines the difficulty, should probably be
+    // more explicit as to how the difficulty impacts the generated patterns
 }
 
 // @TODO: Make more dynamic
@@ -91,7 +27,6 @@ class DynamicSequencer: Sequencer {
     // MARK: Private Properties
     
     private var queue = [Group]()
-    private var patternCount: Int = 0
     
     // MARK: Init
     
@@ -129,7 +64,6 @@ class DynamicSequencer: Sequencer {
             self.queueGroup(self.newGapPattern(count: 3))
             self.queueGroup(self.newThresholdPattern())
             self.queueGroup(self.newGapPattern(count: 10))
-            self.patternCount += 1
         }
         
         // Pull next entity from queue

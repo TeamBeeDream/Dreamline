@@ -62,7 +62,8 @@ class DynamicSequencer: Sequencer {
             self.queueGroup(self.newGapPattern(count: 3))
             self.queueGroup(self.newPacerPattern(difficulty: difficulty, length: 10))
             self.queueGroup(self.newGapPattern(count: 3))
-            self.queueGroup(self.newThresholdPattern())
+            //self.queueGroup(self.newThresholdPattern())
+            // @NOTE: This should only be added when applicable
             self.queueGroup(self.newGapPattern(count: 10))
         }
         

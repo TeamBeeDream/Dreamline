@@ -131,8 +131,8 @@ class DebugRenderer: SKNode, GameRenderer {
         let offset = state.positionState.offset * state.boardState.layout.laneOffset
         self.playerNode.position = self.cachedFrame.point(x: offset,
                                          y: state.boardState.layout.playerPosition)
-        self.focusNode.position = CGPoint(x: self.playerNode.position.x + 30.0,
-                                          y: self.playerNode.position.y)
+        self.focusNode.updatePosition(xPos: self.playerNode.position.x)
+        self.focusNode.position.y = self.playerNode.position.y - 20.0
         
         let diff = state.positionState.offset - self.playerPrevPos
         self.playerNode.zRotation = CGFloat(diff * -3.0) // @HARDCODED

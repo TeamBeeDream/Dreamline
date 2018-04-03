@@ -152,16 +152,27 @@ class GameScene: CustomScene {
         //         It should just send events to VC
         for event in events {
             switch (event) {
+                
             case .barrierPass(_):
                 self.passedBarriers += 1
                 self.totalBarriers += 1
+                
             case .barrierHit(_):
                 self.totalBarriers += 1
                 self.renderer!.killPlayer() // @HACK
-            case .thresholdCross: // @TEMPORARY
-                self.renderer!.roundOver() // @HACK
-                self.roundOver()
+                
+                // @TODO: What happens after crossing a threshold needs to be
+                // determined somehow
+//            case .thresholdCross: // @TEMPORARY
+//                self.renderer!.roundOver() // @HACK
+//                self.roundOver()
+                
+            case .focusGone: // @HACK
+                self.renderer!.roundOver()
+                self.roundOver() // @TODO: This should be determined by the config
+                
             default: break
+                
             }
         }
     }

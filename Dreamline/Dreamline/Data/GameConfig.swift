@@ -43,11 +43,12 @@ class GameConfigFactory {
             boardScrollSpeed: .mach3,
             boardDistanceBetweenEntities: 0.7,
             pointsPerBarrier: 1,
-            focusDelay: 3.0,
+            focusDelay: 5.0,
             focusMaxLevel: 3)
     }
     
     // @CLEANUP: This should probably be in DreamlineTests
+    // This probably shouldn't exist at all
     static func getMock() -> GameConfig {
         return GameConfig(
             positionerTolerance: 0.0,
@@ -56,6 +57,6 @@ class GameConfigFactory {
             boardDistanceBetweenEntities: 0.0,
             pointsPerBarrier: 0,
             focusDelay: 0.0,
-            focusMaxLevel: 1)
+            focusMaxLevel: 0)
     }
 }

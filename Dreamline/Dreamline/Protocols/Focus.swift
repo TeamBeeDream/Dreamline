@@ -55,7 +55,7 @@ class DefaultFocus: Focus {
             case .barrierHit(_):
                 let level = state.level - 1
                 raisedEvents.append(.focusLoss)
-                if level < 0 { raisedEvents.append(.focusGone) }
+                if level <= 0 { raisedEvents.append(.focusGone) }
                 updatedState.level = max(0, level)
                 updatedState.delay = config.focusDelay
                 

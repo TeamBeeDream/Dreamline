@@ -16,6 +16,8 @@ class FocusNode: SKNode {
     private var maxLevel: Int!
     
     private var dots: [SKNode]!
+    private var dotPositions: [CGFloat]!
+    
     private let dotRadius: CGFloat = 5.0
     private let dotOffset: CGFloat = 20.0
     private let dotColor: SKColor = .white
@@ -29,6 +31,7 @@ class FocusNode: SKNode {
         node.level = level
         node.maxLevel = maxLevel
         node.dots = [SKNode]()
+        node.dotPositions = [CGFloat]()
         node.setup()
         return node
     }
@@ -45,6 +48,17 @@ class FocusNode: SKNode {
         self.updateDots()
     }
     
+    func updatePosition(xPos: CGFloat) {
+        self.dotPositions[0] = xPos
+        self.dots[0].position.x = xPos
+        
+        for i in 1...self.maxLevel-1 {
+            let diff = self.dotPositions[i-1] - self.dotPositions[i]
+            self.dotPositions[i] += diff * 0.25
+            self.dots[i].position.x = self.dotPositions[i]
+        }
+    }
+    
     // MARK: Private Methods
     
     private func setup() {
@@ -52,9 +66,10 @@ class FocusNode: SKNode {
         
         for i in 0...self.maxLevel-1 {
             let dot = self.createDot()
-            dot.position = CGPoint(x: self.dotOffset * CGFloat(i), y: 0.0)
+            dot.position = CGPoint(x: 0.0, y: self.dotOffset * CGFloat(i * -1))
             self.addChild(dot)
             self.dots.append(dot)
+            self.dotPositions.append(0.0)
         }
         
         self.updateDots()

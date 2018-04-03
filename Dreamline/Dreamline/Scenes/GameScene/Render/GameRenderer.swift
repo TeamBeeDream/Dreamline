@@ -131,7 +131,7 @@ class DebugRenderer: SKNode, GameRenderer {
         let offset = state.positionState.offset * state.boardState.layout.laneOffset
         self.playerNode.position = self.cachedFrame.point(x: offset,
                                          y: state.boardState.layout.playerPosition)
-        self.focusNode.position = CGPoint(x: self.playerNode.position.x + 15.0,
+        self.focusNode.position = CGPoint(x: self.playerNode.position.x + 30.0,
                                           y: self.playerNode.position.y)
         
         let diff = state.positionState.offset - self.playerPrevPos

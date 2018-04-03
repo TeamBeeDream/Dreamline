@@ -40,9 +40,8 @@ class DefaultFocus: Focus {
         let newDelay = state.delay - dt
         if newDelay < 0.0 {
             raisedEvents.append(.focusGain)
-            let maxLevel = 3 // @HARDCODED, @TODO: Get from config
-            updatedState.level = min(state.level + 1, maxLevel)
-            updatedState.delay = 1 // @HARDCODED, @TODO: Get from config
+            updatedState.level = min(state.level + 1, config.focusMaxLevel)
+            updatedState.delay = config.focusDelay
         } else {
             updatedState.delay = newDelay
         }
@@ -58,7 +57,7 @@ class DefaultFocus: Focus {
                 raisedEvents.append(.focusLoss)
                 if level < 0 { raisedEvents.append(.focusGone) }
                 updatedState.level = max(0, level)
-                updatedState.delay = 1 // @HARDCODED, @TODO: Get from config
+                updatedState.delay = config.focusDelay
                 
             default:
                 break

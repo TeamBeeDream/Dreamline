@@ -9,6 +9,8 @@
 import SpriteKit
 import Firebase
 
+// @CLEANUP: Remove this class.
+
 // @TEMPORARY: This scene is only for the beta
 // it should be removed before the final release
 class FeedbackScene: CustomScene {

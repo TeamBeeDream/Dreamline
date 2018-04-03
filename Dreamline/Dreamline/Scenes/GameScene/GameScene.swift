@@ -181,11 +181,7 @@ class GameScene: CustomScene {
         self.run(SKAction.sequence([
             SKAction.wait(forDuration: 1.0),
             SKAction.run {
-                // @FIXME
-                let difficulty = self.ruleset.speedLookup[self.config.boardScrollSpeed]!.difficulty // @CLEANUP
-                self.manager.transitionToFeedbackScene(got: self.passedBarriers,
-                                                       total: self.totalBarriers,
-                                                       difficulty: difficulty)
+                self.manager.transitionToScoreScene(score: self.passedBarriers)
             }]))
         self.isDead = true
     }

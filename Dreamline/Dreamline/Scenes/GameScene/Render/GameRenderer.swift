@@ -205,8 +205,8 @@ class DebugRenderer: SKNode, GameRenderer {
             node.drawOnce(frameMinX: self.cachedFrame.minX,
                           frameMaxX: self.cachedFrame.maxX)
             self.cachedNodes.addNode(node, entity: entity)
-        case .threshold:
-            let node = ThresholdNode.make(frame: self.cachedFrame)
+        case .threshold(let type):
+            let node = ThresholdNode.make(frame: self.cachedFrame, type: type)
             self.cachedNodes.addNode(node, entity: entity)
         case .modifier(let modifierRow):
             

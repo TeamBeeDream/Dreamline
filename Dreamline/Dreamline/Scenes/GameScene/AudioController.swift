@@ -43,21 +43,31 @@ class AudioNode: SKNode, AudioController {
     func processEvents(_ events: [Event]) {
         for event in events {
             switch (event) {
+                
             case .roundBegin:
                 self.addChild(self.musicNode)
+                
             case .roundEnd:
                 self.musicNode.removeFromParent()
-            case .barrierPass(_):
+                
+            case .barrierPass:
                 self.playSound(self.bingSound)
+                
             case .modifierGet(_, let type):
                 switch (type) {
                 case .speedUp: self.playSound(self.powerupSound)
                 case .speedDown: self.playSound(self.slowdownSound)
                 default: break
                 }
-            case .barrierHit(_):
+                
+            case .barrierHit:
                 self.playSound(self.deathSound)
+                
+            case .thresholdCross(let type):
+                if type == .speedUp { self.playSound(self.powerupSound) }
+                
             default: break
+                
             }
         }
     }

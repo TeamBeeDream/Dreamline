@@ -12,24 +12,29 @@ class ThresholdNode: SKNode {
     
     // MARK: Init
     
-    static func make(frame: CGRect) -> ThresholdNode {
+    static func make(frame: CGRect, type: ThresholdType) -> ThresholdNode {
         let node = ThresholdNode()
-        node.drawOnce(frameMinX: frame.minX, frameMaxX: frame.maxX)
+        var color: SKColor { // @HARDCODED
+            switch type {
+            case .roundOver: return .red
+            case .speedUp: return .cyan
+            }
+        }
+        node.drawOnce(frameMinX: frame.minX,
+                      frameMaxX: frame.maxX,
+                      color: color)
         return node
     }
     
     // MARK: Private Methods
     
-    private func drawOnce(frameMinX: CGFloat, frameMaxX: CGFloat) {
+    private func drawOnce(frameMinX: CGFloat, frameMaxX: CGFloat, color: SKColor) {
         
         let leftPoint = CGPoint(x: frameMinX, y: 0.0)
         let rightPoint = CGPoint(x: frameMaxX, y: 0.0)
         let graphic = self.createLine(from: leftPoint,
                                       to: rightPoint,
-                                      color: SKColor(red: 200.0/255.0,
-                                                     green: 200.0/255.0,
-                                                     blue: 200.0/255.0,
-                                                     alpha: 0.9),
+                                      color: color,
                                       width: 3.5)
         addChild(graphic)
     }

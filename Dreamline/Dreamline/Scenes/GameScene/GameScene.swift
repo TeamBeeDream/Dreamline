@@ -19,7 +19,7 @@ class GameScene: CustomScene {
     // Data
     var state: ModelState = ModelStateFactory.getDefault()
     var score: Score = ScoreFactory.getNew()
-    var config: GameConfig = GameConfigFactory.getDefault()
+    var config: GameConfig = GameConfigFactory.getChallengeConfig() // @HARDCODED
     var ruleset: Ruleset = RulesetFactory.getDefault()
     
     // Protocols
@@ -153,19 +153,19 @@ class GameScene: CustomScene {
         for event in events {
             switch (event) {
                 
-            case .barrierPass(_):
+            case .barrierPass:
                 self.passedBarriers += 1
                 self.totalBarriers += 1
                 
-            case .barrierHit(_):
+            case .barrierHit:
                 self.totalBarriers += 1
                 self.renderer!.killPlayer() // @HACK
                 
-                // @TODO: What happens after crossing a threshold needs to be
-                // determined somehow
-//            case .thresholdCross: // @TEMPORARY
-//                self.renderer!.roundOver() // @HACK
-//                self.roundOver()
+            case .thresholdCross(let type): // @TEMPORARY
+                if type == .roundOver {
+                    self.renderer!.roundOver() // @HACK
+                    self.roundOver()
+                }
                 
             case .focusGone: // @HACK
                 self.renderer!.roundOver()

@@ -24,7 +24,7 @@ struct Entity {
 enum EntityData {
     case barrier(Barrier)
     case modifier(ModifierRow)
-    case threshold
+    case threshold(ThresholdType)
     case empty
 }
 
@@ -70,6 +70,13 @@ enum ModifierType {
     case speedUp
     case speedDown
     case none
+}
+
+// MARK: Threshold
+
+enum ThresholdType {
+    case roundOver
+    case speedUp
 }
 
 

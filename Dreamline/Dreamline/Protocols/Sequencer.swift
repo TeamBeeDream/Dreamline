@@ -62,9 +62,14 @@ class DynamicSequencer: Sequencer {
             self.queueGroup(self.newGapPattern(count: 3))
             self.queueGroup(self.newPacerPattern(difficulty: difficulty, length: 10))
             self.queueGroup(self.newGapPattern(count: 3))
-            //self.queueGroup(self.newThresholdPattern())
-            // @NOTE: This should only be added when applicable
-            self.queueGroup(self.newGapPattern(count: 10))
+            
+            if config.discreteRounds { // @HACK
+                self.queueGroup(self.newThresholdPattern(type: .roundOver))
+                self.queueGroup(self.newGapPattern(count: 10))
+            } else {
+                self.queueGroup(self.newThresholdPattern(type: .speedUp))
+                self.queueGroup(self.newGapPattern(count: 5))
+            }
         }
         
         // Pull next entity from queue
@@ -165,8 +170,8 @@ class DynamicSequencer: Sequencer {
         return Group(pattern: .barrage, entities: entities, index: 0)
     }
     
-    private func newThresholdPattern() -> Group {
-        let threshold = [EntityData.threshold]
+    private func newThresholdPattern(type: ThresholdType) -> Group {
+        let threshold = [EntityData.threshold(type)]
         let entities = [threshold]
         return Group(pattern: .threshold, entities: entities, index: 0)
     }

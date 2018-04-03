@@ -127,12 +127,12 @@ class DefaultBoard: Board {
                 
                 updatedEntity.status = updatedStatus
                 
-            case .threshold:
+            case .threshold(let type):
                 let didHit = thresholdDidCollide(position: entity.position,
                                                  step: step,
                                                  layout: state.layout,
                                                  config: config)
-                if didHit { raisedEvents.append(.thresholdCross) }
+                if didHit { raisedEvents.append(.thresholdCross(type)) }
                 
             default:
                 break

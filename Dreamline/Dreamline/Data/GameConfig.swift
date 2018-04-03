@@ -18,6 +18,8 @@ struct GameConfig {
     
     var pointsPerBarrier: Int
     
+    var discreteRounds: Bool
+    
     var focusDelay: Double
     var focusMaxLevel: Int
 }
@@ -30,33 +32,34 @@ extension GameConfig {
             boardScrollSpeed: self.boardScrollSpeed,
             boardDistanceBetweenEntities: self.boardDistanceBetweenEntities,
             pointsPerBarrier: self.pointsPerBarrier,
+            discreteRounds: self.discreteRounds,
             focusDelay: self.focusDelay,
             focusMaxLevel: self.focusMaxLevel)
     }
 }
 
 class GameConfigFactory {
-    static func getDefault() -> GameConfig {
+    static func getChallengeConfig() -> GameConfig {
         return GameConfig(
             positionerTolerance: 0.2,
             positionerMoveDuration: 0.1,
             boardScrollSpeed: .mach3,
             boardDistanceBetweenEntities: 0.7,
             pointsPerBarrier: 1,
+            discreteRounds: false,
             focusDelay: 5.0,
             focusMaxLevel: 3)
     }
     
-    // @CLEANUP: This should probably be in DreamlineTests
-    // This probably shouldn't exist at all
-    static func getMock() -> GameConfig {
+    static func getMeditationConfig() -> GameConfig {
         return GameConfig(
-            positionerTolerance: 0.0,
-            positionerMoveDuration: 0.0,
-            boardScrollSpeed: .mach1,
-            boardDistanceBetweenEntities: 0.0,
-            pointsPerBarrier: 0,
-            focusDelay: 0.0,
-            focusMaxLevel: 0)
+            positionerTolerance: 0.2,
+            positionerMoveDuration: 0.1,
+            boardScrollSpeed: .mach3,
+            boardDistanceBetweenEntities: 0.7,
+            pointsPerBarrier: 1,
+            discreteRounds: true,
+            focusDelay: 5.0,
+            focusMaxLevel: 3)
     }
 }

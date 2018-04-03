@@ -22,7 +22,7 @@ enum Event {
     
     case modifierGet(Int, ModifierType)
     
-    case thresholdCross
+    case thresholdCross(ThresholdType)
     
     case laneChange
     

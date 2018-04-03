@@ -34,11 +34,12 @@ class DreamlineViewController: UIViewController {
         
         // Add SpriteKit view
         let skview = SKView(frame: self.view.frame)
+        skview.isMultipleTouchEnabled = true
         self.view.addSubview(skview)
         self.skview = skview
         
-        self.transitionToTitleScene()
-        //self.transitionToGameScene()
+        //self.transitionToTitleScene()
+        self.transitionToStartScene()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -60,7 +61,7 @@ protocol SceneManager {
     func transitionToStartScene()
     func transitionToGameScene()
     func transitionToScoreScene(score: Int)
-    func transitionToFeedbackScene(got: Int, total: Int, difficulty: Double)
+    //func transitionToFeedbackScene(got: Int, total: Int, difficulty: Double)
     func transitionFromFeedbackScene(response: Feedback) // @HACK
 }
 
@@ -90,6 +91,7 @@ extension DreamlineViewController: SceneManager {
         self.skview.presentScene(ScoreScene(manager: self, size: self.skview.frame.size, score: score), transition: self.transition())
     }
     
+    /*
     func transitionToFeedbackScene(got: Int, total: Int, difficulty: Double) {
         
         let percentage = Double(got) / Double(total)
@@ -98,6 +100,7 @@ extension DreamlineViewController: SceneManager {
                                        percentage: percentage, difficulty: difficulty)
         self.skview.presentScene(scene, transition: self.transition())
     }
+ */
     
     func transitionFromFeedbackScene(response: Feedback) {
         

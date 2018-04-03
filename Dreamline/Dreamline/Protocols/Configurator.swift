@@ -30,6 +30,13 @@ class DefaultConfigurator: Configurator {
                 let newSpeed = self.newSpeed(current: config.boardScrollSpeed, table: ruleset.speedLookup, modifier: type)
                 updatedConfig.boardScrollSpeed = newSpeed
                 updatedConfig.pointsPerBarrier = ruleset.speedLookup[newSpeed]!.points
+                
+            case .thresholdCross(let type):
+                if type != .speedUp { break }
+                let newSpeed = self.newSpeed(current: config.boardScrollSpeed, table: ruleset.speedLookup, modifier: .speedUp) // @HACK
+                updatedConfig.boardScrollSpeed = newSpeed
+                updatedConfig.pointsPerBarrier = ruleset.speedLookup[newSpeed]!.points
+                
             default:
                 break
             }

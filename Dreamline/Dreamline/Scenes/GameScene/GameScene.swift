@@ -19,7 +19,7 @@ class GameScene: CustomScene {
     // Data
     var state: ModelState = ModelStateFactory.getDefault()
     var score: Score = ScoreFactory.getNew()
-    var config: GameConfig = GameConfigFactory.getDefault()
+    var config: GameConfig = GameConfigFactory.getChallengeConfig() // @HARDCODED
     var ruleset: Ruleset = RulesetFactory.getDefault()
     
     // Protocols
@@ -29,6 +29,7 @@ class GameScene: CustomScene {
     var sequencer: Sequencer = DynamicSequencer.make()
     var configurator: Configurator = DefaultConfigurator.make()
     var scoreUpdater: ScoreUpdater = DefaultScoreUpdater.make()
+    var focus: Focus = DefaultFocus.make()
     
     // View Modules
     var renderer: GameRenderer?
@@ -124,6 +125,7 @@ class GameScene: CustomScene {
             positioner: positioner,
             board: board,
             sequencer: sequencer,
+            focus: focus,
             dt: dt)
         let updatedConfig = configurator.updateConfig(
             config: config,
@@ -150,16 +152,27 @@ class GameScene: CustomScene {
         //         It should just send events to VC
         for event in events {
             switch (event) {
-            case .barrierPass(_):
+                
+            case .barrierPass:
                 self.passedBarriers += 1
                 self.totalBarriers += 1
-            case .barrierHit(_):
+                
+            case .barrierHit:
                 self.totalBarriers += 1
                 self.renderer!.killPlayer() // @HACK
-            case .thresholdCross: // @TEMPORARY
-                self.renderer!.roundOver() // @HACK
-                self.roundOver()
+                
+            case .thresholdCross(let type): // @TEMPORARY
+                if type == .roundOver {
+                    self.renderer!.roundOver() // @HACK
+                    self.roundOver()
+                }
+                
+            case .focusGone: // @HACK
+                self.renderer!.roundOver()
+                self.roundOver() // @TODO: This should be determined by the config
+                
             default: break
+                
             }
         }
     }
@@ -168,11 +181,7 @@ class GameScene: CustomScene {
         self.run(SKAction.sequence([
             SKAction.wait(forDuration: 1.0),
             SKAction.run {
-                // @FIXME
-                let difficulty = self.ruleset.speedLookup[self.config.boardScrollSpeed]!.difficulty // @CLEANUP
-                self.manager.transitionToFeedbackScene(got: self.passedBarriers,
-                                                       total: self.totalBarriers,
-                                                       difficulty: difficulty)
+                self.manager.transitionToScoreScene(score: self.passedBarriers)
             }]))
         self.isDead = true
     }

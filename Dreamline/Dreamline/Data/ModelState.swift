@@ -13,6 +13,7 @@ import Foundation
 struct ModelState {
     var positionState: PositionState
     var boardState: BoardState
+    var focusState: FocusState
 }
 
 extension ModelState {
@@ -21,7 +22,8 @@ extension ModelState {
         
         return ModelState(
             positionState: self.positionState,
-            boardState: self.boardState)
+            boardState: self.boardState,
+            focusState: self.focusState)
     }
 }
 
@@ -39,6 +41,7 @@ class ModelStateFactory {
                 target: 0.0,
                 lane: 0,
                 withinTolerance: true),
-            boardState: BoardStateFactory.getNew(layout: layout))
+            boardState: BoardStateFactory.getNew(layout: layout),
+            focusState: FocusStateFactory.getDefault())
     }
 }

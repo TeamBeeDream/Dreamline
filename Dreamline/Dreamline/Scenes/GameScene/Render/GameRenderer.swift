@@ -25,6 +25,7 @@ class DebugRenderer: SKNode, GameRenderer {
     
     // TEMP GRAPHICS
     var playerNode: SKNode
+    var focusNode: FocusNode
     var playerPrevPos: Double
     var scoreText: SKLabelNode
     var thumbButtonLeft: SKSpriteNode
@@ -32,6 +33,7 @@ class DebugRenderer: SKNode, GameRenderer {
     let alphaLow: CGFloat = 0.2
     let alphaHigh: CGFloat = 0.5
     
+    // @TODO: Change this to a static make() method.
     init(frame: CGRect) {
         
         // @NOTE: This is awkward
@@ -46,6 +48,10 @@ class DebugRenderer: SKNode, GameRenderer {
         player.size = CGSize(width: 20, height: 20) // @HARDCODED
         self.playerNode = player
         self.playerPrevPos = 0.0
+        
+        // Create Focus node
+        let focus = FocusNode.make(level: 3, maxLevel: 3) // @HARDCODED
+        self.focusNode = focus
         
         // Create score text
         self.scoreText = SKLabelNode()
@@ -68,6 +74,7 @@ class DebugRenderer: SKNode, GameRenderer {
         
         // Add everything to the view
         self.addChild(self.playerNode)
+        self.addChild(self.focusNode)
         self.addChild(self.cachedNodes)
         self.addChild(self.scoreText)
         self.addChild(self.thumbButtonLeft)
@@ -93,12 +100,22 @@ class DebugRenderer: SKNode, GameRenderer {
                 
             case .entityAdd(let entity):
                 self.cacheEntity(entity, layout: state.boardState.layout)
+                
             case .entityDestroy(let entityId):
                 self.deleteEntity(entityId)
+                
             case .barrierPass(let entityId):
                 self.fadeOutEntity(entityId)
+                
             case .modifierGet(let entityId, _):
                 self.fadeOutEntity(entityId)
+                
+            case .focusGain:
+                self.focusNode.raiseLevel()
+                
+            case .focusLoss:
+                self.focusNode.lowerLevel()
+                
             default: break
             }
         }
@@ -114,6 +131,8 @@ class DebugRenderer: SKNode, GameRenderer {
         let offset = state.positionState.offset * state.boardState.layout.laneOffset
         self.playerNode.position = self.cachedFrame.point(x: offset,
                                          y: state.boardState.layout.playerPosition)
+        self.focusNode.updatePosition(xPos: self.playerNode.position.x)
+        self.focusNode.position.y = self.playerNode.position.y - 20.0
         
         let diff = state.positionState.offset - self.playerPrevPos
         self.playerNode.zRotation = CGFloat(diff * -3.0) // @HARDCODED
@@ -186,8 +205,8 @@ class DebugRenderer: SKNode, GameRenderer {
             node.drawOnce(frameMinX: self.cachedFrame.minX,
                           frameMaxX: self.cachedFrame.maxX)
             self.cachedNodes.addNode(node, entity: entity)
-        case .threshold:
-            let node = ThresholdNode.make(frame: self.cachedFrame)
+        case .threshold(let type):
+            let node = ThresholdNode.make(frame: self.cachedFrame, type: type)
             self.cachedNodes.addNode(node, entity: entity)
         case .modifier(let modifierRow):
             

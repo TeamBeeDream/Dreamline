@@ -39,12 +39,12 @@ class BarrierNode: SKNode {
         let margin = (self.boardWidth * occupied) / 2.0
         let width = self.boardWidth - (margin * 2.0)
         let gateWidth = Double(width / 4.0)
-        let gateHeight = 20.0 // @HARDCODED
+//        let gateHeight = 20.0 // @HARDCODED
         let wallY: Double = 0
         
         let barrierGraphic = SKNode()
         let wallColor = self.wallColor(status)
-        let gateColor = self.gateColor(status)
+        //let gateColor = self.gateColor(status)
         
         let data = self.barrierDataToBoolArray(data: barrier.gates)
         for i in 1...4 {
@@ -54,16 +54,16 @@ class BarrierNode: SKNode {
             let prevX: Double = Double(i-1) * gateWidth + Double(margin)
             let currX: Double = Double(i) * gateWidth + Double(margin)
             let midX: Double = (prevX + currX) / 2.0
-            let gateUpY: Double = -gateHeight / 2.0
-            let gateDownY: Double = gateHeight / 2.0
+            //let gateUpY: Double = -gateHeight / 2.0
+            //let gateDownY: Double = gateHeight / 2.0
             
-            if prev != curr {
-                let gate = self.createLine(from: CGPoint(x: midX, y: gateUpY),
-                                           to: CGPoint(x: midX, y: gateDownY),
-                                           color: gateColor)
-                barrierGraphic.addChild(gate)
-                self.bits.append(gate)
-            }
+//            if prev != curr {
+//                let gate = self.createLine(from: CGPoint(x: midX, y: gateUpY),
+//                                           to: CGPoint(x: midX, y: gateDownY),
+//                                           color: gateColor)
+//                barrierGraphic.addChild(gate)
+//                self.bits.append(gate)
+//            }
             if !prev {
                 let wall = self.createLine(from: CGPoint(x: prevX, y: wallY),
                                            to: CGPoint(x: midX, y: wallY),
@@ -135,6 +135,7 @@ class BarrierNode: SKNode {
         node.path = path.cgPath
         node.strokeColor = color
         node.lineWidth = width
+        node.lineCap = .round
         return node
     }
 }

@@ -24,6 +24,7 @@ class DebugRenderer: SKNode, GameRenderer {
     var cachedFrame: CGRect
     
     // TEMP GRAPHICS
+    var skyNode: SkyNode
     var playerNode: SKNode
     var focusNode: FocusNode
     var playerPrevPos: Double
@@ -69,10 +70,14 @@ class DebugRenderer: SKNode, GameRenderer {
         self.thumbButtonRight.xScale = -1.0
         self.thumbButtonRight.position = frame.point(x: 0.5, y: 0.6)
         
+        // Create sky node
+        let sky = SkyNode.make(rect: frame)
+        self.skyNode = sky
         
         super.init() // Awkward how this has to happen in the middle
         
         // Add everything to the view
+        self.addChild(self.skyNode)
         self.addChild(self.playerNode)
         self.addChild(self.focusNode)
         self.addChild(self.cachedNodes)

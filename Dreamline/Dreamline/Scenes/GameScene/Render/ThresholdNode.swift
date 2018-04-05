@@ -8,6 +8,9 @@
 
 import SpriteKit
 
+// @NOTE: This class should only be responsible for drawing
+// a horizontal line across the screen, and all behavior
+// should be defined by a controller class
 class ThresholdNode: SKNode {
     
     // MARK: Init
@@ -16,8 +19,8 @@ class ThresholdNode: SKNode {
         let node = ThresholdNode()
         var color: SKColor { // @HARDCODED
             switch type {
-            case .roundOver: return .red
-            case .speedUp: return .blue
+            case .roundOver: return .red // @TODO
+            case .speedUp: return SKColor(red: 210.0/255.0, green: 72.0/255.0, blue: 88.0/255.0, alpha: 1.0)
             }
         }
         node.drawOnce(frameMinX: frame.minX,

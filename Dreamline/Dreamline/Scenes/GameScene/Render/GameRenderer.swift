@@ -47,6 +47,7 @@ class DebugRenderer: SKNode, GameRenderer {
         // Create player node
         let player = SKSpriteNode(imageNamed: "Player")
         player.size = CGSize(width: 20, height: 20) // @HARDCODED
+        player.blendMode = .subtract // @HARDCODED, makes it blue?
         self.playerNode = player
         self.playerPrevPos = 0.0
         
@@ -184,7 +185,7 @@ class DebugRenderer: SKNode, GameRenderer {
     func roundOver() {
         let titleLabel = SKLabelNode(text: "ROUND OVER")
         titleLabel.position = CGPoint(x: cachedFrame.midX, y: cachedFrame.midY)
-        titleLabel.fontColor = .white
+        titleLabel.fontColor = .darkText
         titleLabel.alpha = 0
         titleLabel.fontSize = 40
         self.addChild(titleLabel)

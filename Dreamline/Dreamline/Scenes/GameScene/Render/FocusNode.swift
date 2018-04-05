@@ -20,7 +20,7 @@ class FocusNode: SKNode {
     
     private let dotRadius: CGFloat = 5.0
     private let dotOffset: CGFloat = 20.0
-    private let dotColor: SKColor = .white
+    private let dotColor: SKColor = SKColor(red: 43.0/255.0, green: 54.0/255.0, blue: 74.0/255.0, alpha: 0.6) // @HARDCODED
     private let dotAlphaOn: CGFloat = 0.9
     private let dotAlphaOff: CGFloat = 0.3
     
@@ -80,6 +80,7 @@ class FocusNode: SKNode {
         let dot = SKShapeNode(circleOfRadius: self.dotRadius)
         dot.strokeColor = .clear
         dot.fillColor = self.dotColor
+        dot.isAntialiased = true
         return dot
     }
     

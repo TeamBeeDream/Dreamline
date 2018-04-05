@@ -23,15 +23,15 @@ struct Ruleset {
 class RulesetFactory {
     static func getDefault() -> Ruleset {
         var speedLookup = [Speed: SpeedInfo]()
-        speedLookup[.mach1] = SpeedInfo(speed: 1.0, points: 1, difficulty: 0.2)
-        speedLookup[.mach2] = SpeedInfo(speed: 1.2, points: 2, difficulty: 0.4)
-        speedLookup[.mach3] = SpeedInfo(speed: 1.4, points: 3, difficulty: 0.6)
-        speedLookup[.mach4] = SpeedInfo(speed: 1.6, points: 4, difficulty: 0.8)
-        speedLookup[.mach5] = SpeedInfo(speed: 1.8, points: 5, difficulty: 1.0)
-//        speedLookup[.mach6] = SpeedInfo(speed: 1.8, points: 3, difficulty: 0.6)
-//        speedLookup[.mach7] = SpeedInfo(speed: 2.0, points: 4, difficulty: 0.7)
-//        speedLookup[.mach8] = SpeedInfo(speed: 2.1, points: 4, difficulty: 0.8)
-//        speedLookup[.mach9] = SpeedInfo(speed: 2.2, points: 5, difficulty: 0.9)
+        speedLookup[.mach1] = SpeedInfo(speed: 1.0, points: 1, difficulty: 0.20)
+        speedLookup[.mach2] = SpeedInfo(speed: 1.2, points: 1, difficulty: 0.30)
+        speedLookup[.mach3] = SpeedInfo(speed: 1.4, points: 2, difficulty: 0.45)
+        speedLookup[.mach4] = SpeedInfo(speed: 1.6, points: 2, difficulty: 0.55)
+        speedLookup[.mach5] = SpeedInfo(speed: 1.8, points: 3, difficulty: 0.60)
+        speedLookup[.mach6] = SpeedInfo(speed: 1.8, points: 3, difficulty: 0.70)
+        speedLookup[.mach7] = SpeedInfo(speed: 2.0, points: 4, difficulty: 0.80)
+        speedLookup[.mach8] = SpeedInfo(speed: 2.1, points: 4, difficulty: 0.95)
+        speedLookup[.mach9] = SpeedInfo(speed: 2.2, points: 5, difficulty: 1.00)
         
         return Ruleset(speedLookup: speedLookup)
     }
@@ -44,10 +44,10 @@ class RulesetFactory {
         speedLookup[.mach3] = SpeedInfo(speed: 3.0, points: 3, difficulty: 0.3)
         speedLookup[.mach4] = SpeedInfo(speed: 4.0, points: 4, difficulty: 0.4)
         speedLookup[.mach5] = SpeedInfo(speed: 5.0, points: 5, difficulty: 0.5)
-//        speedLookup[.mach6] = SpeedInfo(speed: 6.0, points: 6, difficulty: 0.6)
-//        speedLookup[.mach7] = SpeedInfo(speed: 7.0, points: 7, difficulty: 0.7)
-//        speedLookup[.mach8] = SpeedInfo(speed: 8.0, points: 8, difficulty: 0.8)
-//        speedLookup[.mach9] = SpeedInfo(speed: 9.0, points: 9, difficulty: 0.9)
+        speedLookup[.mach6] = SpeedInfo(speed: 6.0, points: 6, difficulty: 0.6)
+        speedLookup[.mach7] = SpeedInfo(speed: 7.0, points: 7, difficulty: 0.7)
+        speedLookup[.mach8] = SpeedInfo(speed: 8.0, points: 8, difficulty: 0.8)
+        speedLookup[.mach9] = SpeedInfo(speed: 9.0, points: 9, difficulty: 0.9)
         
         return Ruleset(speedLookup: speedLookup)
     }

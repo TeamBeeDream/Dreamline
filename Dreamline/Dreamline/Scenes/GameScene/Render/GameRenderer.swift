@@ -71,7 +71,9 @@ class DebugRenderer: SKNode, GameRenderer {
         self.thumbButtonRight.position = frame.point(x: 0.5, y: 0.6)
         
         // Create sky node
-        let sky = SkyNode.make(rect: frame)
+        let sky = SkyNode.make(rect: frame,
+                               skyColor: .yellow,
+                               scrollSpeed: 0.1)
         self.skyNode = sky
         
         super.init() // Awkward how this has to happen in the middle

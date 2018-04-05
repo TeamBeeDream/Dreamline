@@ -17,7 +17,7 @@ class ThresholdNode: SKNode {
         var color: SKColor { // @HARDCODED
             switch type {
             case .roundOver: return .red
-            case .speedUp: return .cyan
+            case .speedUp: return .blue
             }
         }
         node.drawOnce(frameMinX: frame.minX,
@@ -51,6 +51,7 @@ class ThresholdNode: SKNode {
         node.path = path.cgPath
         node.strokeColor = color
         node.lineWidth = width
+        node.lineCap = .round
         return node
     }
 }

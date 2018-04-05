@@ -18,7 +18,7 @@ class FocusNode: SKNode {
     private var dots: [SKNode]!
     private var dotPositions: [CGFloat]!
     
-    private let dotRadius: CGFloat = 5.0
+    private let dotRadius: CGFloat = 3.5
     private let dotOffset: CGFloat = 20.0
     private let dotColor: SKColor = SKColor(red: 43.0/255.0, green: 54.0/255.0, blue: 74.0/255.0, alpha: 0.6) // @HARDCODED
     private let dotAlphaOn: CGFloat = 0.9

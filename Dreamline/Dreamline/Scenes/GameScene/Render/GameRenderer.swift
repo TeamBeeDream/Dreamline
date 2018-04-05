@@ -71,8 +71,9 @@ class DebugRenderer: SKNode, GameRenderer {
         self.thumbButtonRight.position = frame.point(x: 0.5, y: 0.6)
         
         // Create sky node
+        let randomSkyColor = SkyColor.random()
         let sky = SkyNode.make(rect: frame,
-                               skyColor: .yellow,
+                               skyColor: randomSkyColor,
                                scrollSpeed: 0.1)
         self.skyNode = sky
         

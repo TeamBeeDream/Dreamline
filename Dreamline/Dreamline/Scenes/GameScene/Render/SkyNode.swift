@@ -13,8 +13,6 @@ enum SkyColor {
     case green
     case pink
     case yellow
-    
-    // @TODO: Expand color selection
 }
 
 extension SkyColor {
@@ -29,6 +27,13 @@ extension SkyColor {
         case .yellow:
             return UIColor(red: 248.0/255.0, green: 221.0/255.0, blue: 174.0/255.0, alpha: 1.0)
         }
+    }
+    
+    static func random() -> SkyColor {
+        let colors: [SkyColor] = [.blue, .green, .pink, .yellow] // @ROBUSTNESS
+        let random = RealRandom() // @HARDCODED
+        let randomIndex = random.nextInt(min: 0, max: colors.count - 1)
+        return colors[randomIndex]
     }
 }
 

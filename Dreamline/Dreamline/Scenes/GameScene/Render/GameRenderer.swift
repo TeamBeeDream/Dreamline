@@ -174,12 +174,6 @@ class DebugRenderer: SKNode, GameRenderer {
         
         // @TEMP
         self.playerNode.run(SKAction.repeat(SKAction.sequence([fadeOut, fadeIn]), count: 4))
-        
-        /*
-        self.playerNode.run(SKAction.group([
-            SKAction.scale(to: 2.0, duration: 0.45),
-            SKAction.fadeOut(withDuration: 0.45)]))
-        */
     }
     
     func roundOver() {
@@ -189,7 +183,7 @@ class DebugRenderer: SKNode, GameRenderer {
         titleLabel.alpha = 0
         titleLabel.fontSize = 40
         self.addChild(titleLabel)
-        titleLabel.run(SKAction.fadeIn(withDuration: 0.1))
+        titleLabel.run(SKAction.fadeIn(withDuration: 0.2))
         // @NOTE: Having to remember to use cachedFrame is annoying
         
         self.scoreText.run(SKAction.fadeOut(withDuration: 0))

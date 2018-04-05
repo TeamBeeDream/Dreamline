@@ -54,6 +54,7 @@
 		69EFB59420531150005B3325 /* EmptyNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFB59320531150005B3325 /* EmptyNode.swift */; };
 		69EFB5962053152F005B3325 /* ModifierNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFB5952053152F005B3325 /* ModifierNode.swift */; };
 		69EFB598205329A0005B3325 /* NodeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFB597205329A0005B3325 /* NodeCache.swift */; };
+		69F0794520766B3500B6D54A /* ScoreCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F0794420766B3500B6D54A /* ScoreCounter.swift */; };
 		69FBDD542073D86C009E2F86 /* FocusState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FBDD532073D86C009E2F86 /* FocusState.swift */; };
 		69FBDD562073D9F7009E2F86 /* Focus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FBDD552073D9F7009E2F86 /* Focus.swift */; };
 		69FBDD582073FD26009E2F86 /* FocusNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FBDD572073FD26009E2F86 /* FocusNode.swift */; };
@@ -133,6 +134,7 @@
 		69EFB59320531150005B3325 /* EmptyNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyNode.swift; sourceTree = "<group>"; };
 		69EFB5952053152F005B3325 /* ModifierNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifierNode.swift; sourceTree = "<group>"; };
 		69EFB597205329A0005B3325 /* NodeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCache.swift; sourceTree = "<group>"; };
+		69F0794420766B3500B6D54A /* ScoreCounter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCounter.swift; sourceTree = "<group>"; };
 		69FBDD532073D86C009E2F86 /* FocusState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusState.swift; sourceTree = "<group>"; };
 		69FBDD552073D9F7009E2F86 /* Focus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Focus.swift; sourceTree = "<group>"; };
 		69FBDD572073FD26009E2F86 /* FocusNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusNode.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 				69EFB597205329A0005B3325 /* NodeCache.swift */,
 				6923FF84206E97D60058A25F /* ThresholdNode.swift */,
 				69FBDD572073FD26009E2F86 /* FocusNode.swift */,
+				69F0794420766B3500B6D54A /* ScoreCounter.swift */,
 				692398C62075560400808F45 /* SkyNode.swift */,
 				69416BC320756D840072A6D8 /* ScrollShader.fsh */,
 			);
@@ -717,6 +720,7 @@
 				69EFB598205329A0005B3325 /* NodeCache.swift in Sources */,
 				69FBDD582073FD26009E2F86 /* FocusNode.swift in Sources */,
 				69FC8A44205C564900E3829E /* BetaInfoScene.swift in Sources */,
+				69F0794520766B3500B6D54A /* ScoreCounter.swift in Sources */,
 				69AB5E8E204EF0E200093B33 /* Sequencer.swift in Sources */,
 				699FC58E204E1A8F00DB09B4 /* GameModel.swift in Sources */,
 				69EFB5962053152F005B3325 /* ModifierNode.swift in Sources */,

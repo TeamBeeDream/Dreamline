@@ -23,12 +23,14 @@ class DebugRenderer: SKNode, GameRenderer {
     var cachedNodes = GenericNodeCache()
     var cachedFrame: CGRect
     
+    var scoreCounter: ScoreCounter!
+    
     // TEMP GRAPHICS
     var skyNode: SkyNode
     var playerNode: SKNode
     var focusNode: FocusNode
     var playerPrevPos: Double
-    var scoreText: SKLabelNode
+    //var scoreText: SKLabelNode
     var thumbButtonLeft: SKSpriteNode
     var thumbButtonRight: SKSpriteNode
     let alphaLow: CGFloat = 0.2
@@ -56,9 +58,7 @@ class DebugRenderer: SKNode, GameRenderer {
         self.focusNode = focus
         
         // Create score text
-        self.scoreText = SKLabelNode()
-        self.scoreText.position = CGPoint(x: frame.midX, y: frame.midY)
-        self.scoreText.fontColor = .clear
+        self.scoreCounter = ScoreCounter.make(frame: frame)
         
         // Create thumb buttons
         let button = SKSpriteNode(imageNamed: "ThumbButton")
@@ -85,7 +85,7 @@ class DebugRenderer: SKNode, GameRenderer {
         self.addChild(self.playerNode)
         self.addChild(self.focusNode)
         self.addChild(self.cachedNodes)
-        self.addChild(self.scoreText)
+        self.addChild(self.scoreCounter)
         self.addChild(self.thumbButtonLeft)
         self.addChild(self.thumbButtonRight)
     }
@@ -148,7 +148,7 @@ class DebugRenderer: SKNode, GameRenderer {
         self.playerPrevPos = state.positionState.offset
         
         // Update Score Text
-        self.scoreText.text = String(score.points)
+        self.scoreCounter.setScore(score.points)
         
         // Update thumb buttons
         let target = state.positionState.target
@@ -185,8 +185,6 @@ class DebugRenderer: SKNode, GameRenderer {
         self.addChild(titleLabel)
         titleLabel.run(SKAction.fadeIn(withDuration: 0.2))
         // @NOTE: Having to remember to use cachedFrame is annoying
-        
-        self.scoreText.run(SKAction.fadeOut(withDuration: 0))
     }
     
     func free() {

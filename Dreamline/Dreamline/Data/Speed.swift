@@ -27,5 +27,5 @@ enum Speed: Int {
 //        cases there are, but there's no built-in
 //        way to determine that
 extension Speed {
-    static let count: Int = 6 // @HARDCODED
+    static let count: Int = 5 // @HARDCODED
 }

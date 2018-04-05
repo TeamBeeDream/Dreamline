@@ -161,6 +161,8 @@ class GameScene: CustomScene {
                 self.totalBarriers += 1
                 self.renderer!.killPlayer() // @HACK
                 
+            // @NOTE: Should probably just pass events
+            // down to the renderer
             case .thresholdCross(let type): // @TEMPORARY
                 if type == .roundOver {
                     self.renderer!.roundOver() // @HACK
@@ -179,9 +181,9 @@ class GameScene: CustomScene {
     
     private func roundOver() {
         self.run(SKAction.sequence([
-            SKAction.wait(forDuration: 1.0),
+            SKAction.wait(forDuration: 2.25),
             SKAction.run {
-                self.manager.transitionToScoreScene(score: self.passedBarriers)
+                self.manager.transitionToScoreScene(score: self.score.points)
             }]))
         self.isDead = true
     }

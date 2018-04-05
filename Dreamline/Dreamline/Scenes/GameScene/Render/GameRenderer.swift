@@ -23,11 +23,14 @@ class DebugRenderer: SKNode, GameRenderer {
     var cachedNodes = GenericNodeCache()
     var cachedFrame: CGRect
     
+    var scoreCounter: ScoreCounter!
+    
     // TEMP GRAPHICS
+    var skyNode: SkyNode
     var playerNode: SKNode
     var focusNode: FocusNode
     var playerPrevPos: Double
-    var scoreText: SKLabelNode
+    //var scoreText: SKLabelNode
     var thumbButtonLeft: SKSpriteNode
     var thumbButtonRight: SKSpriteNode
     let alphaLow: CGFloat = 0.2
@@ -46,6 +49,7 @@ class DebugRenderer: SKNode, GameRenderer {
         // Create player node
         let player = SKSpriteNode(imageNamed: "Player")
         player.size = CGSize(width: 20, height: 20) // @HARDCODED
+        player.blendMode = .subtract // @HARDCODED, makes it blue?
         self.playerNode = player
         self.playerPrevPos = 0.0
         
@@ -54,9 +58,7 @@ class DebugRenderer: SKNode, GameRenderer {
         self.focusNode = focus
         
         // Create score text
-        self.scoreText = SKLabelNode()
-        self.scoreText.position = CGPoint(x: frame.midX, y: frame.midY)
-        self.scoreText.fontColor = .clear
+        self.scoreCounter = ScoreCounter.make(frame: frame)
         
         // Create thumb buttons
         let button = SKSpriteNode(imageNamed: "ThumbButton")
@@ -69,14 +71,21 @@ class DebugRenderer: SKNode, GameRenderer {
         self.thumbButtonRight.xScale = -1.0
         self.thumbButtonRight.position = frame.point(x: 0.5, y: 0.6)
         
+        // Create sky node
+        let randomSkyColor = SkyColor.random()
+        let sky = SkyNode.make(rect: frame,
+                               skyColor: randomSkyColor,
+                               scrollSpeed: 0.1)
+        self.skyNode = sky
         
         super.init() // Awkward how this has to happen in the middle
         
         // Add everything to the view
+        self.addChild(self.skyNode)
         self.addChild(self.playerNode)
         self.addChild(self.focusNode)
         self.addChild(self.cachedNodes)
-        self.addChild(self.scoreText)
+        self.addChild(self.scoreCounter)
         self.addChild(self.thumbButtonLeft)
         self.addChild(self.thumbButtonRight)
     }
@@ -139,7 +148,7 @@ class DebugRenderer: SKNode, GameRenderer {
         self.playerPrevPos = state.positionState.offset
         
         // Update Score Text
-        self.scoreText.text = String(score.points)
+        self.scoreCounter.setScore(score.points)
         
         // Update thumb buttons
         let target = state.positionState.target
@@ -165,25 +174,17 @@ class DebugRenderer: SKNode, GameRenderer {
         
         // @TEMP
         self.playerNode.run(SKAction.repeat(SKAction.sequence([fadeOut, fadeIn]), count: 4))
-        
-        /*
-        self.playerNode.run(SKAction.group([
-            SKAction.scale(to: 2.0, duration: 0.45),
-            SKAction.fadeOut(withDuration: 0.45)]))
-        */
     }
     
     func roundOver() {
         let titleLabel = SKLabelNode(text: "ROUND OVER")
         titleLabel.position = CGPoint(x: cachedFrame.midX, y: cachedFrame.midY)
-        titleLabel.fontColor = .white
+        titleLabel.fontColor = .darkText
         titleLabel.alpha = 0
         titleLabel.fontSize = 40
         self.addChild(titleLabel)
-        titleLabel.run(SKAction.fadeIn(withDuration: 0.1))
+        titleLabel.run(SKAction.fadeIn(withDuration: 0.2))
         // @NOTE: Having to remember to use cachedFrame is annoying
-        
-        self.scoreText.run(SKAction.fadeOut(withDuration: 0))
     }
     
     func free() {

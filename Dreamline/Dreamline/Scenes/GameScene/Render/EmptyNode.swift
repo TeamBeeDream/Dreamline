@@ -33,15 +33,17 @@ class EmptyNode: SKNode {
     // @RENAME
     func drawOnce(frameMinX: CGFloat, frameMaxX: CGFloat) {
         
-        let leftPoint = CGPoint(x: frameMinX, y: 0.0)
-        let rightPoint = CGPoint(x: frameMaxX, y: 0.0)
-        let graphic = EmptyNode.createLine(from: leftPoint,
-                                            to: rightPoint,
-                                            color: SKColor(red: 87.0/255.0,
-                                                           green: 91.0/255.0,
-                                                           blue: 93.0/255.0,
-                                                           alpha: 0.7))
-        addChild(graphic)
+        return // @HACK: Don't want to draw this anymore.  Should probably remove outright
+        
+//        let leftPoint = CGPoint(x: frameMinX, y: 0.0)
+//        let rightPoint = CGPoint(x: frameMaxX, y: 0.0)
+//        let graphic = EmptyNode.createLine(from: leftPoint,
+//                                            to: rightPoint,
+//                                            color: SKColor(red: 87.0/255.0,
+//                                                           green: 91.0/255.0,
+//                                                           blue: 93.0/255.0,
+//                                                           alpha: 0.7))
+//        addChild(graphic)
     }
     
     // @CLEANUP: should probably move this to a shared graphics functions class

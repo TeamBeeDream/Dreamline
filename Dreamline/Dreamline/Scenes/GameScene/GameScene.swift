@@ -183,7 +183,7 @@ class GameScene: CustomScene {
         self.run(SKAction.sequence([
             SKAction.wait(forDuration: 2.25),
             SKAction.run {
-                self.manager.transitionToScoreScene(score: self.passedBarriers)
+                self.manager.transitionToScoreScene(score: self.score.points)
             }]))
         self.isDead = true
     }

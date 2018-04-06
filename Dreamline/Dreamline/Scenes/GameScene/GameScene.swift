@@ -65,7 +65,7 @@ class GameScene: CustomScene {
         //        be created without it, hence why this can't
         //        be instantiated until after GameScene's init
         
-        self.audio = AudioNode()
+        self.audio = AudioNode.make()
         addChild(self.audio as! SKNode)
         
         self.backgroundColor = SKColor(red: 57.0/255.0, green: 61.0/255.0, blue: 63.0/255.0, alpha: 1.0)

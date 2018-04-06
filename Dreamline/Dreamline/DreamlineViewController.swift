@@ -81,7 +81,7 @@ extension DreamlineViewController: SceneManager {
     }
     
     func transitionToGameScene() {
-        let scene = GameScene.make(manager: self, size: self.skview.frame.size, speed: self.currentSpeed)
+        let scene = GameScene.make(manager: self, frame: self.skview.frame, speed: self.currentSpeed)
         self.skview.presentScene(scene, transition: self.transition())
     }
     

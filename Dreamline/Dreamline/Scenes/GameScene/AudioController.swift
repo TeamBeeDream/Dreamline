@@ -32,8 +32,14 @@ class AudioNode: SKNode, AudioController {
         instance.bingSound = SKAction.playSoundFileNamed("Pickup_Coin.wav", waitForCompletion: false)
         instance.powerupSound = SKAction.playSoundFileNamed("Powerup.wav", waitForCompletion: false)
         instance.deathSound = SKAction.playSoundFileNamed("Death.wav", waitForCompletion: false)
-        instance.musicNode = SKAudioNode(fileNamed: "dreamline_mainloop_rough.mp3")
+        
+        let node = SKAudioNode(fileNamed: "dreamline_mainloop_rough.mp3")
+        instance.musicNode = node
         instance.musicNode.autoplayLooped = true
+        
+        // @BUG: For some reason, creating the audio node like this returns nil
+        //instance.musicNode = SKAudioNode(fileNamed: "dreamline_mainloop_rough.mp3")
+        
         return instance
     }
     

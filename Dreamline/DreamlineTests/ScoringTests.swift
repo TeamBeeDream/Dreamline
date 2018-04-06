@@ -23,7 +23,7 @@ class DefaultScoreUpdaterTests: XCTestCase {
     override func setUp() {
         self.scoreUpdater = DefaultScoreUpdater()
         self.state = ScoreFactory.getNew()
-        self.config = GameConfigFactory.getDefault()
+        self.config = GameConfigFactory.getChallengeConfig()
         self.config.pointsPerBarrier = self.pointsPerBarrier
     }
     

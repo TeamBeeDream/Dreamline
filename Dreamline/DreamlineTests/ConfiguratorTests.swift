@@ -21,7 +21,7 @@ class DefaultConfiguratorTests: XCTestCase {
     
     override func setUp() {
         self.configurator = DefaultConfigurator.make()
-        self.config = GameConfigFactory.getMock()
+        self.config = GameConfigFactory.getChallengeConfig()
         self.ruleset = RulesetFactory.getMock()
     }
     
@@ -49,13 +49,5 @@ class DefaultConfiguratorTests: XCTestCase {
                                                     ruleset: self.ruleset,
                                                     events: events)
         XCTAssert(config.boardScrollSpeed != self.config.boardScrollSpeed)
-    }
-    
-    func testUpdateConfigModifier_ModifierSpeedDown() {
-        let events = [Event.modifierGet(0, .speedDown)]
-        let config = self.configurator.updateConfig(config: self.config,
-                                                    ruleset: self.ruleset,
-                                                    events: events)
-        XCTAssert(config.boardScrollSpeed == self.config.boardScrollSpeed)
     }
 }

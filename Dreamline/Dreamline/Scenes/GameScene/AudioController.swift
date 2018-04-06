@@ -16,10 +16,8 @@ class AudioNode: SKNode, AudioController {
     
     private let bingSound: SKAction
     private let powerupSound: SKAction
-    private let slowdownSound: SKAction
     private let deathSound: SKAction
     
-    //private let musicSound: SKAction
     private let musicNode: SKAudioNode
     
     override init() {
@@ -27,17 +25,12 @@ class AudioNode: SKNode, AudioController {
         // Init all sound actions (equivalent to preloading)
         self.bingSound = SKAction.playSoundFileNamed("Pickup_Coin.wav", waitForCompletion: false)
         self.powerupSound = SKAction.playSoundFileNamed("Powerup.wav", waitForCompletion: false)
-        self.slowdownSound = SKAction.playSoundFileNamed("slowdown_effect.mp3", waitForCompletion: false)
         self.deathSound = SKAction.playSoundFileNamed("Death.wav", waitForCompletion: false)
+        
         self.musicNode = SKAudioNode(fileNamed: "dreamline_mainloop_rough.mp3")
         self.musicNode.autoplayLooped = true
         
-        super.init()
-        
-        // @NOTE: I'm not sure if I should maintain the lifecycle of this node
-        // In the future, this entire class will probably be replaced with
-        // a more generic AVFoundation system
-        self.addChild(self.musicNode)
+        super.init() // @TODO: Use static make() method to avoid this
     }
     
     // I'm probably not subclassing the right class
@@ -45,19 +38,24 @@ class AudioNode: SKNode, AudioController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // @NOTE: It doesn't really matter here, but in more complex cases it
+    // makes sense to have a class that just plays sounds and then a
+    // controller that determines which sounds to play when
+    // This method would be in the controller, not here
     func processEvents(_ events: [Event]) {
         for event in events {
             switch (event) {
                 
+            // Start music at beginning of round
+            case .roundBegin:
+                self.addChild(self.musicNode)
+                
+            // Stop music at end of round
+            case .roundEnd:
+                self.musicNode.removeFromParent()
+                
             case .barrierPass:
                 self.playSound(self.bingSound)
-                
-            case .modifierGet(_, let type):
-                switch (type) {
-                case .speedUp: self.playSound(self.powerupSound)
-                case .speedDown: self.playSound(self.slowdownSound)
-                default: break
-                }
                 
             case .barrierHit:
                 self.playSound(self.deathSound)

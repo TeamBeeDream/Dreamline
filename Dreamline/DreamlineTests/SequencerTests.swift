@@ -22,7 +22,9 @@ class DynamicSequencerTests: XCTestCase {
                                      positionerMoveDuration: 0.0,
                                      boardScrollSpeed: .mach1,
                                      boardDistanceBetweenEntities: 0.0,
-                                     pointsPerBarrier: 0)
+                                     pointsPerBarrier: 0, discreteRounds: true,
+                                     focusDelay: 0.0,
+                                     focusMaxLevel: 0)
     }
     
     override func tearDown() {

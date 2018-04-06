@@ -38,8 +38,8 @@ class DreamlineViewController: UIViewController {
         self.view.addSubview(skview)
         self.skview = skview
         
-        //self.transitionToTitleScene()
-        self.transitionToStartScene()
+        // Start on title scene
+        self.transitionToTitleScene()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -81,7 +81,7 @@ extension DreamlineViewController: SceneManager {
     }
     
     func transitionToGameScene() {
-        let scene = GameScene.make(manager: self, size: self.skview.frame.size, speed: self.currentSpeed)
+        let scene = GameScene.make(manager: self, frame: self.skview.frame, speed: self.currentSpeed)
         self.skview.presentScene(scene, transition: self.transition())
     }
     

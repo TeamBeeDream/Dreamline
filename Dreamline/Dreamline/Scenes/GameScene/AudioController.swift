@@ -33,6 +33,11 @@ class AudioNode: SKNode, AudioController {
         self.musicNode.autoplayLooped = true
         
         super.init()
+        
+        // @NOTE: I'm not sure if I should maintain the lifecycle of this node
+        // In the future, this entire class will probably be replaced with
+        // a more generic AVFoundation system
+        self.addChild(self.musicNode)
     }
     
     // I'm probably not subclassing the right class
@@ -43,12 +48,6 @@ class AudioNode: SKNode, AudioController {
     func processEvents(_ events: [Event]) {
         for event in events {
             switch (event) {
-                
-            case .roundBegin:
-                self.addChild(self.musicNode)
-                
-            case .roundEnd:
-                self.musicNode.removeFromParent()
                 
             case .barrierPass:
                 self.playSound(self.bingSound)

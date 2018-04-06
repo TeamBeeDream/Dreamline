@@ -39,12 +39,11 @@ class BarrierNode: SKNode {
         let margin = (self.boardWidth * occupied) / 2.0
         let width = self.boardWidth - (margin * 2.0)
         let gateWidth = Double(width / 4.0)
-        let gateHeight = 20.0 // @HARDCODED
+//        let gateHeight = 20.0 // @HARDCODED
         let wallY: Double = 0
         
         let barrierGraphic = SKNode()
-        let wallColor = self.wallColor(status)
-        let gateColor = self.gateColor(status)
+        let wallColor = self.wallColor()
         
         let data = self.barrierDataToBoolArray(data: barrier.gates)
         for i in 1...4 {
@@ -54,16 +53,6 @@ class BarrierNode: SKNode {
             let prevX: Double = Double(i-1) * gateWidth + Double(margin)
             let currX: Double = Double(i) * gateWidth + Double(margin)
             let midX: Double = (prevX + currX) / 2.0
-            let gateUpY: Double = -gateHeight / 2.0
-            let gateDownY: Double = gateHeight / 2.0
-            
-            if prev != curr {
-                let gate = self.createLine(from: CGPoint(x: midX, y: gateUpY),
-                                           to: CGPoint(x: midX, y: gateDownY),
-                                           color: gateColor)
-                barrierGraphic.addChild(gate)
-                self.bits.append(gate)
-            }
             if !prev {
                 let wall = self.createLine(from: CGPoint(x: prevX, y: wallY),
                                            to: CGPoint(x: midX, y: wallY),
@@ -84,32 +73,12 @@ class BarrierNode: SKNode {
         addChild(self.graphic!)
     }
     
-    private func wallColor(_ status: EntityStatus) -> SKColor {
-        
-        switch (status) {
-        case .active:
-            return SKColor(red: 231.0/255.0, green: 109.0/255.0, blue: 131.0/255.0, alpha: 1.0)
-        case .pass:
-            return SKColor.green
-        case .hit:
-            return SKColor.red
-        }
-    }
-    
-    private func gateColor(_ status: EntityStatus) -> SKColor {
-        
-        switch (status) {
-        case .active:
-            return SKColor(red: 218.0/255.0, green: 221.0/255.0, blue: 216.0/255.0, alpha: 1.0)
-        case .pass:
-            return SKColor.green
-        case .hit:
-            return SKColor.red
-        }
+    // @TODO: Colors should be gotten from a common palette data structure
+    private func wallColor() -> SKColor {
+        return SKColor(red: 43.0/255.0, green: 54.0/255.0, blue: 74.0/255.0, alpha: 1.0)
     }
     
     private func barrierDataToBoolArray(data: [Gate]) -> [Bool] {
-        
         assert(data.count == 3) // @ROBUSTNESS: expects data array to have exactly 3 values
         var result = [Bool](repeating: false, count: 5)
         result[0] = false
@@ -123,6 +92,7 @@ class BarrierNode: SKNode {
         return result
     }
     
+    // @TODO: Move to common graphics class
     private func createLine(from: CGPoint,
                             to: CGPoint,
                             color: SKColor,
@@ -135,6 +105,8 @@ class BarrierNode: SKNode {
         node.path = path.cgPath
         node.strokeColor = color
         node.lineWidth = width
+        node.lineCap = .round
+        node.isAntialiased = true // @HARDCODED
         return node
     }
 }

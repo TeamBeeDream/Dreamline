@@ -19,7 +19,7 @@ class GameScene: CustomScene {
     // Data
     var state: ModelState = ModelStateFactory.getDefault()
     var score: Score = ScoreFactory.getNew()
-    var config: GameConfig = GameConfigFactory.getDefault()
+    var config: GameConfig = GameConfigFactory.getChallengeConfig() // @HARDCODED
     var ruleset: Ruleset = RulesetFactory.getDefault()
     
     // Protocols
@@ -29,10 +29,12 @@ class GameScene: CustomScene {
     var sequencer: Sequencer = DynamicSequencer.make()
     var configurator: Configurator = DefaultConfigurator.make()
     var scoreUpdater: ScoreUpdater = DefaultScoreUpdater.make()
+    var focus: Focus = DefaultFocus.make()
     
     // View Modules
-    var renderer: GameRenderer?
-    var audio: AudioController?
+    var renderer: GameRenderer!
+    var audio: AudioController!
+    var analytics: AnalyticsListener!
     
     // GameScene State
     private var timeOfPreviousFrame: TimeInterval = 0
@@ -43,30 +45,27 @@ class GameScene: CustomScene {
     
     // MARK: Init
     
-    static func make(manager: SceneManager, size: CGSize, speed: Speed) -> GameScene {
+    static func make(manager: SceneManager, frame: CGRect, speed: Speed) -> GameScene {
         
-        // @ROBUSTNESS
-        // This probably shouldn't be in the class itself, but for now it's good enough.
-        Analytics.logEvent("game_started", parameters: nil)
+        let renderer = DebugRenderer(frame: frame)
+        let audio = AudioNode.make()
         
-        let scene = GameScene(manager: manager, size: size)
+        let scene = GameScene(manager: manager, size: frame.size)
+        
         scene.config.boardScrollSpeed = speed
+        
+        scene.renderer = renderer
+        scene.addChild(renderer)
+        
+        scene.audio = audio
+        scene.addChild(audio)
+        
+        scene.analytics = DefaultAnalyticsListener.make()
+        
         return scene
     }
     
     override func onInit() {
-        // Create the renderer and add it to the view
-        self.renderer = DebugRenderer(frame: self.frame)
-        addChild(self.renderer as! SKNode)
-        // @NOTE: It's interesting that the DebugRenderer needs
-        //        to be initialized here.  The dependency is
-        //        the frame of this view, the renderer can't
-        //        be created without it, hence why this can't
-        //        be instantiated until after GameScene's init
-        
-        self.audio = AudioNode()
-        addChild(self.audio as! SKNode)
-        
         self.backgroundColor = SKColor(red: 57.0/255.0, green: 61.0/255.0, blue: 63.0/255.0, alpha: 1.0)
     }
     
@@ -124,6 +123,7 @@ class GameScene: CustomScene {
             positioner: positioner,
             board: board,
             sequencer: sequencer,
+            focus: focus,
             dt: dt)
         let updatedConfig = configurator.updateConfig(
             config: config,
@@ -139,9 +139,10 @@ class GameScene: CustomScene {
         self.config = updatedConfig // @TODO: should config changes be done here or in the model?
         self.score = updatedScore
         
-        // This optional is dangerous :(
-        self.renderer!.render(state: state, score: score, config: config, events: events)
-        self.audio!.processEvents(events)
+        // Send events to all "view" modules
+        self.renderer.render(state: state, score: score, config: config, events: events)
+        self.audio.processEvents(events)
+        self.analytics.processEvents(events, config: config)
         
         // Scene stuff
         // @TODO: Move this to own function or something
@@ -150,29 +151,38 @@ class GameScene: CustomScene {
         //         It should just send events to VC
         for event in events {
             switch (event) {
-            case .barrierPass(_):
+                
+            case .barrierPass:
                 self.passedBarriers += 1
                 self.totalBarriers += 1
-            case .barrierHit(_):
+                
+            case .barrierHit:
                 self.totalBarriers += 1
                 self.renderer!.killPlayer() // @HACK
-            case .thresholdCross: // @TEMPORARY
-                self.renderer!.roundOver() // @HACK
-                self.roundOver()
+                
+            // @NOTE: Should probably just pass events
+            // down to the renderer
+            case .thresholdCross(let type): // @TEMPORARY
+                if type == .roundOver {
+                    self.renderer!.roundOver() // @HACK
+                    self.roundOver()
+                }
+                
+            case .focusGone: // @HACK
+                self.renderer!.roundOver()
+                self.roundOver() // @TODO: This should be determined by the config
+                
             default: break
+                
             }
         }
     }
     
     private func roundOver() {
         self.run(SKAction.sequence([
-            SKAction.wait(forDuration: 1.0),
+            SKAction.wait(forDuration: 2.25),
             SKAction.run {
-                // @FIXME
-                let difficulty = self.ruleset.speedLookup[self.config.boardScrollSpeed]!.difficulty // @CLEANUP
-                self.manager.transitionToFeedbackScene(got: self.passedBarriers,
-                                                       total: self.totalBarriers,
-                                                       difficulty: difficulty)
+                self.manager.transitionToScoreScene(score: self.score.points)
             }]))
         self.isDead = true
     }

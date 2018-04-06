@@ -14,6 +14,7 @@ class ScoreScene: CustomScene {
     var highscores: [Highscore]?
     
     static var clearHighscoresOnInit = false // @HARDCODED
+    let storageKey = "0.2-highschores"
     
     // @TODO: Find better way to pass data in at creation
     init(manager: SceneManager, size: CGSize, score: Int) {
@@ -37,7 +38,7 @@ class ScoreScene: CustomScene {
     
     private func loadHighscores() -> [Highscore] {
         
-        if let data = UserDefaults.standard.object(forKey: "highscore") {
+        if let data = UserDefaults.standard.object(forKey: self.storageKey) {
             let highscores = NSKeyedUnarchiver.unarchiveObject(with: data as! Data)
             return highscores as! [Highscore]
         } else {
@@ -51,7 +52,7 @@ class ScoreScene: CustomScene {
         let encodedData = NSKeyedArchiver.archivedData(withRootObject: highscores)
         
         let userDefaults = UserDefaults.standard
-        userDefaults.set(encodedData, forKey: "highscore") // @HARDCODED
+        userDefaults.set(encodedData, forKey: self.storageKey)
         userDefaults.synchronize()
     }
     

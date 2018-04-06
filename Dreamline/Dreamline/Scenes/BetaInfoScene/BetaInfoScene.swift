@@ -16,17 +16,13 @@ class BetaInfoScene: CustomScene {
         self.display([
             "Welcome to the Dreamline Beta",
             "",
-            "This update is for data collection.",
-            "We are looking to balance the",
-            "difficulty of the game by",
-            "using your feedback.",
+            "This is the second beta for our",
+            "upcoming game.",
             "",
-            "After each round you will be",
-            "asked to rate the difficulty.",
+            "All graphics and mechanics are",
+            "non-final and subject to change.",
             "",
-            "",
-            "Tap to continue"
-        ])
+            "Tap to continue"])
     }
     
     private func display(_ lines: [String]) {

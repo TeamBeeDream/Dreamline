@@ -18,20 +18,6 @@ class CleanupRule: Rule {
     
     // MARK: Rule Methods
     
-    /*func process(state: KernelState,
-                 events: [KernelEvent],
-                 deltaTime: Double) -> ([RuleFlag], [KernelInstruction]) {
-        
-        var instructions = [KernelInstruction]()
-        for entity in state.boardState.entities {
-            if isOffBoard(entity: entity, layout: state.boardState.layout) {
-                instructions.append(.removeEntity(entity.id))
-            }
-        }
-        
-        return ([RuleFlag](), instructions)
-    }*/
-    
     func mutate(state: inout KernelState,
                 events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],

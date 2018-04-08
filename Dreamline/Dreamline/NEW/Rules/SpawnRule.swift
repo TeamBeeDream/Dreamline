@@ -29,30 +29,6 @@ class SpawnRule: Rule {
     
     // MARK: Rule Methods
     
-    /*func process(state: KernelState,
-                 events: [KernelEvent],
-                 deltaTime: Double) -> ([RuleFlag], [KernelInstruction]) {
-        
-        // Raise instructions
-        var instructions = [KernelInstruction]()
-        
-        let currentDistance = state.boardState.scrollDistance
-        let mod = currentDistance.truncatingRemainder(dividingBy: self.distanceBetweenEntities)
-        let nearest = currentDistance - mod
-        
-        if nearest > self.lastBarrierPosition {
-            let entity = EntityData(id: self.currentId,
-                                    position: state.boardState.layout.lowerBound,
-                                    type: .barrier([true, true, true]))
-            instructions.append(.addEntity(entity))
-            
-            self.lastBarrierPosition = nearest
-            self.currentId += 1
-        }
-        
-        return ([RuleFlag](), instructions)
-    }*/
-    
     func mutate(state: inout KernelState,
                 events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],

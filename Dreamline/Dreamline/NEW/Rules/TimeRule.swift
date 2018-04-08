@@ -18,19 +18,6 @@ class TimeRule: Rule {
     
     // MARK: Rule Methods
     
-    /*func process(state: KernelState,
-                 events: [KernelEvent],
-                 deltaTime: Double) -> ([RuleFlag], [KernelInstruction]) {
-        
-        var instructions = [KernelInstruction]()
-        
-        if !state.timeState.paused {
-            instructions.append(.tick(deltaTime))
-        }
-        
-        return ([RuleFlag](), instructions)
-    }*/
-    
     func mutate(state: inout KernelState,
                 events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],

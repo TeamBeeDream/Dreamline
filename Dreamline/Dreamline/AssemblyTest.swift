@@ -86,15 +86,15 @@ class TestScene: SKScene {
         if dt > 1.0 { dt = 1.0/60.0 }
         
         // @TEMP
-        
-        var workingEvents = self.eventsBuffer.access()
-        var workingState = self.stateBuffer.access()
-        let workingInstructions = self.instrBuffer.access()
+        var workingEvents = self.eventsBuffer.access() // :(
+        var workingState = self.stateBuffer.access()    // :(
         
         for kernel in self.kernels {
-            kernel.mutate(state: &workingState,
-                          events: &workingEvents,
-                          instructions: workingInstructions) // Careful...
+            for instr in self.instrBuffer.access() {
+                kernel.mutate(state: &workingState,
+                              events: &workingEvents,
+                              instr: instr)
+            }
         }
         
         self.instrBuffer.toggle()
@@ -108,7 +108,7 @@ class TestScene: SKScene {
         }
         
         for observer in self.observers {
-            observer.observe(events: workingEvents)
+            observer.observe(events: workingEvents) // @SLOW
         }
 
         // @ROBUST: Check memory usage around toggle buffers
@@ -122,7 +122,7 @@ class TestScene: SKScene {
         self.instrBuffer.toggle()
         self.instrBuffer.inject(newInstructions)
         
-        // @TEMP
+        // @TEMP @SLOW
         var infoString = ""
         infoString.append("Time\n")
         infoString.append("Tick:  \(workingState.timeState.frameNumber)\n")
@@ -143,14 +143,6 @@ class TestScene: SKScene {
         
         let info = self.infoLabel!
         info.text = infoString
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        if self.state.timeState.paused {
-//            self.instructions.append(.unpause)
-//        } else {
-//            self.instructions.append(.pause)
-//        }
     }
     
     // MARK: Private Methods

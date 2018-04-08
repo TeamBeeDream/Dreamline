@@ -71,7 +71,8 @@ protocol Kernel {
     // and not raw data structures
     func mutate(state: inout KernelState,
                 events: inout [KernelEvent],
-                instructions: [KernelInstruction])
+                instr: KernelInstruction)
+                //instructions: [KernelInstruction])
 }
 
 enum RuleFlag {

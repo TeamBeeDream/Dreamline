@@ -29,7 +29,7 @@ class SpawnRule: Rule {
     
     // MARK: Rule Methods
     
-    func process(state: KernelState,
+    /*func process(state: KernelState,
                  events: [KernelEvent],
                  deltaTime: Double) -> ([RuleFlag], [KernelInstruction]) {
         
@@ -51,5 +51,25 @@ class SpawnRule: Rule {
         }
         
         return ([RuleFlag](), instructions)
+    }*/
+    
+    func mutate(state: inout KernelState,
+                events: inout [KernelEvent],
+                instructions: inout [KernelInstruction],
+                deltaTime: Double) {
+        
+        let currentDistance = state.boardState.scrollDistance
+        let overshoot = currentDistance.truncatingRemainder(dividingBy: self.distanceBetweenEntities)
+        let nearest = currentDistance - overshoot
+        
+        if nearest > self.lastBarrierPosition {
+            let entity = EntityData(id: self.currentId, // <-- This is super dangerous @TODO
+                                    position: state.boardState.layout.lowerBound,
+                                    type: .barrier([true, true, true]))
+            instructions.append(.addEntity(entity))
+            
+            self.lastBarrierPosition = nearest
+            self.currentId += 1
+        }
     }
 }

@@ -24,7 +24,7 @@ class ScrollRule: Rule {
     
     // MARK: Rule Methods
     
-    func process(state: KernelState,
+    /*func process(state: KernelState,
                  events: [KernelEvent],
                  deltaTime: Double) -> ([RuleFlag], [KernelInstruction]) {
         for event in events {
@@ -36,5 +36,21 @@ class ScrollRule: Rule {
         }
         
         return ([RuleFlag](), [KernelInstruction]())
+    }*/
+    
+    func mutate(state: inout KernelState,
+                events: inout [KernelEvent],
+                instructions: inout [KernelInstruction],
+                deltaTime: Double) {
+        for event in events {
+            switch event {
+                
+            case .tick(let dt):
+                instructions.append(.scrollBoard(self.scrollSpeed * dt))
+                
+            default: break
+                
+            }
+        }
     }
 }

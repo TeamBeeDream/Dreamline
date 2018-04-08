@@ -18,7 +18,7 @@ class TimeRule: Rule {
     
     // MARK: Rule Methods
     
-    func process(state: KernelState,
+    /*func process(state: KernelState,
                  events: [KernelEvent],
                  deltaTime: Double) -> ([RuleFlag], [KernelInstruction]) {
         
@@ -29,5 +29,15 @@ class TimeRule: Rule {
         }
         
         return ([RuleFlag](), instructions)
+    }*/
+    
+    func mutate(state: inout KernelState,
+                events: inout [KernelEvent],
+                instructions: inout [KernelInstruction],
+                deltaTime: Double) {
+    
+        if !state.timeState.paused {
+            instructions.append(.tick(deltaTime))
+        }
     }
 }

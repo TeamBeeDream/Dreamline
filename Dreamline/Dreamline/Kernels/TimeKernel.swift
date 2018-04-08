@@ -19,7 +19,7 @@ class TimeKernel: Kernel {
     
     // MARK: Kernel Methods
     
-    func update(state: KernelState,
+    /*func update(state: KernelState,
                 instructions: [KernelInstruction]) -> (KernelState, [KernelEvent]) {
         
         // @NOTE: This kernel actually does two things:
@@ -48,6 +48,7 @@ class TimeKernel: Kernel {
                 raisedEvents.append(.unpaused)
                 
             default: break
+                
             }
         }
         
@@ -61,5 +62,32 @@ class TimeKernel: Kernel {
         
         // @TEMP
         return (updatedState, raisedEvents)
+    }*/
+    
+    func mutate(state: inout KernelState,
+                events: inout [KernelEvent],
+                instructions: [KernelInstruction]) {
+        
+        for instr in instructions {
+            switch instr {
+                
+            case .tick(let deltaTime):
+                state.timeState.frameNumber += 1
+                state.timeState.deltaTime = deltaTime
+                state.timeState.timeSinceBeginning += deltaTime
+                events.append(.tick(deltaTime))
+                
+            case .pause:
+                state.timeState.paused = true
+                events.append(.paused)
+                
+            case .unpause:
+                state.timeState.paused = false
+                events.append(.unpaused)
+                
+            default: break
+                
+            }
+        }
     }
 }

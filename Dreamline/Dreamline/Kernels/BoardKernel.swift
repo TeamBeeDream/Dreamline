@@ -19,7 +19,7 @@ class BoardKernel: Kernel {
     
     // MARK: Kernel Methods
     
-    func update(state: KernelState,
+    /*func update(state: KernelState,
                 instructions: [KernelInstruction]) -> (KernelState, [KernelEvent]) {
         
         var boardState = BoardData.clone(state.boardState)
@@ -44,6 +44,7 @@ class BoardKernel: Kernel {
                 raisedEvents.append(.boardScrolled(distance))
                 
             default: break
+                
             }
         }
         
@@ -52,5 +53,53 @@ class BoardKernel: Kernel {
         
         // @TEMP
         return (updatedState, raisedEvents)
+    }*/
+    
+    func mutate(state: inout KernelState,
+                events: inout [KernelEvent],
+                instructions: [KernelInstruction]) {
+        
+        for instr in instructions {
+            switch instr {
+            
+            case .addEntity(let data):
+                state.boardState.entities.append(data)
+                events.append(.barrierAdded(data))
+            
+            case .removeEntity(let id):
+                // @PERFORMANCE
+                state.boardState.entities = state.boardState.entities.filter { $0.id != id }
+                events.append(.barrierRemoved(id))
+                
+            case .scrollBoard(let distance):
+                // This sucks
+                state.boardState.entities = state.boardState.entities.map({
+                    EntityData(id: $0.id,
+                               position: $0.position + distance,
+                               type: $0.type)
+                })
+                state.boardState.scrollDistance += distance
+                events.append(.boardScrolled(distance))
+                
+            default: break
+                
+            }
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

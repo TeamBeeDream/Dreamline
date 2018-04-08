@@ -9,21 +9,47 @@
 import Foundation
 import SpriteKit
 
+class ToggleBuffer<T> {
+    
+    private var head: Int = 0
+    private var buffer: [T]!
+    
+    static func make(value: T) -> ToggleBuffer {
+        let instance = ToggleBuffer()
+        instance.buffer = [T](repeating: value, count: 2)
+        return instance
+    }
+    
+    func access() -> T {
+        return self.buffer[self.head]
+    }
+    
+    func inject(_ value: T) {
+        self.buffer[self.head] = value
+    }
+    
+    func toggle() {
+        if self.head == 0   { self.head = 1 }
+        else                { self.head = 0 }
+    }
+}
+
 class TestScene: SKScene {
     
     // MARK: Dipko
     
-    var state: KernelState!
     var kernels: [Kernel]!
     var rules: [Rule]!
     var observers: [Observer]!
-    
-    var instructions = [KernelInstruction]()
     
     // MARK: Private Properties
     
     private var previousTime: TimeInterval = 0
     private var infoLabel: SKLabelNode!
+    
+    private var stateBuffer = ToggleBuffer.make(value: KernelState.new())
+    private var eventsBuffer = ToggleBuffer.make(value: [KernelEvent]()) // @HACK
+    private var instrBuffer = ToggleBuffer.make(value: [KernelInstruction]()) // @HACK
     
     // MARK: Init
     
@@ -31,9 +57,9 @@ class TestScene: SKScene {
                      kernels: [Kernel],
                      rules: [Rule]) -> TestScene {
         let instance = TestScene()
-        instance.state = state
         instance.kernels = kernels
         instance.rules = rules
+        instance.stateBuffer.inject(state)
         return instance
     }
     
@@ -59,49 +85,58 @@ class TestScene: SKScene {
         self.previousTime = currentTime
         if dt > 1.0 { dt = 1.0/60.0 }
         
-        // Trigger kernel update
-        var partialState = KernelState.clone(self.state)
-        var raisedEvents = [KernelEvent]()
+        // @TEMP
+        
+        var workingEvents = self.eventsBuffer.access()
+        var workingState = self.stateBuffer.access()
+        let workingInstructions = self.instrBuffer.access()
+        
         for kernel in self.kernels {
-            let (state, events) = kernel.update(state: partialState,
-                                                instructions: self.instructions)
-            partialState = state
-            raisedEvents.append(contentsOf: events)
+            kernel.mutate(state: &workingState,
+                          events: &workingEvents,
+                          instructions: workingInstructions) // Careful...
         }
         
-        // Trigger protocol update
-        var raisedInstructions = [KernelInstruction]()
+        self.instrBuffer.toggle()
+        var newInstructions = self.instrBuffer.access()
+        newInstructions.removeAll(keepingCapacity: true)// :(?
         for rule in self.rules {
-            let (_, instructions) = rule.process(state: partialState,
-                                                 events: raisedEvents,
-                                                 deltaTime: dt)
-            raisedInstructions.append(contentsOf: instructions)
+            rule.mutate(state: &workingState,
+                        events: &workingEvents,
+                        instructions: &newInstructions,
+                        deltaTime: dt)
         }
         
-        // Trigger observer update
         for observer in self.observers {
-            observer.observe(events: raisedEvents)
+            observer.observe(events: workingEvents)
         }
+
+        // @ROBUST: Check memory usage around toggle buffers
         
-        // Store for next tick
-        self.state = partialState
-        self.instructions = raisedInstructions
+        self.stateBuffer.toggle()
+        self.stateBuffer.inject(workingState)
+        
+        workingEvents.removeAll()
+        self.eventsBuffer.toggle()
+        
+        self.instrBuffer.toggle()
+        self.instrBuffer.inject(newInstructions)
         
         // @TEMP
         var infoString = ""
         infoString.append("Time\n")
-        infoString.append("Tick:  \(self.state.timeState.frameNumber)\n")
-        infoString.append("Time:  \(self.state.timeState.timeSinceBeginning)\n")
-        infoString.append("Delta: \(self.state.timeState.deltaTime)\n")
-        infoString.append("Paused:  \(self.state.timeState.paused)\n")
+        infoString.append("Tick:  \(workingState.timeState.frameNumber)\n")
+        infoString.append("Time:  \(workingState.timeState.timeSinceBeginning)\n")
+        infoString.append("Delta: \(workingState.timeState.deltaTime)\n")
+        infoString.append("Paused:  \(workingState.timeState.paused)\n")
         infoString.append("\n")
         infoString.append("Board\n")
-        infoString.append("Distance:  \(self.state.boardState.scrollDistance)\n")
-        infoString.append("Count: \(self.state.boardState.entities.count)\n")
+        infoString.append("Distance:  \(workingState.boardState.scrollDistance)\n")
+        infoString.append("Count: \(workingState.boardState.entities.count)\n")
         
-        if !self.state.boardState.entities.isEmpty {
+        if !workingState.boardState.entities.isEmpty {
             infoString.append("\n")
-            for entity in self.state.boardState.entities {
+            for entity in workingState.boardState.entities {
                 infoString.append("\(entity.id) - Y: \(entity.position)\n")
             }
         }
@@ -111,11 +146,11 @@ class TestScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if self.state.timeState.paused {
-            self.instructions.append(.unpause)
-        } else {
-            self.instructions.append(.pause)
-        }
+//        if self.state.timeState.paused {
+//            self.instructions.append(.unpause)
+//        } else {
+//            self.instructions.append(.pause)
+//        }
     }
     
     // MARK: Private Methods

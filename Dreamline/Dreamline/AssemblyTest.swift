@@ -137,14 +137,7 @@ class TestScene: SKScene {
         infoString.append("Board\n")
         infoString.append("Distance:  \(workingState.boardState.scrollDistance)\n")
         infoString.append("Count: \(workingState.boardState.entities.count)\n")
-        
-        if !workingState.boardState.entities.isEmpty {
-            infoString.append("\n")
-            for entity in workingState.boardState.entities {
-                infoString.append("\(entity.id) - Y: \(entity.position)\n")
-            }
-        }
-        
+
         let info = self.infoLabel!
         info.text = infoString // @SLOW!!!
     }

@@ -51,6 +51,10 @@ class TestScene: SKScene {
     private var eventsBuffer = ToggleBuffer.make(value: [KernelEvent]()) // @HACK
     private var instrBuffer = ToggleBuffer.make(value: [KernelInstruction]()) // @HACK
     
+    // @HACK
+    static let TEXT_Z_POSITION: CGFloat = 1.0
+    static let LINE_Z_POSITION: CGFloat = 0.0
+    
     // MARK: Init
     
     static func make(state: KernelState,
@@ -70,7 +74,7 @@ class TestScene: SKScene {
         
         // @TEMP
         let container = SKNode()
-        let lineRenderer = LineRenderer.make(frame: view.frame, container: container)
+        let lineRenderer = LineRenderer.make(view: view) // @HACK
         self.observers = [lineRenderer] // @HACK
         self.addChild(container)
         
@@ -142,7 +146,7 @@ class TestScene: SKScene {
         }
         
         let info = self.infoLabel!
-        info.text = infoString
+        info.text = infoString // @SLOW!!!
     }
     
     // MARK: Private Methods
@@ -156,6 +160,7 @@ class TestScene: SKScene {
         label.lineBreakMode = .byWordWrapping
         label.horizontalAlignmentMode = .left
         label.verticalAlignmentMode = .top
+        label.zPosition = TestScene.TEXT_Z_POSITION
         return label
     }
 }

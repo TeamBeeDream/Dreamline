@@ -35,6 +35,12 @@ class DreamlineViewController: UIViewController {
                                            SpawnRule.make(distanceBetweenEntities: 0.4)])
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
+        skView.ignoresSiblingOrder = true
+        skView.showsDrawCount = true
+        skView.showsFPS = true
+        //skView.isAsynchronous = true // Whoa
+        
+        skView.texture(from: )
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

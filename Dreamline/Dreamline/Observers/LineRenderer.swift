@@ -12,17 +12,18 @@ class LineRenderer: Observer {
     
     // MARK: Private Properties
     
-    private var container: SKNode!
-    private var frame: CGRect!
-    private var lines = [Int: SKShapeNode]()
+    private var view: SKView!
+    private var lines = [Int: SKSpriteNode]()
     private var ids = [Int]()
+    
+    private var texture: SKTexture!
     
     // MARK: Init
     
-    static func make(frame: CGRect, container: SKNode) -> LineRenderer {
+    static func make(view: SKView) -> LineRenderer {
         let instance = LineRenderer()
-        instance.frame = frame
-        instance.container = container
+        instance.view = view
+        instance.texture = view.texture(from: instance.makeLine()) // Whoa
         return instance
     }
     
@@ -50,16 +51,18 @@ class LineRenderer: Observer {
     // MARK: Private Methods
     
     private func addLine(entity: EntityData) {
-        let line = self.makeLine()
-        line.position.y = self.calcPosition(entity.position)
-        self.container.addChild(line)
-        self.lines[entity.id] = line
+        let sprite = SKSpriteNode(texture: self.texture)
+        sprite.zPosition = TestScene.LINE_Z_POSITION
+        sprite.position.x = self.view.frame.midX
+        
+        self.view.scene!.addChild(sprite)
+        self.lines[entity.id] = sprite
         self.ids.append(entity.id)
     }
     
     private func removeLine(id: Int) {
         let line = self.lines[id]!
-        line.removeFromParent()
+        line.removeFromParent() // @TODO: Pool line sprites
         self.lines[id] = nil
         self.ids = self.ids.filter { $0 != id }
     }
@@ -67,23 +70,24 @@ class LineRenderer: Observer {
     private func moveLines(distance: Double) {
         for id in self.ids {
             let line = self.lines[id]!
-            line.position.y += CGFloat(distance / 2.0) * self.frame.height // @FIXME
+            line.position.y += CGFloat(distance / 2.0) * self.view.frame.height // @FIXME
         }
     }
     
     private func makeLine(width: Double = 1.0) -> SKShapeNode {
-        let rect = CGRect(x: 0.0, y: 0.0, width: Double(self.frame.width), height: width)
+        let rect = CGRect(x: 0.0, y: 0.0, width: Double(self.view.frame.width), height: width)
         let line = SKShapeNode(rect: rect)
         line.lineWidth = 0.0
         line.fillColor = .red
+        line.zPosition = TestScene.LINE_Z_POSITION
+        line.blendMode = .add
         return line
     }
     
     private func calcPosition(_ position: Double) -> CGFloat {
         let value = lerp(CGFloat(position + 1.0) / 2.0,
-                         min: self.frame.minY,
-                         max: self.frame.maxY)
-        //let value = CGFloat((position + 1.0) / 2.0) * self.frame.height
+                         min: self.view.frame.minY,
+                         max: self.view.frame.maxY)
         return value
     }
 }

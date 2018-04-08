@@ -39,13 +39,27 @@ class SpawnRule: Rule {
         let nearest = currentDistance - overshoot
         
         if nearest > self.lastBarrierPosition {
+            let barrierData = self.makeRandomBarrier() // @HARDCODED
             let entity = EntityData(id: self.currentId, // <-- This is super dangerous @TODO
                                     position: state.boardState.layout.lowerBound,
-                                    type: .barrier([true, true, true]))
+                                    type: .barrier(barrierData))
             instructions.append(.addEntity(entity))
             
             self.lastBarrierPosition = nearest
             self.currentId += 1
         }
+    }
+    
+    // MARK: Private Methods
+    
+    private func makeRandomBarrier() -> [Bool] {
+        
+        let random = RealRandom() // @HARDCODED
+        
+        var barrier = [Bool]()
+        for _ in 1...3 {
+            barrier.append(random.next() > 0.5)
+        }
+        return barrier
     }
 }

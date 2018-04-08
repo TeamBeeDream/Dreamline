@@ -13,17 +13,17 @@ class LineRenderer: Observer {
     // MARK: Private Properties
     
     private var view: SKView!
-    private var lines = [Int: SKSpriteNode]()
+    private var lines = [Int: SKNode]()
     private var ids = [Int]()
     
-    private var texture: SKTexture!
+    private var barrierTexture: SKTexture!
     
     // MARK: Init
     
     static func make(view: SKView) -> LineRenderer {
         let instance = LineRenderer()
         instance.view = view
-        instance.texture = view.texture(from: instance.makeLine()) // Whoa
+        instance.generateTextures()
         return instance
     }
     
@@ -51,13 +51,29 @@ class LineRenderer: Observer {
     // MARK: Private Methods
     
     private func addLine(entity: EntityData) {
-        let sprite = SKSpriteNode(texture: self.texture)
-        sprite.zPosition = TestScene.LINE_Z_POSITION
-        sprite.position.x = self.view.frame.midX
         
-        self.view.scene!.addChild(sprite)
-        self.lines[entity.id] = sprite
-        self.ids.append(entity.id)
+        switch entity.type {
+        case .barrier(let gates):
+            let container = SKNode()
+            let offset = self.view.frame.width / 3.0
+            var posX = self.view.frame.width / 6.0
+            for gate in gates {
+                if !gate { posX += offset; continue }
+                
+                let lineTexture = self.barrierTexture
+                let sprite = SKSpriteNode(texture: lineTexture)
+                sprite.position.x = posX
+                sprite.zPosition = TestScene.LINE_Z_POSITION
+                posX += offset
+                container.addChild(sprite)
+            }
+            
+            self.view.scene!.addChild(container)
+            self.lines[entity.id] = container
+            self.ids.append(entity.id)
+            
+        default: break
+        }
     }
     
     private func removeLine(id: Int) {
@@ -74,20 +90,17 @@ class LineRenderer: Observer {
         }
     }
     
-    private func makeLine(width: Double = 1.0) -> SKShapeNode {
-        let rect = CGRect(x: 0.0, y: 0.0, width: Double(self.view.frame.width), height: width)
+    private func generateTextures() {
+        let frame = self.view.frame
+        let lineRect = CGRect(x: 0.0, y: 0.0, width: frame.width / 3.0, height: 2.0)
+        let line = self.makeLine(rect: lineRect, color: .cyan)
+        self.barrierTexture = self.view.texture(from: line)!
+    }
+
+    private func makeLine(rect: CGRect, color: SKColor) -> SKShapeNode {
         let line = SKShapeNode(rect: rect)
         line.lineWidth = 0.0
-        line.fillColor = .red
-        line.zPosition = TestScene.LINE_Z_POSITION
-        line.blendMode = .add
+        line.fillColor = color
         return line
-    }
-    
-    private func calcPosition(_ position: Double) -> CGFloat {
-        let value = lerp(CGFloat(position + 1.0) / 2.0,
-                         min: self.view.frame.minY,
-                         max: self.view.frame.maxY)
-        return value
     }
 }

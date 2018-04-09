@@ -10,4 +10,8 @@ import Foundation
 
 struct StaminaData {
     var level: Int
+    
+    static func new() -> StaminaData {
+        return StaminaData(level: 0)
+    }
 }

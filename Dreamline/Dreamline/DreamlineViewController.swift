@@ -26,16 +26,19 @@ class DreamlineViewController: UIViewController {
         skView.isMultipleTouchEnabled = true
         self.view.addSubview(skView)
         
+        // @TODO: Use factory to assemble these lists
         let scene = TestScene.make(state: KernelState.new(),
                                    kernels: [TimeKernel.make(),
                                              BoardKernel.make(),
                                              PositionKernel.make(),
-                                             InputKernel.make()],
+                                             InputKernel.make(),
+                                             StaminaKernel.make()],
                                    rules: [ScrollRule.make(scrollSpeed: 2.0),
                                            TimeRule.make(),
                                            CleanupRule.make(),
                                            SpawnRule.make(distanceBetweenEntities: 0.1),
-                                           PositionRule.make()])
+                                           PositionRule.make(),
+                                           StaminaRule.make()])
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
         skView.ignoresSiblingOrder = true

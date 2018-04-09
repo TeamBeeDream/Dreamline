@@ -30,6 +30,8 @@
 		696B350B207BE283007DD318 /* CleanupRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B3506207BE283007DD318 /* CleanupRule.swift */; };
 		696B350C207BE283007DD318 /* SpawnRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B3507207BE283007DD318 /* SpawnRule.swift */; };
 		696B350D207BE283007DD318 /* PositionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B3508207BE283007DD318 /* PositionRule.swift */; };
+		696B350F207BE2C9007DD318 /* StaminaKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B350E207BE2C9007DD318 /* StaminaKernel.swift */; };
+		696B3511207BE5B7007DD318 /* StaminaRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B3510207BE5B7007DD318 /* StaminaRule.swift */; };
 		6970F7962079C7DF00E315E4 /* LineRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6970F7952079C7DF00E315E4 /* LineRenderer.swift */; };
 		699EB42D206DAFDA00693CB8 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42C206DAFDA00693CB8 /* Random.swift */; };
 		699EB42F206DB51200693CB8 /* RandomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42E206DB51200693CB8 /* RandomTests.swift */; };
@@ -90,6 +92,8 @@
 		696B3506207BE283007DD318 /* CleanupRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CleanupRule.swift; sourceTree = "<group>"; };
 		696B3507207BE283007DD318 /* SpawnRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpawnRule.swift; sourceTree = "<group>"; };
 		696B3508207BE283007DD318 /* PositionRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PositionRule.swift; sourceTree = "<group>"; };
+		696B350E207BE2C9007DD318 /* StaminaKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaminaKernel.swift; sourceTree = "<group>"; };
+		696B3510207BE5B7007DD318 /* StaminaRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaminaRule.swift; sourceTree = "<group>"; };
 		6970F7952079C7DF00E315E4 /* LineRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineRenderer.swift; sourceTree = "<group>"; };
 		699EB42C206DAFDA00693CB8 /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		699EB42E206DB51200693CB8 /* RandomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTests.swift; sourceTree = "<group>"; };
@@ -198,6 +202,7 @@
 				696B3506207BE283007DD318 /* CleanupRule.swift */,
 				696B3507207BE283007DD318 /* SpawnRule.swift */,
 				696B3508207BE283007DD318 /* PositionRule.swift */,
+				696B3510207BE5B7007DD318 /* StaminaRule.swift */,
 			);
 			path = Rules;
 			sourceTree = "<group>";
@@ -283,6 +288,7 @@
 				69F6C56D2078472100380DF5 /* BoardKernel.swift */,
 				696B34E8207BD527007DD318 /* PositionKernel.swift */,
 				696B34F0207BDBC7007DD318 /* InputKernel.swift */,
+				696B350E207BE2C9007DD318 /* StaminaKernel.swift */,
 			);
 			path = Kernels;
 			sourceTree = "<group>";
@@ -613,6 +619,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				69F6C57420785B8F00380DF5 /* Definitions.swift in Sources */,
+				696B3511207BE5B7007DD318 /* StaminaRule.swift in Sources */,
 				696B34F3207BDFFD007DD318 /* Sequencer.swift in Sources */,
 				696B350D207BE283007DD318 /* PositionRule.swift in Sources */,
 				696B34FD207BE27E007DD318 /* Board.swift in Sources */,
@@ -634,6 +641,7 @@
 				69F6C5722078547900380DF5 /* AssemblyTest.swift in Sources */,
 				696B350C207BE283007DD318 /* SpawnRule.swift in Sources */,
 				696B3509207BE283007DD318 /* ScrollRule.swift in Sources */,
+				696B350F207BE2C9007DD318 /* StaminaKernel.swift in Sources */,
 				696B3501207BE27E007DD318 /* Position.swift in Sources */,
 				696B350A207BE283007DD318 /* TimeRule.swift in Sources */,
 				696B34FC207BE27E007DD318 /* Stamina.swift in Sources */,

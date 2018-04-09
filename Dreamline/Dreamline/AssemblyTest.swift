@@ -95,7 +95,6 @@ class TestScene: SKScene {
         // - Update Observers
         // - Store instructions for next update
         
-        
         var dt = currentTime - self.previousTime
         self.previousTime = currentTime
         if dt > 1.0 { dt = 1.0/60.0 }
@@ -145,19 +144,19 @@ class TestScene: SKScene {
         self.instrBuffer.inject(newInstructions)
         
         // @TEMP @SLOW
-        var infoString = ""
-        infoString.append("Time\n")
-        infoString.append("Tick:  \(workingState.timeState.frameNumber)\n")
-        infoString.append("Time:  \(workingState.timeState.timeSinceBeginning)\n")
-        infoString.append("Delta: \(workingState.timeState.deltaTime)\n")
-        infoString.append("Paused:  \(workingState.timeState.paused)\n")
-        infoString.append("\n")
-        infoString.append("Board\n")
-        infoString.append("Distance:  \(workingState.boardState.scrollDistance)\n")
-        infoString.append("Count: \(workingState.boardState.entities.count)\n")
-
-        let info = self.infoLabel!
-        info.text = infoString // @SLOW!!!
+//        var infoString = ""
+//        infoString.append("Time\n")
+//        infoString.append("Tick:  \(workingState.timeState.frameNumber)\n")
+//        infoString.append("Time:  \(workingState.timeState.timeSinceBeginning)\n")
+//        infoString.append("Delta: \(workingState.timeState.deltaTime)\n")
+//        infoString.append("Paused:  \(workingState.timeState.paused)\n")
+//        infoString.append("\n")
+//        infoString.append("Board\n")
+//        infoString.append("Distance:  \(workingState.boardState.scrollDistance)\n")
+//        infoString.append("Count: \(workingState.boardState.entities.count)\n")
+//
+//        let info = self.infoLabel!
+//        info.text = infoString  @SLOW!!!
     }
     
     // @TEMP

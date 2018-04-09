@@ -26,6 +26,10 @@ enum KernelInstruction {
     
     // Input
     case updateInput(Int)
+    
+    // Stamina
+    case incrementStamina
+    case decrementStamina
 }
 
 // @TODO: Move this somewhere more obvious
@@ -45,7 +49,10 @@ enum KernelEvent {
     case boardScrolled(Double)
     
     // Position
-    case positionUpdated(PositionData) // This one is different
+    case positionUpdated(PositionData)
+    
+    // Stamina
+    case staminaUpdated(Int)
 }
 
 // @TODO: Move this somewhere more obvious
@@ -54,12 +61,14 @@ struct KernelState {
     var boardState: BoardData
     var positionState: PositionData
     var inputState: InputData
+    var staminaState: StaminaData
     
     static func new() -> KernelState {
         return KernelState(timeState: TimeData.new(),
                            boardState: BoardData.new(),
                            positionState: PositionData.new(),
-                           inputState: InputData.new())
+                           inputState: InputData.new(),
+                           staminaState: StaminaData.new())
     }
     
     // @NOTE: I'm not even really sure if this works correctly...
@@ -68,7 +77,8 @@ struct KernelState {
         return KernelState(timeState: state.timeState,
                            boardState: state.boardState,
                            positionState: state.positionState,
-                           inputState: state.inputState)
+                           inputState: state.inputState,
+                           staminaState: state.staminaState)
     }
 }
 

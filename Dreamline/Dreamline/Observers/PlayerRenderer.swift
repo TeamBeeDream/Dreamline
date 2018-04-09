@@ -14,6 +14,7 @@ class PlayerRenderer: Observer {
     
     private var view: SKView!       // @ROBUSTNESS
     private var playerNode: SKNode!
+    private var staminaNode: SKLabelNode!
     
     // MARK: Init
     
@@ -28,8 +29,13 @@ class PlayerRenderer: Observer {
         node.lineWidth = 0.0
         node.fillColor = .orange
         view.scene!.addChild(node) // @FIXME
-        
         instance.playerNode = node
+        
+        let label = SKLabelNode(text: "")
+        label.zPosition = 2
+        label.fontColor = .white
+        view.scene!.addChild(label) // @FIXME
+        instance.staminaNode = label
         
         return instance
     }
@@ -41,12 +47,28 @@ class PlayerRenderer: Observer {
             switch event {
                 
             case .positionUpdated(let position):
-                playerNode.position = CGPoint(x: self.view.frame.midX + CGFloat(position.offset) * self.view.frame.width / 3.0,
-                                              y: self.view.frame.midY - self.view.frame.height * 0.3) // @HARDCODED
+                let viewPosition = self.playerPosition(offset: position.offset)
+                self.playerNode.position = viewPosition
+                self.staminaNode.position = CGPoint(x: viewPosition.x + 35.0, y: viewPosition.y + 8.0)
+                
+            case .staminaUpdated(let level):
+                self.staminaNode.text = "\(level)"
                 
             default: break
                 
             }
         }
+    }
+    
+    // MARK: Private Properties
+    
+    private func playerPosition(offset: Double) -> CGPoint {
+        let midX = self.view.frame.midX
+        let midY = self.view.frame.midY
+        let horizontalOffset = self.view.frame.width / 3.0
+        let verticalOffset = self.view.frame.height * -0.3
+        
+        return CGPoint(x: midX + CGFloat(offset) * horizontalOffset,
+                       y: midY + verticalOffset)
     }
 }

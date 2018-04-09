@@ -28,11 +28,14 @@ class DreamlineViewController: UIViewController {
         
         let scene = TestScene.make(state: KernelState.new(),
                                    kernels: [TimeKernel.make(),
-                                             BoardKernel.make()],
+                                             BoardKernel.make(),
+                                             PositionKernel.make(),
+                                             InputKernel.make()],
                                    rules: [ScrollRule.make(scrollSpeed: 2.0),
                                            TimeRule.make(),
                                            CleanupRule.make(),
-                                           SpawnRule.make(distanceBetweenEntities: 0.1)])
+                                           SpawnRule.make(distanceBetweenEntities: 0.1),
+                                           PositionRule.make()])
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
         skView.ignoresSiblingOrder = true

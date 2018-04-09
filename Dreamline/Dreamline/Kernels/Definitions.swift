@@ -8,6 +8,7 @@
 
 import Foundation
 
+// @TODO: Move this somewhere more obvious
 enum KernelInstruction {
     
     // Time
@@ -19,8 +20,18 @@ enum KernelInstruction {
     case addEntity(EntityData)
     case removeEntity(Int)
     case scrollBoard(Double)
+    
+    // Position
+    case updatePositionOffset(Double) // @NOTE: only need to pass in offset, rest of values are calculated dynamically
+    
+    // Input
+    case updateInput(Int)
 }
 
+// @TODO: Move this somewhere more obvious
+// @NOTE: It seems like the instructions and events
+// are identical, so if they never deviate then
+// maybe they should just be one in the same
 enum KernelEvent {
     
     // Time
@@ -32,60 +43,44 @@ enum KernelEvent {
     case barrierAdded(EntityData)
     case barrierRemoved(Int)
     case boardScrolled(Double)
+    
+    // Position
+    case positionUpdated(PositionData) // This one is different
 }
 
+// @TODO: Move this somewhere more obvious
 struct KernelState {
     var timeState: TimeData
     var boardState: BoardData
+    var positionState: PositionData
+    var inputState: InputData
     
     static func new() -> KernelState {
         return KernelState(timeState: TimeData.new(),
-                           boardState: BoardData.new())
+                           boardState: BoardData.new(),
+                           positionState: PositionData.new(),
+                           inputState: InputData.new())
     }
     
+    // @NOTE: I'm not even really sure if this works correctly...
+    // @TODO: Test deep copying
     static func clone(_ state: KernelState) -> KernelState {
         return KernelState(timeState: state.timeState,
-                           boardState: state.boardState)
-    }
-    
-    // This is weird
-    static func sync(_ state: inout KernelState, with match: KernelState) {
-        state.timeState.deltaTime = match.timeState.deltaTime
-        state.timeState.frameNumber = match.timeState.frameNumber
-        state.timeState.paused = match.timeState.paused
-        state.timeState.timeSinceBeginning = match.timeState.timeSinceBeginning
-        
-        state.boardState.layout = match.boardState.layout
-        state.boardState.scrollDistance = match.boardState.scrollDistance
-        state.boardState.entities = match.boardState.entities
+                           boardState: state.boardState,
+                           positionState: state.positionState,
+                           inputState: state.inputState)
     }
 }
 
 protocol Kernel {
-    /*
-    func update(state: KernelState,
-                instructions: [KernelInstruction]) -> (KernelState, [KernelEvent])
-    */
-    
     // @NOTE: Should send data store protocols
     // and not raw data structures
     func mutate(state: inout KernelState,
                 events: inout [KernelEvent],
                 instr: KernelInstruction)
-                //instructions: [KernelInstruction])
-}
-
-enum RuleFlag {
-    
 }
 
 protocol Rule {
-    /*
-    func process(state: KernelState,
-                 events: [KernelEvent],
-                 deltaTime: Double) -> ([RuleFlag], [KernelInstruction])
-    */
-    
     func mutate(state: inout KernelState,
                  events: inout [KernelEvent],
                  instructions: inout [KernelInstruction],

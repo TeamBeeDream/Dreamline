@@ -51,6 +51,9 @@ class TestScene: SKScene {
     private var eventsBuffer = ToggleBuffer.make(value: [KernelEvent]()) // @HACK
     private var instrBuffer = ToggleBuffer.make(value: [KernelInstruction]()) // @HACK
     
+    private var inputCount: Int = 0
+    private var inputTarget: Int = 0
+    
     // @HACK
     static let TEXT_Z_POSITION: CGFloat = 1.0
     static let LINE_Z_POSITION: CGFloat = 0.0
@@ -73,10 +76,8 @@ class TestScene: SKScene {
         self.backgroundColor = .darkText
         
         // @TEMP
-        let container = SKNode()
-        let lineRenderer = LineRenderer.make(view: view) // @HACK
-        self.observers = [lineRenderer] // @HACK
-        self.addChild(container)
+        self.observers = [LineRenderer.make(view: view),
+                          PlayerRenderer.make(view: view)] // @HACK @HARDCODED
         
         let infoLabel = TestScene.makeInfoLabel()
         infoLabel.position = CGPoint(x: view.frame.minX, y: view.frame.maxY)
@@ -85,22 +86,38 @@ class TestScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        
+        // @NOTE: The official update step list:
+        // - Poll user/external input
+        // - Calculate realtime delta time
+        // - Update Kernels
+        // - Update Rules
+        // - Update Observers
+        // - Store instructions for next update
+        
+        
         var dt = currentTime - self.previousTime
         self.previousTime = currentTime
         if dt > 1.0 { dt = 1.0/60.0 }
         
         // @TEMP
-        var workingEvents = self.eventsBuffer.access() // :(
+        var workingEvents = self.eventsBuffer.access()  // :(
         var workingState = self.stateBuffer.access()    // :(
         
+        // @TEMP: Inject user input
+        var instructions = self.instrBuffer.access()
+        instructions.append(.updateInput(self.inputTarget))
+        
+        // KERNEL
         for kernel in self.kernels {
-            for instr in self.instrBuffer.access() {
+            for instr in instructions {
                 kernel.mutate(state: &workingState,
                               events: &workingEvents,
                               instr: instr)
             }
         }
         
+        // RULES
         self.instrBuffer.toggle()
         var newInstructions = self.instrBuffer.access()
         newInstructions.removeAll(keepingCapacity: true)// :(?
@@ -111,6 +128,7 @@ class TestScene: SKScene {
                         deltaTime: dt)
         }
         
+        // OBSERVERS
         for observer in self.observers {
             observer.observe(events: workingEvents) // @SLOW
         }
@@ -140,6 +158,27 @@ class TestScene: SKScene {
 
         let info = self.infoLabel!
         info.text = infoString // @SLOW!!!
+    }
+    
+    // @TEMP
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for t in touches {
+            let location = t.location(in: self)
+            self.inputTarget = location.x > self.frame.midX ? 1 : -1
+            self.inputCount += 1
+        }
+    }
+    
+    // @TEMP
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.inputCount -= touches.count
+        if self.inputCount == 0 { self.inputTarget = 0 }
+    }
+    
+    // @TEMP
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.inputCount -= touches.count
+        if self.inputCount == 0 { self.inputTarget = 0 }
     }
     
     // MARK: Private Methods

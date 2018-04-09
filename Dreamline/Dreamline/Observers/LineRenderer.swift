@@ -42,15 +42,13 @@ class LineRenderer: Observer {
                 
             case .entityRemoved(let id):
                 self.removeLine(id: id)
+
+            case .entityStateChanged(let entity):
+                if entity.state == .hit { self.blinkLine(id: entity.id) }
+                if entity.state == .passed { self.fadeOutLine(id: entity.id) }
                 
             case .boardScrolled(let distance):
                 self.moveLines(distance: distance)
-                
-            case .barrierHit(let id):
-                self.blinkLine(id: id)
-                
-            case .barrierPass(let id):
-                self.fadeOutLine(id: id)
                 
             default:
                 break

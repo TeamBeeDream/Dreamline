@@ -21,8 +21,7 @@ enum KernelInstruction {
     case addEntity(EntityData)
     case removeEntity(Int)
     case scrollBoard(Double)
-    case makeEntityActive(Int)
-    case makeEntityInactive(Int)
+    case updateEntityState(Int, EntityState)
     
     // Position
     case updatePositionOffset(Double) // @NOTE: only need to pass in offset, rest of values are calculated dynamically
@@ -49,11 +48,8 @@ enum KernelEvent {
     // Board
     case entityAdded(EntityData)
     case entityRemoved(Int)
-    case entityMarkedActive(Int)
-    case entityMarkedInactive(Int)
+    case entityStateChanged(EntityData)
     case boardScrolled(Double)
-    case barrierPass(Int)
-    case barrierHit(Int)
     
     // Position
     case positionUpdated(PositionData)
@@ -98,10 +94,10 @@ protocol Kernel {
 }
 
 protocol Rule {
-    func mutate(state: inout KernelState,
-                 events: inout [KernelEvent],
-                 instructions: inout [KernelInstruction],
-                 deltaTime: Double)
+    func mutate(state: KernelState,
+                events: inout [KernelEvent],
+                instructions: inout [KernelInstruction],
+                deltaTime: Double)
     // @NOTE: This deltaTime is real time, need to use .tick event to get
     // in-engine time
 }

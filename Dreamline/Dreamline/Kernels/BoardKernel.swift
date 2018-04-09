@@ -39,14 +39,10 @@ class BoardKernel: Kernel {
             }
             state.boardState.scrollDistance += distance
             events.append(.boardScrolled(distance))
-            
-        case .makeEntityActive(let id):
-            state.boardState.entities[id]!.active = true
-            events.append(.entityMarkedActive(id))
-            
-        case .makeEntityInactive(let id):
-            state.boardState.entities[id]!.active = false
-            events.append(.entityMarkedInactive(id))
+
+        case .updateEntityState(let id, let entityState):
+            state.boardState.entities[id]!.state = entityState
+            events.append(.entityStateChanged(state.boardState.entities[id]!))
             
         default: break
             

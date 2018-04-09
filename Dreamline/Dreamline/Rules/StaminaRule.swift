@@ -18,7 +18,7 @@ class StaminaRule: Rule {
     
     // MARK: Rule Methods
     
-    func mutate(state: inout KernelState,
+    func mutate(state: KernelState,
                 events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
@@ -26,10 +26,15 @@ class StaminaRule: Rule {
         // Respond to events
         for event in events {
             switch event {
-                
-            // @TODO
-            //case .barrierCollision:
-            //    instructions.append(.decrementStamina)
+
+            case .entityStateChanged(let entity):
+                switch entity.type {
+                case .barrier:
+                    if entity.state == .hit    { instructions.append(.decrementStamina) }
+                    if entity.state == .passed { instructions.append(.incrementStamina) }
+                    
+                default: break
+                }
                 
             case .staminaUpdated(let level):
                 if level < 0 { // && !state.dead

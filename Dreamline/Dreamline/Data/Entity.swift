@@ -11,8 +11,14 @@ import Foundation
 struct EntityData {
     var id: Int
     var position: Double
-    var active: Bool
+    var state: EntityState
     var type: EntityType
+}
+
+enum EntityState {
+    case none
+    case hit
+    case passed
 }
 
 enum EntityType {

@@ -18,11 +18,12 @@ class TimeRule: Rule {
     
     // MARK: Rule Methods
     
-    func mutate(state: inout KernelState,
+    func mutate(state: KernelState,
                 events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
     
+        // @FIXME
         if !state.timeState.paused {
             instructions.append(.tick(deltaTime))
         }

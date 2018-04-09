@@ -31,7 +31,7 @@ class SpawnRule: Rule {
     
     // MARK: Rule Methods
     
-    func mutate(state: inout KernelState,
+    func mutate(state: KernelState,
                 events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
@@ -46,7 +46,7 @@ class SpawnRule: Rule {
             for type in next {
                 let entity = EntityData(id: self.currentId, // <-- This is super dangerous @ROBUSTNESS
                                         position: state.boardState.layout.lowerBound,
-                                        active: true,
+                                        state: .none,
                                         type: type)
                 instructions.append(.addEntity(entity))
                 self.currentId += 1

@@ -20,7 +20,7 @@ class CollisionRule: Rule {
     
     // MARK: Rule Methods
     
-    func mutate(state: inout KernelState,
+    func mutate(state: KernelState,
                 events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
@@ -33,7 +33,7 @@ class CollisionRule: Rule {
                 
             case .boardScrolled(let distance):
                 for entity in state.boardState.entities.values {
-                    if !entity.active { continue }
+                    if entity.state != .none { continue }
                     
                     if self.didCross(playerPosition: state.boardState.layout.playerPosition,
                                      entityPosition: entity.position,
@@ -42,16 +42,15 @@ class CollisionRule: Rule {
                         // @CLEANUP
                         switch entity.type {
                         case .threshold:
-                            instructions.append(.makeEntityInactive(entity.id))
+                            instructions.append(.updateEntityState(entity.id, .hit))
                             
                         case .barrier(let gates):
                             let laneIndex = state.positionState.nearestLane + 1
                             if gates[laneIndex] {
-                                events.append(.barrierPass(entity.id))
+                                instructions.append(.updateEntityState(entity.id, .passed))
                             } else {
-                                events.append(.barrierHit(entity.id))
+                                instructions.append(.updateEntityState(entity.id, .hit))
                             }
-                            instructions.append(.makeEntityInactive(entity.id))
                         }
                     }
                 }

@@ -126,7 +126,7 @@ class TestScene: SKScene {
         var newInstructions = self.instrBuffer.access()
         newInstructions.removeAll(keepingCapacity: true)// :(?
         for rule in self.rules {
-            rule.mutate(state: &workingState,
+            rule.mutate(state: workingState,
                         events: &workingEvents,
                         instructions: &newInstructions,
                         deltaTime: dt)

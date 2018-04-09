@@ -18,7 +18,7 @@ class PositionRule: Rule {
     
     // MARK: Rule Methods
     
-    func mutate(state: inout KernelState,
+    func mutate(state: KernelState,
                 events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {

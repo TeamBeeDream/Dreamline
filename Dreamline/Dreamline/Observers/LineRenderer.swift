@@ -49,6 +49,8 @@ class LineRenderer: Observer {
                 
             case .boardScrolled(let distance):
                 self.moveLines(distance: distance)
+            
+            // @TODO: Handle .entityMoved
                 
             default:
                 break
@@ -98,7 +100,6 @@ class LineRenderer: Observer {
     }
     
     private func blinkLine(id: Int) {
-        
         let blinkAction = SKAction.sequence([
             SKAction.fadeOut(withDuration: 0.1),
             SKAction.fadeIn(withDuration: 0.05)])

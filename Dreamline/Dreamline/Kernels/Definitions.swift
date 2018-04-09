@@ -48,6 +48,7 @@ enum KernelEvent {
     // Board
     case entityAdded(EntityData)
     case entityRemoved(Int)
+    case entityMoved(Int, Double, BoardLayout) // @Awkward
     case entityStateChanged(EntityData)
     case boardScrolled(Double)
     

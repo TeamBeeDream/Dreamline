@@ -112,9 +112,33 @@ class TestScene: SKScene {
         var instructions = self.instrBuffer.access()
         instructions.append(.updateInput(self.inputTarget))
         
+        let instructionsNoRemoves = instructions.filter {
+            switch $0 {
+            case .removeEntity:
+                return true
+            default: return false
+            }
+        }
+        let filteredRemoveInstructions = instructions.filter {
+            switch $0 {
+            case .removeEntity:
+                return false
+            default: return true
+            }
+        }
+        
         // KERNEL
+        // @ROBUSTNESS: I filter out the .removeEntity instructions
+        // and ensure that they are completed LAST, this is very error prone
+        // so probably need to come up with better solution for handling
+        // removing data from the state
         for kernel in self.kernels {
-            for instr in instructions {
+            for instr in instructionsNoRemoves {
+                kernel.mutate(state: &workingState,
+                              events: &workingEvents,
+                              instr: instr)
+            }
+            for instr in filteredRemoveInstructions {
                 kernel.mutate(state: &workingState,
                               events: &workingEvents,
                               instr: instr)

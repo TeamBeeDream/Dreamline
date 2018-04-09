@@ -22,18 +22,22 @@ class CleanupRule: Rule {
                 events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
-        for entity in state.boardState.entities.values {
-            if isOffBoard(entity: entity, layout: state.boardState.layout) {
-                instructions.append(.removeEntity(entity.id))
+        
+        for event in events {
+            switch event {
+            case .entityMoved(let id, let position, let layout):
+                if isOffBoard(position: position, layout: layout) {
+                    instructions.append(.removeEntity(id)) // @BUG
+                }
+                
+            default: break
             }
         }
     }
     
     // MARK: Private Methods
     
-    private func isOffBoard(entity: EntityData, layout: BoardLayout) -> Bool {
-        let position = entity.position
-        
+    private func isOffBoard(position: Double, layout: BoardLayout) -> Bool {
         let isAboveUpperBound = position > layout.upperBound
         let isBelowLowerBound = position < layout.lowerBound
         return isAboveUpperBound || isBelowLowerBound

@@ -26,6 +26,7 @@ class InputKernel: Kernel {
             
         case .updateInput(let lane):
             state.inputState.targetLane = lane
+            events.append(.inputChanged(lane))
             
         default: break
             

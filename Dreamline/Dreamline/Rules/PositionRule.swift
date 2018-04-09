@@ -10,6 +10,11 @@ import Foundation
 
 class PositionRule: Rule {
     
+    // MARK: Private Properties
+    
+    private var targetLane: Int!
+    private var playerOffset: Double!
+    
     // MARK: Init
     
     static func make() -> PositionRule {
@@ -18,19 +23,52 @@ class PositionRule: Rule {
     
     // MARK: Rule Methods
     
-    func mutate(state: KernelState,
-                events: inout [KernelEvent],
+    func setup(state: KernelState) {
+        self.targetLane = state.inputState.targetLane
+        self.playerOffset = state.positionState.offset
+    }
+    
+    func mutate(events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
         
-        let target = Double(state.inputState.targetLane)
-        let moveDuration = 0.1  // @HARDCODED
+        // @NOTE: I need to put these events first or else it causes
+        // stuttery behavior.  Maybe I should have separate function calls
+        // for updating the rule's internal state and one that produces
+        // new instructions
         
-        let diff = target - state.positionState.offset
-        let step = clamp(state.timeState.deltaTime / moveDuration,
-                         min: 0.0, max: 1.0)
+        for event in events {
+            switch event {
+                
+            case .positionUpdated(let position):
+                self.playerOffset = position.offset
+            
+            case .inputChanged(let lane):
+                self.targetLane = lane
+                
+            default: break
+                
+            }
+        }
         
-        let delta = step * diff
-        instructions.append(.updatePositionOffset(state.positionState.offset + delta))
+        for event in events {
+            switch event {
+                
+            case .tick(let dt):
+                let target = Double(self.targetLane)
+                let moveDuration = 0.1  // @HARDCODED
+                
+                let diff = target - self.playerOffset
+                let step = clamp(dt / moveDuration,
+                                 min: 0.0, max: 1.0)
+                
+                let delta = step * diff
+                instructions.append(.updatePositionOffset(self.playerOffset + delta))
+                
+                
+            default: break
+                
+            }
+        }
     }
 }

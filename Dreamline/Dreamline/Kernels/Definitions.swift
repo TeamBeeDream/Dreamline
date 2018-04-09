@@ -48,12 +48,15 @@ enum KernelEvent {
     // Board
     case entityAdded(EntityData)
     case entityRemoved(Int)
-    case entityMoved(Int, Double, BoardLayout) // @Awkward
+    case entityMoved(EntityData, Double)
     case entityStateChanged(EntityData)
-    case boardScrolled(Double)
+    case boardScrolled(Double, Double)
     
     // Position
     case positionUpdated(PositionData)
+    
+    // Input
+    case inputChanged(Int)
     
     // Stamina
     case staminaUpdated(Int)
@@ -95,8 +98,8 @@ protocol Kernel {
 }
 
 protocol Rule {
-    func mutate(state: KernelState,
-                events: inout [KernelEvent],
+    func setup(state: KernelState)
+    func mutate(events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double)
     // @NOTE: This deltaTime is real time, need to use .tick event to get

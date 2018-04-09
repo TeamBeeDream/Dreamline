@@ -10,6 +10,10 @@ import Foundation
 
 class TimeRule: Rule {
     
+    // MARK: Private Properties
+    
+    private var paused: Bool!
+    
     // MARK: Init
     
     static func make() -> TimeRule {
@@ -18,14 +22,14 @@ class TimeRule: Rule {
     
     // MARK: Rule Methods
     
-    func mutate(state: KernelState,
-                events: inout [KernelEvent],
+    func setup(state: KernelState) {
+        self.paused = state.timeState.paused
+    }
+    
+    func mutate(events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
     
-        // @FIXME
-        if !state.timeState.paused {
-            instructions.append(.tick(deltaTime))
-        }
+        if !self.paused { instructions.append(.tick(deltaTime)) }
     }
 }

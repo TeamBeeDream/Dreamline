@@ -24,8 +24,11 @@ class ScrollRule: Rule {
     
     // MARK: Rule Methods
     
-    func mutate(state: KernelState,
-                events: inout [KernelEvent],
+    func setup(state: KernelState) {
+        
+    }
+    
+    func mutate(events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
         for event in events {

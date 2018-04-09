@@ -36,13 +36,13 @@ class BoardKernel: Kernel {
         // @CLEANUP
         case .scrollBoard(let distance):
             for id in state.boardState.entities.keys {
+                let prevPos = state.boardState.entities[id]!.position
                 state.boardState.entities[id]!.position += distance
-                events.append(.entityMoved(id,
-                                           state.boardState.entities[id]!.position,
-                                           state.boardState.layout))
+                events.append(.entityMoved(state.boardState.entities[id]!,
+                                           prevPos))
             }
             state.boardState.scrollDistance += distance
-            events.append(.boardScrolled(distance))
+            events.append(.boardScrolled(state.boardState.scrollDistance, distance))
 
         case .updateEntityState(let id, let entityState):
             state.boardState.entities[id]!.state = entityState

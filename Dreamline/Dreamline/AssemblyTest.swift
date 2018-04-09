@@ -82,6 +82,7 @@ class TestScene: SKScene {
         // @NOTE: awkward place for this
         // @ROBUSTNESS: Need to ensure that this state is correct
         let state = self.stateBuffer.access()
+        for rule in self.rules { rule.setup(state: state) }
         for observer in self.observers { observer.setup(state: state, scene: self) }
         
 //        let infoLabel = TestScene.makeInfoLabel()
@@ -150,8 +151,7 @@ class TestScene: SKScene {
         var newInstructions = self.instrBuffer.access()
         newInstructions.removeAll(keepingCapacity: true)// :(?
         for rule in self.rules {
-            rule.mutate(state: workingState,
-                        events: &workingEvents,
+            rule.mutate(events: &workingEvents,
                         instructions: &newInstructions,
                         deltaTime: dt)
         }

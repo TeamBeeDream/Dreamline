@@ -40,7 +40,7 @@ class PlayerRenderer: Observer {
         self.scene.addChild(node) // @FIXME
         self.playerNode = node
         
-        let label = SKLabelNode(text: "")
+        let label = SKLabelNode(text: "\(state.staminaState.level)")
         label.zPosition = 2
         label.fontColor = .white
         self.scene.addChild(label) // @FIXME

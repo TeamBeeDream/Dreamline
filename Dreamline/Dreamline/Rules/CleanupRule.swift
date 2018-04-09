@@ -10,6 +10,10 @@ import Foundation
 
 class CleanupRule: Rule {
     
+    // MARK: Private Properties
+    
+    private var layout: BoardLayout!
+    
     // MARK: Init
     
     static func make() -> CleanupRule {
@@ -18,16 +22,19 @@ class CleanupRule: Rule {
     
     // MARK: Rule Methods
     
-    func mutate(state: KernelState,
-                events: inout [KernelEvent],
+    func setup(state: KernelState) {
+        self.layout = state.boardState.layout
+    }
+    
+    func mutate(events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
         
         for event in events {
             switch event {
-            case .entityMoved(let id, let position, let layout):
-                if isOffBoard(position: position, layout: layout) {
-                    instructions.append(.removeEntity(id)) // @BUG
+            case .entityMoved(let entity, _):
+                if isOffBoard(position: entity.position, layout: self.layout) {
+                    instructions.append(.removeEntity(entity.id))
                 }
                 
             default: break

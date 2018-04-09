@@ -47,8 +47,8 @@ class LineRenderer: Observer {
                 if entity.state == .hit { self.blinkLine(id: entity.id) }
                 if entity.state == .passed { self.fadeOutLine(id: entity.id) }
                 
-            case .boardScrolled(let distance):
-                self.moveLines(distance: distance)
+            case .boardScrolled(_, let delta):
+                self.moveLines(delta: delta)
             
             // @TODO: Handle .entityMoved
                 
@@ -109,10 +109,10 @@ class LineRenderer: Observer {
                                  count: 4))
     }
     
-    private func moveLines(distance: Double) {
+    private func moveLines(delta: Double) {
         for id in self.ids {
             let line = self.lines[id]!
-            line.position.y -= CGFloat(distance / 2.0) * self.scene.frame.height // @FIXME
+            line.position.y -= CGFloat(delta / 2.0) * self.scene.frame.height // @FIXME
         }
     }
     

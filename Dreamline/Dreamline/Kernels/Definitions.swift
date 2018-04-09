@@ -52,6 +52,8 @@ enum KernelEvent {
     case entityMarkedActive(Int)
     case entityMarkedInactive(Int)
     case boardScrolled(Double)
+    case barrierPass(Int)
+    case barrierHit(Int)
     
     // Position
     case positionUpdated(PositionData)

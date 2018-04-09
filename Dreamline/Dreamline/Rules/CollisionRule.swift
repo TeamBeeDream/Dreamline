@@ -39,7 +39,20 @@ class CollisionRule: Rule {
                                      entityPosition: entity.position,
                                      scrollDistance: distance) {
                         
-                        instructions.append(.makeEntityInactive(entity.id))
+                        // @CLEANUP
+                        switch entity.type {
+                        case .threshold:
+                            instructions.append(.makeEntityInactive(entity.id))
+                            
+                        case .barrier(let gates):
+                            let laneIndex = state.positionState.nearestLane + 1
+                            if gates[laneIndex] {
+                                events.append(.barrierPass(entity.id))
+                            } else {
+                                events.append(.barrierHit(entity.id))
+                            }
+                            instructions.append(.makeEntityInactive(entity.id))
+                        }
                     }
                 }
                 

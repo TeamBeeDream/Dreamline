@@ -35,10 +35,10 @@ class DreamlineViewController: UIViewController {
              InputKernel.make(),
              StaminaKernel.make()]
         let rules: [Rule] =
-            [ScrollRule.make(scrollSpeed: 2.0),
+            [ScrollRule.make(scrollSpeed: 1.5),
              TimeRule.make(),
              CleanupRule.make(),
-             SpawnRule.make(distanceBetweenEntities: 0.1),
+             SpawnRule.make(distanceBetweenEntities: 0.5),
              PositionRule.make(),
              StaminaRule.make(),
              CollisionRule.make()]

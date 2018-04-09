@@ -46,7 +46,10 @@ class LineRenderer: Observer {
             case .boardScrolled(let distance):
                 self.moveLines(distance: distance)
                 
-            case .entityMarkedInactive(let id):
+            case .barrierHit(let id):
+                self.blinkLine(id: id)
+                
+            case .barrierPass(let id):
                 self.fadeOutLine(id: id)
                 
             default:
@@ -65,7 +68,7 @@ class LineRenderer: Observer {
             let offset = self.scene.frame.width / 3.0
             var posX = self.scene.frame.width / 6.0
             for gate in gates {
-                if !gate { posX += offset; continue }
+                if gate { posX += offset; continue }
                 
                 let lineTexture = self.barrierTexture
                 let sprite = SKSpriteNode(texture: lineTexture)
@@ -94,6 +97,17 @@ class LineRenderer: Observer {
     private func fadeOutLine(id: Int) {
         let line = self.lines[id]!
         line.run(SKAction.fadeOut(withDuration: 0.2)) // @HARDCODED
+    }
+    
+    private func blinkLine(id: Int) {
+        
+        let blinkAction = SKAction.sequence([
+            SKAction.fadeOut(withDuration: 0.1),
+            SKAction.fadeIn(withDuration: 0.05)])
+        
+        let line = self.lines[id]!
+        line.run(SKAction.repeat(blinkAction,
+                                 count: 4))
     }
     
     private func moveLines(distance: Double) {

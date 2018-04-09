@@ -16,14 +16,16 @@ class SpawnRule: Rule {
     
     // MARK: Private Properties
     
-    var currentId: Int = 0
-    var lastBarrierPosition: Double = 0.0
+    private var currentId: Int = 0
+    private var lastBarrierPosition: Double = 0.0
+    private var sequencer: Sequencer!
     
     // MARK: Init
     
     static func make(distanceBetweenEntities: Double) -> Rule {
         let instance = SpawnRule()
         instance.distanceBetweenEntities = distanceBetweenEntities
+        instance.sequencer = TempSequencer.make(random: RealRandom()) // @HARDCODED
         return instance
     }
     
@@ -38,28 +40,17 @@ class SpawnRule: Rule {
         let overshoot = currentDistance.truncatingRemainder(dividingBy: self.distanceBetweenEntities)
         let nearest = currentDistance - overshoot
         
+        // @CLEANUP
         if nearest > self.lastBarrierPosition {
-            let barrierData = self.makeRandomBarrier() // @HARDCODED
-            let entity = EntityData(id: self.currentId, // <-- This is super dangerous @TODO
-                                    position: state.boardState.layout.lowerBound,
-                                    type: .barrier(barrierData))
-            instructions.append(.addEntity(entity))
-            
+            let next = self.sequencer.nextEntity()
+            for type in next {
+                let entity = EntityData(id: self.currentId, // <-- This is super dangerous @ROBUSTNESS
+                                        position: state.boardState.layout.lowerBound,
+                                        type: type)
+                instructions.append(.addEntity(entity))
+                self.currentId += 1
+            }
             self.lastBarrierPosition = nearest
-            self.currentId += 1
         }
-    }
-    
-    // MARK: Private Methods
-    
-    private func makeRandomBarrier() -> [Bool] {
-        
-        let random = RealRandom() // @HARDCODED
-        
-        var barrier = [Bool]()
-        for _ in 1...3 {
-            barrier.append(random.next() > 0.5)
-        }
-        return barrier
     }
 }

@@ -63,6 +63,7 @@ class LineRenderer: Observer {
                 let lineTexture = self.barrierTexture
                 let sprite = SKSpriteNode(texture: lineTexture)
                 sprite.position.x = posX
+                sprite.position.y = self.view.frame.maxY
                 sprite.zPosition = TestScene.LINE_Z_POSITION
                 posX += offset
                 container.addChild(sprite)
@@ -86,7 +87,7 @@ class LineRenderer: Observer {
     private func moveLines(distance: Double) {
         for id in self.ids {
             let line = self.lines[id]!
-            line.position.y += CGFloat(distance / 2.0) * self.view.frame.height // @FIXME
+            line.position.y -= CGFloat(distance / 2.0) * self.view.frame.height // @FIXME
         }
     }
     

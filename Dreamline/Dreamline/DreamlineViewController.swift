@@ -27,18 +27,29 @@ class DreamlineViewController: UIViewController {
         self.view.addSubview(skView)
         
         // @TODO: Use factory to assemble these lists
-        let scene = TestScene.make(state: KernelState.new(),
-                                   kernels: [TimeKernel.make(),
-                                             BoardKernel.make(),
-                                             PositionKernel.make(),
-                                             InputKernel.make(),
-                                             StaminaKernel.make()],
-                                   rules: [ScrollRule.make(scrollSpeed: 2.0),
-                                           TimeRule.make(),
-                                           CleanupRule.make(),
-                                           SpawnRule.make(distanceBetweenEntities: 0.1),
-                                           PositionRule.make(),
-                                           StaminaRule.make()])
+        let state = KernelState.new()
+        let kernels: [Kernel] =
+            [TimeKernel.make(),
+             BoardKernel.make(),
+             PositionKernel.make(),
+             InputKernel.make(),
+             StaminaKernel.make()]
+        let rules: [Rule] =
+            [ScrollRule.make(scrollSpeed: 2.0),
+             TimeRule.make(),
+             CleanupRule.make(),
+             SpawnRule.make(distanceBetweenEntities: 0.1),
+             PositionRule.make(),
+             StaminaRule.make(),
+             CollisionRule.make()]
+        let observers: [Observer] =
+            [LineRenderer.make(),
+             PlayerRenderer.make()]
+        
+        let scene = TestScene.make(state: state,
+                                   kernels: kernels,
+                                   rules: rules,
+                                   observers: observers)
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
         skView.ignoresSiblingOrder = true

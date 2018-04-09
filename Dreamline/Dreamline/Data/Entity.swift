@@ -11,6 +11,7 @@ import Foundation
 struct EntityData {
     var id: Int
     var position: Double
+    var active: Bool
     var type: EntityType
 }
 

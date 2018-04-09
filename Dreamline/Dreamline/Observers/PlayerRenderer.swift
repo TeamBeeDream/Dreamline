@@ -12,47 +12,52 @@ class PlayerRenderer: Observer {
     
     // MARK: Private Properties
     
-    private var view: SKView!       // @ROBUSTNESS
+    private var scene: SKScene!
     private var playerNode: SKNode!
     private var staminaNode: SKLabelNode!
+    
+    private var yPos: Double = 0.0
     
     // MARK: Init
     
     // @NOTE: View is probably not best thing to send as a SK container,
     // should probably just send the scene(?)
-    static func make(view: SKView) -> PlayerRenderer {
+    static func make() -> PlayerRenderer {
         let instance = PlayerRenderer()
-        instance.view = view
+        return instance
+    }
+    
+    // MARK: Observer Methods
+    
+    func setup(state: KernelState, scene: SKScene) {
+        self.scene = scene
+        self.yPos = state.boardState.layout.playerPosition
         
         let node = SKShapeNode(circleOfRadius: 15.0)
         node.zPosition = 2
         node.lineWidth = 0.0
         node.fillColor = .orange
-        view.scene!.addChild(node) // @FIXME
-        instance.playerNode = node
+        self.scene.addChild(node) // @FIXME
+        self.playerNode = node
         
         let label = SKLabelNode(text: "")
         label.zPosition = 2
         label.fontColor = .white
-        view.scene!.addChild(label) // @FIXME
-        instance.staminaNode = label
-        
-        return instance
+        self.scene.addChild(label) // @FIXME
+        self.staminaNode = label
     }
-    
-    // MARK: Observer Methods
     
     func observe(events: [KernelEvent]) {
         for event in events {
             switch event {
                 
             case .positionUpdated(let position):
-                let viewPosition = self.playerPosition(offset: position.offset)
-                self.playerNode.position = viewPosition
-                self.staminaNode.position = CGPoint(x: viewPosition.x + 35.0, y: viewPosition.y + 8.0)
+                let pos = self.playerPoint(offset: position.offset)
+                self.playerNode?.position = pos
+                self.staminaNode?.position = CGPoint(x: pos.x + 35.0, y: pos.y + 8.0)
                 
             case .staminaUpdated(let level):
-                self.staminaNode.text = "\(level)"
+                self.staminaNode?.text = "\(level)"
                 
             default: break
                 
@@ -62,13 +67,14 @@ class PlayerRenderer: Observer {
     
     // MARK: Private Properties
     
-    private func playerPosition(offset: Double) -> CGPoint {
-        let midX = self.view.frame.midX
-        let midY = self.view.frame.midY
-        let horizontalOffset = self.view.frame.width / 3.0
-        let verticalOffset = self.view.frame.height * -0.3
+    private func playerPoint(offset: Double) -> CGPoint {
+        let midX = self.scene.frame.midX
+        let midY = self.scene.frame.midY
+        let horizontalOffset = self.scene.frame.width / 3.0
+        let verticalOffset = self.scene.frame.height * -0.5
         
-        return CGPoint(x: midX + CGFloat(offset) * horizontalOffset,
-                       y: midY + verticalOffset)
+        let x = midX + CGFloat(offset) * horizontalOffset
+        let y = midY + CGFloat(yPos) * verticalOffset
+        return CGPoint(x: x, y: y)
     }
 }

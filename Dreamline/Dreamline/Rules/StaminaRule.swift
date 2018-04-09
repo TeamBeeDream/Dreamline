@@ -27,7 +27,8 @@ class StaminaRule: Rule {
         for event in events {
             switch event {
                 
-            //case .barrierCollision: // @TODO: Replace with actual trigger
+            // @TODO
+            //case .barrierCollision:
             //    instructions.append(.decrementStamina)
                 
             case .staminaUpdated(let level):

@@ -26,23 +26,27 @@ class BoardKernel: Kernel {
         switch instr {
         
         case .addEntity(let data):
-            state.boardState.entities.append(data)
-            events.append(.barrierAdded(data))
+            state.boardState.entities[data.id] = data
+            events.append(.entityAdded(data))
         
         case .removeEntity(let id):
-            // @PERFORMANCE
-            state.boardState.entities = state.boardState.entities.filter { $0.id != id }
-            events.append(.barrierRemoved(id))
+            state.boardState.entities[id] = nil
+            events.append(.entityRemoved(id))
             
         case .scrollBoard(let distance):
-            // This sucks
-            state.boardState.entities = state.boardState.entities.map({
-                EntityData(id: $0.id,
-                           position: $0.position + distance,
-                           type: $0.type)
-            })
+            for id in state.boardState.entities.keys {
+                state.boardState.entities[id]!.position += distance
+            }
             state.boardState.scrollDistance += distance
             events.append(.boardScrolled(distance))
+            
+        case .makeEntityActive(let id):
+            state.boardState.entities[id]!.active = true
+            events.append(.entityMarkedActive(id))
+            
+        case .makeEntityInactive(let id):
+            state.boardState.entities[id]!.active = false
+            events.append(.entityMarkedInactive(id))
             
         default: break
             

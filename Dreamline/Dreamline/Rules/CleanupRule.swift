@@ -22,7 +22,7 @@ class CleanupRule: Rule {
                 events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
-        for entity in state.boardState.entities {
+        for entity in state.boardState.entities.values {
             if isOffBoard(entity: entity, layout: state.boardState.layout) {
                 instructions.append(.removeEntity(entity.id))
             }

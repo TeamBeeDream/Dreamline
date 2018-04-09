@@ -62,11 +62,15 @@ class TestScene: SKScene {
     
     static func make(state: KernelState,
                      kernels: [Kernel],
-                     rules: [Rule]) -> TestScene {
+                     rules: [Rule],
+                     observers: [Observer]) -> TestScene {
         let instance = TestScene()
         instance.kernels = kernels
         instance.rules = rules
+        instance.observers = observers
         instance.stateBuffer.inject(state)
+        
+        
         return instance
     }
     
@@ -75,14 +79,15 @@ class TestScene: SKScene {
     override func didMove(to view: SKView) {
         self.backgroundColor = .darkText
         
-        // @TEMP
-        self.observers = [LineRenderer.make(view: view),
-                          PlayerRenderer.make(view: view)] // @HACK @HARDCODED
+        // @NOTE: awkward place for this
+        // @ROBUSTNESS: Need to ensure that this state is correct
+        let state = self.stateBuffer.access()
+        for observer in self.observers { observer.setup(state: state, scene: self) }
         
-        let infoLabel = TestScene.makeInfoLabel()
-        infoLabel.position = CGPoint(x: view.frame.minX, y: view.frame.maxY)
-        self.infoLabel = infoLabel
-        self.addChild(infoLabel)
+//        let infoLabel = TestScene.makeInfoLabel()
+//        infoLabel.position = CGPoint(x: view.frame.minX, y: view.frame.maxY)
+//        self.infoLabel = infoLabel
+//        self.addChild(infoLabel)
     }
     
     override func update(_ currentTime: TimeInterval) {

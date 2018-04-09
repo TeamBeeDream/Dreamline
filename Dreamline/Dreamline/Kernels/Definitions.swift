@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SpriteKit
 
 // @TODO: Move this somewhere more obvious
 enum KernelInstruction {
@@ -20,6 +21,8 @@ enum KernelInstruction {
     case addEntity(EntityData)
     case removeEntity(Int)
     case scrollBoard(Double)
+    case makeEntityActive(Int)
+    case makeEntityInactive(Int)
     
     // Position
     case updatePositionOffset(Double) // @NOTE: only need to pass in offset, rest of values are calculated dynamically
@@ -44,8 +47,10 @@ enum KernelEvent {
     case unpaused
     
     // Board
-    case barrierAdded(EntityData)
-    case barrierRemoved(Int)
+    case entityAdded(EntityData)
+    case entityRemoved(Int)
+    case entityMarkedActive(Int)
+    case entityMarkedInactive(Int)
     case boardScrolled(Double)
     
     // Position
@@ -100,5 +105,6 @@ protocol Rule {
 }
 
 protocol Observer {
+    func setup(state: KernelState, scene: SKScene)
     func observe(events: [KernelEvent]) // flags: [RuleFlag]
 }

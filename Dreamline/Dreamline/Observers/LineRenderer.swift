@@ -69,7 +69,7 @@ class LineRenderer: Observer {
             let offset = self.scene.frame.width / 3.0
             var posX = self.scene.frame.width / 6.0
             for gate in gates {
-                if gate { posX += offset; continue }
+                if gate == .open { posX += offset; continue }
                 
                 let lineTexture = self.barrierTexture
                 let sprite = SKSpriteNode(texture: lineTexture)

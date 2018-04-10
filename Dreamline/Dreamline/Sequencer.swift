@@ -32,12 +32,12 @@ class TempSequencer: Sequencer {
     
     func nextEntity() -> [(EntityType, EntityData)] {
         // @TEMP: Generate random barriers
-        var gates = [Bool]()
-        var areas = [Bool]()
+        var gates = [Gate]()
+        var areas = [Area]()
         for _ in 1...3 {
             let rand = self.random.next() > 0.5
-            gates.append(rand)
-            areas.append(!rand) // Area bools are flipped
+            gates.append(rand ? .open : .closed)
+            areas.append(rand ? .inactive : .active)
         }
         return [(.area, .area(areas)), (.barrier, .barrier(gates))]
     }

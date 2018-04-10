@@ -71,12 +71,12 @@ class AreaRenderer: Observer {
         
         switch entity.data {
             
-        case .area(let gates):
+        case .area(let areas):
             let container = SKNode()
             let offset = self.scene.frame.width / 3.0
             var posX = self.scene.frame.width / 6.0
-            for gate in gates {
-                if !gate { posX += offset; continue }
+            for area in areas {
+                if area == .inactive { posX += offset; continue }
                 
                 let areaTexture = self.areaTexture
                 let sprite = SKSpriteNode(texture: areaTexture)

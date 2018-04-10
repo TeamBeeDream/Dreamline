@@ -8,6 +8,8 @@
 
 import Foundation
 
+// MARK: Entity
+
 struct Entity {
     var id: Int
     var position: Double
@@ -22,15 +24,32 @@ enum EntityType {
     case area
 }
 
+// @TODO: Revise these states
 enum EntityState {
     case none
-    case hit // ?
+    case hit
     case passed
-    case over // ?
+    case over
 }
 
 enum EntityData {
     case threshold
-    case barrier([Bool])
-    case area([Bool])
+    case barrier([Gate])
+    case area([Area])
+}
+
+// MARK: Threshold
+
+// MARK: Barrier
+
+enum Gate {
+    case open
+    case closed
+}
+
+// MARK: Area
+
+enum Area {
+    case active
+    case inactive
 }

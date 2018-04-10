@@ -60,7 +60,7 @@ class LineCollisionRule: Rule {
                                                     linePosition: entity.position,
                                                     lineDelta: entity.position - prevPosition) {
                         let laneIndex = self.nearestLane + 1
-                        let newState = gates[laneIndex] ? EntityState.passed : EntityState.hit
+                        let newState = gates[laneIndex] == .open ? EntityState.passed : EntityState.hit
                         instructions.append(.updateEntityState(entity.id, newState))
                     }
                     

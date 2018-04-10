@@ -39,12 +39,12 @@ class AreaCollisionRule: Rule {
                 
             case .entityMoved(let entity, let prevPosition):
                 switch entity.data {
-                case .area(let gates):
+                case .area(let areas):
                     
                     let inArea = Collision.inArea(testPosition: self.layout.playerPosition,
                                                   areaLowerBound: entity.position -     self.layout.distanceBetweenEntities,
                                                   areaUpperBound: entity.position)
-                    let inLane = gates[self.nearestLane + 1] // gross
+                    let inLane = areas[self.nearestLane + 1] == .active
                     
                     switch entity.state {
                     case .over: fallthrough

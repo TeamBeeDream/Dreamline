@@ -34,6 +34,14 @@ class ToggleBuffer<T> {
     }
 }
 
+class TestViewDelegate: NSObject, SKViewDelegate {
+    
+    func view(_ view: SKView, shouldRenderAtTime time: TimeInterval) -> Bool {
+        // @TODO: Use this to determine when to render the next frame
+        return true
+    }
+}
+
 class TestScene: SKScene {
     
     // MARK: Private Properties
@@ -84,6 +92,19 @@ class TestScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.backgroundColor = .darkText
+        
+        // @TEMP
+        let border = SKShapeNode(rect: view.frame)
+        border.fillColor = .clear
+        border.strokeColor = .cyan
+        self.addChild(border)
+    }
+    
+    override func didChangeSize(_ oldSize: CGSize) {
+        let newSize = self.frame.size
+        print("old: \(oldSize) new: \(newSize)")
+        
+        // @NOTE: This happens at beginning too
     }
     
     override func update(_ currentTime: TimeInterval) {

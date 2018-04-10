@@ -39,7 +39,6 @@ class TempSequencer: Sequencer {
             gates.append(rand)
             areas.append(!rand) // Area bools are flipped
         }
-//        return [.barrier(gates)]
         return [(.area, .area(areas)), (.barrier, .barrier(gates))]
     }
 }

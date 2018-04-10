@@ -10,6 +10,10 @@ import SpriteKit
 
 class DreamlineViewController: UIViewController {
     
+    // MARK: Private Properties
+    
+    private var skView: SKView!
+    
     // MARK: Init and Deinit
     
     static func make() -> DreamlineViewController {
@@ -25,6 +29,7 @@ class DreamlineViewController: UIViewController {
         let skView = SKView(frame: self.view.frame)
         skView.isMultipleTouchEnabled = true
         self.view.addSubview(skView)
+        self.skView = skView // @IMPORTANT
         
         // @TODO: Use factory to assemble these lists
         let state = KernelState.new()
@@ -49,22 +54,27 @@ class DreamlineViewController: UIViewController {
                                    kernels: kernels,
                                    rules: rules,
                                    observers: []) // @NOTE: Should Observers be just renderers?
-        scene.scaleMode = .resizeFill
+        scene.scaleMode = .aspectFit
         skView.presentScene(scene)
         skView.ignoresSiblingOrder = true
         skView.showsDrawCount = true
         skView.showsFPS = true
         //skView.isAsynchronous = true // @NOTE: I'm not sure what this does
-        
-        skView.texture(from: )
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        //let orientation = UIDevice.current.orientation.isLandscape
+        //self.skView.scene!.size = self.skView.scene!.size
+        // @TODO: Replace this with call to custom scene interface ( e.g. didOrientationChange(...) )
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.portrait
+        //return .allButUpsideDown // @TODO
+        return .portrait
     }
     
     override var shouldAutorotate: Bool {
-        return false
+        return true
     }
     
     override var prefersStatusBarHidden: Bool {

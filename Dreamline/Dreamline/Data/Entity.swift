@@ -24,6 +24,12 @@ enum EntityType {
     case area
 }
 
+enum EntityData {
+    case threshold(ThresholdType)
+    case barrier([Gate])
+    case area([Area])
+}
+
 // @TODO: Revise these states
 enum EntityState {
     case none
@@ -32,13 +38,11 @@ enum EntityState {
     case over
 }
 
-enum EntityData {
-    case threshold
-    case barrier([Gate])
-    case area([Area])
-}
-
 // MARK: Threshold
+
+enum ThresholdType {
+    case normal // @TEMP
+}
 
 // MARK: Barrier
 

@@ -49,7 +49,8 @@ class TestScene: SKScene {
         // @TEMP @HARDCODED
         var customObservers: [Observer] = [LineRenderer.make(scene: instance),
                                            PlayerRenderer.make(scene: instance),
-                                           AreaRenderer.make(scene: instance)]
+                                           AreaRenderer.make(scene: instance),
+                                           ThresholdRenderer.make(scene: instance)]
         instance.renderers = customObservers
         customObservers.append(contentsOf: observers) // @HACK
         

@@ -110,6 +110,11 @@ class LineRenderer: Observer {
     }
     
     private func blinkLine(id: Int) {
+        // @DUPLICATED
+        // @ROBUSTNESS: Since we're only handling barriers
+        // we can't remove *any* entity by its id
+        if self.nodes[id] == nil { return }
+        
         let blinkAction = SKAction.sequence([
             SKAction.fadeOut(withDuration: 0.1),
             SKAction.fadeIn(withDuration: 0.05)])

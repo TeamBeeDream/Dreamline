@@ -37,6 +37,7 @@
 		697FD96C207D284500403C7F /* AreaCollisionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96B207D284500403C7F /* AreaCollisionRule.swift */; };
 		697FD96E207D307400403C7F /* Collision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96D207D307400403C7F /* Collision.swift */; };
 		697FD970207D31D700403C7F /* AreaRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96F207D31D700403C7F /* AreaRenderer.swift */; };
+		697FD972207D468800403C7F /* ThresholdRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD971207D468800403C7F /* ThresholdRenderer.swift */; };
 		699EB42D206DAFDA00693CB8 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42C206DAFDA00693CB8 /* Random.swift */; };
 		699EB42F206DB51200693CB8 /* RandomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42E206DB51200693CB8 /* RandomTests.swift */; };
 		699EB431206DB8C600693CB8 /* ScoringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB430206DB8C600693CB8 /* ScoringTests.swift */; };
@@ -104,6 +105,7 @@
 		697FD96B207D284500403C7F /* AreaCollisionRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaCollisionRule.swift; sourceTree = "<group>"; };
 		697FD96D207D307400403C7F /* Collision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collision.swift; sourceTree = "<group>"; };
 		697FD96F207D31D700403C7F /* AreaRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaRenderer.swift; sourceTree = "<group>"; };
+		697FD971207D468800403C7F /* ThresholdRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThresholdRenderer.swift; sourceTree = "<group>"; };
 		699EB42C206DAFDA00693CB8 /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		699EB42E206DB51200693CB8 /* RandomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTests.swift; sourceTree = "<group>"; };
 		699EB430206DB8C600693CB8 /* ScoringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringTests.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				696B34EA207BD804007DD318 /* PlayerRenderer.swift */,
 				6970F7952079C7DF00E315E4 /* LineRenderer.swift */,
 				697FD96F207D31D700403C7F /* AreaRenderer.swift */,
+				697FD971207D468800403C7F /* ThresholdRenderer.swift */,
 			);
 			path = Observers;
 			sourceTree = "<group>";
@@ -654,6 +657,7 @@
 				696B3500207BE27E007DD318 /* Input.swift in Sources */,
 				696B3502207BE27E007DD318 /* Phase.swift in Sources */,
 				696B34EB207BD804007DD318 /* PlayerRenderer.swift in Sources */,
+				697FD972207D468800403C7F /* ThresholdRenderer.swift in Sources */,
 				69F6C56E2078472100380DF5 /* BoardKernel.swift in Sources */,
 				699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */,
 				69F6C56820783FF500380DF5 /* TimeKernel.swift in Sources */,

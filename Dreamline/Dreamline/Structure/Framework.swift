@@ -130,12 +130,14 @@ class DefaultFramework: Framework, InputDelegate {
     
     // MARK: Private Properties
     
+    // @ROBUSTNESS
     private func syncState(_ state: KernelState) {
         self.stateBuffer.inject(state)
         for rule in self.rules { rule.setup(state: state) }
         for observer in self.observers { observer.setup(state: state) }
     }
     
+    // @ROBUSTNESS
     private func noRemove(_ instr: KernelInstruction)  -> Bool {
         switch instr {
         case .removeEntity: return false

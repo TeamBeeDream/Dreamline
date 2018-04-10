@@ -29,12 +29,15 @@ class StaminaRule: Rule {
         // Respond to events
         for event in events {
             switch event {
-
+                
             case .entityStateChanged(let entity):
                 switch entity.type {
-                case .barrier:
-                    if entity.state == .hit    { instructions.append(.decrementStamina) }
-                    if entity.state == .passed { instructions.append(.incrementStamina) }
+//                case .barrier:
+//                    if entity.state == .hit    { instructions.append(.decrementStamina) }
+//                    if entity.state == .passed { instructions.append(.incrementStamina) }
+
+                case .area:
+                    if entity.state == .over { instructions.append(.incrementStamina) }
                     
                 default: break
                 }

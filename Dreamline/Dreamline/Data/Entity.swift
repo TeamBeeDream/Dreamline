@@ -17,11 +17,13 @@ struct EntityData {
 
 enum EntityState {
     case none
-    case hit
+    case hit // ?
     case passed
+    case over // ?
 }
 
 enum EntityType {
     case barrier([Bool])
+    case area([Bool])
     case threshold
 }

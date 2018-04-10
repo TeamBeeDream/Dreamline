@@ -34,34 +34,44 @@ class CollisionRule: Rule {
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
         
-        // Iterate through entities and test for collision
-        // @NOTE: Should this be here or in the kernel?
-        
         for event in events {
             switch event {
                 
+            // @NOTE: This just maintains the state for this rule
+            // Might make sense to put it in its own method
             case .positionUpdated(let position):
                 self.nearestLane = position.nearestLane
                 
+            // @NOTE: This is only checking for crossing over entities
+            // @TODO: Change the name to better reflect this
             case .entityMoved(let entity, let prevPosition):
                 if entity.state != .none { continue }
                 
-                if self.didCross(playerPosition: self.layout.playerPosition,
-                                 entityPosition: entity.position,
-                                 scrollDistance: entity.position - prevPosition) {
-                    // @CLEANUP
-                    switch entity.type {
-                    case .threshold:
+                switch entity.type {
+                case .threshold:
+                    if self.didCross(playerPosition: self.layout.playerPosition,
+                                     entityPosition: entity.position,
+                                     scrollDistance: entity.position - prevPosition) {
                         instructions.append(.updateEntityState(entity.id, .hit))
-                        
-                    case .barrier(let gates):
-                        let laneIndex = self.nearestLane + 1
-                        if gates[laneIndex] {
-                            instructions.append(.updateEntityState(entity.id, .passed))
-                        } else {
-                            instructions.append(.updateEntityState(entity.id, .hit))
-                        }
                     }
+                    
+                case .barrier(let gates):
+                    if self.didCross(playerPosition: self.layout.playerPosition,
+                                     entityPosition: entity.position,
+                                     scrollDistance: entity.position - prevPosition) {
+                        let laneIndex = self.nearestLane + 1
+                        let newState = gates[laneIndex] ? EntityState.passed : EntityState.hit
+                        instructions.append(.updateEntityState(entity.id, newState))
+                    }
+                    
+                // @FIXME
+                case .area(_):
+                    if self.didCross(playerPosition: self.layout.playerPosition,
+                                     entityPosition: entity.position - self.layout.distanceBetweenEntities,
+                                     scrollDistance: entity.position - prevPosition) {
+                        instructions.append(.updateEntityState(entity.id, .passed))
+                    }
+                    
                 }
             
             default:
@@ -73,6 +83,8 @@ class CollisionRule: Rule {
     
     // MARK: Private Methods
     
+    // @TODO: Move this to a common geometry class
+    // so it can be easily reused
     private func didCross(playerPosition: Double,
                           entityPosition: Double,
                           scrollDistance: Double) -> Bool {

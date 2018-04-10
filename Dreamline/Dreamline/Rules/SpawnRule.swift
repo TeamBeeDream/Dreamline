@@ -10,22 +10,18 @@ import Foundation
 
 class SpawnRule: Rule {
     
-    // MARK: Public Properties
-    
-    var distanceBetweenEntities: Double = 0
-    
     // MARK: Private Properties
     
     private var currentId: Int = 0
     private var lastBarrierPosition: Double = 0.0
+    
     private var sequencer: Sequencer!
     private var layout: BoardLayout!
     
     // MARK: Init
     
-    static func make(distanceBetweenEntities: Double) -> Rule {
+    static func make() -> Rule {
         let instance = SpawnRule()
-        instance.distanceBetweenEntities = distanceBetweenEntities
         instance.sequencer = TempSequencer.make(random: RealRandom()) // @HARDCODED
         return instance
     }
@@ -44,7 +40,7 @@ class SpawnRule: Rule {
             switch event {
                 
             case .boardScrolled(let distance, _):
-                let overshoot = distance.truncatingRemainder(dividingBy: self.distanceBetweenEntities)
+                let overshoot = distance.truncatingRemainder(dividingBy: self.layout.distanceBetweenEntities)
                 let nearest = distance - overshoot
                 
                 // @CLEANUP

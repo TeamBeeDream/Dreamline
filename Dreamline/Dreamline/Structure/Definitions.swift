@@ -52,6 +52,9 @@ enum KernelEvent {
     case entityStateChanged(EntityData)
     case boardScrolled(Double, Double)
     
+    // Collision
+    case playerInArea(EntityData) // @RENAME?
+    
     // Position
     case positionUpdated(PositionData)
     

@@ -8,6 +8,8 @@
 
 import Foundation
 
+// @NOTE: Should entities be in the board state
+// or should they have their own state/kernel?
 class BoardKernel: Kernel {
     
     // MARK: Init

@@ -8,6 +8,8 @@
 
 import Foundation
 
+// @TODO: Find place for this file
+
 protocol Sequencer {
     func nextEntity() -> [EntityType]
 }
@@ -31,9 +33,13 @@ class TempSequencer: Sequencer {
     func nextEntity() -> [EntityType] {
         // @TEMP: Generate random barriers
         var gates = [Bool]()
+        var areas = [Bool]()
         for _ in 1...3 {
-            gates.append(self.random.next() > 0.5)
+            let rand = self.random.next() > 0.5
+            gates.append(rand)
+            areas.append(!rand) // Area bools are flipped
         }
-        return [.barrier(gates)]
+//        return [.barrier(gates)]
+        return [.area(areas), .barrier(gates)]
     }
 }

@@ -39,6 +39,7 @@ struct BoardLayout {
     var upperBound: Double
     var lowerBound: Double
     var distanceBetweenLanes: Double
+    var distanceBetweenEntities: Double
     
     // MARK: Static Constructors
     
@@ -47,13 +48,15 @@ struct BoardLayout {
         return BoardLayout(playerPosition: 0.2,
                            upperBound: 1.0,
                            lowerBound: -1.0,
-                           distanceBetweenLanes: 0.5)
+                           distanceBetweenLanes: 0.5,
+                           distanceBetweenEntities: 0.5)
     }
     
     static func clone(_ data: BoardLayout) -> BoardLayout {
         return BoardLayout(playerPosition: data.playerPosition,
                            upperBound: data.upperBound,
                            lowerBound: data.lowerBound,
-                           distanceBetweenLanes: data.distanceBetweenLanes)
+                           distanceBetweenLanes: data.distanceBetweenLanes,
+                           distanceBetweenEntities: data.distanceBetweenEntities)
     }
 }

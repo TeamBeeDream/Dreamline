@@ -75,13 +75,6 @@ class TestScene: SKScene {
         self.addChild(border)
     }
     
-    override func didChangeSize(_ oldSize: CGSize) {
-        let newSize = self.frame.size
-        print("old: \(oldSize) new: \(newSize)")
-        
-        // @NOTE: This happens at beginning too
-    }
-    
     override func update(_ currentTime: TimeInterval) {
         var dt = currentTime - self.previousTime
         self.previousTime = currentTime

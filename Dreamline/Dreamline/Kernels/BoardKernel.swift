@@ -32,6 +32,8 @@ class BoardKernel: Kernel {
             events.append(.entityAdded(data))
         
         case .removeEntity(let id):
+            if !self.entityExists(id, state) { break } // @ROBUSTNESS
+            
             state.boardState.entities[id] = nil
             events.append(.entityRemoved(id))
             
@@ -47,12 +49,20 @@ class BoardKernel: Kernel {
             events.append(.boardScrolled(state.boardState.scrollDistance, distance))
 
         case .updateEntityState(let id, let entityState):
+            if !self.entityExists(id, state) { break } // @ROBUSTNESS
+            
             state.boardState.entities[id]!.state = entityState
             events.append(.entityStateChanged(state.boardState.entities[id]!))
             
         default: break
             
         }
+    }
+    
+    // MARK: Private Methods
+    
+    private func entityExists(_ id: Int, _ state: KernelState) -> Bool {
+        return state.boardState.entities[id] != nil
     }
 }
 

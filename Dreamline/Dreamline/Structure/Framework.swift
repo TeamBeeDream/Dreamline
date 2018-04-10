@@ -29,7 +29,8 @@ class DefaultFramework: Framework, InputDelegate {
     private var rules: [Rule]!
     private var observers: [Observer]!
     
-    // Buffers
+    // @NOTE: This is probably not the most
+    // efficient way to hold data in memory
     private var state: KernelState!
     private var instructions: [KernelInstruction]!
     private var events: [KernelEvent]!
@@ -71,17 +72,20 @@ class DefaultFramework: Framework, InputDelegate {
         // @FIXME: Ensure that remove instructions are handled correctly
         // They should probably be done at the very end of the frame
         // to prevent data issues in the rules/observers
-        let instrNoRemoves = workingInstructions.filter {  !self.noRemove($0) }
-        let instrJustRemoves = workingInstructions.filter { self.noRemove($0) }
+        let instrNoRemoves      = workingInstructions.filter {  self.isRemove($0) }
+        let instrJustRemoves    = workingInstructions.filter { !self.isRemove($0) }
         
         // KERNEL
         for kernel in self.kernels {
-            for instr in instrNoRemoves {
+            // Handle removes first, if any instructions involve
+            // removed entities should just be ignored (rip)
+            for instr in instrJustRemoves {
                 kernel.mutate(state: &workingState,
                               events: &workingEvents,
                               instr: instr)
             }
-            for instr in instrJustRemoves {
+            // Handle the rest of the instructions
+            for instr in instrNoRemoves {
                 kernel.mutate(state: &workingState,
                               events: &workingEvents,
                               instr: instr)
@@ -128,7 +132,6 @@ class DefaultFramework: Framework, InputDelegate {
     
     // @ROBUSTNESS
     private func syncState(_ state: KernelState) {
-        //self.stateBuffer.inject(state)
         for rule in self.rules { rule.setup(state: state) }
         for observer in self.observers { observer.setup(state: state) }
         
@@ -138,10 +141,10 @@ class DefaultFramework: Framework, InputDelegate {
     }
     
     // @ROBUSTNESS
-    private func noRemove(_ instr: KernelInstruction)  -> Bool {
+    private func isRemove(_ instr: KernelInstruction)  -> Bool {
         switch instr {
-        case .removeEntity: return false
-        default:            return true
+        case .removeEntity: return true
+        default:            return false
         }
     }
 }

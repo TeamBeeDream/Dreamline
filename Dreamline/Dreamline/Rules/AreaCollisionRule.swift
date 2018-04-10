@@ -38,7 +38,7 @@ class AreaCollisionRule: Rule {
                 self.nearestLane = position.nearestLane
                 
             case .entityMoved(let entity, let prevPosition):
-                switch entity.type {
+                switch entity.data {
                 case .area(let gates):
                     
                     let inArea = Collision.inArea(testPosition: self.layout.playerPosition,

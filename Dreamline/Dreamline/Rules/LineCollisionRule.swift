@@ -47,7 +47,7 @@ class LineCollisionRule: Rule {
             case .entityMoved(let entity, let prevPosition):
                 if entity.state != .none { continue }
                 
-                switch entity.type {
+                switch entity.data {
                 case .threshold:
                     if Collision.didCrossLine(testPosition: self.layout.playerPosition,
                                                     linePosition: entity.position,

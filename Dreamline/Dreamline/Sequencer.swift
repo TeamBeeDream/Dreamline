@@ -11,7 +11,7 @@ import Foundation
 // @TODO: Find place for this file
 
 protocol Sequencer {
-    func nextEntity() -> [EntityType]
+    func nextEntity() -> [(EntityType, EntityData)]
 }
 
 class TempSequencer: Sequencer {
@@ -30,7 +30,7 @@ class TempSequencer: Sequencer {
     
     // MARK: Sequencer Methods
     
-    func nextEntity() -> [EntityType] {
+    func nextEntity() -> [(EntityType, EntityData)] {
         // @TEMP: Generate random barriers
         var gates = [Bool]()
         var areas = [Bool]()
@@ -40,6 +40,6 @@ class TempSequencer: Sequencer {
             areas.append(!rand) // Area bools are flipped
         }
 //        return [.barrier(gates)]
-        return [.area(areas), .barrier(gates)]
+        return [(.area, .area(areas)), (.barrier, .barrier(gates))]
     }
 }

@@ -46,11 +46,12 @@ class SpawnRule: Rule {
                 // @CLEANUP
                 if nearest > self.lastBarrierPosition {
                     let next = self.sequencer.nextEntity()
-                    for type in next {
-                        let entity = EntityData(id: self.currentId, // <-- This is super dangerous @ROBUSTNESS
+                    for bundle in next {
+                        let entity = Entity(id: self.currentId, // <-- This is super dangerous @ROBUSTNESS
                             position: self.layout.lowerBound,
                             state: .none,
-                            type: type)
+                            type: bundle.0,
+                            data: bundle.1)
                         instructions.append(.addEntity(entity))
                         self.currentId += 1
                     }

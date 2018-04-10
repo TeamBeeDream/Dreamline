@@ -61,9 +61,9 @@ class LineRenderer: Observer {
     
     // MARK: Private Methods
     
-    private func addLine(entity: EntityData) {
+    private func addLine(entity: Entity) {
         
-        switch entity.type {
+        switch entity.data {
         case .barrier(let gates):
             let container = SKNode()
             let offset = self.scene.frame.width / 3.0

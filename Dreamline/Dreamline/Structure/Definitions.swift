@@ -18,7 +18,7 @@ enum KernelInstruction {
     case unpause
     
     // Board
-    case addEntity(EntityData)
+    case addEntity(Entity)
     case removeEntity(Int)
     case scrollBoard(Double)
     case updateEntityState(Int, EntityState)
@@ -46,14 +46,11 @@ enum KernelEvent {
     case unpaused
     
     // Board
-    case entityAdded(EntityData)
+    case entityAdded(Entity)
     case entityRemoved(Int)
-    case entityMoved(EntityData, Double)
-    case entityStateChanged(EntityData)
+    case entityMoved(Entity, Double)
+    case entityStateChanged(Entity)
     case boardScrolled(Double, Double)
-    
-    // Collision
-    case playerInArea(EntityData) // @RENAME?
     
     // Position
     case positionUpdated(PositionData)

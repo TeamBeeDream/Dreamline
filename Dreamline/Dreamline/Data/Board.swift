@@ -12,14 +12,14 @@ struct BoardData {
     
     // MARK: Properties
     
-    var entities: [Int: EntityData]
+    var entities: [Int: Entity]
     var layout: BoardLayout
     var scrollDistance: Double
 
     // MARK: Static Constructors
     
     static func new() -> BoardData {
-        return BoardData(entities: [Int: EntityData](),
+        return BoardData(entities: [Int: Entity](),
                          layout: BoardLayout.new(),
                          scrollDistance: 0.0)
     }

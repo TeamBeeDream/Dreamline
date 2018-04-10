@@ -67,9 +67,9 @@ class AreaRenderer: Observer {
         self.areaTexture = SKView().texture(from: area)
     }
     
-    private func addNode(entity: EntityData) {
+    private func addNode(entity: Entity) {
         
-        switch entity.type {
+        switch entity.data {
             
         case .area(let gates):
             let container = SKNode()
@@ -114,9 +114,9 @@ class AreaRenderer: Observer {
         }
     }
     
-    private func blinkArea(entity: EntityData) {
+    private func blinkArea(entity: Entity) {
         
-        switch entity.type {
+        switch entity.data {
         case .area:
             let blinkAction = SKAction.sequence([
                 SKAction.fadeOut(withDuration: 0.2),

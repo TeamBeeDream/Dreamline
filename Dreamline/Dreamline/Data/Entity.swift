@@ -8,11 +8,18 @@
 
 import Foundation
 
-struct EntityData {
+struct Entity {
     var id: Int
     var position: Double
     var state: EntityState
     var type: EntityType
+    var data: EntityData
+}
+
+enum EntityType {
+    case threshold
+    case barrier
+    case area
 }
 
 enum EntityState {
@@ -22,8 +29,8 @@ enum EntityState {
     case over // ?
 }
 
-enum EntityType {
+enum EntityData {
+    case threshold
     case barrier([Bool])
     case area([Bool])
-    case threshold
 }

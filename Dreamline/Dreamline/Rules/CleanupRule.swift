@@ -33,6 +33,7 @@ class CleanupRule: Rule {
         for event in events {
             switch event {
             case .entityMoved(let entity, _):
+                // @TODO: Fix for area
                 if isOffBoard(position: entity.position, layout: self.layout) {
                     instructions.append(.removeEntity(entity.id))
                 }

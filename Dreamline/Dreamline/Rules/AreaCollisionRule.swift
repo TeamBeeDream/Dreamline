@@ -37,13 +37,13 @@ class AreaCollisionRule: Rule {
             case .positionUpdated(let position):
                 self.nearestLane = position.nearestLane
                 
-            case .entityMoved(let entity, _):
+            case .entityMoved(let entity, let prevPosition):
                 switch entity.type {
                 case .area(let gates):
                     
-                    let inArea = self.inArea(playerPosition: self.layout.playerPosition,
-                                             areaLowerBound: entity.position - self.layout.distanceBetweenEntities,
-                                             areaUpperBound: entity.position)
+                    let inArea = Collision.inArea(testPosition: self.layout.playerPosition,
+                                                  areaLowerBound: entity.position -     self.layout.distanceBetweenEntities,
+                                                  areaUpperBound: entity.position)
                     let inLane = gates[self.nearestLane + 1] // gross
                     
                     switch entity.state {
@@ -63,28 +63,18 @@ class AreaCollisionRule: Rule {
                         
                     }
                     
+                    // Check for crossing top of area (leaving area)
+                    if Collision.didCrossLine(testPosition: self.layout.playerPosition,
+                                                    linePosition: entity.position - self.layout.distanceBetweenEntities,
+                                                    lineDelta: entity.position - prevPosition) {
+                        instructions.append(.updateEntityState(entity.id, .passed))
+                    }
+                    
                 default: break
                 }
                 
             default: break
             }
         }
-    }
-    
-    // MARK: Private Methods
-    
-    // @NOTE: This only determines if in vertical range of area
-    private func inArea(playerPosition: Double,
-                        areaLowerBound: Double,
-                        areaUpperBound: Double) -> Bool {
-        
-        // @NOTE: This is a spot check, it only checks if
-        // the player is currently in the area
-        // So if the player is going fast enough to cross
-        // over the entire area this function will return fals
-        
-        return
-            (playerPosition < areaUpperBound) &&
-            (playerPosition > areaLowerBound)
     }
 }

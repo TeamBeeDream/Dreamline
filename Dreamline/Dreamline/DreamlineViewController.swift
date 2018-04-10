@@ -41,7 +41,7 @@ class DreamlineViewController: UIViewController {
              SpawnRule.make(),
              PositionRule.make(),
              StaminaRule.make(),
-             CollisionRule.make(),
+             LineCollisionRule.make(),
              AreaCollisionRule.make()]
         
         let scene = TestScene.make(size: skView.frame.size,

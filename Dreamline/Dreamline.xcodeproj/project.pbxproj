@@ -32,9 +32,11 @@
 		696B350D207BE283007DD318 /* PositionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B3508207BE283007DD318 /* PositionRule.swift */; };
 		696B350F207BE2C9007DD318 /* StaminaKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B350E207BE2C9007DD318 /* StaminaKernel.swift */; };
 		696B3511207BE5B7007DD318 /* StaminaRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B3510207BE5B7007DD318 /* StaminaRule.swift */; };
-		696B3513207BEA7B007DD318 /* CollisionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B3512207BEA7B007DD318 /* CollisionRule.swift */; };
+		696B3513207BEA7B007DD318 /* LineCollisionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B3512207BEA7B007DD318 /* LineCollisionRule.swift */; };
 		6970F7962079C7DF00E315E4 /* LineRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6970F7952079C7DF00E315E4 /* LineRenderer.swift */; };
 		697FD96C207D284500403C7F /* AreaCollisionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96B207D284500403C7F /* AreaCollisionRule.swift */; };
+		697FD96E207D307400403C7F /* Collision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96D207D307400403C7F /* Collision.swift */; };
+		697FD970207D31D700403C7F /* AreaRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96F207D31D700403C7F /* AreaRenderer.swift */; };
 		699EB42D206DAFDA00693CB8 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42C206DAFDA00693CB8 /* Random.swift */; };
 		699EB42F206DB51200693CB8 /* RandomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42E206DB51200693CB8 /* RandomTests.swift */; };
 		699EB431206DB8C600693CB8 /* ScoringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB430206DB8C600693CB8 /* ScoringTests.swift */; };
@@ -97,9 +99,11 @@
 		696B3508207BE283007DD318 /* PositionRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PositionRule.swift; sourceTree = "<group>"; };
 		696B350E207BE2C9007DD318 /* StaminaKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaminaKernel.swift; sourceTree = "<group>"; };
 		696B3510207BE5B7007DD318 /* StaminaRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaminaRule.swift; sourceTree = "<group>"; };
-		696B3512207BEA7B007DD318 /* CollisionRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionRule.swift; sourceTree = "<group>"; };
+		696B3512207BEA7B007DD318 /* LineCollisionRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineCollisionRule.swift; sourceTree = "<group>"; };
 		6970F7952079C7DF00E315E4 /* LineRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineRenderer.swift; sourceTree = "<group>"; };
 		697FD96B207D284500403C7F /* AreaCollisionRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaCollisionRule.swift; sourceTree = "<group>"; };
+		697FD96D207D307400403C7F /* Collision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collision.swift; sourceTree = "<group>"; };
+		697FD96F207D31D700403C7F /* AreaRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaRenderer.swift; sourceTree = "<group>"; };
 		699EB42C206DAFDA00693CB8 /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		699EB42E206DB51200693CB8 /* RandomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTests.swift; sourceTree = "<group>"; };
 		699EB430206DB8C600693CB8 /* ScoringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringTests.swift; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 			children = (
 				69AB5E91204F251700093B33 /* Math.swift */,
 				699EB42C206DAFDA00693CB8 /* Random.swift */,
+				697FD96D207D307400403C7F /* Collision.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -209,7 +214,7 @@
 				696B3507207BE283007DD318 /* SpawnRule.swift */,
 				696B3508207BE283007DD318 /* PositionRule.swift */,
 				696B3510207BE5B7007DD318 /* StaminaRule.swift */,
-				696B3512207BEA7B007DD318 /* CollisionRule.swift */,
+				696B3512207BEA7B007DD318 /* LineCollisionRule.swift */,
 				697FD96B207D284500403C7F /* AreaCollisionRule.swift */,
 			);
 			path = Rules;
@@ -292,8 +297,9 @@
 		69F6C55920783C6200380DF5 /* Observers */ = {
 			isa = PBXGroup;
 			children = (
-				6970F7952079C7DF00E315E4 /* LineRenderer.swift */,
 				696B34EA207BD804007DD318 /* PlayerRenderer.swift */,
+				6970F7952079C7DF00E315E4 /* LineRenderer.swift */,
+				697FD96F207D31D700403C7F /* AreaRenderer.swift */,
 			);
 			path = Observers;
 			sourceTree = "<group>";
@@ -637,6 +643,7 @@
 			files = (
 				69F6C57420785B8F00380DF5 /* Definitions.swift in Sources */,
 				696B3511207BE5B7007DD318 /* StaminaRule.swift in Sources */,
+				697FD96E207D307400403C7F /* Collision.swift in Sources */,
 				69CDEF0B207C467B0016A527 /* Framework.swift in Sources */,
 				696B34F3207BDFFD007DD318 /* Sequencer.swift in Sources */,
 				696B350D207BE283007DD318 /* PositionRule.swift in Sources */,
@@ -659,10 +666,11 @@
 				6970F7962079C7DF00E315E4 /* LineRenderer.swift in Sources */,
 				69F6C5722078547900380DF5 /* AssemblyTest.swift in Sources */,
 				696B350C207BE283007DD318 /* SpawnRule.swift in Sources */,
-				696B3513207BEA7B007DD318 /* CollisionRule.swift in Sources */,
+				696B3513207BEA7B007DD318 /* LineCollisionRule.swift in Sources */,
 				696B3509207BE283007DD318 /* ScrollRule.swift in Sources */,
 				696B350F207BE2C9007DD318 /* StaminaKernel.swift in Sources */,
 				696B3501207BE27E007DD318 /* Position.swift in Sources */,
+				697FD970207D31D700403C7F /* AreaRenderer.swift in Sources */,
 				696B350A207BE283007DD318 /* TimeRule.swift in Sources */,
 				696B34FC207BE27E007DD318 /* Stamina.swift in Sources */,
 			);

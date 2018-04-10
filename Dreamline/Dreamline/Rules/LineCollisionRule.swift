@@ -10,7 +10,7 @@ import Foundation
 
 // @NOTE: Might need to make this more specific
 // i.e. BarrierCollisionRule vs AreaCollisionRule
-class CollisionRule: Rule {
+class LineCollisionRule: Rule {
     
     // MARK: Private Properties
     
@@ -19,8 +19,8 @@ class CollisionRule: Rule {
     
     // MARK: Init
     
-    static func make() -> CollisionRule {
-        return CollisionRule()
+    static func make() -> LineCollisionRule {
+        return LineCollisionRule()
     }
     
     // MARK: Rule Methods
@@ -49,28 +49,22 @@ class CollisionRule: Rule {
                 
                 switch entity.type {
                 case .threshold:
-                    if self.didCross(playerPosition: self.layout.playerPosition,
-                                     entityPosition: entity.position,
-                                     scrollDistance: entity.position - prevPosition) {
+                    if Collision.didCrossLine(testPosition: self.layout.playerPosition,
+                                                    linePosition: entity.position,
+                                                    lineDelta: entity.position - prevPosition) {
                         instructions.append(.updateEntityState(entity.id, .hit))
                     }
                     
                 case .barrier(let gates):
-                    if self.didCross(playerPosition: self.layout.playerPosition,
-                                     entityPosition: entity.position,
-                                     scrollDistance: entity.position - prevPosition) {
+                    if Collision.didCrossLine(testPosition: self.layout.playerPosition,
+                                                    linePosition: entity.position,
+                                                    lineDelta: entity.position - prevPosition) {
                         let laneIndex = self.nearestLane + 1
                         let newState = gates[laneIndex] ? EntityState.passed : EntityState.hit
                         instructions.append(.updateEntityState(entity.id, newState))
                     }
                     
-                // @FIXME
-                case .area(_):
-                    if self.didCross(playerPosition: self.layout.playerPosition,
-                                     entityPosition: entity.position - self.layout.distanceBetweenEntities,
-                                     scrollDistance: entity.position - prevPosition) {
-                        instructions.append(.updateEntityState(entity.id, .passed))
-                    }
+                default: break
                     
                 }
             
@@ -79,19 +73,5 @@ class CollisionRule: Rule {
                 
             }
         }
-    }
-    
-    // MARK: Private Methods
-    
-    // @TODO: Move this to a common geometry class
-    // so it can be easily reused
-    private func didCross(playerPosition: Double,
-                          entityPosition: Double,
-                          scrollDistance: Double) -> Bool {
-        
-        // @FIXME
-        return
-            (playerPosition < entityPosition) &&
-            (playerPosition > entityPosition - scrollDistance)
     }
 }

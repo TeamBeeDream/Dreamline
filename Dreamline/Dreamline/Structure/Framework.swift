@@ -10,10 +10,6 @@ import Foundation
 
 protocol Framework {
     func update(deltaTime: Double)
-    
-    // @TODO
-//    func getState() -> KernelState
-//    func setState(state: KernelState)
 }
 
 protocol InputDelegate {
@@ -64,27 +60,22 @@ class DefaultFramework: Framework, InputDelegate {
         var workingEvents = self.events!
         var workingInstructions = self.instructions!
         
-        // @HACK
+        // INPUT @HACK
         let inputInstruction = KernelInstruction.updateInput(self.inputTarget)
         workingInstructions.append(inputInstruction)
-        
-        // @HACK
-        // @FIXME: Ensure that remove instructions are handled correctly
-        // They should probably be done at the very end of the frame
-        // to prevent data issues in the rules/observers
-        let instrNoRemoves      = workingInstructions.filter {  self.isRemove($0) }
-        let instrJustRemoves    = workingInstructions.filter { !self.isRemove($0) }
         
         // KERNEL
         for kernel in self.kernels {
             // Handle removes first, if any instructions involve
             // removed entities should just be ignored (rip)
+            let instrJustRemoves = workingInstructions.filter { !self.isRemove($0) }
             for instr in instrJustRemoves {
                 kernel.mutate(state: &workingState,
                               events: &workingEvents,
                               instr: instr)
             }
             // Handle the rest of the instructions
+            let instrNoRemoves = workingInstructions.filter { self.isRemove($0) }
             for instr in instrNoRemoves {
                 kernel.mutate(state: &workingState,
                               events: &workingEvents,

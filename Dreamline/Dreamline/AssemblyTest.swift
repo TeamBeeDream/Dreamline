@@ -9,31 +9,6 @@
 import Foundation
 import SpriteKit
 
-class ToggleBuffer<T> {
-    
-    private var head: Int = 0
-    private var buffer: [T]!
-    
-    static func make(value: T) -> ToggleBuffer {
-        let instance = ToggleBuffer()
-        instance.buffer = [T](repeating: value, count: 2)
-        return instance
-    }
-    
-    func access() -> T {
-        return self.buffer[self.head]
-    }
-    
-    func inject(_ value: T) {
-        self.buffer[self.head] = value
-    }
-    
-    func toggle() {
-        if self.head == 0   { self.head = 1 }
-        else                { self.head = 0 }
-    }
-}
-
 class TestViewDelegate: NSObject, SKViewDelegate {
     
     func view(_ view: SKView, shouldRenderAtTime time: TimeInterval) -> Bool {

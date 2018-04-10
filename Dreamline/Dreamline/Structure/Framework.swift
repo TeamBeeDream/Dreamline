@@ -29,9 +29,10 @@ class DefaultFramework: Framework, InputDelegate {
     private var rules: [Rule]!
     private var observers: [Observer]!
     
-    private var stateBuffer = ToggleBuffer.make(value: KernelState.new())
-    private var eventBuffer = ToggleBuffer.make(value: [KernelEvent]())
-    private var instrBuffer = ToggleBuffer.make(value: [KernelInstruction]())
+    // Buffers
+    private var state: KernelState!
+    private var instructions: [KernelInstruction]!
+    private var events: [KernelEvent]!
     
     // MARK: InputDelegate Properties
     
@@ -58,20 +59,20 @@ class DefaultFramework: Framework, InputDelegate {
     // MARK: Framework Methods
     
     func update(deltaTime: Double) {
+        var workingState = self.state!
+        var workingEvents = self.events!
+        var workingInstructions = self.instructions!
+        
+        // @HACK
         let inputInstruction = KernelInstruction.updateInput(self.inputTarget)
-        
-        var workingEvents = self.eventBuffer.access()   // @CLEANUP
-        var workingState = self.stateBuffer.access()    // @CLEANUP
-        
-        var instructions = self.instrBuffer.access()
-        instructions.append(inputInstruction)
+        workingInstructions.append(inputInstruction)
         
         // @HACK
         // @FIXME: Ensure that remove instructions are handled correctly
         // They should probably be done at the very end of the frame
         // to prevent data issues in the rules/observers
-        let instrNoRemoves = instructions.filter {  !self.noRemove($0) }
-        let instrJustRemoves = instructions.filter { self.noRemove($0) }
+        let instrNoRemoves = workingInstructions.filter {  !self.noRemove($0) }
+        let instrJustRemoves = workingInstructions.filter { self.noRemove($0) }
         
         // KERNEL
         for kernel in self.kernels {
@@ -86,14 +87,12 @@ class DefaultFramework: Framework, InputDelegate {
                               instr: instr)
             }
         }
+        workingInstructions.removeAll(keepingCapacity: true) // Clear so rules can use this
         
         // RULES
-        self.instrBuffer.toggle()
-        var newInstructions = self.instrBuffer.access()
-        newInstructions.removeAll(keepingCapacity: true) // ?
         for rule in self.rules {
             rule.mutate(events: &workingEvents,
-                        instructions: &newInstructions,
+                        instructions: &workingInstructions,
                         deltaTime: deltaTime)
         }
         
@@ -102,16 +101,13 @@ class DefaultFramework: Framework, InputDelegate {
             observer.observe(events: workingEvents)
         }
         
-        // @ROBUST: Check memory usage around toggle buffers
         
-        self.stateBuffer.toggle()
-        self.stateBuffer.inject(workingState)
+        // Cleanup for next update
+        workingEvents.removeAll(keepingCapacity: true)
         
-        workingEvents.removeAll() // ?
-        self.eventBuffer.toggle()
-        
-        self.instrBuffer.toggle()
-        self.instrBuffer.inject(newInstructions)
+        self.state = workingState
+        self.events = workingEvents
+        self.instructions = workingInstructions
     }
     
     // MARK: Input Delegate Methods
@@ -132,9 +128,13 @@ class DefaultFramework: Framework, InputDelegate {
     
     // @ROBUSTNESS
     private func syncState(_ state: KernelState) {
-        self.stateBuffer.inject(state)
+        //self.stateBuffer.inject(state)
         for rule in self.rules { rule.setup(state: state) }
         for observer in self.observers { observer.setup(state: state) }
+        
+        self.state = state
+        self.events = [KernelEvent]()
+        self.instructions = [KernelInstruction]()
     }
     
     // @ROBUSTNESS

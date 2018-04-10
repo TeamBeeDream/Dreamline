@@ -89,6 +89,7 @@ struct KernelState {
     }
 }
 
+// @NOTE: Stateless
 protocol Kernel {
     // @NOTE: Should send data store protocols
     // and not raw data structures
@@ -97,6 +98,7 @@ protocol Kernel {
                 instr: KernelInstruction)
 }
 
+// @NOTE: Stateful
 protocol Rule {
     func setup(state: KernelState)
     func mutate(events: inout [KernelEvent],
@@ -106,7 +108,8 @@ protocol Rule {
     // in-engine time
 }
 
+// @NOTE: Stateful
 protocol Observer {
-    func setup(state: KernelState, scene: SKScene)
-    func observe(events: [KernelEvent]) // flags: [RuleFlag]
+    func setup(state: KernelState)
+    func observe(events: [KernelEvent])
 }

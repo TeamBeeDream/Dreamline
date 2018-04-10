@@ -42,20 +42,18 @@ class DreamlineViewController: UIViewController {
              PositionRule.make(),
              StaminaRule.make(),
              CollisionRule.make()]
-        let observers: [Observer] =
-            [LineRenderer.make(),
-             PlayerRenderer.make()]
         
-        let scene = TestScene.make(state: state,
+        let scene = TestScene.make(size: skView.frame.size,
+                                   state: state,
                                    kernels: kernels,
                                    rules: rules,
-                                   observers: observers)
+                                   observers: []) // @NOTE: Should Observers be just renderers?
         scene.scaleMode = .resizeFill
         skView.presentScene(scene)
         skView.ignoresSiblingOrder = true
         skView.showsDrawCount = true
         skView.showsFPS = true
-        //skView.isAsynchronous = true // Whoa
+        //skView.isAsynchronous = true // @NOTE: I'm not sure what this does
         
         skView.texture(from: )
     }

@@ -45,6 +45,7 @@
 		699FC571204E053600DB09B4 /* SequencerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC570204E053600DB09B4 /* SequencerTests.swift */; };
 		699FC57C204E053600DB09B4 /* DreamlineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC57B204E053600DB09B4 /* DreamlineUITests.swift */; };
 		69AB5E92204F251700093B33 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E91204F251700093B33 /* Math.swift */; };
+		69CDEF0B207C467B0016A527 /* Framework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CDEF0A207C467B0016A527 /* Framework.swift */; };
 		69F6C56820783FF500380DF5 /* TimeKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F6C56720783FF500380DF5 /* TimeKernel.swift */; };
 		69F6C56E2078472100380DF5 /* BoardKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F6C56D2078472100380DF5 /* BoardKernel.swift */; };
 		69F6C5722078547900380DF5 /* AssemblyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F6C5712078547800380DF5 /* AssemblyTest.swift */; };
@@ -114,6 +115,7 @@
 		699FC57B204E053600DB09B4 /* DreamlineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamlineUITests.swift; sourceTree = "<group>"; };
 		699FC57D204E053600DB09B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69AB5E91204F251700093B33 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		69CDEF0A207C467B0016A527 /* Framework.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Framework.swift; sourceTree = "<group>"; };
 		69F6C56720783FF500380DF5 /* TimeKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeKernel.swift; sourceTree = "<group>"; };
 		69F6C56D2078472100380DF5 /* BoardKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardKernel.swift; sourceTree = "<group>"; };
 		69F6C5712078547800380DF5 /* AssemblyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyTest.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				69F6C55B20783C7500380DF5 /* Kernels */,
 				696B3503207BE283007DD318 /* Rules */,
 				69F6C55920783C6200380DF5 /* Observers */,
+				69CDEF09207C462A0016A527 /* Structure */,
 				693E1BAB2059A79A008DBACE /* Util */,
 				699FC555204E053600DB09B4 /* AppDelegate.swift */,
 				699FC55D204E053600DB09B4 /* DreamlineViewController.swift */,
@@ -274,6 +277,15 @@
 			path = DreamlineUITests;
 			sourceTree = "<group>";
 		};
+		69CDEF09207C462A0016A527 /* Structure */ = {
+			isa = PBXGroup;
+			children = (
+				69F6C57320785B8F00380DF5 /* Definitions.swift */,
+				69CDEF0A207C467B0016A527 /* Framework.swift */,
+			);
+			path = Structure;
+			sourceTree = "<group>";
+		};
 		69F6C55920783C6200380DF5 /* Observers */ = {
 			isa = PBXGroup;
 			children = (
@@ -286,7 +298,6 @@
 		69F6C55B20783C7500380DF5 /* Kernels */ = {
 			isa = PBXGroup;
 			children = (
-				69F6C57320785B8F00380DF5 /* Definitions.swift */,
 				69F6C56720783FF500380DF5 /* TimeKernel.swift */,
 				69F6C56D2078472100380DF5 /* BoardKernel.swift */,
 				696B34E8207BD527007DD318 /* PositionKernel.swift */,
@@ -623,6 +634,7 @@
 			files = (
 				69F6C57420785B8F00380DF5 /* Definitions.swift in Sources */,
 				696B3511207BE5B7007DD318 /* StaminaRule.swift in Sources */,
+				69CDEF0B207C467B0016A527 /* Framework.swift in Sources */,
 				696B34F3207BDFFD007DD318 /* Sequencer.swift in Sources */,
 				696B350D207BE283007DD318 /* PositionRule.swift in Sources */,
 				696B34FD207BE27E007DD318 /* Board.swift in Sources */,

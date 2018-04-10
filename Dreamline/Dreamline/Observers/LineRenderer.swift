@@ -12,7 +12,7 @@ class LineRenderer: Observer {
     
     // MARK: Private Properties
     
-    private var scene: SKScene!
+    private var scene: SKScene!     // @TODO: Make public?
     private var lines = [Int: SKNode]()
     private var ids = [Int]()
     
@@ -20,16 +20,16 @@ class LineRenderer: Observer {
     
     // MARK: Init
     
-    static func make() -> LineRenderer {
+    static func make(scene: SKScene) -> LineRenderer {
         let instance = LineRenderer()
+        instance.scene = scene
         return instance
     }
     
     // MARK: Observer Methods
     
-    func setup(state: KernelState, scene: SKScene) {
+    func setup(state: KernelState) {
         // @TODO: setup lines based on given state
-        self.scene = scene
         self.generateTextures()
     }
     

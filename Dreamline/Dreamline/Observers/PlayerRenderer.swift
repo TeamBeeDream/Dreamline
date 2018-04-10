@@ -22,15 +22,15 @@ class PlayerRenderer: Observer {
     
     // @NOTE: View is probably not best thing to send as a SK container,
     // should probably just send the scene(?)
-    static func make() -> PlayerRenderer {
+    static func make(scene: SKScene) -> PlayerRenderer {
         let instance = PlayerRenderer()
+        instance.scene = scene
         return instance
     }
     
     // MARK: Observer Methods
     
-    func setup(state: KernelState, scene: SKScene) {
-        self.scene = scene
+    func setup(state: KernelState) {
         self.yPos = state.boardState.layout.playerPosition
         
         let node = SKShapeNode(circleOfRadius: 15.0)

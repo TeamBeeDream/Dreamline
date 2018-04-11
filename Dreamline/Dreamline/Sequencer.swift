@@ -42,7 +42,7 @@ class TempSequencer: Sequencer {
 //        return [(.area, .area(areas)), (.barrier, .barrier(gates))]
         
         // @TEMP: Generate thresholds
-        return [(.threshold, .threshold(.normal))]
+        return [(.threshold, .threshold(.speed))]
     }
     
     // @IDEA: Have generic functions that produce entities,

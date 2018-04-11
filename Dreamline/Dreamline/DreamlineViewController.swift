@@ -38,16 +38,18 @@ class DreamlineViewController: UIViewController {
              BoardKernel.make(),
              PositionKernel.make(),
              InputKernel.make(),
-             StaminaKernel.make()]
+             StaminaKernel.make(),
+             SpeedKernel.make()]
         let rules: [Rule] =
-            [ScrollRule.make(scrollSpeed: 1.5),
+            [ScrollRule.make(),
              TimeRule.make(),
              CleanupRule.make(),
              SpawnRule.make(),
              PositionRule.make(),
              StaminaRule.make(),
              LineCollisionRule.make(),
-             AreaCollisionRule.make()]
+             AreaCollisionRule.make(),
+             SpeedRule.make()]
         
         let scene = TestScene.make(size: skView.frame.size,
                                    state: state,

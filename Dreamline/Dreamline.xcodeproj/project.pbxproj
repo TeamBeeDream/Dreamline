@@ -50,6 +50,9 @@
 		699FC57C204E053600DB09B4 /* DreamlineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC57B204E053600DB09B4 /* DreamlineUITests.swift */; };
 		69AB5E92204F251700093B33 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E91204F251700093B33 /* Math.swift */; };
 		69CDEF0B207C467B0016A527 /* Framework.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69CDEF0A207C467B0016A527 /* Framework.swift */; };
+		69F3DD63207E5C530010F4CE /* Speed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F3DD62207E5C530010F4CE /* Speed.swift */; };
+		69F3DD65207E5CBF0010F4CE /* SpeedKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F3DD64207E5CBF0010F4CE /* SpeedKernel.swift */; };
+		69F3DD67207E5DD10010F4CE /* SpeedRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F3DD66207E5DD10010F4CE /* SpeedRule.swift */; };
 		69F6C56820783FF500380DF5 /* TimeKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F6C56720783FF500380DF5 /* TimeKernel.swift */; };
 		69F6C56E2078472100380DF5 /* BoardKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F6C56D2078472100380DF5 /* BoardKernel.swift */; };
 		69F6C5722078547900380DF5 /* AssemblyTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69F6C5712078547800380DF5 /* AssemblyTest.swift */; };
@@ -124,6 +127,9 @@
 		699FC57D204E053600DB09B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69AB5E91204F251700093B33 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		69CDEF0A207C467B0016A527 /* Framework.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Framework.swift; sourceTree = "<group>"; };
+		69F3DD62207E5C530010F4CE /* Speed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Speed.swift; sourceTree = "<group>"; };
+		69F3DD64207E5CBF0010F4CE /* SpeedKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedKernel.swift; sourceTree = "<group>"; };
+		69F3DD66207E5DD10010F4CE /* SpeedRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedRule.swift; sourceTree = "<group>"; };
 		69F6C56720783FF500380DF5 /* TimeKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeKernel.swift; sourceTree = "<group>"; };
 		69F6C56D2078472100380DF5 /* BoardKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardKernel.swift; sourceTree = "<group>"; };
 		69F6C5712078547800380DF5 /* AssemblyTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyTest.swift; sourceTree = "<group>"; };
@@ -203,6 +209,7 @@
 				696B34F9207BE27E007DD318 /* Input.swift */,
 				696B34FA207BE27E007DD318 /* Position.swift */,
 				696B34FB207BE27E007DD318 /* Phase.swift */,
+				69F3DD62207E5C530010F4CE /* Speed.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -218,6 +225,7 @@
 				696B3510207BE5B7007DD318 /* StaminaRule.swift */,
 				696B3512207BEA7B007DD318 /* LineCollisionRule.swift */,
 				697FD96B207D284500403C7F /* AreaCollisionRule.swift */,
+				69F3DD66207E5DD10010F4CE /* SpeedRule.swift */,
 			);
 			path = Rules;
 			sourceTree = "<group>";
@@ -247,11 +255,11 @@
 		699FC554204E053600DB09B4 /* Dreamline */ = {
 			isa = PBXGroup;
 			children = (
+				69CDEF09207C462A0016A527 /* Structure */,
 				696B34F4207BE27E007DD318 /* Data */,
 				69F6C55B20783C7500380DF5 /* Kernels */,
 				696B3503207BE283007DD318 /* Rules */,
 				69F6C55920783C6200380DF5 /* Observers */,
-				69CDEF09207C462A0016A527 /* Structure */,
 				693E1BAB2059A79A008DBACE /* Util */,
 				699FC555204E053600DB09B4 /* AppDelegate.swift */,
 				699FC55D204E053600DB09B4 /* DreamlineViewController.swift */,
@@ -315,6 +323,7 @@
 				696B34E8207BD527007DD318 /* PositionKernel.swift */,
 				696B34F0207BDBC7007DD318 /* InputKernel.swift */,
 				696B350E207BE2C9007DD318 /* StaminaKernel.swift */,
+				69F3DD64207E5CBF0010F4CE /* SpeedKernel.swift */,
 			);
 			path = Kernels;
 			sourceTree = "<group>";
@@ -654,6 +663,7 @@
 				699FC55E204E053600DB09B4 /* DreamlineViewController.swift in Sources */,
 				696B34FE207BE27E007DD318 /* Entity.swift in Sources */,
 				696B34FF207BE27E007DD318 /* Time.swift in Sources */,
+				69F3DD63207E5C530010F4CE /* Speed.swift in Sources */,
 				696B3500207BE27E007DD318 /* Input.swift in Sources */,
 				696B3502207BE27E007DD318 /* Phase.swift in Sources */,
 				696B34EB207BD804007DD318 /* PlayerRenderer.swift in Sources */,
@@ -666,12 +676,14 @@
 				69AB5E92204F251700093B33 /* Math.swift in Sources */,
 				696B34E9207BD527007DD318 /* PositionKernel.swift in Sources */,
 				696B34F1207BDBC7007DD318 /* InputKernel.swift in Sources */,
+				69F3DD67207E5DD10010F4CE /* SpeedRule.swift in Sources */,
 				696B350B207BE283007DD318 /* CleanupRule.swift in Sources */,
 				6970F7962079C7DF00E315E4 /* LineRenderer.swift in Sources */,
 				69F6C5722078547900380DF5 /* AssemblyTest.swift in Sources */,
 				696B350C207BE283007DD318 /* SpawnRule.swift in Sources */,
 				696B3513207BEA7B007DD318 /* LineCollisionRule.swift in Sources */,
 				696B3509207BE283007DD318 /* ScrollRule.swift in Sources */,
+				69F3DD65207E5CBF0010F4CE /* SpeedKernel.swift in Sources */,
 				696B350F207BE2C9007DD318 /* StaminaKernel.swift in Sources */,
 				696B3501207BE27E007DD318 /* Position.swift in Sources */,
 				697FD970207D31D700403C7F /* AreaRenderer.swift in Sources */,

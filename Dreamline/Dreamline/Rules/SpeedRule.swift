@@ -49,11 +49,11 @@ class SpeedRule: Rule {
                     instructions.append(.updateSpeed(newSpeed)) // @TEMP @HARDCODED
                 }
                 
-            case .positionUpdated(let position):
-                if position.nearestLane == self.currentLane { break }
-                
-                self.currentLane = position.nearestLane
-                instructions.append(.updateSpeed(self.speed - 0.02)) // @TEMP @HARDCODED
+//            case .positionUpdated(let position):
+//                if position.nearestLane == self.currentLane { break }
+//
+//                self.currentLane = position.nearestLane
+//                instructions.append(.updateSpeed(self.speed - 0.05)) // @TEMP @HARDCODED
                 
             default: break
             }

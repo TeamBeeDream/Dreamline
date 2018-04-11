@@ -47,7 +47,11 @@ class TestScene: SKScene {
         let instance = TestScene(size: size)
         
         // @TEMP @HARDCODED
-        var customObservers: [Observer] = [LineRenderer.make(scene: instance),
+        let barrierRenderer = EntityRenderer.make(scene: instance,
+                                                  delegate: BarrierRendererDelegate.make(frame: instance.frame))
+        
+        var customObservers: [Observer] = [barrierRenderer,
+            //LineRenderer.make(scene: instance),
                                            PlayerRenderer.make(scene: instance),
                                            AreaRenderer.make(scene: instance),
                                            ThresholdRenderer.make(scene: instance),

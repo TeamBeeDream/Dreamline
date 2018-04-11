@@ -40,6 +40,15 @@ extension Entity {
             return nil
         }
     }
+    
+    func barrierData() -> [Gate]? {
+        switch self.data {
+        case .barrier(let gates):
+            return gates
+        default:
+            return nil
+        }
+    }
 }
 
 enum EntityType {

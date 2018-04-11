@@ -44,7 +44,7 @@ class AreaCollisionRule: Rule {
                     let inArea = Collision.inArea(testPosition: self.layout.playerPosition,
                                                   areaLowerBound: entity.position -     self.layout.distanceBetweenEntities,
                                                   areaUpperBound: entity.position)
-                    let inLane = areas[self.nearestLane + 1] == .active
+                    let inLane = areas[self.nearestLane + 1] != .none
                     
                     switch entity.state {
                     case .over: fallthrough

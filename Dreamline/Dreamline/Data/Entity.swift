@@ -81,8 +81,9 @@ enum Gate {
 // MARK: Area
 
 enum Area {
-    case active
-    case inactive
+    case none
+    case bad    // @RENAME
+    case good   // @RENAME
 }
 
 // MARK: Orbs

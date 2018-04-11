@@ -16,9 +16,12 @@ class AreaRenderer: Observer {
     private var nodes = [Int: SKNode]()
     private var ids = [Int]()
     
-    private var areaTexture: SKTexture!
+    private var badAreaTexture: SKTexture!
+    private var goodAreaTexture: SKTexture!
     private let areaBlinkKey = "areaBlinkAction"
-    private let areaColor = SKColor.darkGray
+    
+    private let badAreaColor = SKColor.red
+    private let goodAreaColor = SKColor.cyan
     
     // MARK: Init
     
@@ -63,8 +66,11 @@ class AreaRenderer: Observer {
         let areaRect = CGRect(x: 0.0, y: 0.0,
                               width: frame.width / 3.0,
                               height: CGFloat(areaHeight))
-        let area = self.makeRect(rect: areaRect, color: self.areaColor)
-        self.areaTexture = SKView().texture(from: area)
+        let badArea = self.makeRect(rect: areaRect, color: self.badAreaColor)
+        self.badAreaTexture = SKView().texture(from: badArea)
+        
+        self.goodAreaTexture = SKView().texture(from: self.makeRect(rect: areaRect,
+                                                                    color: self.goodAreaColor))
     }
     
     private func addNode(entity: Entity) {
@@ -76,9 +82,9 @@ class AreaRenderer: Observer {
             let offset = self.scene.frame.width / 3.0
             var posX = self.scene.frame.width / 6.0
             for area in areas {
-                if area == .inactive { posX += offset; continue }
+                if area == .none { posX += offset; continue }
                 
-                let areaTexture = self.areaTexture
+                let areaTexture = area == .bad ? self.badAreaTexture : self.goodAreaTexture // @ROBUST
                 let sprite = SKSpriteNode(texture: areaTexture)
                 sprite.position.x = posX
                 sprite.position.y = self.scene.frame.maxY + sprite.size.height * 0.5 // @CLEANUP @FIXME

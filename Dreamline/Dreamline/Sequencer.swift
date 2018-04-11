@@ -32,7 +32,7 @@ class TempSequencer: Sequencer {
     
     func nextEntity() -> [(EntityType, EntityData)] {
         // @TEMP
-        return [self.createRandomOrb()]
+        return [self.createRandomArea()]
     }
     
     // MARK: Private Methods
@@ -53,8 +53,10 @@ class TempSequencer: Sequencer {
     private func createRandomArea() -> (EntityType, EntityData) {
         var areas = [Area]()
         for _ in 1...3 {
-            let rand = self.random.next() > 0.5
-            areas.append(rand ? .inactive : .active)
+            if self.random.next() > 0.5 {
+                let rand = self.random.next() > 0.5
+                areas.append(rand ? .good : .bad)
+            } else { areas.append(.none) }
         }
         return (.area, .area(areas))
     }

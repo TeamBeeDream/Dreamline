@@ -23,21 +23,31 @@ extension Entity {
         return self.type == type
     }
     
-    func thresholdType() -> ThresholdType? {
+    func thresholdType() -> Threshold? {
         switch self.data {
-        case .threshold(let type):
-            return type
-        default:
-            return nil
+        case .threshold(let type): return type
+        default: return nil
         }
     }
     
     func orbData() -> [Orb]? {
         switch self.data {
-        case .orb(let orbs):
-            return orbs
-        default:
-            return nil
+        case .orb(let orbs): return orbs
+        default: return nil
+        }
+    }
+    
+    func barrierData() -> [Gate]? {
+        switch self.data {
+        case .barrier(let gates): return gates
+        default: return nil
+        }
+    }
+    
+    func areaData() -> [Area]? {
+        switch self.data {
+        case .area(let areas): return areas
+        default: return nil
         }
     }
 }
@@ -50,7 +60,7 @@ enum EntityType {
 }
 
 enum EntityData {
-    case threshold(ThresholdType)
+    case threshold(Threshold)
     case barrier([Gate])
     case area([Area])
     case orb([Orb])
@@ -66,7 +76,7 @@ enum EntityState {
 
 // MARK: Threshold
 
-enum ThresholdType {
+enum Threshold {
     case normal // @TEMP
     case speed
 }

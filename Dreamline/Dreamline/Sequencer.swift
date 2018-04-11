@@ -32,7 +32,7 @@ class TempSequencer: Sequencer {
     
     func nextEntity() -> [(EntityType, EntityData)] {
         // @TEMP
-        return [self.createRandomArea()]
+        return [self.createRandomOrb()]
     }
     
     // MARK: Private Methods

@@ -47,8 +47,8 @@ struct BoardLayout {
     static func new() -> BoardLayout {
         // @HARDCODED
         return BoardLayout(playerPosition: 0.2,
-                           upperBound: 1.0,
-                           lowerBound: -1.0,
+                           upperBound: 1.5,
+                           lowerBound: -1.1,
                            distanceBetweenLanes: 0.5,
                            distanceBetweenEntities: 0.5)
     }

@@ -1,0 +1,35 @@
+//
+//  TimeProtocol.swift
+//  Dreamline
+//
+//  Created by BeeDream on 4/7/18.
+//  Copyright © 2018 Team BeeDream. All rights reserved.
+//
+
+import Foundation
+
+class TimeRule: Rule {
+    
+    // MARK: Private Properties
+    
+    private var paused: Bool!
+    
+    // MARK: Init
+    
+    static func make() -> TimeRule {
+        return TimeRule()
+    }
+    
+    // MARK: Rule Methods
+    
+    func setup(state: KernelState) {
+        self.paused = state.timeState.paused
+    }
+    
+    func mutate(events: inout [KernelEvent],
+                instructions: inout [KernelInstruction],
+                deltaTime: Double) {
+    
+        if !self.paused { instructions.append(.tick(deltaTime)) }
+    }
+}

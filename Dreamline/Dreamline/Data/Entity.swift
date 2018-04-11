@@ -2,7 +2,7 @@
 //  Entity.swift
 //  Dreamline
 //
-//  Created by BeeDream on 3/19/18.
+//  Created by BeeDream on 4/6/18.
 //  Copyright © 2018 Team BeeDream. All rights reserved.
 //
 
@@ -10,73 +10,50 @@ import Foundation
 
 // MARK: Entity
 
-/**
- An Entity is an object that exists
- on the board and scrolls with it
- */
 struct Entity {
-    let id: Int
+    var id: Int
     var position: Double
-    var status: EntityStatus
+    var state: EntityState
+    var type: EntityType
     var data: EntityData
 }
 
+enum EntityType {
+    case threshold
+    case barrier
+    case area
+}
+
 enum EntityData {
-    case barrier(Barrier)
-    case modifier(ModifierRow)
     case threshold(ThresholdType)
-    case empty
+    case barrier([Gate])
+    case area([Area])
 }
 
-enum EntityStatus {
-    case active
-    case pass
+// @TODO: Revise these states
+enum EntityState {
+    case none
     case hit
+    case passed
+    case over
 }
 
-extension Entity {
-    func clone() -> Entity {
-        return Entity(id: self.id,
-                      position: self.position,
-                      status: self.status,
-                      data: self.data)
-    }
+// MARK: Threshold
+
+enum ThresholdType {
+    case normal // @TEMP
 }
 
 // MARK: Barrier
-
-struct Barrier {
-    let gates: [Gate]
-}
-
-extension Barrier {
-    func clone() -> Barrier {
-        return Barrier(gates: self.gates)
-    }
-}
 
 enum Gate {
     case open
     case closed
 }
 
-// MARK: Modifiers
+// MARK: Area
 
-struct ModifierRow {
-    let modifiers: [ModifierType]
+enum Area {
+    case active
+    case inactive
 }
-
-enum ModifierType {
-    case speedUp
-    case speedDown
-    case none
-}
-
-// MARK: Threshold
-
-enum ThresholdType {
-    case roundOver
-    case speedUp
-}
-
-

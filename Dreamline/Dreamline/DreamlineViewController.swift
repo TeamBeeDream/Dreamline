@@ -12,81 +12,72 @@ class DreamlineViewController: UIViewController {
     
     // MARK: Private Properties
     
-    private var skview: SKView!
-    private var currentSpeed: Speed = .mach1 // @HACK @TEMPORARY
+    private var skView: SKView!
     
     // MARK: Init and Deinit
     
     static func make() -> DreamlineViewController {
-        return DreamlineViewController()
+        let instance = DreamlineViewController()
+        return instance
     }
     
     // MARK: UIViewController Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
+   
+        let skView = SKView(frame: self.view.frame)
+        skView.isMultipleTouchEnabled = true
+        self.view.addSubview(skView)
+        self.skView = skView // @IMPORTANT
         
-        // @NOTE: This is basically the entry point into the application
-        //        This method is only expected to be called once,
-        //        from here, views manage their own resources
-        //        This class will be responsible for managing the
-        //        FSM that controlls the subviews
+        // @TODO: Use factory to assemble these lists
+        let state = KernelState.new()
+        let kernels: [Kernel] =
+            [TimeKernel.make(),
+             BoardKernel.make(),
+             PositionKernel.make(),
+             InputKernel.make(),
+             StaminaKernel.make()]
+        let rules: [Rule] =
+            [ScrollRule.make(scrollSpeed: 1.5),
+             TimeRule.make(),
+             CleanupRule.make(),
+             SpawnRule.make(),
+             PositionRule.make(),
+             StaminaRule.make(),
+             LineCollisionRule.make(),
+             AreaCollisionRule.make()]
         
-        // Add SpriteKit view
-        let skview = SKView(frame: self.view.frame)
-        skview.isMultipleTouchEnabled = true
-        self.view.addSubview(skview)
-        self.skview = skview
-        
-        // Start on title scene
-        self.transitionToTitleScene()
+        let scene = TestScene.make(size: skView.frame.size,
+                                   state: state,
+                                   kernels: kernels,
+                                   rules: rules,
+                                   observers: []) // @NOTE: Should Observers be just renderers?
+        scene.scaleMode = .aspectFit
+        skView.presentScene(scene)
+        skView.ignoresSiblingOrder = true
+        skView.showsDrawCount = true
+        skView.showsFPS = true
+        //skView.isAsynchronous = true // @NOTE: I'm not sure what this does
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        //let orientation = UIDevice.current.orientation.isLandscape
+        //self.skView.scene!.size = self.skView.scene!.size
+        // @TODO: Replace this with call to custom scene interface ( e.g. didOrientationChange(...) )
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.portrait
+        //return .allButUpsideDown // @TODO
+        return .portrait
     }
     
     override var shouldAutorotate: Bool {
-        return false
+        return true
     }
     
     override var prefersStatusBarHidden: Bool {
         return true
     }
 }
-
-protocol SceneManager {
-    func transitionToTitleScene()
-    func transitionToInfoScene()
-    func transitionToStartScene()
-    func transitionToGameScene()
-    func transitionToScoreScene(score: Int)
-}
-
-extension DreamlineViewController: SceneManager {
-    private func transition() -> SKTransition {
-        return SKTransition.crossFade(withDuration: 0.3)
-    }
-    
-    func transitionToTitleScene() {
-        self.skview.presentScene(TitleScene(manager: self, size: self.skview.frame.size), transition: self.transition())
-    }
-    
-    func transitionToInfoScene() {
-        self.skview.presentScene(BetaInfoScene(manager: self, size: self.skview.frame.size), transition: self.transition())
-    }
-    
-    func transitionToStartScene() {
-        self.skview.presentScene(StartScene(manager: self, size: self.skview.frame.size), transition: self.transition())
-    }
-    
-    func transitionToGameScene() {
-        let scene = GameScene.make(manager: self, frame: self.skview.frame, speed: self.currentSpeed)
-        self.skview.presentScene(scene, transition: self.transition())
-    }
-    
-    func transitionToScoreScene(score: Int) {
-        self.skview.presentScene(ScoreScene(manager: self, size: self.skview.frame.size, score: score), transition: self.transition())
-    }
-}
-

@@ -36,6 +36,13 @@ class StaminaRule: Rule {
 //                    if entity.state == .hit    { instructions.append(.decrementStamina) }
 //                    if entity.state == .passed { instructions.append(.incrementStamina) }
 
+                case .threshold:
+                    // @NOTE: Keyword .hit is ambiguous in this context
+                    if entity.state == .hit { instructions.append(.incrementStamina) }
+                    
+                case .orb:
+                    if entity.state == .hit { instructions.append(.incrementStamina) }
+                    
                 case .area:
                     if entity.state == .over { instructions.append(.incrementStamina) }
                     

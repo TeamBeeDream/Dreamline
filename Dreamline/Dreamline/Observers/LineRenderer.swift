@@ -96,7 +96,7 @@ class LineRenderer: Observer {
         let line = self.nodes[id]!
         line.removeFromParent() // @TODO: Pool line sprites
         self.nodes[id] = nil
-        self.ids = self.ids.filter { $0 != id }
+        self.ids = self.ids.filter { $0 != id } // @REMOVE
     }
     
     private func fadeOutLine(id: Int) {

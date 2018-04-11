@@ -18,6 +18,29 @@ struct Entity {
     var data: EntityData
 }
 
+extension Entity {
+    func isThreshold() -> Bool {
+        return self.type == .threshold
+    }
+    
+    func isBarrier() -> Bool {
+        return self.type == .barrier
+    }
+    
+    func isArea() -> Bool {
+        return self.type == .area
+    }
+    
+    func thresholdType() -> ThresholdType? {
+        switch self.data {
+        case .threshold(let type):
+            return type
+        default:
+            return nil
+        }
+    }
+}
+
 enum EntityType {
     case threshold
     case barrier
@@ -42,6 +65,7 @@ enum EntityState {
 
 enum ThresholdType {
     case normal // @TEMP
+    case speed
 }
 
 // MARK: Barrier

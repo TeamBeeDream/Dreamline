@@ -32,6 +32,9 @@ enum KernelInstruction {
     // Stamina
     case incrementStamina
     case decrementStamina
+    
+    // Speed
+    case updateSpeed(Double)
 }
 
 // @TODO: Move this somewhere more obvious
@@ -53,13 +56,16 @@ enum KernelEvent {
     case boardScrolled(Double, Double)
     
     // Position
-    case positionUpdated(PositionData)
+    case positionUpdated(PositionData) // @CLEANUP: Pass generic variables?
     
     // Input
     case inputChanged(Int)
     
     // Stamina
     case staminaUpdated(Int)
+    
+    // Speed
+    case speedUpdated(Double)
 }
 
 // @TODO: Move this somewhere more obvious
@@ -69,23 +75,15 @@ struct KernelState {
     var positionState: PositionData
     var inputState: InputData
     var staminaState: StaminaData
+    var speedState: SpeedData
     
     static func new() -> KernelState {
         return KernelState(timeState: TimeData.new(),
                            boardState: BoardData.new(),
                            positionState: PositionData.new(),
                            inputState: InputData.new(),
-                           staminaState: StaminaData.new())
-    }
-    
-    // @NOTE: I'm not even really sure if this works correctly...
-    // @TODO: Test deep copying
-    static func clone(_ state: KernelState) -> KernelState {
-        return KernelState(timeState: state.timeState,
-                           boardState: state.boardState,
-                           positionState: state.positionState,
-                           inputState: state.inputState,
-                           staminaState: state.staminaState)
+                           staminaState: StaminaData.new(),
+                           speedState: SpeedData.new())
     }
 }
 

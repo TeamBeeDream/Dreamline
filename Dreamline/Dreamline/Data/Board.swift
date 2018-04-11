@@ -24,6 +24,7 @@ struct BoardData {
                          scrollDistance: 0.0)
     }
     
+    // @REMOVE?
     static func clone(_ data: BoardData) -> BoardData {
         return BoardData(entities: data.entities,
                          layout: data.layout,

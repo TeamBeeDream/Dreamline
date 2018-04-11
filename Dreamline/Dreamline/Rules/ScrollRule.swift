@@ -16,16 +16,15 @@ class ScrollRule: Rule {
     
     // MARK: Init
     
-    static func make(scrollSpeed: Double) -> ScrollRule {
+    static func make() -> ScrollRule {
         let instance = ScrollRule()
-        instance.scrollSpeed = scrollSpeed
         return instance
     }
     
     // MARK: Rule Methods
     
     func setup(state: KernelState) {
-        
+        self.scrollSpeed = state.speedState.speed
     }
     
     func mutate(events: inout [KernelEvent],
@@ -33,6 +32,9 @@ class ScrollRule: Rule {
                 deltaTime: Double) {
         for event in events {
             switch event {
+                
+            case .speedUpdated(let speed):
+                self.scrollSpeed = speed
                 
             case .tick(let dt):
                 instructions.append(.scrollBoard(self.scrollSpeed * dt))

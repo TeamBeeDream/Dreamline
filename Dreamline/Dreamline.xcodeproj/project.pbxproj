@@ -34,6 +34,8 @@
 		696B3511207BE5B7007DD318 /* StaminaRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B3510207BE5B7007DD318 /* StaminaRule.swift */; };
 		696B3513207BEA7B007DD318 /* LineCollisionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B3512207BEA7B007DD318 /* LineCollisionRule.swift */; };
 		6970F7962079C7DF00E315E4 /* LineRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6970F7952079C7DF00E315E4 /* LineRenderer.swift */; };
+		69711D01207E68B600B7309C /* OrbCollisionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69711D00207E68B600B7309C /* OrbCollisionRule.swift */; };
+		69711D03207E704400B7309C /* OrbRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69711D02207E704400B7309C /* OrbRenderer.swift */; };
 		697FD96C207D284500403C7F /* AreaCollisionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96B207D284500403C7F /* AreaCollisionRule.swift */; };
 		697FD96E207D307400403C7F /* Collision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96D207D307400403C7F /* Collision.swift */; };
 		697FD970207D31D700403C7F /* AreaRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96F207D31D700403C7F /* AreaRenderer.swift */; };
@@ -105,6 +107,8 @@
 		696B3510207BE5B7007DD318 /* StaminaRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaminaRule.swift; sourceTree = "<group>"; };
 		696B3512207BEA7B007DD318 /* LineCollisionRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineCollisionRule.swift; sourceTree = "<group>"; };
 		6970F7952079C7DF00E315E4 /* LineRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineRenderer.swift; sourceTree = "<group>"; };
+		69711D00207E68B600B7309C /* OrbCollisionRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbCollisionRule.swift; sourceTree = "<group>"; };
+		69711D02207E704400B7309C /* OrbRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrbRenderer.swift; sourceTree = "<group>"; };
 		697FD96B207D284500403C7F /* AreaCollisionRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaCollisionRule.swift; sourceTree = "<group>"; };
 		697FD96D207D307400403C7F /* Collision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collision.swift; sourceTree = "<group>"; };
 		697FD96F207D31D700403C7F /* AreaRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaRenderer.swift; sourceTree = "<group>"; };
@@ -225,6 +229,7 @@
 				696B3510207BE5B7007DD318 /* StaminaRule.swift */,
 				696B3512207BEA7B007DD318 /* LineCollisionRule.swift */,
 				697FD96B207D284500403C7F /* AreaCollisionRule.swift */,
+				69711D00207E68B600B7309C /* OrbCollisionRule.swift */,
 				69F3DD66207E5DD10010F4CE /* SpeedRule.swift */,
 			);
 			path = Rules;
@@ -311,6 +316,7 @@
 				6970F7952079C7DF00E315E4 /* LineRenderer.swift */,
 				697FD96F207D31D700403C7F /* AreaRenderer.swift */,
 				697FD971207D468800403C7F /* ThresholdRenderer.swift */,
+				69711D02207E704400B7309C /* OrbRenderer.swift */,
 			);
 			path = Observers;
 			sourceTree = "<group>";
@@ -670,12 +676,14 @@
 				697FD972207D468800403C7F /* ThresholdRenderer.swift in Sources */,
 				69F6C56E2078472100380DF5 /* BoardKernel.swift in Sources */,
 				699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */,
+				69711D01207E68B600B7309C /* OrbCollisionRule.swift in Sources */,
 				69F6C56820783FF500380DF5 /* TimeKernel.swift in Sources */,
 				697FD96C207D284500403C7F /* AreaCollisionRule.swift in Sources */,
 				699EB42D206DAFDA00693CB8 /* Random.swift in Sources */,
 				69AB5E92204F251700093B33 /* Math.swift in Sources */,
 				696B34E9207BD527007DD318 /* PositionKernel.swift in Sources */,
 				696B34F1207BDBC7007DD318 /* InputKernel.swift in Sources */,
+				69711D03207E704400B7309C /* OrbRenderer.swift in Sources */,
 				69F3DD67207E5DD10010F4CE /* SpeedRule.swift in Sources */,
 				696B350B207BE283007DD318 /* CleanupRule.swift in Sources */,
 				6970F7962079C7DF00E315E4 /* LineRenderer.swift in Sources */,

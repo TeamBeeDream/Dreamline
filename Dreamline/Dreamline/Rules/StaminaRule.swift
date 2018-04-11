@@ -40,6 +40,9 @@ class StaminaRule: Rule {
                     // @NOTE: Keyword .hit is ambiguous in this context
                     if entity.state == .hit { instructions.append(.incrementStamina) }
                     
+                case .orb:
+                    if entity.state == .hit { instructions.append(.incrementStamina) }
+                    
                 case .area:
                     if entity.state == .over { instructions.append(.incrementStamina) }
                     

@@ -19,16 +19,8 @@ struct Entity {
 }
 
 extension Entity {
-    func isThreshold() -> Bool {
-        return self.type == .threshold
-    }
-    
-    func isBarrier() -> Bool {
-        return self.type == .barrier
-    }
-    
-    func isArea() -> Bool {
-        return self.type == .area
+    func isA(_ type: EntityType) -> Bool {
+        return self.type == type
     }
     
     func thresholdType() -> ThresholdType? {
@@ -39,18 +31,29 @@ extension Entity {
             return nil
         }
     }
+    
+    func orbData() -> [Orb]? {
+        switch self.data {
+        case .orb(let orbs):
+            return orbs
+        default:
+            return nil
+        }
+    }
 }
 
 enum EntityType {
     case threshold
     case barrier
     case area
+    case orb
 }
 
 enum EntityData {
     case threshold(ThresholdType)
     case barrier([Gate])
     case area([Area])
+    case orb([Orb])
 }
 
 // @TODO: Revise these states
@@ -80,4 +83,12 @@ enum Gate {
 enum Area {
     case active
     case inactive
+}
+
+// MARK: Orbs
+
+enum Orb {
+    case none
+    case speedUp
+    case staminaUp
 }

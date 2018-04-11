@@ -54,12 +54,14 @@ class TestScene: SKScene {
                                                                                    state: state))
         let thresholdRenderer = EntityRenderer.make(scene: instance,
                                                     delegate: ThresholdRendererDelegate.make(frame: instance.frame))
+        let orbRenderer = EntityRenderer.make(scene: instance,
+                                              delegate: OrbRendererDelegate.make(frame: instance.frame))
         
         var customObservers: [Observer] = [barrierRenderer,
                                            areaRenderer,
                                            thresholdRenderer,
-                                           PlayerRenderer.make(scene: instance),
-                                           OrbRenderer.make(scene: instance)]
+                                           orbRenderer,
+                                           PlayerRenderer.make(scene: instance)]
         instance.renderers = customObservers
         customObservers.append(contentsOf: observers) // @HACK
         

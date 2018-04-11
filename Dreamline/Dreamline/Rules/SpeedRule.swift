@@ -44,16 +44,23 @@ class SpeedRule: Rule {
             // Would probably need some translation layer between kernel and rules :(
             case .entityStateChanged(let entity):
                 if entity.isThreshold() && entity.thresholdType() == .speed {
-                    let maxSpeed = 2.0 // @HARDCODED
-                    let newSpeed = min(maxSpeed, self.speed + 0.2)
-                    instructions.append(.updateSpeed(newSpeed)) // @TEMP @HARDCODED
+//                    let maxSpeed = 2.0 // @HARDCODED
+//                    let newSpeed = min(maxSpeed, self.speed + 0.2)
+//                    instructions.append(.updateSpeed(newSpeed)) // @TEMP @HARDCODED
                 }
                 
+            // Slow down speed when moving laterally
 //            case .positionUpdated(let position):
 //                if position.nearestLane == self.currentLane { break }
 //
 //                self.currentLane = position.nearestLane
 //                instructions.append(.updateSpeed(self.speed - 0.05)) // @TEMP @HARDCODED
+                
+            case .staminaUpdated(let stamina):
+                if stamina % 5 == 0 && stamina > 0 {
+                    let newSpeed = self.speed + 0.2 // @HARDCODED
+                    instructions.append(.updateSpeed(newSpeed))
+                }
                 
             default: break
             }

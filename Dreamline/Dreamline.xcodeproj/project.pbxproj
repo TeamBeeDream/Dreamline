@@ -39,6 +39,7 @@
 		69711D05207E7D4600B7309C /* NodeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69711D04207E7D4600B7309C /* NodeCache.swift */; };
 		69711D07207E7FCB00B7309C /* EntityRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69711D06207E7FCB00B7309C /* EntityRenderer.swift */; };
 		69711D09207EC62200B7309C /* TimeKernelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69711D08207EC62200B7309C /* TimeKernelTests.swift */; };
+		69711D0B207ECDD700B7309C /* BoardKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69711D0A207ECDD700B7309C /* BoardKernel.swift */; };
 		697FD96C207D284500403C7F /* AreaCollisionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96B207D284500403C7F /* AreaCollisionRule.swift */; };
 		697FD96E207D307400403C7F /* Collision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96D207D307400403C7F /* Collision.swift */; };
 		697FD970207D31D700403C7F /* AreaRendererDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96F207D31D700403C7F /* AreaRendererDelegate.swift */; };
@@ -112,6 +113,7 @@
 		69711D04207E7D4600B7309C /* NodeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCache.swift; sourceTree = "<group>"; };
 		69711D06207E7FCB00B7309C /* EntityRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityRenderer.swift; sourceTree = "<group>"; };
 		69711D08207EC62200B7309C /* TimeKernelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeKernelTests.swift; sourceTree = "<group>"; };
+		69711D0A207ECDD700B7309C /* BoardKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardKernel.swift; sourceTree = "<group>"; };
 		697FD96B207D284500403C7F /* AreaCollisionRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaCollisionRule.swift; sourceTree = "<group>"; };
 		697FD96D207D307400403C7F /* Collision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collision.swift; sourceTree = "<group>"; };
 		697FD96F207D31D700403C7F /* AreaRendererDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaRendererDelegate.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				69711D08207EC62200B7309C /* TimeKernelTests.swift */,
+				69711D0A207ECDD700B7309C /* BoardKernel.swift */,
 				699EB42E206DB51200693CB8 /* RandomTests.swift */,
 				699FC572204E053600DB09B4 /* Info.plist */,
 			);
@@ -707,6 +710,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				69711D09207EC62200B7309C /* TimeKernelTests.swift in Sources */,
+				69711D0B207ECDD700B7309C /* BoardKernel.swift in Sources */,
 				699EB42F206DB51200693CB8 /* RandomTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

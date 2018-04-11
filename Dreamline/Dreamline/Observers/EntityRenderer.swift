@@ -35,8 +35,9 @@ class EntityRenderer: Observer {
         self.layout = state.boardState.layout
         // @TEST
         for (_, entity) in state.boardState.entities {
-            let node = self.delegate.makeNode(entity: entity)
-            self.cache.storeNode(node, forId: entity.id)
+            if let node = self.delegate.makeNode(entity: entity) {
+                self.cache.storeNode(node, forId: entity.id)
+            }
         }
     }
     
@@ -69,7 +70,8 @@ class EntityRenderer: Observer {
     // MARK: Private Methods
     
     private func addNode(entity: Entity) {
-        let node = self.delegate.makeNode(entity: entity)
+        guard let node = self.delegate.makeNode(entity: entity) else { return }
+        
         node.position.y = self.nodePosition(position: entity.position)
         
         scene.addChild(node)
@@ -88,10 +90,11 @@ class EntityRenderer: Observer {
         let midY = self.scene.frame.midY
         let offset = self.scene.frame.height * -0.5
         return midY + CGFloat(position) * offset
+        //return self.scene.frame.maxY
     }
 }
 
 protocol EntityRendererDelegate {
-    func makeNode(entity: Entity) -> SKNode
+    func makeNode(entity: Entity) -> SKNode?
     func handleEntityStateChange(entity: Entity, node: SKNode)
 }

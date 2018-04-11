@@ -25,28 +25,29 @@ extension Entity {
     
     func thresholdType() -> ThresholdType? {
         switch self.data {
-        case .threshold(let type):
-            return type
-        default:
-            return nil
+        case .threshold(let type): return type
+        default: return nil
         }
     }
     
     func orbData() -> [Orb]? {
         switch self.data {
-        case .orb(let orbs):
-            return orbs
-        default:
-            return nil
+        case .orb(let orbs): return orbs
+        default: return nil
         }
     }
     
     func barrierData() -> [Gate]? {
         switch self.data {
-        case .barrier(let gates):
-            return gates
-        default:
-            return nil
+        case .barrier(let gates): return gates
+        default: return nil
+        }
+    }
+    
+    func areaData() -> [Area]? {
+        switch self.data {
+        case .area(let areas): return areas
+        default: return nil
         }
     }
 }

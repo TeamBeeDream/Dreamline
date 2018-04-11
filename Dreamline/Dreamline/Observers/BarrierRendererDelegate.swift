@@ -28,8 +28,8 @@ class BarrierRendererDelegate: EntityRendererDelegate {
     
     // MARK: EntityRenderDelegate Methods
     
-    func makeNode(entity: Entity) -> SKNode {
-        if !entity.isA(.barrier) { return SKNode() } // @HACK
+    func makeNode(entity: Entity) -> SKNode? {
+        if !entity.isA(.barrier) { return nil }
         
         let gates = entity.barrierData()!
         

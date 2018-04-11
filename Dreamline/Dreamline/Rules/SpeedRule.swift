@@ -56,11 +56,11 @@ class SpeedRule: Rule {
 //                self.currentLane = position.nearestLane
 //                instructions.append(.updateSpeed(self.speed - 0.05)) // @TEMP @HARDCODED
                 
-            case .staminaUpdated(let stamina):
-                if stamina % 5 == 0 && stamina > 0 {
-                    let newSpeed = self.speed + 0.2 // @HARDCODED
-                    instructions.append(.updateSpeed(newSpeed))
-                }
+//            case .staminaUpdated(let stamina):
+//                if stamina % 5 == 0 && stamina > 0 {
+//                    let newSpeed = self.speed + 0.2 // @HARDCODED
+//                    instructions.append(.updateSpeed(newSpeed))
+//                }
                 
             default: break
             }

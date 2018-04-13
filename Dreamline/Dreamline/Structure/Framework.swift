@@ -70,14 +70,14 @@ class DefaultFramework: Framework, InputDelegate {
             // removed entities should just be ignored (rip)
             let instrJustRemoves = workingInstructions.filter { !self.isRemove($0) }
             for instr in instrJustRemoves {
-                kernel.mutate(state: &workingState,
+                kernel.update(state: &workingState,
                               events: &workingEvents,
                               instr: instr)
             }
             // Handle the rest of the instructions
             let instrNoRemoves = workingInstructions.filter { self.isRemove($0) }
             for instr in instrNoRemoves {
-                kernel.mutate(state: &workingState,
+                kernel.update(state: &workingState,
                               events: &workingEvents,
                               instr: instr)
             }

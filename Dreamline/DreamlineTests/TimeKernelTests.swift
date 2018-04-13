@@ -31,7 +31,7 @@ class TimeKernelTests: XCTestCase {
         let instruction = KernelInstruction.tick(delta)
         
         XCTAssert(state.timeState.timeSinceBeginning == 0.0)
-        self.kernel.mutate(state: &state, events: &events, instr: instruction)
+        self.kernel.update(state: &state, events: &events, instr: instruction)
         XCTAssert(state.timeState.timeSinceBeginning == delta)
     }
     
@@ -43,7 +43,7 @@ class TimeKernelTests: XCTestCase {
         let instruction = KernelInstruction.tick(delta)
         
         XCTAssert(state.timeState.deltaTime == 0.0)
-        self.kernel.mutate(state: &state, events: &events, instr: instruction)
+        self.kernel.update(state: &state, events: &events, instr: instruction)
         XCTAssert(state.timeState.deltaTime == delta)
     }
     
@@ -55,7 +55,7 @@ class TimeKernelTests: XCTestCase {
         let instruction = KernelInstruction.tick(delta)
         
         XCTAssert(state.timeState.frameNumber == 0)
-        self.kernel.mutate(state: &state, events: &events, instr: instruction)
+        self.kernel.update(state: &state, events: &events, instr: instruction)
         XCTAssert(state.timeState.deltaTime == delta)
     }
     
@@ -64,9 +64,9 @@ class TimeKernelTests: XCTestCase {
         var events = [KernelEvent]()
         
         XCTAssert(state.timeState.paused == false)
-        self.kernel.mutate(state: &state, events: &events, instr: .pause)
+        self.kernel.update(state: &state, events: &events, instr: .pause)
         XCTAssert(state.timeState.paused == true)
-        self.kernel.mutate(state: &state, events: &events, instr: .unpause)
+        self.kernel.update(state: &state, events: &events, instr: .unpause)
         XCTAssert(state.timeState.paused == false)
     }
     

@@ -91,7 +91,7 @@ struct KernelState {
 protocol Kernel {
     // @NOTE: Should send data store protocols
     // and not raw data structures
-    func mutate(state: inout KernelState,
+    func update(state: inout KernelState,
                 events: inout [KernelEvent],
                 instr: KernelInstruction)
 }

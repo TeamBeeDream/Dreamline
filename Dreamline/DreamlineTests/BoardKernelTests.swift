@@ -31,7 +31,7 @@ class BoardKernelTests: XCTestCase {
         let instruction = KernelInstruction.addEntity(entity)
         
         XCTAssert(state.boardState.entities.count == 0)
-        self.kernel.mutate(state: &state, events: &events, instr: instruction)
+        self.kernel.update(state: &state, events: &events, instr: instruction)
         XCTAssert(state.boardState.entities.count == 1)
         XCTAssert(state.boardState.entities[0] == entity)
     }
@@ -42,9 +42,9 @@ class BoardKernelTests: XCTestCase {
         
         let entity = self.getMockEntity()
         
-        self.kernel.mutate(state: &state, events: &events, instr: .addEntity(entity))
+        self.kernel.update(state: &state, events: &events, instr: .addEntity(entity))
         XCTAssert(state.boardState.entities.count == 1)
-        self.kernel.mutate(state: &state, events: &events, instr: .removeEntity(entity.id))
+        self.kernel.update(state: &state, events: &events, instr: .removeEntity(entity.id))
         XCTAssert(state.boardState.entities.count == 0)
     }
     
@@ -55,9 +55,9 @@ class BoardKernelTests: XCTestCase {
         let entity = self.getMockEntity()
         let distance = RealRandom().next()
         
-        self.kernel.mutate(state: &state, events: &events, instr: .addEntity(entity))
+        self.kernel.update(state: &state, events: &events, instr: .addEntity(entity))
         XCTAssert(state.boardState.entities[0]!.position == 0.0)
-        self.kernel.mutate(state: &state, events: &events, instr: .scrollBoard(distance))
+        self.kernel.update(state: &state, events: &events, instr: .scrollBoard(distance))
         XCTAssert(state.boardState.entities[0]!.position == distance)
     }
     
@@ -67,9 +67,9 @@ class BoardKernelTests: XCTestCase {
         
         let entity = self.getMockEntity()
         
-        self.kernel.mutate(state: &state, events: &events, instr: .addEntity(entity))
+        self.kernel.update(state: &state, events: &events, instr: .addEntity(entity))
         XCTAssert(state.boardState.entities[0]!.state == .none)
-        self.kernel.mutate(state: &state, events: &events, instr: .updateEntityState(entity.id, .hit))
+        self.kernel.update(state: &state, events: &events, instr: .updateEntityState(entity.id, .hit))
         XCTAssert(state.boardState.entities[0]!.state == .hit)
     }
     

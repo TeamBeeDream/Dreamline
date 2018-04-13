@@ -30,7 +30,7 @@ class PositionKernelTests: XCTestCase {
         let offset = RealRandom().next()
         
         XCTAssert(state.positionState.offset == 0.0)
-        self.kernel.mutate(state: &state, events: &events, instr: .updatePositionOffset(offset))
+        self.kernel.update(state: &state, events: &events, instr: .updatePositionOffset(offset))
         XCTAssert(state.positionState.offset == offset)
     }
     
@@ -41,9 +41,9 @@ class PositionKernelTests: XCTestCase {
         let offset = RealRandom().next()
         
         XCTAssert(state.positionState.velocity == 0.0)
-        self.kernel.mutate(state: &state, events: &events, instr: .updatePositionOffset(offset))
+        self.kernel.update(state: &state, events: &events, instr: .updatePositionOffset(offset))
         XCTAssert(state.positionState.velocity == offset)
-        self.kernel.mutate(state: &state, events: &events, instr: .updatePositionOffset(0.0))
+        self.kernel.update(state: &state, events: &events, instr: .updatePositionOffset(0.0))
         XCTAssert(state.positionState.velocity == -offset)
     }
     
@@ -55,9 +55,9 @@ class PositionKernelTests: XCTestCase {
         let rightLane = 1.0
         
         XCTAssert(state.positionState.nearestLane == 0)
-        self.kernel.mutate(state: &state, events: &events, instr: .updatePositionOffset(leftLane))
+        self.kernel.update(state: &state, events: &events, instr: .updatePositionOffset(leftLane))
         XCTAssert(state.positionState.nearestLane == Int(leftLane))
-        self.kernel.mutate(state: &state, events: &events, instr: .updatePositionOffset(rightLane))
+        self.kernel.update(state: &state, events: &events, instr: .updatePositionOffset(rightLane))
         XCTAssert(state.positionState.nearestLane == Int(rightLane))
     }
     
@@ -66,9 +66,9 @@ class PositionKernelTests: XCTestCase {
         var events = [KernelEvent]()
         
         XCTAssert(state.positionState.distanceFromNearestLane == 0.0)
-        self.kernel.mutate(state: &state, events: &events, instr: .updatePositionOffset(0.25))
+        self.kernel.update(state: &state, events: &events, instr: .updatePositionOffset(0.25))
         XCTAssert(state.positionState.distanceFromNearestLane == 0.25)
-        self.kernel.mutate(state: &state, events: &events, instr: .updatePositionOffset(0.75))
+        self.kernel.update(state: &state, events: &events, instr: .updatePositionOffset(0.75))
         XCTAssert(state.positionState.distanceFromNearestLane == -0.25)
     }
 }

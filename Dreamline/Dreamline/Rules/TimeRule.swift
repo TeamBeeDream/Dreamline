@@ -30,6 +30,14 @@ class TimeRule: Rule {
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
     
+        for event in events {
+            switch event {
+            case .paused: self.paused = true
+            case .unpaused: self.paused = false
+            default: break
+            }
+        }
+        
         if !self.paused { instructions.append(.tick(deltaTime)) }
     }
 }

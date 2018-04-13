@@ -124,7 +124,7 @@ class DefaultFramework: Framework, InputDelegate {
     // @ROBUSTNESS
     private func syncState(_ state: KernelState) {
         for rule in self.rules { rule.sync(state: state) }
-        for observer in self.observers { observer.setup(state: state) }
+        for observer in self.observers { observer.sync(state: state) }
         
         self.state = state
         self.events = [KernelEvent]()

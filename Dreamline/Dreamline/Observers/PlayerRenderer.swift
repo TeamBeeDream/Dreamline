@@ -30,7 +30,7 @@ class PlayerRenderer: Observer {
     
     // MARK: Observer Methods
     
-    func setup(state: KernelState) {
+    func sync(state: KernelState) {
         self.yPos = state.boardState.layout.playerPosition
         
         let node = SKShapeNode(circleOfRadius: 15.0)

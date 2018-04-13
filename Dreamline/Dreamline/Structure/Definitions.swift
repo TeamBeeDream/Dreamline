@@ -108,6 +108,6 @@ protocol Rule {
 
 // @NOTE: Stateful
 protocol Observer {
-    func setup(state: KernelState)
+    func sync(state: KernelState)
     func observe(events: [KernelEvent])
 }

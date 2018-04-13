@@ -21,7 +21,7 @@ class BoardKernel: Kernel {
     
     // MARK: Kernel Methods
     
-    func mutate(state: inout KernelState,
+    func update(state: inout KernelState,
                 events: inout [KernelEvent],
                 instr: KernelInstruction) {
         

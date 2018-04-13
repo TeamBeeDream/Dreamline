@@ -24,12 +24,12 @@ class SpeedRule: Rule {
     
     // MARK: Rule Methods
     
-    func setup(state: KernelState) {
+    func sync(state: KernelState) {
         self.speed = state.speedState.speed
         self.currentLane = state.positionState.nearestLane
     }
     
-    func mutate(events: inout [KernelEvent],
+    func decide(events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
         

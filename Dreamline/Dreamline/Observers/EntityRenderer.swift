@@ -31,7 +31,7 @@ class EntityRenderer: Observer {
     
     // MARK: Observer Methods
     
-    func setup(state: KernelState) {
+    func sync(state: KernelState) {
         self.layout = state.boardState.layout
         // @TEST
         for (_, entity) in state.boardState.entities {

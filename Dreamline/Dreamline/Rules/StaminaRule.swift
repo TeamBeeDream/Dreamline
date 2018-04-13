@@ -18,11 +18,11 @@ class StaminaRule: Rule {
     
     // MARK: Rule Methods
     
-    func setup(state: KernelState) {
+    func sync(state: KernelState) {
         
     }
     
-    func mutate(events: inout [KernelEvent],
+    func decide(events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
         

@@ -18,6 +18,17 @@ struct Entity {
     var data: EntityData
 }
 
+extension Entity: Equatable {
+    static func ==(lhs: Entity, rhs: Entity) -> Bool {
+        return
+            (lhs.id == rhs.id) &&
+            (lhs.position == rhs.position) &&
+            (lhs.state == rhs.state) &&
+            (lhs.type == rhs.type) &&
+            (lhs.data == rhs.data)
+    }
+}
+
 extension Entity {
     func isA(_ type: EntityType) -> Bool {
         return self.type == type
@@ -53,6 +64,7 @@ extension Entity {
 }
 
 enum EntityType {
+    case none
     case threshold
     case barrier
     case area
@@ -60,10 +72,34 @@ enum EntityType {
 }
 
 enum EntityData {
+    case none
     case threshold(Threshold)
     case barrier([Gate])
     case area([Area])
     case orb([Orb])
+}
+
+extension EntityData: Equatable {
+    static func ==(lhs: EntityData, rhs: EntityData) -> Bool {
+        switch (lhs, rhs) {
+            
+        case (.none, .none): return true
+            
+        case let (.threshold(lThreshold), .threshold(rThreshold)):
+            return lThreshold == rThreshold
+            
+        case let (.barrier(lGates), .barrier(rGates)):
+            return lGates == rGates
+            
+        case let (.area(lArea), .area(rArea)):
+            return lArea == rArea
+            
+        case let (.orb(lOrb), .orb(rOrb)):
+            return lOrb == rOrb
+            
+        default: return false
+        }
+    }
 }
 
 // @TODO: Revise these states

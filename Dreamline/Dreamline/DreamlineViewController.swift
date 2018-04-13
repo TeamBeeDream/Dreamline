@@ -25,7 +25,8 @@ class DreamlineViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-   
+        
+//        let halfFrame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.width)
         let skView = SKView(frame: self.view.frame)
         skView.isMultipleTouchEnabled = true
         self.view.addSubview(skView)
@@ -65,15 +66,19 @@ class DreamlineViewController: UIViewController {
         //skView.isAsynchronous = true // @NOTE: I'm not sure what this does
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        //let orientation = UIDevice.current.orientation.isLandscape
-        //self.skView.scene!.size = self.skView.scene!.size
-        // @TODO: Replace this with call to custom scene interface ( e.g. didOrientationChange(...) )
-    }
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        let orientation = UIDevice.current.orientation
+//        if orientation.isLandscape {
+//            let offset = (size.width - self.skView.frame.width) / 2.0
+//            self.skView.frame.origin = CGPoint(x: offset, y: 0.0)
+//        } else if orientation.isPortrait {
+//            self.skView.frame.origin = CGPoint(x: 0.0, y: 0.0)
+//        }
+//    }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        //return .allButUpsideDown // @TODO
-        return .portrait
+        return .allButUpsideDown // @TODO
+        //return .portrait
     }
     
     override var shouldAutorotate: Bool {

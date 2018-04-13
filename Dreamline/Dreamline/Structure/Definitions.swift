@@ -91,15 +91,15 @@ struct KernelState {
 protocol Kernel {
     // @NOTE: Should send data store protocols
     // and not raw data structures
-    func mutate(state: inout KernelState,
+    func update(state: inout KernelState,
                 events: inout [KernelEvent],
                 instr: KernelInstruction)
 }
 
 // @NOTE: Stateful
 protocol Rule {
-    func setup(state: KernelState)
-    func mutate(events: inout [KernelEvent],
+    func sync(state: KernelState)
+    func decide(events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double)
     // @NOTE: This deltaTime is real time, need to use .tick event to get
@@ -108,6 +108,6 @@ protocol Rule {
 
 // @NOTE: Stateful
 protocol Observer {
-    func setup(state: KernelState)
+    func sync(state: KernelState)
     func observe(events: [KernelEvent])
 }

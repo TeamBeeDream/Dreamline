@@ -25,12 +25,12 @@ class LineCollisionRule: Rule {
     
     // MARK: Rule Methods
     
-    func setup(state: KernelState) {
+    func sync(state: KernelState) {
         self.layout = state.boardState.layout
         self.nearestLane = state.positionState.nearestLane
     }
     
-    func mutate(events: inout [KernelEvent],
+    func decide(events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
         

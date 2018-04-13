@@ -23,12 +23,12 @@ class AreaCollisionRule: Rule {
     
     // MARK: Rule Methods
     
-    func setup(state: KernelState) {
+    func sync(state: KernelState) {
         self.nearestLane = state.positionState.nearestLane
         self.layout = state.boardState.layout
     }
     
-    func mutate(events: inout [KernelEvent],
+    func decide(events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
         

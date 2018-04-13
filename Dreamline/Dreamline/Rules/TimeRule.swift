@@ -22,11 +22,11 @@ class TimeRule: Rule {
     
     // MARK: Rule Methods
     
-    func setup(state: KernelState) {
+    func sync(state: KernelState) {
         self.paused = state.timeState.paused
     }
     
-    func mutate(events: inout [KernelEvent],
+    func decide(events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double) {
     

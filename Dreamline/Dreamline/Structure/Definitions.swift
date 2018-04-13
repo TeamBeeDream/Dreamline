@@ -98,8 +98,8 @@ protocol Kernel {
 
 // @NOTE: Stateful
 protocol Rule {
-    func setup(state: KernelState)
-    func mutate(events: inout [KernelEvent],
+    func sync(state: KernelState)
+    func decide(events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
                 deltaTime: Double)
     // @NOTE: This deltaTime is real time, need to use .tick event to get

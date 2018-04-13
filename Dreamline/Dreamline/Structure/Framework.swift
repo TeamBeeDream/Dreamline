@@ -86,7 +86,7 @@ class DefaultFramework: Framework, InputDelegate {
         
         // RULES
         for rule in self.rules {
-            rule.mutate(events: &workingEvents,
+            rule.decide(events: &workingEvents,
                         instructions: &workingInstructions,
                         deltaTime: deltaTime)
         }
@@ -123,7 +123,7 @@ class DefaultFramework: Framework, InputDelegate {
     
     // @ROBUSTNESS
     private func syncState(_ state: KernelState) {
-        for rule in self.rules { rule.setup(state: state) }
+        for rule in self.rules { rule.sync(state: state) }
         for observer in self.observers { observer.setup(state: state) }
         
         self.state = state

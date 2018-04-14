@@ -265,16 +265,11 @@
 		699FC554204E053600DB09B4 /* Dreamline */ = {
 			isa = PBXGroup;
 			children = (
-				69CDEF09207C462A0016A527 /* Structure */,
-				696B34F4207BE27E007DD318 /* Data */,
-				69F6C55B20783C7500380DF5 /* Kernels */,
-				696B3503207BE283007DD318 /* Rules */,
-				69F6C55920783C6200380DF5 /* Observers */,
+				69FE4C532081804200B0F05C /* Gameplay */,
 				693E1BAB2059A79A008DBACE /* Util */,
 				699FC555204E053600DB09B4 /* AppDelegate.swift */,
 				699FC55D204E053600DB09B4 /* DreamlineViewController.swift */,
 				69F6C5712078547800380DF5 /* AssemblyTest.swift */,
-				696B34F2207BDFFD007DD318 /* Sequencer.swift */,
 				699FC564204E053600DB09B4 /* LaunchScreen.storyboard */,
 				693DF52D205997E0002C4821 /* Resources */,
 				699FC562204E053600DB09B4 /* Assets.xcassets */,
@@ -317,6 +312,7 @@
 		69F6C55920783C6200380DF5 /* Observers */ = {
 			isa = PBXGroup;
 			children = (
+				696B34F2207BDFFD007DD318 /* Sequencer.swift */,
 				696B34EA207BD804007DD318 /* PlayerRenderer.swift */,
 				6970F7952079C7DF00E315E4 /* BarrierRendererDelegate.swift */,
 				697FD96F207D31D700403C7F /* AreaRendererDelegate.swift */,
@@ -338,6 +334,18 @@
 				69F3DD64207E5CBF0010F4CE /* SpeedKernel.swift */,
 			);
 			path = Kernels;
+			sourceTree = "<group>";
+		};
+		69FE4C532081804200B0F05C /* Gameplay */ = {
+			isa = PBXGroup;
+			children = (
+				69CDEF09207C462A0016A527 /* Structure */,
+				696B34F4207BE27E007DD318 /* Data */,
+				69F6C55B20783C7500380DF5 /* Kernels */,
+				696B3503207BE283007DD318 /* Rules */,
+				69F6C55920783C6200380DF5 /* Observers */,
+			);
+			path = Gameplay;
 			sourceTree = "<group>";
 		};
 		9FEBE81FBD174B88AC4E666D /* Frameworks */ = {

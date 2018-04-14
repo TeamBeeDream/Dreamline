@@ -9,14 +9,6 @@
 import Foundation
 import SpriteKit
 
-class TestViewDelegate: NSObject, SKViewDelegate {
-    
-    func view(_ view: SKView, shouldRenderAtTime time: TimeInterval) -> Bool {
-        // @TODO: Use this to determine when to render the next frame
-        return true
-    }
-}
-
 class TestScene: SKScene {
     
     // MARK: Private Properties

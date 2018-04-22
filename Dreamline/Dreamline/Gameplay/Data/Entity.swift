@@ -115,6 +115,7 @@ enum EntityState {
 enum Threshold {
     case normal // @TEMP
     case speed
+    case roundOver // @TEMP
 }
 
 // MARK: Barrier

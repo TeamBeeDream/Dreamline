@@ -1,17 +1,18 @@
 //
-//  AssemblyTest.swift
+//  GameScene.swift
 //  Dreamline
 //
-//  Created by BeeDream on 4/6/18.
+//  Created by BeeDream on 4/13/18.
 //  Copyright © 2018 Team BeeDream. All rights reserved.
 //
 
-import Foundation
 import SpriteKit
 
-class TestScene: SKScene {
+class GameScene: SKScene {
     
     // MARK: Private Properties
+    
+    private var sceneDelegate: SceneDelegate?
     
     private var framework: Framework!
     private var inputDelegate: InputDelegate!
@@ -34,9 +35,11 @@ class TestScene: SKScene {
                      state: KernelState,
                      kernels: [Kernel],
                      rules: [Rule],
-                     observers: [Observer]) -> TestScene {
+                     observers: [Observer],
+                     delegate: SceneDelegate?) -> GameScene {
         
-        let instance = TestScene(size: size)
+        let instance = GameScene(size: size)
+        instance.sceneDelegate = delegate
         
         // @TEMP @HARDCODED
         let barrierRenderer = EntityRenderer.make(scene: instance,
@@ -63,6 +66,7 @@ class TestScene: SKScene {
                                               observer: customObservers)
         instance.framework = framework
         instance.inputDelegate = framework // ?
+        framework.delegate = instance
         
         return instance
     }
@@ -84,7 +88,7 @@ class TestScene: SKScene {
         self.previousTime = currentTime
         if dt > 1.0 { dt = 1.0/60.0 }
         
-        self.framework.update(deltaTime: dt) // WOW
+        self.framework.update(deltaTime: dt)
     }
     
     // @TEMP
@@ -104,5 +108,44 @@ class TestScene: SKScene {
     // @TEMP
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.inputDelegate.removeInput(count: touches.count)
+    }
+}
+
+extension GameScene: FrameworkDelegate {
+    func tempTransition() {
+        self.sceneDelegate!.didTransition(to: .title)
+    }
+}
+
+class GameSceneFactory {
+    static func master(size: CGSize, delegate: SceneDelegate?) -> GameScene {
+        let state = KernelState.new()
+        let kernels: [Kernel] =
+            [TimeKernel.make(),
+             BoardKernel.make(),
+             PositionKernel.make(),
+             InputKernel.make(),
+             StaminaKernel.make(),
+             SpeedKernel.make()]
+        let rules: [Rule] =
+            [ScrollRule.make(),
+             TimeRule.make(),
+             CleanupRule.make(),
+             SpawnRule.make(),
+             PositionRule.make(),
+             StaminaRule.make(),
+             LineCollisionRule.make(),
+             AreaCollisionRule.make(),
+             OrbCollisionRule.make(),
+             SpeedRule.make(),
+             TempRoundOverThresholdRule.make() // @TEMP
+        ]
+        
+        return GameScene.make(size: size,
+                              state: state,
+                              kernels: kernels,
+                              rules: rules,
+                              observers: [],
+                              delegate: delegate)
     }
 }

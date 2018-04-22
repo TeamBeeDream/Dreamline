@@ -19,6 +19,7 @@ class TempSequencer: Sequencer {
     // MARK: Private Properties
     
     private var random: Random!
+    private var current: Int = 0 // @TEMP
     
     // MARK: Init
     
@@ -32,7 +33,12 @@ class TempSequencer: Sequencer {
     
     func nextEntity() -> [(EntityType, EntityData)] {
         // @TEMP
-        return [self.createRandomOrb()]
+        self.current += 1
+        if self.current != 10 {
+            return [self.createRandomOrb()]
+        } else {
+            return [self.createRoundOverThreshold()]
+        }
     }
     
     // MARK: Private Methods
@@ -64,6 +70,11 @@ class TempSequencer: Sequencer {
     private func createRandomThreshold() -> (EntityType, EntityData) {
         let rand = self.random.next() > 0.5
         return (.threshold, .threshold(rand ? .normal : .speed))
+    }
+    
+    // @TEMP
+    private func createRoundOverThreshold() -> (EntityType, EntityData) {
+        return (.threshold, .threshold(.roundOver))
     }
     
     private func createRandomOrb() -> (EntityType, EntityData) {

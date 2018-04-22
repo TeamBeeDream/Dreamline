@@ -42,7 +42,7 @@ class BarrierRendererDelegate: EntityRendererDelegate {
             let texture = self.textures.retrieveTexture(key: 0) // @HARDCODED
             let sprite = SKSpriteNode(texture: texture)
             sprite.position.x = posX
-            sprite.zPosition = TestScene.LINE_Z_POSITION
+            sprite.zPosition = GameScene.LINE_Z_POSITION
             posX += offset
             container.addChild(sprite)
         }

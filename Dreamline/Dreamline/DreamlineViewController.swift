@@ -13,6 +13,7 @@ class DreamlineViewController: UIViewController {
     // MARK: Private Properties
     
     private var skView: SKView!
+    private var sceneController: SceneController!
     
     // MARK: Init and Deinit
     
@@ -26,44 +27,22 @@ class DreamlineViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.sceneController = DreamlineSceneController.make(size: self.view.frame.size)
+        
 //        let halfFrame = CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.width)
         let skView = SKView(frame: self.view.frame)
         skView.isMultipleTouchEnabled = true
         self.view.addSubview(skView)
         self.skView = skView // @IMPORTANT
         
-        // @TODO: Use factory to assemble these lists
-        let state = KernelState.new()
-        let kernels: [Kernel] =
-            [TimeKernel.make(),
-             BoardKernel.make(),
-             PositionKernel.make(),
-             InputKernel.make(),
-             StaminaKernel.make(),
-             SpeedKernel.make()]
-        let rules: [Rule] =
-            [ScrollRule.make(),
-             TimeRule.make(),
-             CleanupRule.make(),
-             SpawnRule.make(),
-             PositionRule.make(),
-             StaminaRule.make(),
-             LineCollisionRule.make(),
-             AreaCollisionRule.make(),
-             OrbCollisionRule.make(),
-             SpeedRule.make()]
-        
-        let scene = TestScene.make(size: skView.frame.size,
-                                   state: state,
-                                   kernels: kernels,
-                                   rules: rules,
-                                   observers: []) // @NOTE: Should Observers be just renderers?
-        scene.scaleMode = .aspectFit
-        skView.presentScene(scene)
+//        scene.scaleMode = .aspectFit
+//        skView.presentScene(scene)
         skView.ignoresSiblingOrder = true
         skView.showsDrawCount = true
         skView.showsFPS = true
         //skView.isAsynchronous = true // @NOTE: I'm not sure what this does
+        
+        self.didTransition(to: .title)
     }
     
 //    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -87,5 +66,12 @@ class DreamlineViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+}
+
+extension DreamlineViewController: SceneDelegate {
+    func didTransition(to: Scene) {
+        let toScene = self.sceneController.getScene(to, delegate: self)
+        self.skView.presentScene(toScene)
     }
 }

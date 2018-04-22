@@ -12,12 +12,20 @@ protocol Framework {
     func update(deltaTime: Double)
 }
 
+protocol FrameworkDelegate {
+    func tempTransition()
+}
+
 protocol InputDelegate {
     func addInput(lane: Int)
     func removeInput(count: Int)
 }
 
 class DefaultFramework: Framework, InputDelegate {
+    
+    // MARK: Public Properties
+    
+    var delegate: FrameworkDelegate!
     
     // MARK: Framework Properties
     

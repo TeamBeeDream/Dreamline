@@ -33,7 +33,7 @@ class ThresholdRendererDelegate: EntityRendererDelegate {
         let texture = self.textures.retrieveTexture(key: type)
         let sprite = SKSpriteNode(texture: texture)
         sprite.position.x = self.frame.midX
-        sprite.zPosition = TestScene.LINE_Z_POSITION // @HARDCODED
+        sprite.zPosition = GameScene.LINE_Z_POSITION // @HARDCODED
         return sprite
     }
     
@@ -56,5 +56,8 @@ class ThresholdRendererDelegate: EntityRendererDelegate {
         
         shape.fillColor = .green
         self.textures.storeTexture(SKView().texture(from: shape)!, forKey: .speed)
+        
+        shape.fillColor = .red
+        self.textures.storeTexture(SKView().texture(from: shape)!, forKey: .roundOver)
     }
 }

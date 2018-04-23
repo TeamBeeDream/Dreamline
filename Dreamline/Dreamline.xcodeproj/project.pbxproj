@@ -46,6 +46,7 @@
 		697FD96E207D307400403C7F /* Collision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96D207D307400403C7F /* Collision.swift */; };
 		697FD970207D31D700403C7F /* AreaRendererDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96F207D31D700403C7F /* AreaRendererDelegate.swift */; };
 		697FD972207D468800403C7F /* ThresholdRendererDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD971207D468800403C7F /* ThresholdRendererDelegate.swift */; };
+		6984C153208E5EEA00253739 /* BarrierRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984C152208E5EEA00253739 /* BarrierRule.swift */; };
 		699EB42D206DAFDA00693CB8 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42C206DAFDA00693CB8 /* Random.swift */; };
 		699EB42F206DB51200693CB8 /* RandomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42E206DB51200693CB8 /* RandomTests.swift */; };
 		699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC555204E053600DB09B4 /* AppDelegate.swift */; };
@@ -125,6 +126,7 @@
 		697FD96D207D307400403C7F /* Collision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Collision.swift; sourceTree = "<group>"; };
 		697FD96F207D31D700403C7F /* AreaRendererDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaRendererDelegate.swift; sourceTree = "<group>"; };
 		697FD971207D468800403C7F /* ThresholdRendererDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThresholdRendererDelegate.swift; sourceTree = "<group>"; };
+		6984C152208E5EEA00253739 /* BarrierRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarrierRule.swift; sourceTree = "<group>"; };
 		699EB42C206DAFDA00693CB8 /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		699EB42E206DB51200693CB8 /* RandomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTests.swift; sourceTree = "<group>"; };
 		699FC552204E053600DB09B4 /* Dreamline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dreamline.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -241,6 +243,7 @@
 				696B3507207BE283007DD318 /* SpawnRule.swift */,
 				696B3508207BE283007DD318 /* PositionRule.swift */,
 				696B3510207BE5B7007DD318 /* StaminaRule.swift */,
+				6984C152208E5EEA00253739 /* BarrierRule.swift */,
 				696B3512207BEA7B007DD318 /* LineCollisionRule.swift */,
 				697FD96B207D284500403C7F /* AreaCollisionRule.swift */,
 				69711D00207E68B600B7309C /* OrbCollisionRule.swift */,
@@ -716,6 +719,7 @@
 				69559C402089227100CD477E /* TempRoundOverThresholdRule.swift in Sources */,
 				69711D01207E68B600B7309C /* OrbCollisionRule.swift in Sources */,
 				69F6C56820783FF500380DF5 /* TimeKernel.swift in Sources */,
+				6984C153208E5EEA00253739 /* BarrierRule.swift in Sources */,
 				697FD96C207D284500403C7F /* AreaCollisionRule.swift in Sources */,
 				699EB42D206DAFDA00693CB8 /* Random.swift in Sources */,
 				69FE4C5A2081834400B0F05C /* TitleScene.swift in Sources */,

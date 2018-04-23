@@ -38,7 +38,7 @@ class DreamlineViewController: UIViewController {
         skView.showsFPS = true
         //skView.isAsynchronous = true // @NOTE: I'm not sure what this does
         
-        self.didTransition(to: .title)
+        self.didTransition(to: .game)
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

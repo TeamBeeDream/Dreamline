@@ -20,12 +20,17 @@ class TempSequencer: Sequencer {
     
     private var random: Random!
     private var current: Int = 0 // @TEMP
+    private var buffer: [(EntityType, EntityData)]!
     
     // MARK: Init
     
     static func make(random: Random) -> TempSequencer {
         let instance = TempSequencer()
         instance.random = random
+        
+        // @TEMP
+        instance.generateFullPattern()
+        
         return instance
     }
     
@@ -33,15 +38,23 @@ class TempSequencer: Sequencer {
     
     func nextEntity() -> [(EntityType, EntityData)] {
         // @TEMP
+//        self.current += 1
+//        if self.current != 10 {
+//            return [self.createRandomOrb()]
+//        } else {
+//            return [self.createRoundOverThreshold()]
+//        }
+        if self.current >= self.buffer.count { return [] }
+        let entity = self.buffer[self.current]
         self.current += 1
-        if self.current != 10 {
-            return [self.createRandomOrb()]
-        } else {
-            return [self.createRoundOverThreshold()]
-        }
+        return [entity]
     }
     
     // MARK: Private Methods
+    
+    private func generateFullPattern() {
+        self.buffer = TempWallGenerator().generate(length: 50)
+    }
     
     // @NOTE: These generation methods should be behind a protocol
     // @IDEA: Have generic functions that produce entities,
@@ -83,5 +96,43 @@ class TempSequencer: Sequencer {
         var orbs = [Orb](repeating: .none, count: 3)
         orbs[lane] = type
         return (.orb, .orb(orbs))
+    }
+}
+
+class TempBarrierSequencer: Sequencer {
+    
+    private var density: Double!
+    
+    static func make(density: Double) -> TempBarrierSequencer {
+        let instance = TempBarrierSequencer()
+        instance.density = density
+        return instance
+    }
+    
+    func nextEntity() -> [(EntityType, EntityData)] {
+        if !self.shouldPlaceBarrier(probability: self.density) {
+            return []
+        }
+        
+        return [self.generateRandomBarrier()]
+    }
+    
+    func shouldPlaceBarrier(probability: Double) -> Bool {
+        return RealRandom().next() > probability
+    }
+    
+    func generateRandomBarrier() -> (EntityType, EntityData) {
+        let numberOfOpenGates = RealRandom().nextBool() ? 1 : 2 // gross
+        let gates = self.generateRandomGateArray(numberOfOpenGates: numberOfOpenGates)
+        return (.barrier, .barrier(gates))
+    }
+    
+    func generateRandomGateArray(numberOfOpenGates: Int) -> [Gate] {
+        var gates: [Gate] = [.closed, .closed, .closed]
+        for _ in 1...numberOfOpenGates {
+            let randomLane = RealRandom().nextInt(min: 0, max: 2)
+            gates[randomLane] = .open
+        }
+        return gates
     }
 }

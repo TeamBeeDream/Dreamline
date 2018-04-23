@@ -212,6 +212,7 @@
 				699EB42C206DAFDA00693CB8 /* Random.swift */,
 				697FD96D207D307400403C7F /* Collision.swift */,
 				69711D04207E7D4600B7309C /* NodeCache.swift */,
+				696B34F2207BDFFD007DD318 /* Sequencer.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -321,7 +322,6 @@
 		69F6C55920783C6200380DF5 /* Observers */ = {
 			isa = PBXGroup;
 			children = (
-				696B34F2207BDFFD007DD318 /* Sequencer.swift */,
 				696B34EA207BD804007DD318 /* PlayerRenderer.swift */,
 				6970F7952079C7DF00E315E4 /* BarrierRendererDelegate.swift */,
 				697FD96F207D31D700403C7F /* AreaRendererDelegate.swift */,

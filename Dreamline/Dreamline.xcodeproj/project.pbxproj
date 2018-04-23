@@ -47,6 +47,8 @@
 		697FD970207D31D700403C7F /* AreaRendererDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD96F207D31D700403C7F /* AreaRendererDelegate.swift */; };
 		697FD972207D468800403C7F /* ThresholdRendererDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 697FD971207D468800403C7F /* ThresholdRendererDelegate.swift */; };
 		6984C153208E5EEA00253739 /* BarrierRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984C152208E5EEA00253739 /* BarrierRule.swift */; };
+		6984C155208E605600253739 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984C154208E605600253739 /* Score.swift */; };
+		6984C157208E607900253739 /* ScoreKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984C156208E607900253739 /* ScoreKernel.swift */; };
 		699EB42D206DAFDA00693CB8 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42C206DAFDA00693CB8 /* Random.swift */; };
 		699EB42F206DB51200693CB8 /* RandomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42E206DB51200693CB8 /* RandomTests.swift */; };
 		699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC555204E053600DB09B4 /* AppDelegate.swift */; };
@@ -127,6 +129,8 @@
 		697FD96F207D31D700403C7F /* AreaRendererDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaRendererDelegate.swift; sourceTree = "<group>"; };
 		697FD971207D468800403C7F /* ThresholdRendererDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThresholdRendererDelegate.swift; sourceTree = "<group>"; };
 		6984C152208E5EEA00253739 /* BarrierRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarrierRule.swift; sourceTree = "<group>"; };
+		6984C154208E605600253739 /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
+		6984C156208E607900253739 /* ScoreKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreKernel.swift; sourceTree = "<group>"; };
 		699EB42C206DAFDA00693CB8 /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		699EB42E206DB51200693CB8 /* RandomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTests.swift; sourceTree = "<group>"; };
 		699FC552204E053600DB09B4 /* Dreamline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dreamline.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -230,6 +234,7 @@
 				696B34FA207BE27E007DD318 /* Position.swift */,
 				696B34FB207BE27E007DD318 /* Phase.swift */,
 				69F3DD62207E5C530010F4CE /* Speed.swift */,
+				6984C154208E605600253739 /* Score.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -344,6 +349,7 @@
 				696B34F0207BDBC7007DD318 /* InputKernel.swift */,
 				696B350E207BE2C9007DD318 /* StaminaKernel.swift */,
 				69F3DD64207E5CBF0010F4CE /* SpeedKernel.swift */,
+				6984C156208E607900253739 /* ScoreKernel.swift */,
 			);
 			path = Kernels;
 			sourceTree = "<group>";
@@ -730,12 +736,14 @@
 				69F3DD67207E5DD10010F4CE /* SpeedRule.swift in Sources */,
 				696B350B207BE283007DD318 /* CleanupRule.swift in Sources */,
 				6970F7962079C7DF00E315E4 /* BarrierRendererDelegate.swift in Sources */,
+				6984C155208E605600253739 /* Score.swift in Sources */,
 				696B350C207BE283007DD318 /* SpawnRule.swift in Sources */,
 				696B3513207BEA7B007DD318 /* LineCollisionRule.swift in Sources */,
 				696B3509207BE283007DD318 /* ScrollRule.swift in Sources */,
 				69FE4C5E20818F9200B0F05C /* MenuScene.swift in Sources */,
 				69F3DD65207E5CBF0010F4CE /* SpeedKernel.swift in Sources */,
 				696B350F207BE2C9007DD318 /* StaminaKernel.swift in Sources */,
+				6984C157208E607900253739 /* ScoreKernel.swift in Sources */,
 				69711D07207E7FCB00B7309C /* EntityRenderer.swift in Sources */,
 				696B3501207BE27E007DD318 /* Position.swift in Sources */,
 				697FD970207D31D700403C7F /* AreaRendererDelegate.swift in Sources */,

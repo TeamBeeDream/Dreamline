@@ -126,7 +126,8 @@ class GameSceneFactory {
              PositionKernel.make(),
              InputKernel.make(),
              StaminaKernel.make(),
-             SpeedKernel.make()]
+             SpeedKernel.make(),
+             ScoreKernel.make()]
         let rules: [Rule] =
             [ScrollRule.make(),
              TimeRule.make(),

@@ -25,7 +25,7 @@ class BarrierRule: Rule {
             switch event {
             case .entityStateChanged(let entity):
                 if !entity.isA(.barrier) { break }
-                if entity.state == .passed  { instructions.append(.incrementStamina) }
+                if entity.state == .passed  { instructions.append(.addScore(1)) }
                 if entity.state == .hit     { instructions.append(.decrementStamina) }
                 
             default: break

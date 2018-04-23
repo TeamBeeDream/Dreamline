@@ -14,7 +14,7 @@ class PlayerRenderer: Observer {
     
     private var scene: SKScene!
     private var playerNode: SKNode!
-    private var staminaNode: SKLabelNode!
+    private var scoreLabel: SKLabelNode!
     
     private var yPos: Double = 0.0
     
@@ -44,7 +44,7 @@ class PlayerRenderer: Observer {
         label.zPosition = 2
         label.fontColor = .white
         self.scene.addChild(label) // @FIXME
-        self.staminaNode = label
+        self.scoreLabel = label
     }
     
     func observe(events: [KernelEvent]) {
@@ -54,10 +54,10 @@ class PlayerRenderer: Observer {
             case .positionUpdated(let position):
                 let pos = self.playerPoint(offset: position.offset)
                 self.playerNode?.position = pos
-                self.staminaNode?.position = CGPoint(x: pos.x + 35.0, y: pos.y + 8.0)
+                self.scoreLabel?.position = CGPoint(x: pos.x + 35.0, y: pos.y + 8.0)
                 
-            case .staminaUpdated(let level):
-                self.staminaNode?.text = "\(level)"
+            case .scoreUpdated(let score):
+                self.scoreLabel?.text = "\(score)"
                 
             default: break
                 

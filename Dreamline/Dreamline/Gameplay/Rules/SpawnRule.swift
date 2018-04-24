@@ -22,11 +22,8 @@ class SpawnRule: Rule {
     // MARK: Init
     
     static func make() -> Rule {
-        let sequencer = TempBarrierSequencer.make()
-        let params = SequencerParams(density: 0.5, length: 15) // @HARDCODED
-        
         let instance = SpawnRule()
-        instance.entityBuffer = sequencer.generateEntities(params: params)
+        instance.entityBuffer = []
         return instance
     }
     
@@ -42,6 +39,9 @@ class SpawnRule: Rule {
         
         for event in events {
             switch event {
+                
+            case .phaseChanged(let phase):
+                if phase == .setup { self.generateLevel() }
                 
             case .boardScrolled(let distance, _):
                 let overshoot = distance.truncatingRemainder(dividingBy: self.layout.distanceBetweenEntities)
@@ -66,5 +66,15 @@ class SpawnRule: Rule {
                 
             }
         }
+    }
+    
+    func generateLevel() {
+        let sequencer = TempBarrierSequencer.make()
+        let params = SequencerParams(density: 0.5, length: 15) // @HARDCODED
+        self.entityBuffer = sequencer.generateEntities(params: params)
+        
+        // @HACK
+        self.lastBarrierPosition = 0.0
+        self.currentId = 0
     }
 }

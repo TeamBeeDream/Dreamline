@@ -27,6 +27,10 @@ class ScoreKernel: Kernel {
             state.scoreState.barriersPassed += newPoints
             events.append(.scoreUpdated(state.scoreState.barriersPassed))
             
+        case .resetScore:
+            state.scoreState.barriersPassed = 0
+            events.append(.scoreUpdated(0))
+            
         default: break
         }
     }

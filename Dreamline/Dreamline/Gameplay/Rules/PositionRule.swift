@@ -49,7 +49,7 @@ class PositionRule: Rule {
                 self.playerOffset = position.offset
             
             case .inputChanged(let lane):
-                if self.phase == .playing {
+                if self.phase == .play {
                     self.targetLane = lane
                 }
                 

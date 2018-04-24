@@ -8,12 +8,12 @@
 
 import Foundation
 
-class ResetGameRule: Rule {
+class InputTapRules: Rule {
     
     private var phase: Phase!
     
-    static func make() -> ResetGameRule {
-        return ResetGameRule()
+    static func make() -> InputTapRules {
+        return InputTapRules()
     }
     
     func sync(state: KernelState) {
@@ -30,8 +30,12 @@ class ResetGameRule: Rule {
                 self.phase = phase
                 
             case .tapAdded:
-                if self.phase != .results { break }
-                instructions.append(.updatePhase(.reset))
+                switch self.phase {
+                case .results:
+                    instructions.append(.updatePhase(.reset))
+                    
+                default: break
+                }
                 
             default: break
             }

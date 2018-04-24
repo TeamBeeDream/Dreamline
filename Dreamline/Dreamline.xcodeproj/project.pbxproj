@@ -14,7 +14,7 @@
 		693DF52F205997ED002C4821 /* Pickup_Coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF52E205997ED002C4821 /* Pickup_Coin.wav */; };
 		693DF53120599961002C4821 /* Powerup.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF53020599961002C4821 /* Powerup.wav */; };
 		693DF533205999DC002C4821 /* Death.wav in Resources */ = {isa = PBXBuildFile; fileRef = 693DF532205999DC002C4821 /* Death.wav */; };
-		69559C402089227100CD477E /* TempRoundOverThresholdRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69559C3F2089227100CD477E /* TempRoundOverThresholdRule.swift */; };
+		69559C402089227100CD477E /* RoundOverRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69559C3F2089227100CD477E /* RoundOverRule.swift */; };
 		696B34E9207BD527007DD318 /* PositionKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B34E8207BD527007DD318 /* PositionKernel.swift */; };
 		696B34EB207BD804007DD318 /* PlayerRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B34EA207BD804007DD318 /* PlayerRenderer.swift */; };
 		696B34F1207BDBC7007DD318 /* InputKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B34F0207BDBC7007DD318 /* InputKernel.swift */; };
@@ -96,7 +96,7 @@
 		693DF52E205997ED002C4821 /* Pickup_Coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Pickup_Coin.wav; sourceTree = "<group>"; };
 		693DF53020599961002C4821 /* Powerup.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Powerup.wav; sourceTree = "<group>"; };
 		693DF532205999DC002C4821 /* Death.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Death.wav; sourceTree = "<group>"; };
-		69559C3F2089227100CD477E /* TempRoundOverThresholdRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempRoundOverThresholdRule.swift; sourceTree = "<group>"; };
+		69559C3F2089227100CD477E /* RoundOverRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundOverRule.swift; sourceTree = "<group>"; };
 		696B34E8207BD527007DD318 /* PositionKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionKernel.swift; sourceTree = "<group>"; };
 		696B34EA207BD804007DD318 /* PlayerRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerRenderer.swift; sourceTree = "<group>"; };
 		696B34F0207BDBC7007DD318 /* InputKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputKernel.swift; sourceTree = "<group>"; };
@@ -253,7 +253,7 @@
 				697FD96B207D284500403C7F /* AreaCollisionRule.swift */,
 				69711D00207E68B600B7309C /* OrbCollisionRule.swift */,
 				69F3DD66207E5DD10010F4CE /* SpeedRule.swift */,
-				69559C3F2089227100CD477E /* TempRoundOverThresholdRule.swift */,
+				69559C3F2089227100CD477E /* RoundOverRule.swift */,
 			);
 			path = Rules;
 			sourceTree = "<group>";
@@ -722,7 +722,7 @@
 				697FD972207D468800403C7F /* ThresholdRendererDelegate.swift in Sources */,
 				69F6C56E2078472100380DF5 /* BoardKernel.swift in Sources */,
 				699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */,
-				69559C402089227100CD477E /* TempRoundOverThresholdRule.swift in Sources */,
+				69559C402089227100CD477E /* RoundOverRule.swift in Sources */,
 				69711D01207E68B600B7309C /* OrbCollisionRule.swift in Sources */,
 				69F6C56820783FF500380DF5 /* TimeKernel.swift in Sources */,
 				6984C153208E5EEA00253739 /* BarrierRule.swift in Sources */,

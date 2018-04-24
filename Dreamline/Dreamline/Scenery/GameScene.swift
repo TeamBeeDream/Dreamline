@@ -136,12 +136,8 @@ class GameSceneFactory {
              PositionRule.make(),
              StaminaRule.make(),
              LineCollisionRule.make(),
-             BarrierRule.make()
-             //AreaCollisionRule.make(),
-             //OrbCollisionRule.make(),
-             //SpeedRule.make(),
-             //TempRoundOverThresholdRule.make() // @TEMP
-        ]
+             BarrierRule.make(),
+             RoundOverRule.make()]
         
         return GameScene.make(size: size,
                               state: state,

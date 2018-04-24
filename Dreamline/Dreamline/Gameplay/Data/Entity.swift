@@ -64,7 +64,7 @@ extension Entity {
 }
 
 enum EntityType {
-    case none
+    case blank
     case threshold
     case barrier
     case area
@@ -72,7 +72,7 @@ enum EntityType {
 }
 
 enum EntityData {
-    case none
+    case blank
     case threshold(Threshold)
     case barrier([Gate])
     case area([Area])
@@ -83,7 +83,7 @@ extension EntityData: Equatable {
     static func ==(lhs: EntityData, rhs: EntityData) -> Bool {
         switch (lhs, rhs) {
             
-        case (.none, .none): return true
+        case (.blank, .blank): return true
             
         case let (.threshold(lThreshold), .threshold(rThreshold)):
             return lThreshold == rThreshold

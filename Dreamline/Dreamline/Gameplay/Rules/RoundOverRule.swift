@@ -30,7 +30,7 @@ class RoundOverRule: Rule {
                 if !entity.isA(.threshold) { break }
                 if entity.thresholdType()! != .roundOver { break }
                 
-                print("ROUND OVER") // @TODO: Add proper instruction
+                instructions.append(.roundComplete)
                 
             default: break
             }

@@ -56,7 +56,8 @@ class GameScene: SKScene {
                                            areaRenderer,
                                            thresholdRenderer,
                                            orbRenderer,
-                                           PlayerRenderer.make(scene: instance)]
+                                           PlayerRenderer.make(scene: instance),
+                                           ResultsRenderer.make(scene: instance)]
         instance.renderers = customObservers
         customObservers.append(contentsOf: observers) // @HACK
         
@@ -127,7 +128,8 @@ class GameSceneFactory {
              InputKernel.make(),
              StaminaKernel.make(),
              SpeedKernel.make(),
-             ScoreKernel.make()]
+             ScoreKernel.make(),
+             GameKernel.make()]
         let rules: [Rule] =
             [ScrollRule.make(),
              TimeRule.make(),

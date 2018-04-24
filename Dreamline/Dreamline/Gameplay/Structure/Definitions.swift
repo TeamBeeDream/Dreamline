@@ -38,6 +38,10 @@ enum KernelInstruction {
     
     // Score
     case addScore(Int)
+    
+    // Game
+    case roundComplete
+    //case playerDead
 }
 
 // @TODO: Move this somewhere more obvious
@@ -72,6 +76,9 @@ enum KernelEvent {
     
     // Score
     case scoreUpdated(Int)
+    
+    // Game State
+    case roundComplete
 }
 
 // @TODO: Move this somewhere more obvious

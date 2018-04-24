@@ -84,8 +84,7 @@ class GameScene: SKScene {
         self.addChild(border)
         
         // @HACK
-        // @TODO: Trigger this after intro animation
-        self.framework.addInstruction(instruction: .updatePhase(.playing))
+        self.framework.addInstruction(instruction: .updatePhase(.reset))
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -145,7 +144,8 @@ class GameSceneFactory {
              LineCollisionRule.make(),
              BarrierRule.make(),
              RoundOverRule.make(),
-             ResetGameRule.make()]
+             ResetGameRule.make(),
+             SetupRoundRule.make()]
         
         return GameScene.make(size: size,
                               state: state,

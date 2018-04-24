@@ -13,4 +13,5 @@ enum Phase {
     case intro
     case playing
     case results
+    case reset
 }

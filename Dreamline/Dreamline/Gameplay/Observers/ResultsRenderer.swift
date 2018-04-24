@@ -49,6 +49,12 @@ class ResultsRenderer: Observer {
                 scoreLabel.position.y -= 24
                 self.nodeContainer.addChild(scoreLabel)
                 
+            case .phaseChanged(let phase):
+                if phase == .reset {
+                    self.nodeContainer.removeAllChildren()
+                    // @TODO: Properly handle reset
+                }
+                
             default: break
             }
         }

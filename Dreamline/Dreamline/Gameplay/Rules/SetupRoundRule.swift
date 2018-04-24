@@ -1,5 +1,5 @@
 //
-//  ResetGameRule.swift
+//  SetupRoundRule.swift
 //  Dreamline
 //
 //  Created by BeeDream on 4/24/18.
@@ -8,16 +8,14 @@
 
 import Foundation
 
-class ResetGameRule: Rule {
+class SetupRoundRule: Rule {
     
-    private var phase: Phase!
-    
-    static func make() -> ResetGameRule {
-        return ResetGameRule()
+    static func make() -> SetupRoundRule {
+        return SetupRoundRule()
     }
     
     func sync(state: KernelState) {
-        self.phase = state.phaseState
+        
     }
     
     func decide(events: inout [KernelEvent],
@@ -25,13 +23,15 @@ class ResetGameRule: Rule {
                 deltaTime: Double) {
         for event in events {
             switch event {
-                
             case .phaseChanged(let phase):
-                self.phase = phase
+                if phase != .reset { break }
                 
-            case .tapAdded:
-                if self.phase != .results { break }
-                instructions.append(.updatePhase(.reset))
+                instructions.append(.resetTime)
+                instructions.append(.clearBoard)
+                instructions.append(.updatePositionOffset(0.0))
+                instructions.append(.updateInput(0))
+                
+                instructions.append(.updatePhase(.playing)) // @FIXME: Should go to .intro
                 
             default: break
             }

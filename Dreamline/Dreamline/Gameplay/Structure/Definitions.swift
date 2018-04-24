@@ -16,12 +16,14 @@ enum KernelInstruction {
     case tick(Double)
     case pause
     case unpause
+    case resetTime
     
     // Board
     case addEntity(Entity)
     case removeEntity(Int)
     case scrollBoard(Double)
     case updateEntityState(Int, EntityState)
+    case clearBoard
     
     // Position
     case updatePositionOffset(Double) // @NOTE: only need to pass in offset, rest of values are calculated dynamically

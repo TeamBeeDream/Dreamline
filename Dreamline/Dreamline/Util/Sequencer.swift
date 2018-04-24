@@ -33,7 +33,7 @@ class TempBarrierSequencer: Sequencer {
     }
     
     func shouldPlaceBarrier(probability: Double) -> Bool {
-        return RealRandom().next() > probability
+        return RealRandom().next() < probability
     }
     
     func generateRandomBarrier() -> (EntityType, EntityData) {

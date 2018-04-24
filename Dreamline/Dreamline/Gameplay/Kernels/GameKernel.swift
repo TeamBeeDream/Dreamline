@@ -21,7 +21,7 @@ class GameKernel: Kernel {
         switch instr {
             
         case .roundComplete:
-            events.append(.roundComplete)
+            events.append(.roundComplete(state.scoreState))
             
         default: break
         }

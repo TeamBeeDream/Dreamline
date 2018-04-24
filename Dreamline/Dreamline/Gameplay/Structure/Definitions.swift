@@ -78,7 +78,7 @@ enum KernelEvent {
     case scoreUpdated(Int)
     
     // Game State
-    case roundComplete
+    case roundComplete(ScoreData)
 }
 
 // @TODO: Move this somewhere more obvious

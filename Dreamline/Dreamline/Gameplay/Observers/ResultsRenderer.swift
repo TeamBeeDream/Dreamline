@@ -34,13 +34,20 @@ class ResultsRenderer: Observer {
     func observe(events: [KernelEvent]) {
         for event in events {
             switch event {
-            case .roundComplete:
+            case .roundComplete(let score):
                 let label = SKLabelNode(text: "ROUND COMPLETE")
                 label.fontColor = .white
                 label.fontSize = 30
                 label.position = CGPoint(x: self.scene.frame.midX, y: self.scene.frame.midY)
                 label.run(SKAction.fadeIn(withDuration: 0.2))
                 self.nodeContainer.addChild(label)
+                
+                let scoreLabel = SKLabelNode(text: "\(score.barriersPassed)")
+                scoreLabel.fontColor = .lightText
+                scoreLabel.fontSize = 18
+                scoreLabel.position = label.position
+                scoreLabel.position.y -= 24
+                self.nodeContainer.addChild(scoreLabel)
                 
             default: break
             }

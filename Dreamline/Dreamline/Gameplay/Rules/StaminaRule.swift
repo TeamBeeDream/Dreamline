@@ -32,9 +32,9 @@ class StaminaRule: Rule {
                 
             case .entityStateChanged(let entity):
                 switch entity.type {
-//                case .barrier:
-//                    if entity.state == .hit    { instructions.append(.decrementStamina) }
-//                    if entity.state == .passed { instructions.append(.incrementStamina) }
+                case .barrier:
+                    if entity.state == .hit    { instructions.append(.decrementStamina) }
+                    if entity.state == .passed { instructions.append(.incrementStamina) }
 
                 case .threshold:
                     // @NOTE: Keyword .hit is ambiguous in this context

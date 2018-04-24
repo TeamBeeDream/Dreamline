@@ -35,6 +35,9 @@ enum KernelInstruction {
     
     // Speed
     case updateSpeed(Double)
+    
+    // Score
+    case addScore(Int)
 }
 
 // @TODO: Move this somewhere more obvious
@@ -66,6 +69,9 @@ enum KernelEvent {
     
     // Speed
     case speedUpdated(Double)
+    
+    // Score
+    case scoreUpdated(Int)
 }
 
 // @TODO: Move this somewhere more obvious
@@ -76,6 +82,7 @@ struct KernelState {
     var inputState: InputData
     var staminaState: StaminaData
     var speedState: SpeedData
+    var scoreState: ScoreData
     
     static func new() -> KernelState {
         return KernelState(timeState: TimeData.new(),
@@ -83,7 +90,8 @@ struct KernelState {
                            positionState: PositionData.new(),
                            inputState: InputData.new(),
                            staminaState: StaminaData.new(),
-                           speedState: SpeedData.new())
+                           speedState: SpeedData.new(),
+                           scoreState: ScoreData.new())
     }
 }
 

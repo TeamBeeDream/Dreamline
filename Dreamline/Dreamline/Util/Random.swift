@@ -11,6 +11,7 @@ import Foundation
 protocol Random {
     func next() -> Double // [0, 1]
     func nextInt(min: Int, max: Int) -> Int // [min, max]
+    func nextBool() -> Bool // False, True
 }
 
 class MockConstantRandom: Random {
@@ -31,6 +32,10 @@ class MockConstantRandom: Random {
         let range = Double(max - min)
         let randValue = self.next()
         return Int(randValue * range + Double(min))
+    }
+    
+    func nextBool() -> Bool {
+        return true
     }
 }
 
@@ -62,6 +67,10 @@ class MockAuthoredRandom: Random {
         let randValue = self.next()
         return Int(randValue * range + Double(min))
     }
+    
+    func nextBool() -> Bool {
+        return true
+    }
 }
 
 class RealRandom: Random {
@@ -76,5 +85,9 @@ class RealRandom: Random {
         let range = Double(max - min)
         let randValue = self.next()
         return Int(randValue * range + Double(min))
+    }
+    
+    func nextBool() -> Bool {
+        return self.next() > 0.5
     }
 }

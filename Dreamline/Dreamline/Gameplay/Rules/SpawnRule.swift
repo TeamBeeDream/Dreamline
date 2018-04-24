@@ -22,7 +22,8 @@ class SpawnRule: Rule {
     
     static func make() -> Rule {
         let instance = SpawnRule()
-        instance.sequencer = TempSequencer.make(random: RealRandom()) // @HARDCODED
+        //instance.sequencer = TempSequencer.make(random: RealRandom()) // @HARDCODED
+        instance.sequencer = TempBarrierSequencer.make(density: 0.5)
         return instance
     }
     

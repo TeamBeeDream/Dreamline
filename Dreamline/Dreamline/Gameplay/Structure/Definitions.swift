@@ -28,6 +28,7 @@ enum KernelInstruction {
     
     // Input
     case updateInput(Int)
+    case addTap
     
     // Stamina
     case incrementStamina
@@ -41,7 +42,7 @@ enum KernelInstruction {
     
     // Game
     case roundComplete
-    //case playerDead
+    case updatePhase(Phase)
 }
 
 // @TODO: Move this somewhere more obvious
@@ -67,6 +68,7 @@ enum KernelEvent {
     
     // Input
     case inputChanged(Int)
+    case tapAdded
     
     // Stamina
     case staminaUpdated(Int)
@@ -77,7 +79,8 @@ enum KernelEvent {
     // Score
     case scoreUpdated(Int)
     
-    // Game State
+    // Phase
+    case phaseChanged(Phase)
     case roundComplete(ScoreData)
 }
 
@@ -90,6 +93,7 @@ struct KernelState {
     var staminaState: StaminaData
     var speedState: SpeedData
     var scoreState: ScoreData
+    var phaseState: Phase
     
     static func new() -> KernelState {
         return KernelState(timeState: TimeData.new(),
@@ -98,7 +102,8 @@ struct KernelState {
                            inputState: InputData.new(),
                            staminaState: StaminaData.new(),
                            speedState: SpeedData.new(),
-                           scoreState: ScoreData.new())
+                           scoreState: ScoreData.new(),
+                           phaseState: .none) // awk
     }
 }
 

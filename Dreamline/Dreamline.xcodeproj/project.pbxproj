@@ -49,8 +49,9 @@
 		6984C153208E5EEA00253739 /* BarrierRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984C152208E5EEA00253739 /* BarrierRule.swift */; };
 		6984C155208E605600253739 /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984C154208E605600253739 /* Score.swift */; };
 		6984C157208E607900253739 /* ScoreKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984C156208E607900253739 /* ScoreKernel.swift */; };
-		6984C159208F829D00253739 /* GameKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984C158208F829D00253739 /* GameKernel.swift */; };
+		6984C159208F829D00253739 /* PhaseKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984C158208F829D00253739 /* PhaseKernel.swift */; };
 		6984C15B208F836500253739 /* ResultsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984C15A208F836500253739 /* ResultsRenderer.swift */; };
+		6984C15D208F8D8100253739 /* ResetGameRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984C15C208F8D8100253739 /* ResetGameRule.swift */; };
 		699EB42D206DAFDA00693CB8 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42C206DAFDA00693CB8 /* Random.swift */; };
 		699EB42F206DB51200693CB8 /* RandomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42E206DB51200693CB8 /* RandomTests.swift */; };
 		699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC555204E053600DB09B4 /* AppDelegate.swift */; };
@@ -133,8 +134,9 @@
 		6984C152208E5EEA00253739 /* BarrierRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarrierRule.swift; sourceTree = "<group>"; };
 		6984C154208E605600253739 /* Score.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Score.swift; sourceTree = "<group>"; };
 		6984C156208E607900253739 /* ScoreKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreKernel.swift; sourceTree = "<group>"; };
-		6984C158208F829D00253739 /* GameKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameKernel.swift; sourceTree = "<group>"; };
+		6984C158208F829D00253739 /* PhaseKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseKernel.swift; sourceTree = "<group>"; };
 		6984C15A208F836500253739 /* ResultsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsRenderer.swift; sourceTree = "<group>"; };
+		6984C15C208F8D8100253739 /* ResetGameRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetGameRule.swift; sourceTree = "<group>"; };
 		699EB42C206DAFDA00693CB8 /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		699EB42E206DB51200693CB8 /* RandomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTests.swift; sourceTree = "<group>"; };
 		699FC552204E053600DB09B4 /* Dreamline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dreamline.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -258,6 +260,7 @@
 				69711D00207E68B600B7309C /* OrbCollisionRule.swift */,
 				69F3DD66207E5DD10010F4CE /* SpeedRule.swift */,
 				69559C3F2089227100CD477E /* RoundOverRule.swift */,
+				6984C15C208F8D8100253739 /* ResetGameRule.swift */,
 			);
 			path = Rules;
 			sourceTree = "<group>";
@@ -355,7 +358,7 @@
 				696B350E207BE2C9007DD318 /* StaminaKernel.swift */,
 				69F3DD64207E5CBF0010F4CE /* SpeedKernel.swift */,
 				6984C156208E607900253739 /* ScoreKernel.swift */,
-				6984C158208F829D00253739 /* GameKernel.swift */,
+				6984C158208F829D00253739 /* PhaseKernel.swift */,
 			);
 			path = Kernels;
 			sourceTree = "<group>";
@@ -727,6 +730,7 @@
 				696B34EB207BD804007DD318 /* PlayerRenderer.swift in Sources */,
 				697FD972207D468800403C7F /* ThresholdRendererDelegate.swift in Sources */,
 				69F6C56E2078472100380DF5 /* BoardKernel.swift in Sources */,
+				6984C15D208F8D8100253739 /* ResetGameRule.swift in Sources */,
 				699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */,
 				69559C402089227100CD477E /* RoundOverRule.swift in Sources */,
 				6984C15B208F836500253739 /* ResultsRenderer.swift in Sources */,
@@ -747,7 +751,7 @@
 				696B350C207BE283007DD318 /* SpawnRule.swift in Sources */,
 				696B3513207BEA7B007DD318 /* LineCollisionRule.swift in Sources */,
 				696B3509207BE283007DD318 /* ScrollRule.swift in Sources */,
-				6984C159208F829D00253739 /* GameKernel.swift in Sources */,
+				6984C159208F829D00253739 /* PhaseKernel.swift in Sources */,
 				69FE4C5E20818F9200B0F05C /* MenuScene.swift in Sources */,
 				69F3DD65207E5CBF0010F4CE /* SpeedKernel.swift in Sources */,
 				696B350F207BE2C9007DD318 /* StaminaKernel.swift in Sources */,

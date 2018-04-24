@@ -82,6 +82,10 @@ class GameScene: SKScene {
         border.fillColor = .clear
         border.strokeColor = .cyan
         self.addChild(border)
+        
+        // @HACK
+        // @TODO: Trigger this after intro animation
+        self.framework.addInstruction(instruction: .updatePhase(.playing))
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -104,6 +108,7 @@ class GameScene: SKScene {
     // @TEMP
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.inputDelegate.removeInput(count: touches.count)
+        self.inputDelegate.triggerTap()
     }
     
     // @TEMP
@@ -129,7 +134,7 @@ class GameSceneFactory {
              StaminaKernel.make(),
              SpeedKernel.make(),
              ScoreKernel.make(),
-             GameKernel.make()]
+             PhaseKernel.make()]
         let rules: [Rule] =
             [ScrollRule.make(),
              TimeRule.make(),
@@ -139,7 +144,8 @@ class GameSceneFactory {
              StaminaRule.make(),
              LineCollisionRule.make(),
              BarrierRule.make(),
-             RoundOverRule.make()]
+             RoundOverRule.make(),
+             ResetGameRule.make()]
         
         return GameScene.make(size: size,
                               state: state,

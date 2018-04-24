@@ -10,6 +10,7 @@ import Foundation
 
 protocol Framework {
     func update(deltaTime: Double)
+    func addInstruction(instruction: KernelInstruction)
 }
 
 protocol FrameworkDelegate {
@@ -19,6 +20,7 @@ protocol FrameworkDelegate {
 protocol InputDelegate {
     func addInput(lane: Int)
     func removeInput(count: Int)
+    func triggerTap()
 }
 
 class DefaultFramework: Framework, InputDelegate {
@@ -43,6 +45,7 @@ class DefaultFramework: Framework, InputDelegate {
     
     private var inputCount: Int = 0
     private var inputTarget: Int = 0
+    private var pendingInstructions = [KernelInstruction]()
     
     // MARK: Init
     
@@ -69,8 +72,8 @@ class DefaultFramework: Framework, InputDelegate {
         var workingInstructions = self.instructions!
         
         // INPUT @HACK
-        let inputInstruction = KernelInstruction.updateInput(self.inputTarget)
-        workingInstructions.append(inputInstruction)
+        workingInstructions.append(contentsOf: self.pendingInstructions)
+        self.pendingInstructions.removeAll()
         
         // KERNEL
         for kernel in self.kernels {
@@ -113,18 +116,31 @@ class DefaultFramework: Framework, InputDelegate {
         self.instructions = workingInstructions
     }
     
+    func addInstruction(instruction: KernelInstruction) {
+        self.pendingInstructions.append(instruction)
+    }
+    
     // MARK: Input Delegate Methods
     
     func addInput(lane: Int) {
-        self.inputTarget = lane
         self.inputCount += 1
+        self.updateInput(lane: lane)
     }
     
     func removeInput(count: Int) {
         self.inputCount -= count
         if self.inputCount == 0 {
-            self.inputTarget = 0 // Reset to center
+            self.updateInput(lane: 0) // Reset to center
         }
+    }
+    
+    func triggerTap() {
+        self.pendingInstructions.append(.addTap)
+    }
+    
+    private func updateInput(lane: Int) {
+        self.inputTarget = lane
+        self.pendingInstructions.append(.updateInput(lane))
     }
     
     // MARK: Private Properties

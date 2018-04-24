@@ -28,6 +28,9 @@ class InputKernel: Kernel {
             state.inputState.targetLane = lane
             events.append(.inputChanged(lane))
             
+        case .addTap:
+            events.append(.tapAdded)
+            
         default: break
             
         }

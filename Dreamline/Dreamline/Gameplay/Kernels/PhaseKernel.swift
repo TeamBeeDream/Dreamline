@@ -9,16 +9,20 @@
 import Foundation
 
 // @NOTE: Need a better solution for handling state changes in the game.
-class GameKernel: Kernel {
+class PhaseKernel: Kernel {
     
-    static func make() -> GameKernel {
-        return GameKernel()
+    static func make() -> PhaseKernel {
+        return PhaseKernel()
     }
     
     func update(state: inout KernelState,
                 events: inout [KernelEvent],
                 instr: KernelInstruction) {
         switch instr {
+            
+        case .updatePhase(let phase):
+            state.phaseState = phase
+            events.append(.phaseChanged(state.phaseState))
             
         case .roundComplete:
             events.append(.roundComplete(state.scoreState))

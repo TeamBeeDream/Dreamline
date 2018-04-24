@@ -8,19 +8,17 @@
 
 import Foundation
 
-class TempRoundOverThresholdRule: Rule {
+class RoundOverRule: Rule {
     
     // MARK: Init
     
-    static func make() -> TempRoundOverThresholdRule {
-        return TempRoundOverThresholdRule()
+    static func make() -> RoundOverRule {
+        return RoundOverRule()
     }
     
     // MARK: Rule Methods
     
-    func sync(state: KernelState) {
-        
-    }
+    func sync(state: KernelState) {}
     
     func decide(events: inout [KernelEvent],
                 instructions: inout [KernelInstruction],
@@ -31,7 +29,9 @@ class TempRoundOverThresholdRule: Rule {
             case .entityStateChanged(let entity):
                 if !entity.isA(.threshold) { break }
                 if entity.thresholdType()! != .roundOver { break }
-                instructions.append(.pause)
+                
+                instructions.append(.updatePhase(.results))
+                instructions.append(.roundComplete)
                 
             default: break
             }

@@ -14,6 +14,7 @@ class PositionRule: Rule {
     
     private var targetLane: Int!
     private var playerOffset: Double!
+    private var phase: Phase!
     
     // MARK: Init
     
@@ -26,6 +27,7 @@ class PositionRule: Rule {
     func sync(state: KernelState) {
         self.targetLane = state.inputState.targetLane
         self.playerOffset = state.positionState.offset
+        self.phase = state.phaseState
     }
     
     func decide(events: inout [KernelEvent],
@@ -40,11 +42,16 @@ class PositionRule: Rule {
         for event in events {
             switch event {
                 
+            case .phaseChanged(let phase):
+                self.phase = phase
+                
             case .positionUpdated(let position):
                 self.playerOffset = position.offset
             
             case .inputChanged(let lane):
-                self.targetLane = lane
+                if self.phase == .playing {
+                    self.targetLane = lane
+                }
                 
             default: break
                 

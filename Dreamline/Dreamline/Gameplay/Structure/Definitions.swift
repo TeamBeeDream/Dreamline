@@ -16,18 +16,21 @@ enum KernelInstruction {
     case tick(Double)
     case pause
     case unpause
+    case resetTime
     
     // Board
     case addEntity(Entity)
     case removeEntity(Int)
     case scrollBoard(Double)
     case updateEntityState(Int, EntityState)
+    case clearBoard
     
     // Position
     case updatePositionOffset(Double) // @NOTE: only need to pass in offset, rest of values are calculated dynamically
     
     // Input
     case updateInput(Int)
+    case addTap
     
     // Stamina
     case incrementStamina
@@ -38,6 +41,10 @@ enum KernelInstruction {
     
     // Score
     case addScore(Int)
+    
+    // Game
+    case roundComplete
+    case updatePhase(Phase)
 }
 
 // @TODO: Move this somewhere more obvious
@@ -63,6 +70,7 @@ enum KernelEvent {
     
     // Input
     case inputChanged(Int)
+    case tapAdded
     
     // Stamina
     case staminaUpdated(Int)
@@ -72,6 +80,10 @@ enum KernelEvent {
     
     // Score
     case scoreUpdated(Int)
+    
+    // Phase
+    case phaseChanged(Phase)
+    case roundComplete(ScoreData)
 }
 
 // @TODO: Move this somewhere more obvious
@@ -83,6 +95,7 @@ struct KernelState {
     var staminaState: StaminaData
     var speedState: SpeedData
     var scoreState: ScoreData
+    var phaseState: Phase
     
     static func new() -> KernelState {
         return KernelState(timeState: TimeData.new(),
@@ -91,7 +104,8 @@ struct KernelState {
                            inputState: InputData.new(),
                            staminaState: StaminaData.new(),
                            speedState: SpeedData.new(),
-                           scoreState: ScoreData.new())
+                           scoreState: ScoreData.new(),
+                           phaseState: .none) // awk
     }
 }
 

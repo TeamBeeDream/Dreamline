@@ -56,7 +56,8 @@ class GameScene: SKScene {
                                            areaRenderer,
                                            thresholdRenderer,
                                            orbRenderer,
-                                           PlayerRenderer.make(scene: instance)]
+                                           PlayerRenderer.make(scene: instance),
+                                           ResultsRenderer.make(scene: instance)]
         instance.renderers = customObservers
         customObservers.append(contentsOf: observers) // @HACK
         
@@ -81,6 +82,9 @@ class GameScene: SKScene {
         border.fillColor = .clear
         border.strokeColor = .cyan
         self.addChild(border)
+        
+        // @HACK
+        self.framework.addInstruction(instruction: .updatePhase(.reset))
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -103,6 +107,7 @@ class GameScene: SKScene {
     // @TEMP
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.inputDelegate.removeInput(count: touches.count)
+        self.inputDelegate.triggerTap()
     }
     
     // @TEMP
@@ -127,7 +132,8 @@ class GameSceneFactory {
              InputKernel.make(),
              StaminaKernel.make(),
              SpeedKernel.make(),
-             ScoreKernel.make()]
+             ScoreKernel.make(),
+             PhaseKernel.make()]
         let rules: [Rule] =
             [ScrollRule.make(),
              TimeRule.make(),
@@ -136,12 +142,10 @@ class GameSceneFactory {
              PositionRule.make(),
              StaminaRule.make(),
              LineCollisionRule.make(),
-             BarrierRule.make()
-             //AreaCollisionRule.make(),
-             //OrbCollisionRule.make(),
-             //SpeedRule.make(),
-             //TempRoundOverThresholdRule.make() // @TEMP
-        ]
+             BarrierRule.make(),
+             RoundOverRule.make(),
+             ResetGameRule.make(),
+             SetupRoundRule.make()]
         
         return GameScene.make(size: size,
                               state: state,

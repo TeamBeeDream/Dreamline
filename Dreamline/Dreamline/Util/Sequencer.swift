@@ -8,28 +8,33 @@
 
 import Foundation
 
-// @TODO: Find place for this file
+struct SequencerParams {
+    var density: Double
+    var length: Int
+}
 
 protocol Sequencer {
-    func nextEntity() -> [(EntityType, EntityData)]
+    func generateEntities(params: SequencerParams) -> [(EntityType, EntityData)]
 }
 
 class TempBarrierSequencer: Sequencer {
     
-    private var density: Double!
-    
-    static func make(density: Double) -> TempBarrierSequencer {
+    static func make() -> TempBarrierSequencer {
         let instance = TempBarrierSequencer()
-        instance.density = density
         return instance
     }
     
-    func nextEntity() -> [(EntityType, EntityData)] {
-        if !self.shouldPlaceBarrier(probability: self.density) {
-            return []
+    func generateEntities(params: SequencerParams) -> [(EntityType, EntityData)] {
+        var entities = [(EntityType, EntityData)]()
+        for _ in 1...params.length {
+            if self.shouldPlaceBarrier(probability: params.density) {
+                entities.append(self.generateRandomBarrier())
+            } else {
+                entities.append((.blank, .blank))
+            }
         }
-        
-        return [self.generateRandomBarrier()]
+        entities.append((.threshold, .threshold(.roundOver))) // @HACK
+        return entities
     }
     
     func shouldPlaceBarrier(probability: Double) -> Bool {

@@ -39,6 +39,11 @@ class TimeKernel: Kernel {
             state.timeState.paused = false
             events.append(.unpaused)
             
+        case .resetTime:
+            state.timeState.frameNumber = 0
+            state.timeState.timeSinceBeginning = 0
+            // @TODO: Add event?
+            
         default: break
             
         }

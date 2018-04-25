@@ -8,7 +8,13 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+protocol GameDelegate {
+    func pause()
+    func unpause()
+    func gotoMenu()
+}
+
+class GameScene: SKScene, GameDelegate {
     
     // MARK: Private Properties
     
@@ -51,11 +57,14 @@ class GameScene: SKScene {
                                                     delegate: ThresholdRendererDelegate.make(frame: instance.frame))
         let orbRenderer = EntityRenderer.make(scene: instance,
                                               delegate: OrbRendererDelegate.make(frame: instance.frame))
+        let pauseRenderer = PauseRenderer.make(scene: instance)
+        pauseRenderer.setDelegate(instance)
         
         var customObservers: [Observer] = [barrierRenderer,
                                            areaRenderer,
                                            thresholdRenderer,
                                            orbRenderer,
+                                           pauseRenderer,
                                            PlayerRenderer.make(scene: instance),
                                            ResultsRenderer.make(scene: instance)]
         instance.renderers = customObservers
@@ -113,6 +122,20 @@ class GameScene: SKScene {
     // @TEMP
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.inputDelegate.removeInput(count: touches.count)
+    }
+    
+    // MARK: Game Delegate Methods
+    
+    func pause() {
+        self.framework.addInstruction(instruction: .pause)
+    }
+    
+    func unpause() {
+        self.framework.addInstruction(instruction: .unpause)
+    }
+    
+    func gotoMenu() {
+        self.sceneDelegate?.didTransition(to: .menu)
     }
 }
 

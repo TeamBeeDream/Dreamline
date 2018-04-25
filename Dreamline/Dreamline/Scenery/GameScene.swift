@@ -84,7 +84,7 @@ class GameScene: SKScene {
         self.addChild(border)
         
         // @HACK
-        self.framework.addInstruction(instruction: .updatePhase(.reset))
+        self.framework.addInstruction(instruction: .updatePhase(.setup))
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -140,12 +140,12 @@ class GameSceneFactory {
              CleanupRule.make(),
              SpawnRule.make(),
              PositionRule.make(),
-             StaminaRule.make(),
+             //StaminaRule.make(),
              LineCollisionRule.make(),
              BarrierRule.make(),
+             PhaseRules.make(),
              RoundOverRule.make(),
-             ResetGameRule.make(),
-             SetupRoundRule.make()]
+             InputTapRules.make()]
         
         return GameScene.make(size: size,
                               state: state,

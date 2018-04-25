@@ -23,13 +23,15 @@ enum KernelInstruction {
     case removeEntity(Int)
     case scrollBoard(Double)
     case updateEntityState(Int, EntityState)
-    case clearBoard
+    case resetBoard
     
     // Position
     case updatePositionOffset(Double) // @NOTE: only need to pass in offset, rest of values are calculated dynamically
+    case resetPosition
     
     // Input
     case updateInput(Int)
+    case resetInput
     case addTap
     
     // Stamina
@@ -41,6 +43,7 @@ enum KernelInstruction {
     
     // Score
     case addScore(Int)
+    case resetScore
     
     // Game
     case roundComplete

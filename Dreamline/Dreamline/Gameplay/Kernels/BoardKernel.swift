@@ -54,7 +54,7 @@ class BoardKernel: Kernel {
             state.boardState.entities[id]!.state = entityState
             events.append(.entityStateChanged(state.boardState.entities[id]!))
             
-        case .clearBoard: // @HACK
+        case .resetBoard:
             for entity in state.boardState.entities {
                 state.boardState.entities[entity.key] = nil
                 events.append(.entityRemoved(entity.key))

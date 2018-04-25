@@ -41,8 +41,8 @@ class TimeKernel: Kernel {
             
         case .resetTime:
             state.timeState.frameNumber = 0
-            state.timeState.timeSinceBeginning = 0
-            // @TODO: Add event?
+            state.timeState.timeSinceBeginning = 0.0
+            state.timeState.deltaTime = 0.0
             
         default: break
             

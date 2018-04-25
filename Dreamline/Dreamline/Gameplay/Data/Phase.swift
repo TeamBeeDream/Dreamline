@@ -10,8 +10,8 @@ import Foundation
 
 enum Phase {
     case none
-    case intro
-    case playing
+    case setup
+    case play
     case results
     case reset
 }

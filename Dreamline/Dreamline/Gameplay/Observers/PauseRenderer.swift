@@ -74,8 +74,13 @@ class PauseRenderer: Observer, TouchEnabled {
             switch event {
             case .paused:
                 self.menuNode.run(self.showAction())
+                self.pauseButton.run(self.hideAction())
             case .unpaused:
                 self.menuNode.run(self.hideAction())
+                self.pauseButton.run(self.showAction())
+            case .phaseChanged(let phase):
+                if phase == .setup { self.pauseButton.run(self.showAction()) }
+                if phase == .results { self.pauseButton.run(self.hideAction()) }
             default: break
             }
         }
@@ -84,13 +89,8 @@ class PauseRenderer: Observer, TouchEnabled {
     // MARK: TouchEnabled Methods
     
     func setDelegate(_ delegate: GameDelegate) {
-        self.pauseButton.delegate = {
-            delegate.pause()
-        }
-        
-        self.resumeButton.delegate = {
-            delegate.unpause()
-        }
+        self.pauseButton.delegate = { delegate.pause() }
+        self.resumeButton.delegate = { delegate.unpause() }
     }
     
     // MARK: Private Methods

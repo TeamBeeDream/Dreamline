@@ -18,9 +18,8 @@ class PauseRenderer: Observer, TouchEnabled {
     // MARK: Private Properties
     
     private var scene: SKScene!
-    private var menuNode: SKNode!
+    private var menuNode: PauseMenuNode!
     private var pauseButton: ButtonNode!
-    private var resumeButton: ButtonNode!
     
     // MARK: Init
     
@@ -28,41 +27,25 @@ class PauseRenderer: Observer, TouchEnabled {
         
         // @TEMP
         let frame = scene.frame
-        let buttonRect = CGRect(x: frame.minX + 50, y: frame.maxY - 50, width: 50, height: 50)
         
-        let container = SKNode()
-        container.zPosition = 100 // @HARDCODED
-        
-        let background = SKShapeNode(rect: PauseRenderer.getMenuRect(frame: scene.frame, margin: 0.1))
-        background.lineWidth = 0.0
-        background.fillColor = .cyan
-        container.addChild(background)
-        scene.addChild(container)
-        
-        let pauseButton = ButtonNode(color: .red, size: buttonRect.size)
-        pauseButton.zPosition = 50 // :(
-        pauseButton.isUserInteractionEnabled = true
-        pauseButton.position = buttonRect.origin
+        let pauseButton = PauseButtonNode.make(size: CGSize(width: 50, height: 50))
+        pauseButton.position = CGPoint(x: frame.minX + 75, y: frame.maxY - 75)
         scene.addChild(pauseButton)
         
-        let resumeButton = ButtonNode(color: .orange, size: CGSize(width: 100, height: 50))
-        resumeButton.zPosition = 101
-        resumeButton.isUserInteractionEnabled = true
-        resumeButton.position = CGPoint(x: frame.midX, y: frame.midY)
-        container.addChild(resumeButton)
+        let menuRect = PauseRenderer.getMenuRect(frame: scene.frame, margin: 0.15)
+        let menuNode = PauseMenuNode.make(rect: menuRect)
+        scene.addChild(menuNode)
         
         let instance = PauseRenderer()
         instance.scene = scene
         instance.pauseButton = pauseButton
-        instance.resumeButton = resumeButton
-        instance.menuNode = container
+        instance.menuNode = menuNode
         return instance
     }
     
     // MARK: Observer Methods
     
     func sync(state: KernelState) {
-        
         if !state.timeState.paused {
             self.menuNode.alpha = 0.0
             self.menuNode.xScale = 0.0
@@ -73,14 +56,14 @@ class PauseRenderer: Observer, TouchEnabled {
         for event in events {
             switch event {
             case .paused:
-                self.menuNode.run(self.showAction())
-                self.pauseButton.run(self.hideAction())
+                self.run(self.menuNode, action: self.showAction())
+                self.run(self.pauseButton, action: self.hideAction())
             case .unpaused:
-                self.menuNode.run(self.hideAction())
-                self.pauseButton.run(self.showAction())
+                self.run(self.menuNode, action: self.hideAction())
+                self.run(self.pauseButton, action: self.showAction())
             case .phaseChanged(let phase):
-                if phase == .setup { self.pauseButton.run(self.showAction()) }
-                if phase == .results { self.pauseButton.run(self.hideAction()) }
+                if phase == .setup { self.run(self.pauseButton, action: self.showAction()) }
+                if phase == .results { self.run(self.pauseButton, action: self.hideAction()) }
             default: break
             }
         }
@@ -89,8 +72,9 @@ class PauseRenderer: Observer, TouchEnabled {
     // MARK: TouchEnabled Methods
     
     func setDelegate(_ delegate: GameDelegate) {
-        self.pauseButton.delegate = { delegate.pause() }
-        self.resumeButton.delegate = { delegate.unpause() }
+        self.pauseButton.action = { delegate.pause() }
+        self.menuNode.resumeButton.action = { delegate.unpause() }
+        self.menuNode.menuButton.action = { delegate.gotoMenu() }
     }
     
     // MARK: Private Methods
@@ -102,6 +86,11 @@ class PauseRenderer: Observer, TouchEnabled {
                       y: frame.minY + marginInPixels,
                       width: frame.width - marginInPixels * 2,
                       height: frame.height - marginInPixels * 2)
+    }
+    
+    private func run(_ node: SKNode, action: SKAction) {
+        node.removeAllActions()
+        node.run(action)
     }
     
     private func showAction() -> SKAction {
@@ -117,15 +106,3 @@ class PauseRenderer: Observer, TouchEnabled {
     }
 }
 
-protocol TouchDelegate {
-    func handleTouch()
-}
-
-class ButtonNode: SKSpriteNode {
-    
-    var delegate: (() -> Void)?
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.delegate?()
-    }
-}

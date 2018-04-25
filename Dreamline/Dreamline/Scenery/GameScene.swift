@@ -11,6 +11,7 @@ import SpriteKit
 protocol GameDelegate {
     func pause()
     func unpause()
+    func gotoMenu()
 }
 
 class GameScene: SKScene, GameDelegate {
@@ -131,6 +132,10 @@ class GameScene: SKScene, GameDelegate {
     
     func unpause() {
         self.framework.addInstruction(instruction: .unpause)
+    }
+    
+    func gotoMenu() {
+        self.sceneDelegate?.didTransition(to: .menu)
     }
 }
 

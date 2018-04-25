@@ -52,6 +52,7 @@
 		6984C159208F829D00253739 /* PhaseKernel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984C158208F829D00253739 /* PhaseKernel.swift */; };
 		6984C15B208F836500253739 /* ResultsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984C15A208F836500253739 /* ResultsRenderer.swift */; };
 		6984C15D208F8D8100253739 /* InputTapRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6984C15C208F8D8100253739 /* InputTapRules.swift */; };
+		6996DD5E2090D463004E0522 /* PauseRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6996DD5D2090D463004E0522 /* PauseRenderer.swift */; };
 		699EB42D206DAFDA00693CB8 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42C206DAFDA00693CB8 /* Random.swift */; };
 		699EB42F206DB51200693CB8 /* RandomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699EB42E206DB51200693CB8 /* RandomTests.swift */; };
 		699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC555204E053600DB09B4 /* AppDelegate.swift */; };
@@ -138,6 +139,7 @@
 		6984C158208F829D00253739 /* PhaseKernel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhaseKernel.swift; sourceTree = "<group>"; };
 		6984C15A208F836500253739 /* ResultsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsRenderer.swift; sourceTree = "<group>"; };
 		6984C15C208F8D8100253739 /* InputTapRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTapRules.swift; sourceTree = "<group>"; };
+		6996DD5D2090D463004E0522 /* PauseRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseRenderer.swift; sourceTree = "<group>"; };
 		699EB42C206DAFDA00693CB8 /* Random.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		699EB42E206DB51200693CB8 /* RandomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTests.swift; sourceTree = "<group>"; };
 		699FC552204E053600DB09B4 /* Dreamline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dreamline.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -347,6 +349,7 @@
 				69711D02207E704400B7309C /* OrbRendererDelegate.swift */,
 				69711D06207E7FCB00B7309C /* EntityRenderer.swift */,
 				6984C15A208F836500253739 /* ResultsRenderer.swift */,
+				6996DD5D2090D463004E0522 /* PauseRenderer.swift */,
 			);
 			path = Observers;
 			sourceTree = "<group>";
@@ -721,6 +724,7 @@
 				697FD96E207D307400403C7F /* Collision.swift in Sources */,
 				69CDEF0B207C467B0016A527 /* Framework.swift in Sources */,
 				696B34F3207BDFFD007DD318 /* Sequencer.swift in Sources */,
+				6996DD5E2090D463004E0522 /* PauseRenderer.swift in Sources */,
 				696B350D207BE283007DD318 /* PositionRule.swift in Sources */,
 				696B34FD207BE27E007DD318 /* Board.swift in Sources */,
 				699FC55E204E053600DB09B4 /* DreamlineViewController.swift in Sources */,

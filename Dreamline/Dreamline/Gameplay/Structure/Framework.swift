@@ -21,6 +21,7 @@ protocol InputDelegate {
     func addInput(lane: Int)
     func removeInput(count: Int)
     func triggerTap()
+    func pauseTap()
 }
 
 class DefaultFramework: Framework, InputDelegate {
@@ -136,6 +137,14 @@ class DefaultFramework: Framework, InputDelegate {
     
     func triggerTap() {
         self.pendingInstructions.append(.addTap)
+    }
+    
+    func pauseTap() {
+        if self.state.timeState.paused {
+            self.pendingInstructions.append(.unpause)
+        } else {
+            self.pendingInstructions.append(.pause)
+        }
     }
     
     private func updateInput(lane: Int) {

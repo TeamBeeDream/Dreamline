@@ -51,11 +51,13 @@ class GameScene: SKScene {
                                                     delegate: ThresholdRendererDelegate.make(frame: instance.frame))
         let orbRenderer = EntityRenderer.make(scene: instance,
                                               delegate: OrbRendererDelegate.make(frame: instance.frame))
+        let pauseRenderer = PauseRenderer.make(scene: instance)
         
         var customObservers: [Observer] = [barrierRenderer,
                                            areaRenderer,
                                            thresholdRenderer,
                                            orbRenderer,
+                                           pauseRenderer,
                                            PlayerRenderer.make(scene: instance),
                                            ResultsRenderer.make(scene: instance)]
         instance.renderers = customObservers
@@ -108,6 +110,14 @@ class GameScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.inputDelegate.removeInput(count: touches.count)
         self.inputDelegate.triggerTap()
+        
+        // @HACK
+        for t in touches {
+            let loc = t.location(in: self)
+            if loc.y > self.frame.height * 0.80 {
+                self.inputDelegate.pauseTap()
+            }
+        }
     }
     
     // @TEMP

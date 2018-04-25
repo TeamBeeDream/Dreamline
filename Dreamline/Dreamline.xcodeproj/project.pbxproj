@@ -270,6 +270,21 @@
 			path = Rules;
 			sourceTree = "<group>";
 		};
+		6996DD5F2090FFF7004E0522 /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				696B34EA207BD804007DD318 /* PlayerRenderer.swift */,
+				6970F7952079C7DF00E315E4 /* BarrierRendererDelegate.swift */,
+				697FD96F207D31D700403C7F /* AreaRendererDelegate.swift */,
+				697FD971207D468800403C7F /* ThresholdRendererDelegate.swift */,
+				69711D02207E704400B7309C /* OrbRendererDelegate.swift */,
+				69711D06207E7FCB00B7309C /* EntityRenderer.swift */,
+				6984C15A208F836500253739 /* ResultsRenderer.swift */,
+				6996DD5D2090D463004E0522 /* PauseRenderer.swift */,
+			);
+			path = Rendering;
+			sourceTree = "<group>";
+		};
 		699FC549204E053600DB09B4 = {
 			isa = PBXGroup;
 			children = (
@@ -295,6 +310,7 @@
 		699FC554204E053600DB09B4 /* Dreamline */ = {
 			isa = PBXGroup;
 			children = (
+				6996DD5F2090FFF7004E0522 /* Rendering */,
 				69FE4C542081810300B0F05C /* Scenery */,
 				69FE4C532081804200B0F05C /* Gameplay */,
 				693E1BAB2059A79A008DBACE /* Util */,
@@ -339,21 +355,6 @@
 			path = Structure;
 			sourceTree = "<group>";
 		};
-		69F6C55920783C6200380DF5 /* Observers */ = {
-			isa = PBXGroup;
-			children = (
-				696B34EA207BD804007DD318 /* PlayerRenderer.swift */,
-				6970F7952079C7DF00E315E4 /* BarrierRendererDelegate.swift */,
-				697FD96F207D31D700403C7F /* AreaRendererDelegate.swift */,
-				697FD971207D468800403C7F /* ThresholdRendererDelegate.swift */,
-				69711D02207E704400B7309C /* OrbRendererDelegate.swift */,
-				69711D06207E7FCB00B7309C /* EntityRenderer.swift */,
-				6984C15A208F836500253739 /* ResultsRenderer.swift */,
-				6996DD5D2090D463004E0522 /* PauseRenderer.swift */,
-			);
-			path = Observers;
-			sourceTree = "<group>";
-		};
 		69F6C55B20783C7500380DF5 /* Kernels */ = {
 			isa = PBXGroup;
 			children = (
@@ -376,7 +377,6 @@
 				696B34F4207BE27E007DD318 /* Data */,
 				69F6C55B20783C7500380DF5 /* Kernels */,
 				696B3503207BE283007DD318 /* Rules */,
-				69F6C55920783C6200380DF5 /* Observers */,
 			);
 			path = Gameplay;
 			sourceTree = "<group>";

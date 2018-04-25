@@ -8,7 +8,12 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+protocol GameDelegate {
+    func pause()
+    func unpause()
+}
+
+class GameScene: SKScene, GameDelegate {
     
     // MARK: Private Properties
     
@@ -52,6 +57,7 @@ class GameScene: SKScene {
         let orbRenderer = EntityRenderer.make(scene: instance,
                                               delegate: OrbRendererDelegate.make(frame: instance.frame))
         let pauseRenderer = PauseRenderer.make(scene: instance)
+        pauseRenderer.setDelegate(instance)
         
         var customObservers: [Observer] = [barrierRenderer,
                                            areaRenderer,
@@ -110,19 +116,21 @@ class GameScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.inputDelegate.removeInput(count: touches.count)
         self.inputDelegate.triggerTap()
-        
-        // @HACK
-        for t in touches {
-            let loc = t.location(in: self)
-            if loc.y > self.frame.height * 0.80 {
-                self.inputDelegate.pauseTap()
-            }
-        }
     }
     
     // @TEMP
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.inputDelegate.removeInput(count: touches.count)
+    }
+    
+    // MARK: Game Delegate Methods
+    
+    func pause() {
+        self.framework.addInstruction(instruction: .pause)
+    }
+    
+    func unpause() {
+        self.framework.addInstruction(instruction: .unpause)
     }
 }
 

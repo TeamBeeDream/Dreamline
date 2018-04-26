@@ -8,13 +8,8 @@
 
 import Foundation
 
-struct SequencerParams {
-    var density: Double
-    var length: Int
-}
-
 protocol Sequencer {
-    func generateEntities(params: SequencerParams) -> [(EntityType, EntityData)]
+    func generateEntities(numberOfBarriers: Int, density: Double) -> [(EntityType, EntityData)]
 }
 
 class TempBarrierSequencer: Sequencer {
@@ -24,11 +19,13 @@ class TempBarrierSequencer: Sequencer {
         return instance
     }
     
-    func generateEntities(params: SequencerParams) -> [(EntityType, EntityData)] {
+    func generateEntities(numberOfBarriers: Int, density: Double) -> [(EntityType, EntityData)] {
         var entities = [(EntityType, EntityData)]()
-        for _ in 1...params.length {
-            if self.shouldPlaceBarrier(probability: params.density) {
+        var totalBarriers = 0
+        while totalBarriers < numberOfBarriers {
+            if self.shouldPlaceBarrier(probability: density) {
                 entities.append(self.generateRandomBarrier())
+                totalBarriers += 1
             } else {
                 entities.append((.blank, .blank))
             }
@@ -50,7 +47,7 @@ class TempBarrierSequencer: Sequencer {
     func generateRandomGateArray(numberOfOpenGates: Int) -> [Gate] {
         var gates: [Gate] = [.closed, .closed, .closed]
         for _ in 1...numberOfOpenGates {
-            let randomLane = RealRandom().nextInt(min: 0, max: 2)
+            let randomLane = RealRandom().nextInt(min: 0, max: 3)
             gates[randomLane] = .open
         }
         return gates

@@ -50,20 +50,13 @@ class GameScene: SKScene, GameDelegate {
         // @TEMP @HARDCODED
         let barrierRenderer = EntityRenderer.make(scene: instance,
                                                   delegate: BarrierRendererDelegate.make(frame: instance.frame))
-        let areaRenderer = EntityRenderer.make(scene: instance,
-                                               delegate: AreaRendererDelegate.make(frame: instance.frame,
-                                                                                   state: state))
         let thresholdRenderer = EntityRenderer.make(scene: instance,
                                                     delegate: ThresholdRendererDelegate.make(frame: instance.frame))
-        let orbRenderer = EntityRenderer.make(scene: instance,
-                                              delegate: OrbRendererDelegate.make(frame: instance.frame))
         let pauseRenderer = PauseRenderer.make(scene: instance)
         pauseRenderer.setDelegate(instance)
         
         var customObservers: [Observer] = [barrierRenderer,
-                                           areaRenderer,
                                            thresholdRenderer,
-                                           orbRenderer,
                                            pauseRenderer,
                                            PlayerRenderer.make(scene: instance),
                                            ResultsRenderer.make(scene: instance)]
@@ -154,7 +147,6 @@ class GameSceneFactory {
              PositionKernel.make(),
              InputKernel.make(),
              StaminaKernel.make(),
-             SpeedKernel.make(),
              ScoreKernel.make(),
              PhaseKernel.make()]
         let rules: [Rule] =
@@ -163,7 +155,6 @@ class GameSceneFactory {
              CleanupRule.make(),
              SpawnRule.make(),
              PositionRule.make(),
-             //StaminaRule.make(),
              LineCollisionRule.make(),
              BarrierRule.make(),
              PhaseRules.make(),

@@ -16,6 +16,7 @@ class SpawnRule: Rule {
     private var lastBarrierPosition: Double = 0.0
     
     private var layout: BoardLayout!
+    private var distanceBetweenEntities: Double!
     
     private var entityBuffer: [(EntityType, EntityData)]!
     
@@ -31,6 +32,7 @@ class SpawnRule: Rule {
     
     func sync(state: KernelState) {
         self.layout = state.boardState.layout
+        self.distanceBetweenEntities = state.boardState.distanceBetweenEntities
     }
     
     func decide(events: inout [KernelEvent],
@@ -40,11 +42,20 @@ class SpawnRule: Rule {
         for event in events {
             switch event {
                 
+            case .boardDistanceChanged(let distanceBetweenBarriers):
+                self.distanceBetweenEntities = distanceBetweenBarriers
+                
             case .phaseChanged(let phase):
-                if phase == .setup { self.generateLevel() }
+                if phase == .setup {
+                    self.generateLevel()
+                    let speed = 3.0
+                    let distance = self.calculateDistanceBetweenBarriers(timeToCompleteInSeconds: 45,
+                                                                         speed: speed)
+                    instructions.append(.configureBoard(speed, distance))
+                }
                 
             case .boardScrolled(let distance, _):
-                let overshoot = distance.truncatingRemainder(dividingBy: self.layout.distanceBetweenEntities)
+                let overshoot = distance.truncatingRemainder(dividingBy: self.distanceBetweenEntities)
                 let nearest = distance - overshoot
                 
                 // @CLEANUP
@@ -70,11 +81,15 @@ class SpawnRule: Rule {
     
     func generateLevel() {
         let sequencer = TempBarrierSequencer.make()
-        let params = SequencerParams(density: 0.5, length: 15) // @HARDCODED
-        self.entityBuffer = sequencer.generateEntities(params: params)
+        self.entityBuffer = sequencer.generateEntities(numberOfBarriers: 100, density: 1.0)
         
         // @HACK
         self.lastBarrierPosition = 0.0
         self.currentId = 0
+    }
+    
+    func calculateDistanceBetweenBarriers(timeToCompleteInSeconds: Int, speed: Double) -> Double {
+        let totalEntityCount = Double(self.entityBuffer.count)
+        return ((Double(timeToCompleteInSeconds) * speed) / totalEntityCount)
     }
 }

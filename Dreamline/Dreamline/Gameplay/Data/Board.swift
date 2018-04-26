@@ -15,20 +15,17 @@ struct BoardData {
     var entities: [Int: Entity]
     var layout: BoardLayout
     var scrollDistance: Double
+    var scrollSpeed: Double
+    var distanceBetweenEntities: Double
 
     // MARK: Static Constructors
     
     static func new() -> BoardData {
         return BoardData(entities: [Int: Entity](),
                          layout: BoardLayout.new(),
-                         scrollDistance: 0.0)
-    }
-    
-    // @REMOVE?
-    static func clone(_ data: BoardData) -> BoardData {
-        return BoardData(entities: data.entities,
-                         layout: data.layout,
-                         scrollDistance: data.scrollDistance)
+                         scrollDistance: 0.0,
+                         scrollSpeed: 1.0,
+                         distanceBetweenEntities: 0.5)
     }
 }
 
@@ -40,7 +37,6 @@ struct BoardLayout {
     var upperBound: Double
     var lowerBound: Double
     var distanceBetweenLanes: Double
-    var distanceBetweenEntities: Double
     
     // MARK: Static Constructors
     
@@ -49,15 +45,13 @@ struct BoardLayout {
         return BoardLayout(playerPosition: 0.2,
                            upperBound: 1.5,
                            lowerBound: -1.1,
-                           distanceBetweenLanes: 0.5,
-                           distanceBetweenEntities: 0.5)
+                           distanceBetweenLanes: 0.5)
     }
     
     static func clone(_ data: BoardLayout) -> BoardLayout {
         return BoardLayout(playerPosition: data.playerPosition,
                            upperBound: data.upperBound,
                            lowerBound: data.lowerBound,
-                           distanceBetweenLanes: data.distanceBetweenLanes,
-                           distanceBetweenEntities: data.distanceBetweenEntities)
+                           distanceBetweenLanes: data.distanceBetweenLanes)
     }
 }

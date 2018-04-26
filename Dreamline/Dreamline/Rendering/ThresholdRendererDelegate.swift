@@ -52,12 +52,9 @@ class ThresholdRendererDelegate: EntityRendererDelegate {
         shape.lineWidth = 0.0
         
         shape.fillColor = .yellow // @HARDCODED
-        self.textures.storeTexture(SKView().texture(from: shape)!, forKey: .normal)
+        self.textures.storeTexture(SKView().texture(from: shape)!, forKey: .chunkEnd)
         
         shape.fillColor = .green
-        self.textures.storeTexture(SKView().texture(from: shape)!, forKey: .speed)
-        
-        shape.fillColor = .orange
-        self.textures.storeTexture(SKView().texture(from: shape)!, forKey: .roundOver)
+        self.textures.storeTexture(SKView().texture(from: shape)!, forKey: .roundEnd)
     }
 }

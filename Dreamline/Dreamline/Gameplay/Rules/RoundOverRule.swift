@@ -28,7 +28,7 @@ class RoundOverRule: Rule {
             switch event {
             case .entityStateChanged(let entity):
                 if !entity.isA(.threshold) { break }
-                if entity.thresholdType()! != .roundOver { break }
+                if entity.thresholdType()! != .roundEnd { break }
                 
                 instructions.append(.updatePhase(.results))
                 instructions.append(.roundComplete)

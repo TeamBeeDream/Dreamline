@@ -140,6 +140,8 @@ extension GameScene: FrameworkDelegate {
 
 class GameSceneFactory {
     static func master(size: CGSize, delegate: SceneDelegate?) -> GameScene {
+        let sequencer = SequencerImpl(generator: DefaultEntityGenerator())
+        
         let state = KernelState.new()
         let kernels: [Kernel] =
             [TimeKernel.make(),
@@ -153,7 +155,7 @@ class GameSceneFactory {
             [ScrollRule.make(),
              TimeRule.make(),
              CleanupRule.make(),
-             SpawnRule.make(),
+             SpawnRule.make(sequencer: sequencer),
              PositionRule.make(),
              LineCollisionRule.make(),
              BarrierRule.make(),

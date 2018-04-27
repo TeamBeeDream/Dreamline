@@ -14,6 +14,7 @@ struct BoardState {
     var position: Double
     var scrollSpeed: Double
     var distanceBetweenEntities: Double
+    var lastEntityPosition: Double
 }
 
 extension BoardState {
@@ -22,7 +23,8 @@ extension BoardState {
                           entities: [Entity](),
                           position: 0.0,
                           scrollSpeed: 0.0,
-                          distanceBetweenEntities: 0.0)
+                          distanceBetweenEntities: 0.0,
+                          lastEntityPosition: 0.0)
     }
 }
 

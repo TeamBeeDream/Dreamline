@@ -41,6 +41,8 @@
 		69C5A84C20939BDB0034C9E6 /* ScrollRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A84B20939BDB0034C9E6 /* ScrollRuleTests.swift */; };
 		69C5A84E2093A0300034C9E6 /* BoardMutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A84D2093A0300034C9E6 /* BoardMutator.swift */; };
 		69C5A8512093A04E0034C9E6 /* BoardMutatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8502093A04E0034C9E6 /* BoardMutatorTests.swift */; };
+		69C5A8532093A2DD0034C9E6 /* SpawnRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8522093A2DD0034C9E6 /* SpawnRule.swift */; };
+		69C5A8552093A3610034C9E6 /* SpawnRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8542093A3610034C9E6 /* SpawnRuleTests.swift */; };
 		69FC8A39205C460000E3829E /* dreamline_mainloop_rough.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */; };
 		69FC8A3F205C4DA000E3829E /* slowdown_effect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */; };
 		84C2A830D3DAB8687D4A83B8 /* Pods_DreamlineTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A67B3B964FC2677127726C0 /* Pods_DreamlineTests.framework */; };
@@ -102,6 +104,8 @@
 		69C5A84B20939BDB0034C9E6 /* ScrollRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollRuleTests.swift; sourceTree = "<group>"; };
 		69C5A84D2093A0300034C9E6 /* BoardMutator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardMutator.swift; sourceTree = "<group>"; };
 		69C5A8502093A04E0034C9E6 /* BoardMutatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardMutatorTests.swift; sourceTree = "<group>"; };
+		69C5A8522093A2DD0034C9E6 /* SpawnRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpawnRule.swift; sourceTree = "<group>"; };
+		69C5A8542093A3610034C9E6 /* SpawnRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpawnRuleTests.swift; sourceTree = "<group>"; };
 		69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreamline_mainloop_rough.mp3; sourceTree = "<group>"; };
 		69FC8A3D205C4CB400E3829E /* slowdown_effect.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = slowdown_effect.aif; sourceTree = "<group>"; };
 		69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slowdown_effect.mp3; sourceTree = "<group>"; };
@@ -257,6 +261,7 @@
 			children = (
 				69C5A83E20938B7D0034C9E6 /* TimeRule.swift */,
 				69C5A84920939BD00034C9E6 /* ScrollRule.swift */,
+				69C5A8522093A2DD0034C9E6 /* SpawnRule.swift */,
 			);
 			path = Rules;
 			sourceTree = "<group>";
@@ -275,6 +280,7 @@
 			children = (
 				69C5A84020938B890034C9E6 /* TimeRuleTests.swift */,
 				69C5A84B20939BDB0034C9E6 /* ScrollRuleTests.swift */,
+				69C5A8542093A3610034C9E6 /* SpawnRuleTests.swift */,
 			);
 			path = RuleTests;
 			sourceTree = "<group>";
@@ -632,6 +638,7 @@
 				69AB5E92204F251700093B33 /* Math.swift in Sources */,
 				69C5A832209387B80034C9E6 /* FlowControlState.swift in Sources */,
 				69C5A834209388110034C9E6 /* HealthState.swift in Sources */,
+				69C5A8532093A2DD0034C9E6 /* SpawnRule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,6 +651,7 @@
 				69C5A84C20939BDB0034C9E6 /* ScrollRuleTests.swift in Sources */,
 				69C5A8512093A04E0034C9E6 /* BoardMutatorTests.swift in Sources */,
 				699EB42F206DB51200693CB8 /* RandomTests.swift in Sources */,
+				69C5A8552093A3610034C9E6 /* SpawnRuleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

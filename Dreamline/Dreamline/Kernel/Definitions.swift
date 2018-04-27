@@ -26,4 +26,5 @@ enum KernelEvent {
                     frameNumber: Int,
                     timeSinceBeginning: Double)
     case boardScroll(distance: Double)
+    case boardAddEntity(entity: Entity)
 }

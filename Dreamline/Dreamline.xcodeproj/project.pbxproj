@@ -24,6 +24,13 @@
 		699FC566204E053600DB09B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 699FC564204E053600DB09B4 /* LaunchScreen.storyboard */; };
 		699FC57C204E053600DB09B4 /* DreamlineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC57B204E053600DB09B4 /* DreamlineUITests.swift */; };
 		69AB5E92204F251700093B33 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E91204F251700093B33 /* Math.swift */; };
+		69C5A827209382AC0034C9E6 /* KernelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A826209382AC0034C9E6 /* KernelState.swift */; };
+		69C5A82A209383300034C9E6 /* TimeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A829209383300034C9E6 /* TimeState.swift */; };
+		69C5A82C209383B80034C9E6 /* ChunkState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A82B209383B80034C9E6 /* ChunkState.swift */; };
+		69C5A82E209384590034C9E6 /* BoardState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A82D209384590034C9E6 /* BoardState.swift */; };
+		69C5A830209387040034C9E6 /* PositionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A82F209387040034C9E6 /* PositionState.swift */; };
+		69C5A832209387B80034C9E6 /* FlowControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A831209387B80034C9E6 /* FlowControlState.swift */; };
+		69C5A834209388110034C9E6 /* HealthState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A833209388110034C9E6 /* HealthState.swift */; };
 		69FC8A39205C460000E3829E /* dreamline_mainloop_rough.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */; };
 		69FC8A3F205C4DA000E3829E /* slowdown_effect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */; };
 		84C2A830D3DAB8687D4A83B8 /* Pods_DreamlineTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A67B3B964FC2677127726C0 /* Pods_DreamlineTests.framework */; };
@@ -68,6 +75,13 @@
 		699FC57B204E053600DB09B4 /* DreamlineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamlineUITests.swift; sourceTree = "<group>"; };
 		699FC57D204E053600DB09B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69AB5E91204F251700093B33 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
+		69C5A826209382AC0034C9E6 /* KernelState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernelState.swift; sourceTree = "<group>"; };
+		69C5A829209383300034C9E6 /* TimeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeState.swift; sourceTree = "<group>"; };
+		69C5A82B209383B80034C9E6 /* ChunkState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChunkState.swift; sourceTree = "<group>"; };
+		69C5A82D209384590034C9E6 /* BoardState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardState.swift; sourceTree = "<group>"; };
+		69C5A82F209387040034C9E6 /* PositionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionState.swift; sourceTree = "<group>"; };
+		69C5A831209387B80034C9E6 /* FlowControlState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowControlState.swift; sourceTree = "<group>"; };
+		69C5A833209388110034C9E6 /* HealthState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthState.swift; sourceTree = "<group>"; };
 		69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreamline_mainloop_rough.mp3; sourceTree = "<group>"; };
 		69FC8A3D205C4CB400E3829E /* slowdown_effect.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = slowdown_effect.aif; sourceTree = "<group>"; };
 		69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slowdown_effect.mp3; sourceTree = "<group>"; };
@@ -159,6 +173,7 @@
 		699FC554204E053600DB09B4 /* Dreamline */ = {
 			isa = PBXGroup;
 			children = (
+				69C5A828209383220034C9E6 /* State */,
 				693E1BAB2059A79A008DBACE /* Util */,
 				699FC555204E053600DB09B4 /* AppDelegate.swift */,
 				699FC55D204E053600DB09B4 /* DreamlineViewController.swift */,
@@ -187,6 +202,20 @@
 				699FC57D204E053600DB09B4 /* Info.plist */,
 			);
 			path = DreamlineUITests;
+			sourceTree = "<group>";
+		};
+		69C5A828209383220034C9E6 /* State */ = {
+			isa = PBXGroup;
+			children = (
+				69C5A826209382AC0034C9E6 /* KernelState.swift */,
+				69C5A829209383300034C9E6 /* TimeState.swift */,
+				69C5A82B209383B80034C9E6 /* ChunkState.swift */,
+				69C5A82D209384590034C9E6 /* BoardState.swift */,
+				69C5A82F209387040034C9E6 /* PositionState.swift */,
+				69C5A831209387B80034C9E6 /* FlowControlState.swift */,
+				69C5A833209388110034C9E6 /* HealthState.swift */,
+			);
+			path = State;
 			sourceTree = "<group>";
 		};
 		9FEBE81FBD174B88AC4E666D /* Frameworks */ = {
@@ -514,12 +543,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69C5A827209382AC0034C9E6 /* KernelState.swift in Sources */,
+				69C5A830209387040034C9E6 /* PositionState.swift in Sources */,
 				697FD96E207D307400403C7F /* Collision.swift in Sources */,
+				69C5A82A209383300034C9E6 /* TimeState.swift in Sources */,
 				699FC55E204E053600DB09B4 /* DreamlineViewController.swift in Sources */,
 				69711D05207E7D4600B7309C /* NodeCache.swift in Sources */,
+				69C5A82C209383B80034C9E6 /* ChunkState.swift in Sources */,
 				699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */,
 				699EB42D206DAFDA00693CB8 /* Random.swift in Sources */,
+				69C5A82E209384590034C9E6 /* BoardState.swift in Sources */,
 				69AB5E92204F251700093B33 /* Math.swift in Sources */,
+				69C5A832209387B80034C9E6 /* FlowControlState.swift in Sources */,
+				69C5A834209388110034C9E6 /* HealthState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,7 +24,7 @@ class ScrollRule: Rule {
     // MARK: Rule Methods
     
     func sync(state: KernelState) {
-        self.scrollSpeed = state.speedState.speed
+        self.scrollSpeed = state.boardState.scrollSpeed
     }
     
     func decide(events: inout [KernelEvent],
@@ -33,7 +33,7 @@ class ScrollRule: Rule {
         for event in events {
             switch event {
                 
-            case .speedUpdated(let speed):
+            case .boardSpeedChanged(let speed):
                 self.scrollSpeed = speed
                 
             case .tick(let dt):

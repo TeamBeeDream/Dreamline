@@ -41,23 +41,9 @@ extension Entity {
         }
     }
     
-    func orbData() -> [Orb]? {
-        switch self.data {
-        case .orb(let orbs): return orbs
-        default: return nil
-        }
-    }
-    
     func barrierData() -> [Gate]? {
         switch self.data {
         case .barrier(let gates): return gates
-        default: return nil
-        }
-    }
-    
-    func areaData() -> [Area]? {
-        switch self.data {
-        case .area(let areas): return areas
         default: return nil
         }
     }
@@ -75,8 +61,6 @@ enum EntityData {
     case blank
     case threshold(Threshold)
     case barrier([Gate])
-    case area([Area])
-    case orb([Orb])
 }
 
 extension EntityData: Equatable {
@@ -90,12 +74,6 @@ extension EntityData: Equatable {
             
         case let (.barrier(lGates), .barrier(rGates)):
             return lGates == rGates
-            
-        case let (.area(lArea), .area(rArea)):
-            return lArea == rArea
-            
-        case let (.orb(lOrb), .orb(rOrb)):
-            return lOrb == rOrb
             
         default: return false
         }
@@ -113,9 +91,8 @@ enum EntityState {
 // MARK: Threshold
 
 enum Threshold {
-    case normal // @TEMP
-    case speed
-    case roundOver // @TEMP
+    case roundEnd
+    case chunkEnd
 }
 
 // MARK: Barrier
@@ -123,20 +100,4 @@ enum Threshold {
 enum Gate {
     case open
     case closed
-}
-
-// MARK: Area
-
-enum Area {
-    case none
-    case bad    // @RENAME
-    case good   // @RENAME
-}
-
-// MARK: Orbs
-
-enum Orb {
-    case none
-    case speedUp
-    case staminaUp
 }

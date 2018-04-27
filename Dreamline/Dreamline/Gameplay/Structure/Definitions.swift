@@ -23,6 +23,7 @@ enum KernelInstruction {
     case removeEntity(Int)
     case scrollBoard(Double)
     case updateEntityState(Int, EntityState)
+    case configureBoard(Double, Double)
     case resetBoard
     
     // Position
@@ -37,9 +38,6 @@ enum KernelInstruction {
     // Stamina
     case incrementStamina
     case decrementStamina
-    
-    // Speed
-    case updateSpeed(Double)
     
     // Score
     case addScore(Int)
@@ -67,6 +65,8 @@ enum KernelEvent {
     case entityMoved(Entity, Double)
     case entityStateChanged(Entity)
     case boardScrolled(Double, Double)
+    case boardSpeedChanged(Double)
+    case boardDistanceChanged(Double)
     
     // Position
     case positionUpdated(PositionData) // @CLEANUP: Pass generic variables?
@@ -77,9 +77,6 @@ enum KernelEvent {
     
     // Stamina
     case staminaUpdated(Int)
-    
-    // Speed
-    case speedUpdated(Double)
     
     // Score
     case scoreUpdated(Int)
@@ -96,7 +93,6 @@ struct KernelState {
     var positionState: PositionData
     var inputState: InputData
     var staminaState: StaminaData
-    var speedState: SpeedData
     var scoreState: ScoreData
     var phaseState: Phase
     
@@ -106,7 +102,6 @@ struct KernelState {
                            positionState: PositionData.new(),
                            inputState: InputData.new(),
                            staminaState: StaminaData.new(),
-                           speedState: SpeedData.new(),
                            scoreState: ScoreData.new(),
                            phaseState: .none) // awk
     }

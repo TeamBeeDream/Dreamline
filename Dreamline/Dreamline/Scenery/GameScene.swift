@@ -50,20 +50,13 @@ class GameScene: SKScene, GameDelegate {
         // @TEMP @HARDCODED
         let barrierRenderer = EntityRenderer.make(scene: instance,
                                                   delegate: BarrierRendererDelegate.make(frame: instance.frame))
-        let areaRenderer = EntityRenderer.make(scene: instance,
-                                               delegate: AreaRendererDelegate.make(frame: instance.frame,
-                                                                                   state: state))
         let thresholdRenderer = EntityRenderer.make(scene: instance,
                                                     delegate: ThresholdRendererDelegate.make(frame: instance.frame))
-        let orbRenderer = EntityRenderer.make(scene: instance,
-                                              delegate: OrbRendererDelegate.make(frame: instance.frame))
         let pauseRenderer = PauseRenderer.make(scene: instance)
         pauseRenderer.setDelegate(instance)
         
         var customObservers: [Observer] = [barrierRenderer,
-                                           areaRenderer,
                                            thresholdRenderer,
-                                           orbRenderer,
                                            pauseRenderer,
                                            PlayerRenderer.make(scene: instance),
                                            ResultsRenderer.make(scene: instance)]
@@ -147,6 +140,8 @@ extension GameScene: FrameworkDelegate {
 
 class GameSceneFactory {
     static func master(size: CGSize, delegate: SceneDelegate?) -> GameScene {
+        let sequencer = SequencerImpl(generator: DefaultEntityGenerator())
+        
         let state = KernelState.new()
         let kernels: [Kernel] =
             [TimeKernel.make(),
@@ -154,16 +149,14 @@ class GameSceneFactory {
              PositionKernel.make(),
              InputKernel.make(),
              StaminaKernel.make(),
-             SpeedKernel.make(),
              ScoreKernel.make(),
              PhaseKernel.make()]
         let rules: [Rule] =
             [ScrollRule.make(),
              TimeRule.make(),
              CleanupRule.make(),
-             SpawnRule.make(),
+             SpawnRule.make(sequencer: sequencer),
              PositionRule.make(),
-             //StaminaRule.make(),
              LineCollisionRule.make(),
              BarrierRule.make(),
              PhaseRules.make(),

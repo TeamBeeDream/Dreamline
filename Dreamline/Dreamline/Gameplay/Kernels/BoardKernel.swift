@@ -54,7 +54,14 @@ class BoardKernel: Kernel {
             state.boardState.entities[id]!.state = entityState
             events.append(.entityStateChanged(state.boardState.entities[id]!))
             
+        case .configureBoard(let scrollSpeed, let distanceBetweenBarriers):
+            state.boardState.scrollSpeed = scrollSpeed
+            state.boardState.distanceBetweenEntities = distanceBetweenBarriers
+            events.append(.boardSpeedChanged(scrollSpeed))
+            events.append(.boardDistanceChanged(distanceBetweenBarriers))
+            
         case .resetBoard:
+            state.boardState.scrollDistance = 0.0
             for entity in state.boardState.entities {
                 state.boardState.entities[entity.key] = nil
                 events.append(.entityRemoved(entity.key))

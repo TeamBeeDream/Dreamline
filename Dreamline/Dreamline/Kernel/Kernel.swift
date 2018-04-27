@@ -12,14 +12,21 @@ class KernelImpl: Kernel {
     
     private var state: KernelState
     private var rules: [Rule]
+    private var mutators: [Mutator]
     
-    init(state: KernelState, rules: [Rule]) {
+    init(state: KernelState, rules: [Rule], mutators: [Mutator]) {
         self.state = state
         self.rules = rules
+        self.mutators = mutators
+    }
+    
+    func getState() -> KernelState {
+        return self.state
     }
     
     func update(deltaTime: Double) -> [KernelEvent] {
         let events = self.processRules(deltaTime: deltaTime)
+        self.mutateState(events: events)
         return events
     }
     
@@ -30,5 +37,13 @@ class KernelImpl: Kernel {
             if event != nil { events.append(event!) }
         }
         return events
+    }
+    
+    private func mutateState(events: [KernelEvent]) {
+        for mutator in self.mutators {
+            for event in events {
+                mutator.mutateState(state: &self.state, event: event)
+            }
+        }
     }
 }

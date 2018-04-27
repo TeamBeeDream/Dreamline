@@ -75,7 +75,7 @@ class TimeRuleAdapterTests: XCTestCase {
 
 class TimeRuleIntegrationTests: XCTestCase {
     
-    private var state: KernelState!
+    private var originalState: KernelState!
     private var kernel: Kernel!
     private var events: [KernelEvent]!
     
@@ -85,12 +85,14 @@ class TimeRuleIntegrationTests: XCTestCase {
         self.setupKernel()
         self.triggerUpdate()
         self.assertEvents()
+        self.assertState()
     }
     
     private func setupKernel() {
         let rules = [TimeRuleAdapter(TimeRule())]
-        self.state = KernelState.new()
-        self.kernel = KernelImpl(state: self.state, rules: rules)
+        let mutators = [TimeMutator()]
+        self.originalState = KernelState.new()
+        self.kernel = KernelImpl(state: self.originalState, rules: rules, mutators: mutators)
     }
     
     private func triggerUpdate() {
@@ -103,8 +105,17 @@ class TimeRuleIntegrationTests: XCTestCase {
                          let frameNumber,
                          let timeSinceBeginning):
             XCTAssert(deltaTime == self.deltaTime)
-            XCTAssert(frameNumber == self.state.time.frameNumber + 1)
-            XCTAssert(timeSinceBeginning == self.state.time.timeSinceBeginning + deltaTime)
+            XCTAssert(frameNumber == self.originalState.time.frameNumber + 1)
+            XCTAssert(timeSinceBeginning == self.originalState.time.timeSinceBeginning + deltaTime)
+        default:
+            XCTAssert(false)
         }
+    }
+    
+    private func assertState() {
+        let updatedState = self.kernel.getState()
+        XCTAssert(updatedState.time.deltaTime == self.deltaTime)
+        XCTAssert(updatedState.time.frameNumber == self.originalState.time.frameNumber + 1)
+        XCTAssert(updatedState.time.timeSinceBeginning == self.originalState.time.timeSinceBeginning + self.deltaTime)
     }
 }

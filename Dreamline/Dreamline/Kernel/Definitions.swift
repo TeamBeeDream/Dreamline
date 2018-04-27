@@ -10,6 +10,7 @@ import Foundation
 
 protocol Kernel {
     func update(deltaTime: Double) -> [KernelEvent]
+    func getState() -> KernelState
 }
 
 protocol Rule {
@@ -17,7 +18,7 @@ protocol Rule {
 }
 
 protocol Mutator {
-    func mutateState(state: inout KernelState)
+    func mutateState(state: inout KernelState, event: KernelEvent)
 }
 
 enum KernelEvent {

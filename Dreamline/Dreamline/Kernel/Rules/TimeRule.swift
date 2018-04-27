@@ -16,8 +16,8 @@ class TimeRuleAdapter: Rule {
         self.adaptedRule = rule
     }
     
-    func process(state: KernelState) -> KernelEvent? {
-        let input = (deltaTime: state.time.deltaTime,
+    func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
+        let input = (deltaTime: deltaTime,
                      frameNumber: state.time.frameNumber,
                      timeSinceBeginning: state.time.timeSinceBeginning)
         let output = self.adaptedRule.moveTimeForward(input)

@@ -45,6 +45,8 @@ class TimeRuleAdapterTests: XCTestCase {
     private var state: KernelState!
     private var event: KernelEvent!
     
+    private let deltaTime: Double = 0.016
+    
     func testProcess() {
         self.setupState()
         self.triggerRule()
@@ -54,20 +56,55 @@ class TimeRuleAdapterTests: XCTestCase {
     private func setupState() {
         self.timeRuleAdapter = TimeRuleAdapter(TimeRule())
         self.state = KernelState.new()
-        self.state.time.deltaTime = 0.016
     }
     
     private func triggerRule() {
-        self.event = self.timeRuleAdapter.process(state: self.state)
+        self.event = self.timeRuleAdapter.process(state: self.state, deltaTime: self.deltaTime)
     }
     
     private func assertTimeUpdateEvent() {
         switch self.event! {
         case .timeUpdate(let deltaTime, let frameNumber, let timeSinceBeginning):
-            XCTAssert(deltaTime == self.state.time.deltaTime)
+            XCTAssert(deltaTime == self.deltaTime)
             XCTAssert(frameNumber == self.state.time.frameNumber + 1)
             XCTAssert(timeSinceBeginning == self.state.time.timeSinceBeginning + deltaTime)
         default: XCTAssert(false)
+        }
+    }
+}
+
+class TimeRuleIntegrationTests: XCTestCase {
+    
+    private var state: KernelState!
+    private var kernel: Kernel!
+    private var events: [KernelEvent]!
+    
+    private let deltaTime: Double = 0.016
+    
+    func testTimeRuleIntegration() {
+        self.setupKernel()
+        self.triggerUpdate()
+        self.assertEvents()
+    }
+    
+    private func setupKernel() {
+        let rules = [TimeRuleAdapter(TimeRule())]
+        self.state = KernelState.new()
+        self.kernel = KernelImpl(state: self.state, rules: rules)
+    }
+    
+    private func triggerUpdate() {
+        self.events = self.kernel.update(deltaTime: self.deltaTime)
+    }
+    
+    private func assertEvents() {
+        switch self.events.first! {
+        case .timeUpdate(let deltaTime,
+                         let frameNumber,
+                         let timeSinceBeginning):
+            XCTAssert(deltaTime == self.deltaTime)
+            XCTAssert(frameNumber == self.state.time.frameNumber + 1)
+            XCTAssert(timeSinceBeginning == self.state.time.timeSinceBeginning + deltaTime)
         }
     }
 }

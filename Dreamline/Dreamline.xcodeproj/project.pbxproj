@@ -198,8 +198,8 @@
 			isa = PBXGroup;
 			children = (
 				699EB42E206DB51200693CB8 /* RandomTests.swift */,
-				699FC572204E053600DB09B4 /* Info.plist */,
 				69C5A84020938B890034C9E6 /* TimeRuleTests.swift */,
+				699FC572204E053600DB09B4 /* Info.plist */,
 			);
 			path = DreamlineTests;
 			sourceTree = "<group>";

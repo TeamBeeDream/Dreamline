@@ -13,7 +13,7 @@ protocol Kernel {
 }
 
 protocol Rule {
-    func process(state: KernelState) -> KernelEvent?
+    func process(state: KernelState, deltaTime: Double) -> KernelEvent?
 }
 
 protocol Mutator {

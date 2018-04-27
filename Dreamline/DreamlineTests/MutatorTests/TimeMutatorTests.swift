@@ -43,6 +43,7 @@ class TimeMutatorTests: XCTestCase {
             XCTAssert(self.state.time.deltaTime == deltaTime)
             XCTAssert(self.state.time.frameNumber == frameNumber)
             XCTAssert(self.state.time.timeSinceBeginning == timeSinceBeginning)
+        default: break
         }
     }
 }

@@ -12,12 +12,14 @@ struct TimeState {
     var deltaTime: Double
     var timeSinceBeginning: Double
     var frameNumber: Int
+    var paused: Bool
 }
 
 extension TimeState {
     static func new() -> TimeState {
         return TimeState(deltaTime: 0.0,
                          timeSinceBeginning: 0.0,
-                         frameNumber: 0)
+                         frameNumber: 0,
+                         paused: false)
     }
 }

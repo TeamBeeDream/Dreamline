@@ -25,4 +25,5 @@ enum KernelEvent {
     case timeUpdate(deltaTime: Double,
                     frameNumber: Int,
                     timeSinceBeginning: Double)
+    case boardScroll(distance: Double)
 }

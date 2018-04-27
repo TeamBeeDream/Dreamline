@@ -8,10 +8,6 @@
 
 import Foundation
 
-protocol Kernel {
-    func update(deltaTime: Double) -> [KernelEvent]
-}
-
 class MasterKernel: Kernel {
     func update(deltaTime: Double) -> [KernelEvent] {
         return []

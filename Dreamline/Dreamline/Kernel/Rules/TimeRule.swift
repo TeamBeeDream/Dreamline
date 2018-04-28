@@ -8,30 +8,26 @@
 
 import Foundation
 
-class TimeRuleAdapter: Rule {
+class TimeRule: Rule {
     
-    private let adaptedRule: TimeRule
-    
-    init(_ rule: TimeRule) {
-        self.adaptedRule = rule
-    }
+    private let calculator = TimeCalculator()
     
     func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
         let input = (deltaTime: deltaTime,
                      frameNumber: state.time.frameNumber,
                      timeSinceBeginning: state.time.timeSinceBeginning)
-        let output = self.adaptedRule.moveTimeForward(input)
+        let output = self.calculator.moveTimeForward(input)
         return .timeUpdate(deltaTime: output.deltaTime,
                            frameNumber: output.frameNumber,
                            timeSinceBeginning: output.timeSinceBeginning)
     }
 }
 
-class TimeRule {
+class TimeCalculator {
     
     typealias Bundle = (deltaTime: Double, frameNumber: Int, timeSinceBeginning: Double)
     
-    func moveTimeForward(_ bundle: TimeRule.Bundle) -> TimeRule.Bundle {
+    func moveTimeForward(_ bundle: TimeCalculator.Bundle) -> TimeCalculator.Bundle {
         return (deltaTime: bundle.deltaTime,
                 frameNumber: bundle.frameNumber + 1,
                 timeSinceBeginning: bundle.timeSinceBeginning + bundle.deltaTime)

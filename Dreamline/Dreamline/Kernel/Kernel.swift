@@ -47,3 +47,26 @@ class KernelImpl: Kernel {
         }
     }
 }
+
+class KernelMasterFactory {
+    func make() -> Kernel {
+        return KernelImpl(state: self.getState(),
+                          rules: self.getRules(),
+                          mutators: self.getMutators())
+    }
+    
+    private func getState() -> KernelState {
+        return KernelState.master()
+    }
+    
+    private func getRules() -> [Rule] {
+        return [TimeRule(),
+                ScrollRule(),
+                SpawnRule()]
+    }
+    
+    private func getMutators() -> [Mutator] {
+        return [TimeMutator(),
+                BoardMutator()]
+    }
+}

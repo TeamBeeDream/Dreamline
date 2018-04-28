@@ -9,9 +9,9 @@
 import XCTest
 @testable import Dreamline
 
-class ScrollRuleTests: XCTestCase {
+class ScrollDistanceCalculatorTests: XCTestCase {
     
-    private var scrollRule: ScrollRule!
+    private var calculator: ScrollDistanceCalculator!
     private var scrollDistance: Double!
     
     private var deltaTime: Double!
@@ -31,14 +31,14 @@ class ScrollRuleTests: XCTestCase {
     }
     
     private func setupRule(paused: Bool) {
-        self.scrollRule = ScrollRule()
+        self.calculator = ScrollDistanceCalculator()
         self.deltaTime = 0.016
         self.paused = paused
         self.scrollSpeed = 1.0
     }
     
     private func triggerRule() {
-        self.scrollDistance = self.scrollRule.calculateScrollDistance(deltaTime: self.deltaTime,
+        self.scrollDistance = self.calculator.calculateScrollDistance(deltaTime: self.deltaTime,
                                                                       paused: self.paused,
                                                                       scrollSpeed: self.scrollSpeed)
     }
@@ -52,29 +52,29 @@ class ScrollRuleTests: XCTestCase {
     }
 }
 
-class ScrollRuleAdapterTests: XCTestCase {
+class ScrollRuleTests: XCTestCase {
     
-    private var scrollRuleAdapter: ScrollRuleAdapter!
+    private var scrollRule: ScrollRule!
     private var state: KernelState!
     private var event: KernelEvent!
     
     private let deltaTime: Double = 0.016
     private let scrollSpeed: Double = 1.0
     
-    func testScrollRuleAdapter() {
-        self.setupRuleAdapter()
+    func testScrollRule() {
+        self.setupRule()
         self.triggerRule()
         self.assertEvent()
     }
     
-    private func setupRuleAdapter() {
-        self.scrollRuleAdapter = ScrollRuleAdapter()
+    private func setupRule() {
+        self.scrollRule = ScrollRule()
         self.state = KernelState.new()
         self.state.board.scrollSpeed = self.scrollSpeed
     }
     
     private func triggerRule() {
-        self.event = self.scrollRuleAdapter.process(state: self.state, deltaTime: self.deltaTime)
+        self.event = self.scrollRule.process(state: self.state, deltaTime: self.deltaTime)
     }
     
     private func assertEvent() {
@@ -103,7 +103,7 @@ class ScrollRuleIntegrationTests: XCTestCase {
     }
     
     private func setupKernel() {
-        let rules = [ScrollRuleAdapter()]
+        let rules = [ScrollRule()]
         let mutators = [BoardMutator()]
         self.originalState = KernelState.new()
         self.originalState.board.scrollSpeed = scrollSpeed

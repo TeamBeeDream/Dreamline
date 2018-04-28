@@ -13,6 +13,14 @@ class BoardMutator: Mutator {
         switch event {
         case .boardScroll(let distance):
             state.board.position += distance
+            for (i, _) in state.board.entities.enumerated() {
+                state.board.entities[i].position += distance
+            }
+        case .boardEntityAdd(let entity):
+            //entity.position = state.board.layout.lowerBound // @HACK
+            state.board.entities.append(entity)
+            //state.board.lastEntityPosition = entity.position
+            state.board.lastEntityPosition = state.board.position
         default: break
         }
     }

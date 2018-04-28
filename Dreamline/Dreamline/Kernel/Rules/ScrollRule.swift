@@ -8,22 +8,22 @@
 
 import Foundation
 
-class ScrollRule {
+class ScrollRule: Rule {
+    
+    private let calculator = ScrollDistanceCalculator()
+    
+    func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
+        let distance = self.calculator.calculateScrollDistance(deltaTime: deltaTime,
+                                                               paused: state.time.paused,
+                                                               scrollSpeed: state.board.scrollSpeed)
+        return .boardScroll(distance: distance)
+    }
+}
+
+class ScrollDistanceCalculator {
     func calculateScrollDistance(deltaTime: Double,
                                  paused: Bool,
                                  scrollSpeed: Double) -> Double {
         return deltaTime * scrollSpeed * (paused ? 0 : 1)
-    }
-}
-
-class ScrollRuleAdapter: Rule {
-    
-    private let rule = ScrollRule()
-    
-    func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
-        let distance = self.rule.calculateScrollDistance(deltaTime: deltaTime,
-                                                         paused: state.time.paused,
-                                                         scrollSpeed: state.board.scrollSpeed)
-        return .boardScroll(distance: distance)
     }
 }

@@ -21,10 +21,16 @@ protocol Mutator {
     func mutateState(state: inout KernelState, event: KernelEvent)
 }
 
+protocol Observer {
+    func observe(event: KernelEvent)
+}
+
 enum KernelEvent {
     case timeUpdate(deltaTime: Double,
                     frameNumber: Int,
                     timeSinceBeginning: Double)
     case boardScroll(distance: Double)
-    case boardAddEntity(entity: Entity)
+    case boardEntityAdd(entity: Entity)
+    case boardEntityRemove(id: Int)
+    case boardEntityStateUpdate(entity: Entity)
 }

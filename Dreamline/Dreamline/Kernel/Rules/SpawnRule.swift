@@ -8,53 +8,34 @@
 
 import Foundation
 
-// @TODO: Unit tests
-class SpawnRule {
+class SpawnRule: Rule {
     
     private var regulator = SpawnRegulator()
     private var sequencer = SpawnSequencer()
-    private var id: Int = 0
+    private var lastId: Int = 0 // @HACK
     
-    func getEntity(boardPosition: Double,
-                   distanceBetweenBarriers: Double,
-                   lastEntityPosition: Double,
-                   chunkType: ChunkType,
-                   difficulty: Double,
-                   length: Int) -> Entity? {
-        if !self.regulator.shouldSpawnEntity(boardPosition: boardPosition,
-                                            distanceBetweenBarriers: distanceBetweenBarriers,
-                                            lastEntityPosition: lastEntityPosition) {
+    func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
+        
+        if !self.regulator.shouldSpawnEntity(boardPosition: state.board.position,
+                                             distanceBetweenBarriers: state.board.distanceBetweenEntities,
+                                             lastEntityPosition: state.board.lastEntityPosition) {
             return nil
         }
         
-        let type = self.sequencer.getNextEntity(type: chunkType,
-                                                difficulty: difficulty,
-                                                length: length)
-        let position = self.regulator.getSpawnPosition(distanceBetweenBarriers: distanceBetweenBarriers,
-                                                       lastEntityPosition: lastEntityPosition)
-        let id = self.id
-        self.id += 1
-        let entity = Entity(id: id,
-                            position: position,
+        return .boardEntityAdd(entity: self.getNextEntity(state: state))
+    }
+    
+    private func getNextEntity(state: KernelState) -> Entity {
+        let type = self.sequencer.getNextEntity(type: state.chunk.type,
+                                                difficulty: state.chunk.difficuly,
+                                                length: state.chunk.length)
+        let entity = Entity(id: self.lastId,
+                            position: state.board.layout.lowerBound,
                             type: type,
                             state: .none)
+        self.lastId += 1
+        
         return entity
-    }
-}
-
-class SpawnRuleAdapter: Rule {
-    
-    private var rule = SpawnRule()
-    
-    func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
-        let entity = self.rule.getEntity(boardPosition: state.board.position,
-                                         distanceBetweenBarriers: state.board.distanceBetweenEntities,
-                                         lastEntityPosition: state.board.lastEntityPosition,
-                                         chunkType: state.chunk.type,
-                                         difficulty: state.chunk.difficuly,
-                                         length: state.chunk.length)
-        if entity == nil { return nil }
-        return .boardAddEntity(entity: entity!)
     }
 }
 

@@ -9,27 +9,27 @@
 import XCTest
 @testable import Dreamline
 
-class TimeRuleTests: XCTestCase {
+class TimeCalculatorTests: XCTestCase {
     
-    private var timeRule: TimeRule!
-    private var input: TimeRule.Bundle!
-    private var output: TimeRule.Bundle!
+    private var calculator: TimeCalculator!
+    private var input: TimeCalculator.Bundle!
+    private var output: TimeCalculator.Bundle!
     
     func testMoveTimeForward() {
-        self.setupTimeRule()
-        self.triggerRule()
+        self.setupTimeCalculator()
+        self.calculate()
         self.assertTimeUpdated()
     }
     
-    private func setupTimeRule() {
-        self.timeRule = TimeRule()
+    private func setupTimeCalculator() {
+        self.calculator = TimeCalculator()
         self.input = (deltaTime: 0.016,
                       frameNumber: 0,
                       timeSinceBeginning: 0.0)
     }
     
-    private func triggerRule() {
-        self.output = self.timeRule.moveTimeForward(self.input)
+    private func calculate() {
+        self.output = self.calculator.moveTimeForward(self.input)
     }
     
     private func assertTimeUpdated() {
@@ -39,9 +39,9 @@ class TimeRuleTests: XCTestCase {
     }
 }
 
-class TimeRuleAdapterTests: XCTestCase {
+class TimeRuleTests: XCTestCase {
     
-    private var timeRuleAdapter: TimeRuleAdapter!
+    private var timeRule: TimeRule!
     private var state: KernelState!
     private var event: KernelEvent!
     
@@ -54,12 +54,12 @@ class TimeRuleAdapterTests: XCTestCase {
     }
     
     private func setupState() {
-        self.timeRuleAdapter = TimeRuleAdapter(TimeRule())
+        self.timeRule = TimeRule()
         self.state = KernelState.new()
     }
     
     private func triggerRule() {
-        self.event = self.timeRuleAdapter.process(state: self.state, deltaTime: self.deltaTime)
+        self.event = self.timeRule.process(state: self.state, deltaTime: self.deltaTime)
     }
     
     private func assertTimeUpdateEvent() {
@@ -89,7 +89,7 @@ class TimeRuleIntegrationTests: XCTestCase {
     }
     
     private func setupKernel() {
-        let rules = [TimeRuleAdapter(TimeRule())]
+        let rules = [TimeRule()]
         let mutators = [TimeMutator()]
         self.originalState = KernelState.new()
         self.kernel = KernelImpl(state: self.originalState, rules: rules, mutators: mutators)

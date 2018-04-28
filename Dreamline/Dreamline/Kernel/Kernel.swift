@@ -14,6 +14,8 @@ class KernelImpl: Kernel {
     private var rules: [Rule]
     private var mutators: [Mutator]
     
+    private var externalEvents = [KernelEvent]()
+    
     init(state: KernelState, rules: [Rule], mutators: [Mutator]) {
         self.state = state
         self.rules = rules
@@ -24,9 +26,15 @@ class KernelImpl: Kernel {
         return self.state
     }
     
+    func addEvent(event: KernelEvent) {
+        self.externalEvents.append(event)
+    }
+    
     func update(deltaTime: Double) -> [KernelEvent] {
         let events = self.processRules(deltaTime: deltaTime)
         self.mutateState(events: events)
+        self.mutateState(events: self.externalEvents)
+        self.clearExternalEvents()
         return events
     }
     
@@ -46,6 +54,10 @@ class KernelImpl: Kernel {
             }
         }
     }
+    
+    private func clearExternalEvents() {
+        self.externalEvents.removeAll()
+    }
 }
 
 class KernelMasterFactory {
@@ -62,11 +74,13 @@ class KernelMasterFactory {
     private func getRules() -> [Rule] {
         return [TimeRule(),
                 ScrollRule(),
-                SpawnRule()]
+                SpawnRule(),
+                PositionRule()]
     }
     
     private func getMutators() -> [Mutator] {
         return [TimeMutator(),
-                BoardMutator()]
+                BoardMutator(),
+                PositionMutator()]
     }
 }

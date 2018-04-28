@@ -11,6 +11,7 @@ import Foundation
 protocol Kernel {
     func update(deltaTime: Double) -> [KernelEvent]
     func getState() -> KernelState
+    func addEvent(event: KernelEvent)
 }
 
 protocol Rule {
@@ -33,4 +34,6 @@ enum KernelEvent {
     case boardEntityAdd(entity: Entity)
     case boardEntityRemove(id: Int)
     case boardEntityStateUpdate(entity: Entity)
+    case positionUpdate(distanceFromOrigin: Double)
+    case positionTargetUpdate(target: Int)
 }

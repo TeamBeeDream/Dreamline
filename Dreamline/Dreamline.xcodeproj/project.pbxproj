@@ -47,6 +47,13 @@
 		69C5A85A2093BB2D0034C9E6 /* EntityRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8592093BB2D0034C9E6 /* EntityRenderer.swift */; };
 		69C5A85C2093BC1F0034C9E6 /* BarrierRendererDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A85B2093BC1F0034C9E6 /* BarrierRendererDelegate.swift */; };
 		69C5A85E2093BC230034C9E6 /* ThresholdRendererDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A85D2093BC230034C9E6 /* ThresholdRendererDelegate.swift */; };
+		69C5A8602094C32F0034C9E6 /* PositionRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A85F2094C32F0034C9E6 /* PositionRuleTests.swift */; };
+		69C5A8622094C33B0034C9E6 /* PositionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8612094C33B0034C9E6 /* PositionRule.swift */; };
+		69C5A8642094C7270034C9E6 /* PositionMutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8632094C7270034C9E6 /* PositionMutator.swift */; };
+		69C5A8662094C7400034C9E6 /* PositionMutatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8652094C7400034C9E6 /* PositionMutatorTests.swift */; };
+		69C5A8682094C9F60034C9E6 /* PlayerRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8672094C9F60034C9E6 /* PlayerRenderer.swift */; };
+		69C5A86A2094CB1A0034C9E6 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8692094CB1A0034C9E6 /* Input.swift */; };
+		69C5A86D2094CB360034C9E6 /* InputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A86C2094CB360034C9E6 /* InputTests.swift */; };
 		69FC8A39205C460000E3829E /* dreamline_mainloop_rough.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */; };
 		69FC8A3F205C4DA000E3829E /* slowdown_effect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */; };
 		84C2A830D3DAB8687D4A83B8 /* Pods_DreamlineTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A67B3B964FC2677127726C0 /* Pods_DreamlineTests.framework */; };
@@ -114,6 +121,13 @@
 		69C5A8592093BB2D0034C9E6 /* EntityRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntityRenderer.swift; sourceTree = "<group>"; };
 		69C5A85B2093BC1F0034C9E6 /* BarrierRendererDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarrierRendererDelegate.swift; sourceTree = "<group>"; };
 		69C5A85D2093BC230034C9E6 /* ThresholdRendererDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThresholdRendererDelegate.swift; sourceTree = "<group>"; };
+		69C5A85F2094C32F0034C9E6 /* PositionRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionRuleTests.swift; sourceTree = "<group>"; };
+		69C5A8612094C33B0034C9E6 /* PositionRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionRule.swift; sourceTree = "<group>"; };
+		69C5A8632094C7270034C9E6 /* PositionMutator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionMutator.swift; sourceTree = "<group>"; };
+		69C5A8652094C7400034C9E6 /* PositionMutatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionMutatorTests.swift; sourceTree = "<group>"; };
+		69C5A8672094C9F60034C9E6 /* PlayerRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerRenderer.swift; sourceTree = "<group>"; };
+		69C5A8692094CB1A0034C9E6 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
+		69C5A86C2094CB360034C9E6 /* InputTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTests.swift; sourceTree = "<group>"; };
 		69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreamline_mainloop_rough.mp3; sourceTree = "<group>"; };
 		69FC8A3D205C4CB400E3829E /* slowdown_effect.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = slowdown_effect.aif; sourceTree = "<group>"; };
 		69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slowdown_effect.mp3; sourceTree = "<group>"; };
@@ -176,6 +190,7 @@
 				699EB42C206DAFDA00693CB8 /* Random.swift */,
 				697FD96D207D307400403C7F /* Collision.swift */,
 				69711D04207E7D4600B7309C /* NodeCache.swift */,
+				69C5A8692094CB1A0034C9E6 /* Input.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -225,7 +240,7 @@
 			children = (
 				69C5A846209396280034C9E6 /* MutatorTests */,
 				69C5A845209396200034C9E6 /* RuleTests */,
-				699EB42E206DB51200693CB8 /* RandomTests.swift */,
+				69C5A86B2094CB220034C9E6 /* UtilTests */,
 				699FC572204E053600DB09B4 /* Info.plist */,
 			);
 			path = DreamlineTests;
@@ -272,6 +287,7 @@
 				69C5A83E20938B7D0034C9E6 /* TimeRule.swift */,
 				69C5A84920939BD00034C9E6 /* ScrollRule.swift */,
 				69C5A8522093A2DD0034C9E6 /* SpawnRule.swift */,
+				69C5A8612094C33B0034C9E6 /* PositionRule.swift */,
 			);
 			path = Rules;
 			sourceTree = "<group>";
@@ -281,6 +297,7 @@
 			children = (
 				69C5A843209395FB0034C9E6 /* TimeMutator.swift */,
 				69C5A84D2093A0300034C9E6 /* BoardMutator.swift */,
+				69C5A8632094C7270034C9E6 /* PositionMutator.swift */,
 			);
 			path = Mutators;
 			sourceTree = "<group>";
@@ -291,6 +308,7 @@
 				69C5A84020938B890034C9E6 /* TimeRuleTests.swift */,
 				69C5A84B20939BDB0034C9E6 /* ScrollRuleTests.swift */,
 				69C5A8542093A3610034C9E6 /* SpawnRuleTests.swift */,
+				69C5A85F2094C32F0034C9E6 /* PositionRuleTests.swift */,
 			);
 			path = RuleTests;
 			sourceTree = "<group>";
@@ -300,6 +318,7 @@
 			children = (
 				69C5A847209396330034C9E6 /* TimeMutatorTests.swift */,
 				69C5A8502093A04E0034C9E6 /* BoardMutatorTests.swift */,
+				69C5A8652094C7400034C9E6 /* PositionMutatorTests.swift */,
 			);
 			path = MutatorTests;
 			sourceTree = "<group>";
@@ -310,8 +329,18 @@
 				69C5A8592093BB2D0034C9E6 /* EntityRenderer.swift */,
 				69C5A85B2093BC1F0034C9E6 /* BarrierRendererDelegate.swift */,
 				69C5A85D2093BC230034C9E6 /* ThresholdRendererDelegate.swift */,
+				69C5A8672094C9F60034C9E6 /* PlayerRenderer.swift */,
 			);
 			path = Rendering;
+			sourceTree = "<group>";
+		};
+		69C5A86B2094CB220034C9E6 /* UtilTests */ = {
+			isa = PBXGroup;
+			children = (
+				699EB42E206DB51200693CB8 /* RandomTests.swift */,
+				69C5A86C2094CB360034C9E6 /* InputTests.swift */,
+			);
+			path = UtilTests;
 			sourceTree = "<group>";
 		};
 		9FEBE81FBD174B88AC4E666D /* Frameworks */ = {
@@ -641,21 +670,25 @@
 			files = (
 				69C5A84A20939BD00034C9E6 /* ScrollRule.swift in Sources */,
 				69C5A83F20938B7D0034C9E6 /* TimeRule.swift in Sources */,
+				69C5A8622094C33B0034C9E6 /* PositionRule.swift in Sources */,
 				69C5A827209382AC0034C9E6 /* KernelState.swift in Sources */,
 				69C5A85C2093BC1F0034C9E6 /* BarrierRendererDelegate.swift in Sources */,
 				69C5A830209387040034C9E6 /* PositionState.swift in Sources */,
 				697FD96E207D307400403C7F /* Collision.swift in Sources */,
+				69C5A8642094C7270034C9E6 /* PositionMutator.swift in Sources */,
 				69C5A82A209383300034C9E6 /* TimeState.swift in Sources */,
 				699FC55E204E053600DB09B4 /* DreamlineViewController.swift in Sources */,
 				69711D05207E7D4600B7309C /* NodeCache.swift in Sources */,
 				69C5A85E2093BC230034C9E6 /* ThresholdRendererDelegate.swift in Sources */,
 				69C5A837209389080034C9E6 /* Kernel.swift in Sources */,
 				69C5A82C209383B80034C9E6 /* ChunkState.swift in Sources */,
+				69C5A86A2094CB1A0034C9E6 /* Input.swift in Sources */,
 				69C5A8572093BA8F0034C9E6 /* TestScene.swift in Sources */,
 				69C5A83D20938A920034C9E6 /* Definitions.swift in Sources */,
 				699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */,
 				69C5A84E2093A0300034C9E6 /* BoardMutator.swift in Sources */,
 				699EB42D206DAFDA00693CB8 /* Random.swift in Sources */,
+				69C5A8682094C9F60034C9E6 /* PlayerRenderer.swift in Sources */,
 				69C5A82E209384590034C9E6 /* BoardState.swift in Sources */,
 				69C5A844209395FB0034C9E6 /* TimeMutator.swift in Sources */,
 				69C5A85A2093BB2D0034C9E6 /* EntityRenderer.swift in Sources */,
@@ -671,6 +704,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				69C5A84120938B890034C9E6 /* TimeRuleTests.swift in Sources */,
+				69C5A8662094C7400034C9E6 /* PositionMutatorTests.swift in Sources */,
+				69C5A8602094C32F0034C9E6 /* PositionRuleTests.swift in Sources */,
+				69C5A86D2094CB360034C9E6 /* InputTests.swift in Sources */,
 				69C5A848209396330034C9E6 /* TimeMutatorTests.swift in Sources */,
 				69C5A84C20939BDB0034C9E6 /* ScrollRuleTests.swift in Sources */,
 				69C5A8512093A04E0034C9E6 /* BoardMutatorTests.swift in Sources */,

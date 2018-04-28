@@ -10,9 +10,11 @@ import SpriteKit
 
 class TestScene: SKScene {
     
-    private var previousTime: TimeInterval = 0
     private var kernel: Kernel!
     private var observers: [Observer]!
+    
+    private var previousTime: TimeInterval = 0
+    private var input = Input()
     
     static func make(size: CGSize) -> TestScene {
         let instance = TestScene(size: size)
@@ -20,7 +22,8 @@ class TestScene: SKScene {
         instance.observers = [EntityRenderer.make(scene: instance,
                                                   delegate: BarrierRendererDelegate.make(frame: instance.frame)),
                               EntityRenderer.make(scene: instance,
-                                                  delegate: ThresholdRendererDelegate.make(frame: instance.frame))]
+                                                  delegate: ThresholdRendererDelegate.make(frame: instance.frame)),
+                              PlayerRenderer.make(scene: instance, state: instance.kernel.getState())]
         return instance
     }
     
@@ -38,11 +41,37 @@ class TestScene: SKScene {
         if dt > 1.0 { dt = 1.0/60.0 }
         
         // @TEMP
+        for event in self.getOutsideEvents() {
+            self.kernel.addEvent(event: event)
+        }
+        
         let events = self.kernel.update(deltaTime: dt)
         for observer in self.observers {
             for event in events {
                 observer.observe(event: event)
             }
         }
+    }
+    
+    private func getOutsideEvents() -> [KernelEvent] {
+        return [.positionTargetUpdate(target: self.input.getCurrent())]
+    }
+}
+
+extension TestScene {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            let location = touch.location(in: self)
+            let lane = (location.x > self.frame.midX) ? 1 : -1
+            self.input.addInput(target: lane)
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.input.removeInput(count: touches.count)
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.input.removeInput(count: touches.count)
     }
 }

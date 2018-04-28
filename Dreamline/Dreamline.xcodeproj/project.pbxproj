@@ -54,6 +54,8 @@
 		69C5A8682094C9F60034C9E6 /* PlayerRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8672094C9F60034C9E6 /* PlayerRenderer.swift */; };
 		69C5A86A2094CB1A0034C9E6 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8692094CB1A0034C9E6 /* Input.swift */; };
 		69C5A86D2094CB360034C9E6 /* InputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A86C2094CB360034C9E6 /* InputTests.swift */; };
+		69C5A86F2094D5210034C9E6 /* CollisionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A86E2094D5210034C9E6 /* CollisionRule.swift */; };
+		69C5A8722094D7170034C9E6 /* CollisionRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8712094D7170034C9E6 /* CollisionRuleTests.swift */; };
 		69FC8A39205C460000E3829E /* dreamline_mainloop_rough.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */; };
 		69FC8A3F205C4DA000E3829E /* slowdown_effect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */; };
 		84C2A830D3DAB8687D4A83B8 /* Pods_DreamlineTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A67B3B964FC2677127726C0 /* Pods_DreamlineTests.framework */; };
@@ -128,6 +130,8 @@
 		69C5A8672094C9F60034C9E6 /* PlayerRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerRenderer.swift; sourceTree = "<group>"; };
 		69C5A8692094CB1A0034C9E6 /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		69C5A86C2094CB360034C9E6 /* InputTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTests.swift; sourceTree = "<group>"; };
+		69C5A86E2094D5210034C9E6 /* CollisionRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionRule.swift; sourceTree = "<group>"; };
+		69C5A8712094D7170034C9E6 /* CollisionRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionRuleTests.swift; sourceTree = "<group>"; };
 		69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreamline_mainloop_rough.mp3; sourceTree = "<group>"; };
 		69FC8A3D205C4CB400E3829E /* slowdown_effect.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = slowdown_effect.aif; sourceTree = "<group>"; };
 		69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slowdown_effect.mp3; sourceTree = "<group>"; };
@@ -288,6 +292,7 @@
 				69C5A84920939BD00034C9E6 /* ScrollRule.swift */,
 				69C5A8522093A2DD0034C9E6 /* SpawnRule.swift */,
 				69C5A8612094C33B0034C9E6 /* PositionRule.swift */,
+				69C5A86E2094D5210034C9E6 /* CollisionRule.swift */,
 			);
 			path = Rules;
 			sourceTree = "<group>";
@@ -309,6 +314,7 @@
 				69C5A84B20939BDB0034C9E6 /* ScrollRuleTests.swift */,
 				69C5A8542093A3610034C9E6 /* SpawnRuleTests.swift */,
 				69C5A85F2094C32F0034C9E6 /* PositionRuleTests.swift */,
+				69C5A8712094D7170034C9E6 /* CollisionRuleTests.swift */,
 			);
 			path = RuleTests;
 			sourceTree = "<group>";
@@ -682,6 +688,7 @@
 				69C5A85E2093BC230034C9E6 /* ThresholdRendererDelegate.swift in Sources */,
 				69C5A837209389080034C9E6 /* Kernel.swift in Sources */,
 				69C5A82C209383B80034C9E6 /* ChunkState.swift in Sources */,
+				69C5A86F2094D5210034C9E6 /* CollisionRule.swift in Sources */,
 				69C5A86A2094CB1A0034C9E6 /* Input.swift in Sources */,
 				69C5A8572093BA8F0034C9E6 /* TestScene.swift in Sources */,
 				69C5A83D20938A920034C9E6 /* Definitions.swift in Sources */,
@@ -703,6 +710,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69C5A8722094D7170034C9E6 /* CollisionRuleTests.swift in Sources */,
 				69C5A84120938B890034C9E6 /* TimeRuleTests.swift in Sources */,
 				69C5A8662094C7400034C9E6 /* PositionMutatorTests.swift in Sources */,
 				69C5A8602094C32F0034C9E6 /* PositionRuleTests.swift in Sources */,

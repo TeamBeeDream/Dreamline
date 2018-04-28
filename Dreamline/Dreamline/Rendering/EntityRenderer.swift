@@ -40,9 +40,9 @@ class EntityRenderer: Observer {
         case .boardEntityRemove(let id):
             self.removeNode(id: id)
             
-        case .boardEntityStateUpdate(let entity):
-            if let node = self.cache.retrieveNode(id: entity.id) {
-                self.delegate.handleEntityStateChange(entity: entity, node: node)
+        case .boardEntityStateUpdate(let id, let state):
+            if let node = self.cache.retrieveNode(id: id) {
+                self.delegate.handleEntityStateChange(state: state, node: node)
             }
             
         case .boardScroll(let distance):
@@ -84,5 +84,5 @@ class EntityRenderer: Observer {
 
 protocol EntityRendererDelegate {
     func makeNode(entity: Entity) -> SKNode?
-    func handleEntityStateChange(entity: Entity, node: SKNode)
+    func handleEntityStateChange(state: EntityState, node: SKNode)
 }

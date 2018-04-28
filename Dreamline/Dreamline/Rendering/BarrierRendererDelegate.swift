@@ -51,9 +51,9 @@ class BarrierRendererDelegate: EntityRendererDelegate {
         }
     }
     
-    func handleEntityStateChange(entity: Entity, node: SKNode) {
-        if entity.state == .crossed { self.blinkLine(node: node) }
-        if entity.state == .passed { self.fadeOutLine(node: node) }
+    func handleEntityStateChange(state: EntityState, node: SKNode) {
+        if state == .crossed { self.blinkLine(node: node) }
+        if state == .passed { self.fadeOutLine(node: node) }
     }
     
     // MARK: Private Methods

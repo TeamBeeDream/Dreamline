@@ -33,7 +33,7 @@ enum KernelEvent {
     case boardScroll(distance: Double)
     case boardEntityAdd(entity: Entity)
     case boardEntityRemove(id: Int)
-    case boardEntityStateUpdate(entity: Entity)
+    case boardEntityStateUpdate(id: Int, state: EntityState)
     case positionUpdate(distanceFromOrigin: Double)
     case positionTargetUpdate(target: Int)
 }

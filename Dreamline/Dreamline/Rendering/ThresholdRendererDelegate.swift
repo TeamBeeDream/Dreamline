@@ -41,9 +41,7 @@ class ThresholdRendererDelegate: EntityRendererDelegate {
         }
     }
     
-    func handleEntityStateChange(entity: Entity, node: SKNode) {
-        
-    }
+    func handleEntityStateChange(state: EntityState, node: SKNode) {}
     
     // MARK: Private Methods
     

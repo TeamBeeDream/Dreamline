@@ -33,12 +33,10 @@ extension KernelState {
         boardState.scrollSpeed = 1.0
         boardState.distanceBetweenEntities = 0.5
         
-        let chunkState = ChunkState(type: .barriers, difficuly: 0.2, length: 5)
-        
         return KernelState(time: TimeState.new(),
                            board: boardState,
                            position: PositionState.new(),
-                           chunk: chunkState,
+                           chunk: ChunkState.new(),
                            flowControl: FlowControlState.new(),
                            health: HealthState.new())
     }

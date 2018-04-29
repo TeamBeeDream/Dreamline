@@ -82,6 +82,7 @@ class BarrierCollisionDelegate: CollisionDelegate {
 }
 
 class ThresholdCollisionDelegate: CollisionDelegate {
+    
     func didCollide(state: KernelState, entity: Entity, lane: Int) -> [KernelEvent] {
         switch entity.type {
         case .threshold(let type):
@@ -92,10 +93,9 @@ class ThresholdCollisionDelegate: CollisionDelegate {
                 events.append(.boardEntityStateUpdate(id: entity.id, state: .crossed))
                 
                 if state.health.invincible {
-                    // @TODO
-                    //events.append(.chunkUpdate(type: type, difficulty: difficulty, length: length))
-                    //events.append(.scoreUpdate(+1))
                     events.append(.healthInvincibleUpdate(invincible: false))
+                } else {
+                    events.append(.chunkNext)
                 }
                 
                 return events

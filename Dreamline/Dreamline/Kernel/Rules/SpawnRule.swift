@@ -15,7 +15,7 @@ class SpawnRule: Rule {
     private var lastId: Int = 0 // @HACK
     
     func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
-        
+        if state.flowControl.phase != .play { return nil }
         if !self.regulator.shouldSpawnEntity(boardPosition: state.board.position,
                                              distanceBetweenBarriers: state.board.distanceBetweenEntities,
                                              lastEntityPosition: state.board.lastEntityPosition) {
@@ -25,10 +25,20 @@ class SpawnRule: Rule {
         return .boardEntityAdd(entity: self.getNextEntity(state: state))
     }
     
+    // @CLEANUP
     private func getNextEntity(state: KernelState) -> Entity {
-        let type = self.sequencer.getNextEntity(type: state.chunk.type,
-                                                difficulty: state.chunk.difficuly,
-                                                length: state.chunk.length)
+        guard let chunk = state.chunk.current else {
+            let entity = Entity(id: self.lastId,
+                                position: state.board.layout.lowerBound,
+                                type: .blank,
+                                state: .none)
+            self.lastId += 1
+            return entity
+        }
+        
+        let type = self.sequencer.getNextEntity(type: chunk.type,
+                                                difficulty: chunk.difficuly,
+                                                length: chunk.length)
         let entity = Entity(id: self.lastId,
                             position: state.board.layout.lowerBound,
                             type: type,

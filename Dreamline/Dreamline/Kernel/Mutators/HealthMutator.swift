@@ -11,6 +11,8 @@ import Foundation
 class HealthMutator: Mutator {
     func mutateState(state: inout KernelState, event: KernelEvent) {
         switch event {
+        case .healthHitPointSet(let hp):
+            state.health.hitPoints = hp
         case .healthHitPointUpdate(let increment):
             state.health.hitPoints += increment
         case .healthInvincibleUpdate(let invincible):

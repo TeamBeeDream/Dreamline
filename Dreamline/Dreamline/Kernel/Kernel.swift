@@ -78,7 +78,8 @@ class KernelMasterFactory {
                 DespawnRule(),
                 PositionRule(),
                 CollisionRule(),
-                HealthRule()]
+                HealthRule(),
+                SetupRule()]
     }
     
     private func getMutators() -> [Mutator] {
@@ -86,6 +87,7 @@ class KernelMasterFactory {
                 BoardMutator(),
                 PositionMutator(),
                 HealthMutator(),
-                ChunkMutator()]
+                ChunkMutator(),
+                FlowControlMutator()]
     }
 }

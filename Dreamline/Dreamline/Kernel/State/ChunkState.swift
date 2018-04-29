@@ -14,16 +14,19 @@ enum ChunkType {
     case finish
 }
 
-extension ChunkState {
-    static func new() -> ChunkState {
-        return ChunkState(type: .empty,
-                          difficuly: 0.0,
-                          length: 0)
-    }
-}
-
-struct ChunkState {
+struct Chunk {
     var type: ChunkType
     var difficuly: Double
     var length: Int
+}
+
+struct ChunkState {
+    var chunks: [Chunk]
+    var current: Chunk?
+}
+
+extension ChunkState {
+    static func new() -> ChunkState {
+        return ChunkState(chunks: [], current: nil)
+    }
 }

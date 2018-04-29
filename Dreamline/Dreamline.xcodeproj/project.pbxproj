@@ -60,6 +60,9 @@
 		69C5A8762094DB5B0034C9E6 /* HealthMutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8752094DB5B0034C9E6 /* HealthMutator.swift */; };
 		69C5A8782094E0820034C9E6 /* DespawnRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8772094E0820034C9E6 /* DespawnRule.swift */; };
 		69C5A87A2094E2A10034C9E6 /* ChunkMutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8792094E2A10034C9E6 /* ChunkMutator.swift */; };
+		69C5A87C20961B770034C9E6 /* ChunkSequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A87B20961B770034C9E6 /* ChunkSequencer.swift */; };
+		69C5A87E209620E60034C9E6 /* SetupRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A87D209620E60034C9E6 /* SetupRule.swift */; };
+		69C5A880209621D00034C9E6 /* FlowControlMutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A87F209621D00034C9E6 /* FlowControlMutator.swift */; };
 		69FC8A39205C460000E3829E /* dreamline_mainloop_rough.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */; };
 		69FC8A3F205C4DA000E3829E /* slowdown_effect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */; };
 		84C2A830D3DAB8687D4A83B8 /* Pods_DreamlineTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A67B3B964FC2677127726C0 /* Pods_DreamlineTests.framework */; };
@@ -140,6 +143,9 @@
 		69C5A8752094DB5B0034C9E6 /* HealthMutator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthMutator.swift; sourceTree = "<group>"; };
 		69C5A8772094E0820034C9E6 /* DespawnRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DespawnRule.swift; sourceTree = "<group>"; };
 		69C5A8792094E2A10034C9E6 /* ChunkMutator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChunkMutator.swift; sourceTree = "<group>"; };
+		69C5A87B20961B770034C9E6 /* ChunkSequencer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChunkSequencer.swift; sourceTree = "<group>"; };
+		69C5A87D209620E60034C9E6 /* SetupRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupRule.swift; sourceTree = "<group>"; };
+		69C5A87F209621D00034C9E6 /* FlowControlMutator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowControlMutator.swift; sourceTree = "<group>"; };
 		69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreamline_mainloop_rough.mp3; sourceTree = "<group>"; };
 		69FC8A3D205C4CB400E3829E /* slowdown_effect.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = slowdown_effect.aif; sourceTree = "<group>"; };
 		69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slowdown_effect.mp3; sourceTree = "<group>"; };
@@ -203,6 +209,7 @@
 				697FD96D207D307400403C7F /* Collision.swift */,
 				69711D04207E7D4600B7309C /* NodeCache.swift */,
 				69C5A8692094CB1A0034C9E6 /* Input.swift */,
+				69C5A87B20961B770034C9E6 /* ChunkSequencer.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -303,6 +310,7 @@
 				69C5A8612094C33B0034C9E6 /* PositionRule.swift */,
 				69C5A86E2094D5210034C9E6 /* CollisionRule.swift */,
 				69C5A8732094DB530034C9E6 /* HealthRule.swift */,
+				69C5A87D209620E60034C9E6 /* SetupRule.swift */,
 			);
 			path = Rules;
 			sourceTree = "<group>";
@@ -315,6 +323,7 @@
 				69C5A8632094C7270034C9E6 /* PositionMutator.swift */,
 				69C5A8752094DB5B0034C9E6 /* HealthMutator.swift */,
 				69C5A8792094E2A10034C9E6 /* ChunkMutator.swift */,
+				69C5A87F209621D00034C9E6 /* FlowControlMutator.swift */,
 			);
 			path = Mutators;
 			sourceTree = "<group>";
@@ -686,11 +695,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69C5A880209621D00034C9E6 /* FlowControlMutator.swift in Sources */,
 				69C5A84A20939BD00034C9E6 /* ScrollRule.swift in Sources */,
 				69C5A83F20938B7D0034C9E6 /* TimeRule.swift in Sources */,
 				69C5A8622094C33B0034C9E6 /* PositionRule.swift in Sources */,
 				69C5A827209382AC0034C9E6 /* KernelState.swift in Sources */,
 				69C5A85C2093BC1F0034C9E6 /* BarrierRendererDelegate.swift in Sources */,
+				69C5A87C20961B770034C9E6 /* ChunkSequencer.swift in Sources */,
 				69C5A830209387040034C9E6 /* PositionState.swift in Sources */,
 				697FD96E207D307400403C7F /* Collision.swift in Sources */,
 				69C5A8642094C7270034C9E6 /* PositionMutator.swift in Sources */,
@@ -702,6 +713,7 @@
 				69C5A837209389080034C9E6 /* Kernel.swift in Sources */,
 				69C5A8742094DB530034C9E6 /* HealthRule.swift in Sources */,
 				69C5A87A2094E2A10034C9E6 /* ChunkMutator.swift in Sources */,
+				69C5A87E209620E60034C9E6 /* SetupRule.swift in Sources */,
 				69C5A82C209383B80034C9E6 /* ChunkState.swift in Sources */,
 				69C5A86F2094D5210034C9E6 /* CollisionRule.swift in Sources */,
 				69C5A86A2094CB1A0034C9E6 /* Input.swift in Sources */,

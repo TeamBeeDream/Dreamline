@@ -30,6 +30,7 @@ enum KernelEvent {
     case timeUpdate(deltaTime: Double,
                     frameNumber: Int,
                     timeSinceBeginning: Double)
+    case timePauseUpdate(pause: Bool)
     case boardScroll(distance: Double)
     case boardEntityAdd(entity: Entity)
     case boardEntityRemove(id: Int)

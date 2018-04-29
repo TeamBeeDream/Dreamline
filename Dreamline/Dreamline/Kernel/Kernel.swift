@@ -31,9 +31,9 @@ class KernelImpl: Kernel {
     }
     
     func update(deltaTime: Double) -> [KernelEvent] {
-        let events = self.processRules(deltaTime: deltaTime)
+        var events = self.processRules(deltaTime: deltaTime)
+        events.append(contentsOf: self.externalEvents)
         self.mutateState(events: events)
-        self.mutateState(events: self.externalEvents)
         self.clearExternalEvents()
         return events
     }

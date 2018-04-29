@@ -8,11 +8,16 @@
 
 import SpriteKit
 
-class TestScene: SKScene {
+protocol EventDelegate {
+    func addEvent(_ event: KernelEvent)
+}
+
+class TestScene: SKScene, EventDelegate {
     
     private var kernel: Kernel!
     private var observers: [Observer]!
     
+    private var queuedEvents = [KernelEvent]()
     private var previousTime: TimeInterval = 0
     private var input = Input()
     
@@ -23,7 +28,8 @@ class TestScene: SKScene {
                                                   delegate: BarrierRendererDelegate.make(frame: instance.frame)),
                               EntityRenderer.make(scene: instance,
                                                   delegate: ThresholdRendererDelegate.make(frame: instance.frame)),
-                              PlayerRenderer.make(scene: instance, state: instance.kernel.getState())]
+                              PlayerRenderer.make(scene: instance, state: instance.kernel.getState()),
+                              PauseRenderer.make(scene: instance, delegate: instance)]
         return instance
     }
     
@@ -53,8 +59,16 @@ class TestScene: SKScene {
         }
     }
     
+    func addEvent(_ event: KernelEvent) {
+        self.queuedEvents.append(event)
+    }
+    
     private func getOutsideEvents() -> [KernelEvent] {
-        return [.positionTargetUpdate(target: self.input.getCurrent())]
+        var events = [KernelEvent]()
+        events.append(.positionTargetUpdate(target: self.input.getCurrent()))
+        events.append(contentsOf: self.queuedEvents)
+        self.queuedEvents.removeAll()
+        return events
     }
 }
 

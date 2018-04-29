@@ -19,7 +19,8 @@ class SetupRule: Rule {
                 .flowControlPhaseUpdate(phase: .begin),
                 .chunkSet(chunks: chunks),
                 .healthHitPointSet(3),
-                .healthInvincibleUpdate(invincible: false)])
+                .healthInvincibleUpdate(invincible: false),
+                .timePauseUpdate(pause: false)])
         }
         
         // @TEMP

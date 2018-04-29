@@ -63,6 +63,11 @@
 		69C5A87C20961B770034C9E6 /* ChunkSequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A87B20961B770034C9E6 /* ChunkSequencer.swift */; };
 		69C5A87E209620E60034C9E6 /* SetupRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A87D209620E60034C9E6 /* SetupRule.swift */; };
 		69C5A880209621D00034C9E6 /* FlowControlMutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A87F209621D00034C9E6 /* FlowControlMutator.swift */; };
+		69C5A885209627AA0034C9E6 /* PauseButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A881209627A90034C9E6 /* PauseButtonNode.swift */; };
+		69C5A886209627AA0034C9E6 /* PauseMenuNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A882209627A90034C9E6 /* PauseMenuNode.swift */; };
+		69C5A887209627AA0034C9E6 /* LabelButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A883209627AA0034C9E6 /* LabelButtonNode.swift */; };
+		69C5A888209627AA0034C9E6 /* PauseRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A884209627AA0034C9E6 /* PauseRenderer.swift */; };
+		69C5A88A209627BD0034C9E6 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A889209627BC0034C9E6 /* ButtonNode.swift */; };
 		69FC8A39205C460000E3829E /* dreamline_mainloop_rough.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */; };
 		69FC8A3F205C4DA000E3829E /* slowdown_effect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */; };
 		84C2A830D3DAB8687D4A83B8 /* Pods_DreamlineTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A67B3B964FC2677127726C0 /* Pods_DreamlineTests.framework */; };
@@ -146,6 +151,11 @@
 		69C5A87B20961B770034C9E6 /* ChunkSequencer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChunkSequencer.swift; sourceTree = "<group>"; };
 		69C5A87D209620E60034C9E6 /* SetupRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupRule.swift; sourceTree = "<group>"; };
 		69C5A87F209621D00034C9E6 /* FlowControlMutator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlowControlMutator.swift; sourceTree = "<group>"; };
+		69C5A881209627A90034C9E6 /* PauseButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseButtonNode.swift; sourceTree = "<group>"; };
+		69C5A882209627A90034C9E6 /* PauseMenuNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseMenuNode.swift; sourceTree = "<group>"; };
+		69C5A883209627AA0034C9E6 /* LabelButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelButtonNode.swift; sourceTree = "<group>"; };
+		69C5A884209627AA0034C9E6 /* PauseRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseRenderer.swift; sourceTree = "<group>"; };
+		69C5A889209627BC0034C9E6 /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 		69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreamline_mainloop_rough.mp3; sourceTree = "<group>"; };
 		69FC8A3D205C4CB400E3829E /* slowdown_effect.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = slowdown_effect.aif; sourceTree = "<group>"; };
 		69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slowdown_effect.mp3; sourceTree = "<group>"; };
@@ -357,6 +367,11 @@
 				69C5A85B2093BC1F0034C9E6 /* BarrierRendererDelegate.swift */,
 				69C5A85D2093BC230034C9E6 /* ThresholdRendererDelegate.swift */,
 				69C5A8672094C9F60034C9E6 /* PlayerRenderer.swift */,
+				69C5A889209627BC0034C9E6 /* ButtonNode.swift */,
+				69C5A883209627AA0034C9E6 /* LabelButtonNode.swift */,
+				69C5A881209627A90034C9E6 /* PauseButtonNode.swift */,
+				69C5A882209627A90034C9E6 /* PauseMenuNode.swift */,
+				69C5A884209627AA0034C9E6 /* PauseRenderer.swift */,
 			);
 			path = Rendering;
 			sourceTree = "<group>";
@@ -697,11 +712,13 @@
 			files = (
 				69C5A880209621D00034C9E6 /* FlowControlMutator.swift in Sources */,
 				69C5A84A20939BD00034C9E6 /* ScrollRule.swift in Sources */,
+				69C5A885209627AA0034C9E6 /* PauseButtonNode.swift in Sources */,
 				69C5A83F20938B7D0034C9E6 /* TimeRule.swift in Sources */,
 				69C5A8622094C33B0034C9E6 /* PositionRule.swift in Sources */,
 				69C5A827209382AC0034C9E6 /* KernelState.swift in Sources */,
 				69C5A85C2093BC1F0034C9E6 /* BarrierRendererDelegate.swift in Sources */,
 				69C5A87C20961B770034C9E6 /* ChunkSequencer.swift in Sources */,
+				69C5A88A209627BD0034C9E6 /* ButtonNode.swift in Sources */,
 				69C5A830209387040034C9E6 /* PositionState.swift in Sources */,
 				697FD96E207D307400403C7F /* Collision.swift in Sources */,
 				69C5A8642094C7270034C9E6 /* PositionMutator.swift in Sources */,
@@ -726,9 +743,12 @@
 				69C5A8762094DB5B0034C9E6 /* HealthMutator.swift in Sources */,
 				69C5A82E209384590034C9E6 /* BoardState.swift in Sources */,
 				69C5A844209395FB0034C9E6 /* TimeMutator.swift in Sources */,
+				69C5A887209627AA0034C9E6 /* LabelButtonNode.swift in Sources */,
 				69C5A85A2093BB2D0034C9E6 /* EntityRenderer.swift in Sources */,
 				69AB5E92204F251700093B33 /* Math.swift in Sources */,
+				69C5A888209627AA0034C9E6 /* PauseRenderer.swift in Sources */,
 				69C5A832209387B80034C9E6 /* FlowControlState.swift in Sources */,
+				69C5A886209627AA0034C9E6 /* PauseMenuNode.swift in Sources */,
 				69C5A834209388110034C9E6 /* HealthState.swift in Sources */,
 				69C5A8532093A2DD0034C9E6 /* SpawnRule.swift in Sources */,
 			);

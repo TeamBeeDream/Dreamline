@@ -22,6 +22,9 @@ class BoardMutator: Mutator {
         case .boardEntityRemove(let id):
             let index = state.board.entities.index(where: { $0.id == id })! // @HACK
             state.board.entities.remove(at: index)
+        case .boardReset:
+            state.board.lastEntityPosition = 0.0
+            state.board.position = 0.0
         case .multiple(let events):
             for bundledEvent in events {
                 self.mutateState(state: &state, event: bundledEvent)

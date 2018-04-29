@@ -35,6 +35,7 @@ enum KernelEvent {
     case boardEntityAdd(entity: Entity)
     case boardEntityRemove(id: Int)
     case boardEntityStateUpdate(id: Int, state: EntityState)
+    case boardReset
     case positionUpdate(distanceFromOrigin: Double)
     case positionTargetUpdate(target: Int)
     case healthHitPointSet(Int)

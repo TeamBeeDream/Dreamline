@@ -29,7 +29,8 @@ class TestScene: SKScene, EventDelegate {
                               EntityRenderer.make(scene: instance,
                                                   delegate: ThresholdRendererDelegate.make(frame: instance.frame)),
                               PlayerRenderer.make(scene: instance, state: instance.kernel.getState()),
-                              PauseRenderer.make(scene: instance, delegate: instance)]
+                              PauseRenderer.make(scene: instance, delegate: instance),
+                              ResultsRenderer.make(scene: instance, delegate: instance)]
         return instance
     }
     

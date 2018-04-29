@@ -14,13 +14,14 @@ class SetupRule: Rule {
     
     func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
         if state.flowControl.phase == .origin {
-            let chunks = self.chunkSequencer.getChunks(start: 0.2, end: 1.0, variation: 0.1, count: 5)
+            let chunks = self.chunkSequencer.getChunks(start: 0.2, end: 1.0, variation: 0.1, count: 1)
             return .multiple(events: [
                 .flowControlPhaseUpdate(phase: .begin),
                 .chunkSet(chunks: chunks),
                 .healthHitPointSet(3),
                 .healthInvincibleUpdate(invincible: false),
-                .timePauseUpdate(pause: false)])
+                .timePauseUpdate(pause: false),
+                .boardReset])
         }
         
         // @TEMP

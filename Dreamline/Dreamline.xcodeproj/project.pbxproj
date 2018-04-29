@@ -68,6 +68,7 @@
 		69C5A887209627AA0034C9E6 /* LabelButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A883209627AA0034C9E6 /* LabelButtonNode.swift */; };
 		69C5A888209627AA0034C9E6 /* PauseRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A884209627AA0034C9E6 /* PauseRenderer.swift */; };
 		69C5A88A209627BD0034C9E6 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A889209627BC0034C9E6 /* ButtonNode.swift */; };
+		69C5A88C20962AA80034C9E6 /* ResultsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A88B20962AA80034C9E6 /* ResultsRenderer.swift */; };
 		69FC8A39205C460000E3829E /* dreamline_mainloop_rough.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */; };
 		69FC8A3F205C4DA000E3829E /* slowdown_effect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */; };
 		84C2A830D3DAB8687D4A83B8 /* Pods_DreamlineTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A67B3B964FC2677127726C0 /* Pods_DreamlineTests.framework */; };
@@ -156,6 +157,7 @@
 		69C5A883209627AA0034C9E6 /* LabelButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelButtonNode.swift; sourceTree = "<group>"; };
 		69C5A884209627AA0034C9E6 /* PauseRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PauseRenderer.swift; sourceTree = "<group>"; };
 		69C5A889209627BC0034C9E6 /* ButtonNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
+		69C5A88B20962AA80034C9E6 /* ResultsRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultsRenderer.swift; sourceTree = "<group>"; };
 		69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreamline_mainloop_rough.mp3; sourceTree = "<group>"; };
 		69FC8A3D205C4CB400E3829E /* slowdown_effect.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = slowdown_effect.aif; sourceTree = "<group>"; };
 		69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slowdown_effect.mp3; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 				69C5A881209627A90034C9E6 /* PauseButtonNode.swift */,
 				69C5A882209627A90034C9E6 /* PauseMenuNode.swift */,
 				69C5A884209627AA0034C9E6 /* PauseRenderer.swift */,
+				69C5A88B20962AA80034C9E6 /* ResultsRenderer.swift */,
 			);
 			path = Rendering;
 			sourceTree = "<group>";
@@ -731,6 +734,7 @@
 				69C5A8742094DB530034C9E6 /* HealthRule.swift in Sources */,
 				69C5A87A2094E2A10034C9E6 /* ChunkMutator.swift in Sources */,
 				69C5A87E209620E60034C9E6 /* SetupRule.swift in Sources */,
+				69C5A88C20962AA80034C9E6 /* ResultsRenderer.swift in Sources */,
 				69C5A82C209383B80034C9E6 /* ChunkState.swift in Sources */,
 				69C5A86F2094D5210034C9E6 /* CollisionRule.swift in Sources */,
 				69C5A86A2094CB1A0034C9E6 /* Input.swift in Sources */,

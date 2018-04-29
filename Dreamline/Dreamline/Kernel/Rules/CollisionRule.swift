@@ -86,6 +86,7 @@ class ThresholdCollisionDelegate: CollisionDelegate {
     func didCollide(state: KernelState, entity: Entity, lane: Int) -> [KernelEvent] {
         switch entity.type {
         case .threshold(let type):
+            if entity.state != .none { return [] } // @HACK
             switch type {
             case .chunkEnd:
                 var events = [KernelEvent]()
@@ -100,7 +101,9 @@ class ThresholdCollisionDelegate: CollisionDelegate {
                 
                 return events
             case .roundEnd:
-                return [.flowControlPhaseUpdate(phase: .results)]
+                return [
+                    .boardEntityStateUpdate(id: entity.id, state: .crossed),
+                    .flowControlPhaseUpdate(phase: .results)]
             }
         default:
             return []

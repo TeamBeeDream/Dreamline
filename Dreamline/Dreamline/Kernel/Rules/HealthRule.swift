@@ -12,7 +12,8 @@ class HealthRule: Rule {
     func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
         if state.flowControl.phase != .play { return nil }
         if state.health.hitPoints <= 0 {
-            return .flowControlPhaseUpdate(phase: .results)
+            //return .flowControlPhaseUpdate(phase: .results)
+            return nil
         } else {
             return nil
         }

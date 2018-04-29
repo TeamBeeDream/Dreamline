@@ -12,7 +12,11 @@ class ChunkMutator: Mutator {
     func mutateState(state: inout KernelState, event: KernelEvent) {
         switch event {
         case .chunkNext:
-            state.chunk.current = state.chunk.chunks.removeFirst()
+            if !state.chunk.chunks.isEmpty {
+//                state.chunk.current = nil
+//            } else {
+                state.chunk.current = state.chunk.chunks.removeFirst()
+            }
         case .chunkSet(let chunks):
             state.chunk.chunks = chunks
             state.chunk.current = state.chunk.chunks.removeFirst()

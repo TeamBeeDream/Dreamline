@@ -75,13 +75,17 @@ class KernelMasterFactory {
         return [TimeRule(),
                 ScrollRule(),
                 SpawnRule(),
+                DespawnRule(),
                 PositionRule(),
-                CollisionRule()]
+                CollisionRule(),
+                HealthRule()]
     }
     
     private func getMutators() -> [Mutator] {
         return [TimeMutator(),
                 BoardMutator(),
-                PositionMutator()]
+                PositionMutator(),
+                HealthMutator(),
+                ChunkMutator()]
     }
 }

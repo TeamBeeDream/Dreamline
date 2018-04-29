@@ -56,6 +56,10 @@
 		69C5A86D2094CB360034C9E6 /* InputTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A86C2094CB360034C9E6 /* InputTests.swift */; };
 		69C5A86F2094D5210034C9E6 /* CollisionRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A86E2094D5210034C9E6 /* CollisionRule.swift */; };
 		69C5A8722094D7170034C9E6 /* CollisionRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8712094D7170034C9E6 /* CollisionRuleTests.swift */; };
+		69C5A8742094DB530034C9E6 /* HealthRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8732094DB530034C9E6 /* HealthRule.swift */; };
+		69C5A8762094DB5B0034C9E6 /* HealthMutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8752094DB5B0034C9E6 /* HealthMutator.swift */; };
+		69C5A8782094E0820034C9E6 /* DespawnRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8772094E0820034C9E6 /* DespawnRule.swift */; };
+		69C5A87A2094E2A10034C9E6 /* ChunkMutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A8792094E2A10034C9E6 /* ChunkMutator.swift */; };
 		69FC8A39205C460000E3829E /* dreamline_mainloop_rough.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */; };
 		69FC8A3F205C4DA000E3829E /* slowdown_effect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */; };
 		84C2A830D3DAB8687D4A83B8 /* Pods_DreamlineTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A67B3B964FC2677127726C0 /* Pods_DreamlineTests.framework */; };
@@ -132,6 +136,10 @@
 		69C5A86C2094CB360034C9E6 /* InputTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTests.swift; sourceTree = "<group>"; };
 		69C5A86E2094D5210034C9E6 /* CollisionRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionRule.swift; sourceTree = "<group>"; };
 		69C5A8712094D7170034C9E6 /* CollisionRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollisionRuleTests.swift; sourceTree = "<group>"; };
+		69C5A8732094DB530034C9E6 /* HealthRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthRule.swift; sourceTree = "<group>"; };
+		69C5A8752094DB5B0034C9E6 /* HealthMutator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthMutator.swift; sourceTree = "<group>"; };
+		69C5A8772094E0820034C9E6 /* DespawnRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DespawnRule.swift; sourceTree = "<group>"; };
+		69C5A8792094E2A10034C9E6 /* ChunkMutator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChunkMutator.swift; sourceTree = "<group>"; };
 		69FC8A38205C460000E3829E /* dreamline_mainloop_rough.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dreamline_mainloop_rough.mp3; sourceTree = "<group>"; };
 		69FC8A3D205C4CB400E3829E /* slowdown_effect.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = slowdown_effect.aif; sourceTree = "<group>"; };
 		69FC8A3E205C4DA000E3829E /* slowdown_effect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = slowdown_effect.mp3; sourceTree = "<group>"; };
@@ -291,8 +299,10 @@
 				69C5A83E20938B7D0034C9E6 /* TimeRule.swift */,
 				69C5A84920939BD00034C9E6 /* ScrollRule.swift */,
 				69C5A8522093A2DD0034C9E6 /* SpawnRule.swift */,
+				69C5A8772094E0820034C9E6 /* DespawnRule.swift */,
 				69C5A8612094C33B0034C9E6 /* PositionRule.swift */,
 				69C5A86E2094D5210034C9E6 /* CollisionRule.swift */,
+				69C5A8732094DB530034C9E6 /* HealthRule.swift */,
 			);
 			path = Rules;
 			sourceTree = "<group>";
@@ -303,6 +313,8 @@
 				69C5A843209395FB0034C9E6 /* TimeMutator.swift */,
 				69C5A84D2093A0300034C9E6 /* BoardMutator.swift */,
 				69C5A8632094C7270034C9E6 /* PositionMutator.swift */,
+				69C5A8752094DB5B0034C9E6 /* HealthMutator.swift */,
+				69C5A8792094E2A10034C9E6 /* ChunkMutator.swift */,
 			);
 			path = Mutators;
 			sourceTree = "<group>";
@@ -686,7 +698,10 @@
 				699FC55E204E053600DB09B4 /* DreamlineViewController.swift in Sources */,
 				69711D05207E7D4600B7309C /* NodeCache.swift in Sources */,
 				69C5A85E2093BC230034C9E6 /* ThresholdRendererDelegate.swift in Sources */,
+				69C5A8782094E0820034C9E6 /* DespawnRule.swift in Sources */,
 				69C5A837209389080034C9E6 /* Kernel.swift in Sources */,
+				69C5A8742094DB530034C9E6 /* HealthRule.swift in Sources */,
+				69C5A87A2094E2A10034C9E6 /* ChunkMutator.swift in Sources */,
 				69C5A82C209383B80034C9E6 /* ChunkState.swift in Sources */,
 				69C5A86F2094D5210034C9E6 /* CollisionRule.swift in Sources */,
 				69C5A86A2094CB1A0034C9E6 /* Input.swift in Sources */,
@@ -696,6 +711,7 @@
 				69C5A84E2093A0300034C9E6 /* BoardMutator.swift in Sources */,
 				699EB42D206DAFDA00693CB8 /* Random.swift in Sources */,
 				69C5A8682094C9F60034C9E6 /* PlayerRenderer.swift in Sources */,
+				69C5A8762094DB5B0034C9E6 /* HealthMutator.swift in Sources */,
 				69C5A82E209384590034C9E6 /* BoardState.swift in Sources */,
 				69C5A844209395FB0034C9E6 /* TimeMutator.swift in Sources */,
 				69C5A85A2093BB2D0034C9E6 /* EntityRenderer.swift in Sources */,

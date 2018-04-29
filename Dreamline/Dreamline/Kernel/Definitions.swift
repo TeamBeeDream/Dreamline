@@ -36,4 +36,10 @@ enum KernelEvent {
     case boardEntityStateUpdate(id: Int, state: EntityState)
     case positionUpdate(distanceFromOrigin: Double)
     case positionTargetUpdate(target: Int)
+    case healthHitPointUpdate(increment: Int)
+    case healthInvincibleUpdate(invincible: Bool)
+    case flowControlPhaseUpdate(phase: FlowControlPhase)
+    case chunkUpdate(type: ChunkType, difficulty: Double, length: Int)
+    
+    case multiple(events: [KernelEvent]) // :(
 }

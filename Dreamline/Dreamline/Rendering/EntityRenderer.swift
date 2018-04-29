@@ -50,6 +50,11 @@ class EntityRenderer: Observer {
                 entity.position.y -= CGFloat(distance / 2.0) * self.scene.frame.height // @FIXME
             }
             
+        case .multiple(let events):
+            for bundledEvent in events {
+                self.observe(event: bundledEvent)
+            }
+            
         default:
             break
         }

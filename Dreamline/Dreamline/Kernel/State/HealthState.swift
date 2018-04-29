@@ -10,10 +10,12 @@ import Foundation
 
 struct HealthState {
     var hitPoints: Int
+    var invincible: Bool
 }
 
 extension HealthState {
     static func new() -> HealthState {
-        return HealthState(hitPoints: 0)
+        return HealthState(hitPoints: 0,
+                           invincible: false)
     }
 }

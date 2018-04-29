@@ -43,6 +43,12 @@ class PlayerRenderer: Observer {
         case .positionUpdate(let distanceFromOrigin):
             let pos = self.playerPoint(offset: distanceFromOrigin)
             self.playerNode?.position = pos
+        case .healthInvincibleUpdate(let invincible):
+            self.playerNode?.alpha = invincible ? 0.5 : 1
+        case .multiple(let events):
+            for bundledEvent in events {
+                self.observe(event: bundledEvent)
+            }
         default: break
         }
     }

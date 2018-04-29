@@ -18,6 +18,10 @@ class PositionMutator: Mutator {
             state.position.distanceFromNearestLane = distanceFromNearestLane
         case .positionTargetUpdate(let target):
             state.position.targetLane = target
+        case .multiple(let events):
+            for bundledEvent in events {
+                self.mutateState(state: &state, event: bundledEvent)
+            }
         default: break
         }
     }

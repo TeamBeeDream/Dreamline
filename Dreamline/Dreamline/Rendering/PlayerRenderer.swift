@@ -30,12 +30,12 @@ class PlayerRenderer: Observer {
     private func setup(state: KernelState) {
         self.yPos = state.board.layout.playerPosition
         
-        let node = SKShapeNode(circleOfRadius: 15.0)
-        node.zPosition = 2
-        node.lineWidth = 0.0
-        node.fillColor = .orange
-        self.scene.addChild(node) // @FIXME
-        self.playerNode = node
+        let width = self.scene.frame.width * 0.15
+        let airplane = SKSpriteNode(imageNamed: "PaperAirplaneA")
+        airplane.zPosition = 2 // @HARDCODED
+        airplane.size = CGSize(width: width, height: width)
+        self.scene.addChild(airplane)
+        self.playerNode = airplane
     }
     
     func observe(event: KernelEvent) {

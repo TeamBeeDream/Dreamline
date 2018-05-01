@@ -18,6 +18,7 @@ class AudioRenderer: Observer {
     private var barrierPass: SKAction!
     private var thresholdCross: SKAction!
     private var playerMove: SKAction!
+    private var playerReturn: SKAction!
     
     private var lane: Int = 0
     
@@ -33,8 +34,12 @@ class AudioRenderer: Observer {
         case .settingsMuteUpdate(let mute):
             self.handleMuteUpdate(mute: mute)
         case .positionTargetUpdate(let target):
-            if lane != target && target != 0 {
-                self.nullNode.run(self.playerMove)
+            if lane != target {
+                if target == 0 {
+                    self.nullNode.run(self.playerReturn)
+                } else {
+                    self.nullNode.run(self.playerMove)
+                }
             }
             self.lane = target
         case .boardEntityStateUpdate(_, let type, let state):
@@ -64,7 +69,8 @@ class AudioRenderer: Observer {
         self.barrierCross = SKAction.playSoundFileNamed("barrier_cross_quiet.mp3", waitForCompletion: false)
         self.barrierPass = SKAction.playSoundFileNamed("barrier_pass.mp3", waitForCompletion: false)
         self.thresholdCross = SKAction.playSoundFileNamed("threshold_cross.mp3", waitForCompletion: false)
-        self.playerMove = SKAction.playSoundFileNamed("player_move.mp3", waitForCompletion: true)
+        self.playerMove = SKAction.playSoundFileNamed("player_move.mp3", waitForCompletion: false)
+        self.playerReturn = SKAction.playSoundFileNamed("player_move_2.mp3", waitForCompletion: false)
     }
 
     private func handleEvent(type: EntityType, state: EntityState) {

@@ -12,18 +12,16 @@ class SkyRenderer: Observer {
     
     private var scene: SKScene!
     private var skyNode: SkyNode!
+    private var matteNode: SKSpriteNode!
     
     private let scrollSpeed = 0.2 // @HARDCODED
     private let skyColor = UIColor.cyan
     
     static func make(scene: SKScene) -> SkyRenderer {
-        
-        let sky = SkyNode.make(frame: scene.frame)
-        scene.addChild(sky)
-        
         let instance = SkyRenderer()
         instance.scene = scene
-        instance.skyNode = sky
+        instance.addSky(rect: scene.frame)
+        instance.addMatte(rect: scene.frame)
         instance.setScrollSpeed(speed: instance.scrollSpeed)
         instance.setSkyColor(color: instance.skyColor)
         return instance
@@ -41,9 +39,27 @@ class SkyRenderer: Observer {
         }
     }
     
+    private func addSky(rect: CGRect) {
+        let sky = SkyNode.make(frame: scene.frame)
+        self.scene.addChild(sky)
+        self.skyNode = sky
+    }
+    
+    private func addMatte(rect: CGRect) {
+        let matte = SKSpriteNode(color: .black, size: rect.size)
+        matte.position = CGPoint(x: rect.midX, y: rect.midY)
+        matte.zPosition = 4 // @HARDCODED
+        matte.alpha = 0.0
+        self.scene.addChild(matte)
+        self.matteNode = matte
+    }
+    
     private func handlePhaseUpdate(_ phase: FlowControlPhase) {
         switch phase {
-            // @TODO
+        case .begin:
+            self.matteNode.run(Actions.fadeOut(duration: 0.2))
+        case .results:
+            self.matteNode.run(Actions.fadeIn(duration: 0.5))
         default:
             break
         }

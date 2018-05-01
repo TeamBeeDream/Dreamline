@@ -45,6 +45,7 @@ class ResultsRenderer: Observer {
                 let label = SKLabelNode(text: "ROUND COMPLETE")
                 label.fontColor = .white
                 label.fontSize = 30
+                label.zPosition = 40 // @HARDCODED
                 label.position = CGPoint(x: self.scene.frame.midX, y: self.scene.frame.midY)
                 label.run(SKAction.fadeIn(withDuration: 0.2))
                 self.nodeContainer.addChild(label)
@@ -52,7 +53,7 @@ class ResultsRenderer: Observer {
                 // @HACK
                 let continueButton = ButtonNode(color: .clear, size: self.scene.frame.size)
                 continueButton.isUserInteractionEnabled = true
-                continueButton.zPosition = 100
+                continueButton.zPosition = 100 // @HARDCODED
                 continueButton.position = CGPoint(x: self.scene.frame.midX, y: self.scene.frame.midY)
                 continueButton.action = { self.delegate.addEvent(.flowControlPhaseUpdate(phase: .origin)) }
                 self.nodeContainer.addChild(continueButton)

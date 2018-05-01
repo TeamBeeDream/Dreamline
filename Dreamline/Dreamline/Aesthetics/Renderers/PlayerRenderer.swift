@@ -32,7 +32,7 @@ class PlayerRenderer: Observer {
         
         let width = self.scene.frame.width * 0.15
         let player = PlayerNode.make(size: width)
-        player.zPosition = 2 // @HARDCODED
+        player.zPosition = 10 // @HARDCODED
         self.scene.addChild(player)
         self.player = player
     }

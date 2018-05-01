@@ -13,4 +13,14 @@ class Layout {
         let marginInPixels = rect.width * margin
         return rect.insetBy(dx: marginInPixels, dy: marginInPixels)
     }
+    
+    static func autoLayout(fullLength: CGFloat, segments: Int) -> (sublength: CGFloat, positions: [CGFloat]) {
+        let sublength = fullLength / CGFloat(segments)
+        var positions = [CGFloat]()
+        for i in 0...segments {
+            let pos = (sublength / 2) + (CGFloat(i) * sublength)
+            positions.append(pos)
+        }
+        return (sublength: sublength, positions: positions)
+    }
 }

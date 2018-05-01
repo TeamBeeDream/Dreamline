@@ -17,9 +17,10 @@ class PauseMenuNode: SKNode {
     static func make(rect: CGRect) -> PauseMenuNode {
         let instance = PauseMenuNode()
         instance.addBackground(rect: rect)
-        instance.addResumeButton(rect: rect)
-        instance.addMenuButton(rect: rect)
-        instance.addMuteButton(rect: rect)
+        instance.addButtons(rect: rect)
+//        instance.addResumeButton(rect: rect)
+//        instance.addMenuButton(rect: rect)
+//        instance.addMuteButton(rect: rect)
         instance.zPosition = 100 // @HARDCODED
         return instance
     }
@@ -32,34 +33,40 @@ class PauseMenuNode: SKNode {
         self.addChild(backgroundNode)
     }
     
-    private func addResumeButton(rect: CGRect) {
-        let buttonSize = CGSize(width: rect.width, height: 100)
-        let resumeButton = LabelButtonNode.make("Resume",
-                                                size: buttonSize,
+    private func addButtons(rect: CGRect) {
+        let layout = Layout.autoLayout(fullLength: rect.height, segments: 3)
+        let buttonSize = CGSize(width: rect.width, height: layout.sublength)
+        let buttonPositions = layout.positions
+        
+        let buttons = [self.addResumeButton(size: buttonSize),
+                       self.addMenuButton(size: buttonSize),
+                       self.addMuteButton(size: buttonSize)]
+        for (i, button) in buttons.enumerated() {
+            let position = buttonPositions[i]
+            button.position = CGPoint(x: rect.midX, y: rect.maxY - position)
+            self.addChild(button)
+        }
+    }
+    
+    private func addResumeButton(size: CGSize) -> ButtonNode {
+        self.resumeButton = LabelButtonNode.make("Resume",
+                                                size: size,
                                                 color: .orange)
-        resumeButton.position = CGPoint(x: rect.midX, y: rect.midY + 100)
-        self.addChild(resumeButton)
-        self.resumeButton = resumeButton
+        return self.resumeButton
     }
     
-    private func addMenuButton(rect: CGRect) {
-        let buttonSize = CGSize(width: rect.width, height: 100)
-        let menuButton = LabelButtonNode.make("Menu",
-                                              size: buttonSize,
+    private func addMenuButton(size: CGSize) -> ButtonNode {
+        self.menuButton = LabelButtonNode.make("Menu",
+                                              size: size,
                                               color: .yellow)
-        menuButton.position = CGPoint(x: rect.midX, y: rect.midY)
-        self.addChild(menuButton)
-        self.menuButton = menuButton
+        return self.menuButton
     }
     
-    private func addMuteButton(rect: CGRect) {
-        let buttonSize = CGSize(width: rect.width, height: 100)
-        let muteButton = LabelButtonNode.make("Mute",
-                                              size: buttonSize,
+    private func addMuteButton(size: CGSize) -> ButtonNode {
+        self.muteButton = LabelButtonNode.make("Mute",
+                                              size: size,
                                               color: .green)
-        muteButton.position = CGPoint(x: rect.midX, y: rect.midY - 100)
-        self.addChild(muteButton)
-        self.muteButton = muteButton
+        return self.muteButton
     }
     
     func toggleMuteButton(mute: Bool, delegate: EventDelegate) {

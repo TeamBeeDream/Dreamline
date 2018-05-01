@@ -42,6 +42,9 @@ class GameScene: SKScene, EventDelegate {
         border.fillColor = .clear
         border.strokeColor = .green
         self.addChild(border)
+        
+        // @TEMP
+        self.kernel.addEvent(event: .settingsMuteUpdate(mute: true))
     }
     
     override func update(_ currentTime: TimeInterval) {

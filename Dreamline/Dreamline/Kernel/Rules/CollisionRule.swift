@@ -23,7 +23,7 @@ class CollisionRule: Rule {
         for entity in state.board.entities {
             if Collision.didCrossLine(testPosition: state.board.layout.playerPosition,
                                       linePosition: entity.position,
-                                      lineDelta: state.board.scrollSpeed * deltaTime) {
+                                      lineDelta: state.board.scrollSpeed * deltaTime * 2) {
                 let events = self.getEventsFromDelegates(state: state,
                                                          entity: entity,
                                                          lane: state.position.nearestLane)

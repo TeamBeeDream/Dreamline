@@ -10,11 +10,11 @@ import Foundation
 
 class SetupRule: Rule {
     
-    private var chunkSequencer = ChunkSequencer()
+    private var sequencer: ChunkSequencer = DebugChunkSequencer() // @TEMP
     
     func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
         if state.flowControl.phase == .origin {
-            let chunks = self.chunkSequencer.getChunks(start: 0.2, end: 1.0, variation: 0.1, count: 1)
+            let chunks = self.sequencer.getChunks(level: 0)
             return .multiple(events: [
                 .flowControlPhaseUpdate(phase: .begin),
                 .chunkSet(chunks: chunks),

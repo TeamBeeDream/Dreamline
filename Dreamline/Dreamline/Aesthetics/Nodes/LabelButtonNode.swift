@@ -9,6 +9,9 @@
 import SpriteKit
 
 class LabelButtonNode: ButtonNode {
+    
+    private var label: SKLabelNode!
+    
     static func make(_ label: String, size: CGSize, color: UIColor) -> LabelButtonNode {
         let instance = LabelButtonNode(color: color, size: size)
         instance.addLabel(label)
@@ -17,10 +20,15 @@ class LabelButtonNode: ButtonNode {
         return instance
     }
     
+    func setLabel(_ label: String) {
+        self.label.text = label
+    }
+    
     private func addLabel(_ text: String) {
         let label = SKLabelNode(text: text)
         label.fontColor = .darkText
         label.verticalAlignmentMode = .center
         self.addChild(label)
+        self.label = label
     }
 }

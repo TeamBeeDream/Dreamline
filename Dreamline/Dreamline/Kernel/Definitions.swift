@@ -44,6 +44,7 @@ enum KernelEvent {
     case flowControlPhaseUpdate(phase: FlowControlPhase)
     case chunkNext
     case chunkSet(chunks: [Chunk])
+    case settingsMuteUpdate(mute: Bool)
     
     case multiple(events: [KernelEvent]) // :(
 }

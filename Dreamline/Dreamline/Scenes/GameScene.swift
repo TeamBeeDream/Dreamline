@@ -31,7 +31,8 @@ class GameScene: SKScene, EventDelegate {
                               PlayerRenderer.make(scene: instance, state: instance.kernel.getState()),
                               PauseRenderer.make(scene: instance, delegate: instance),
                               ResultsRenderer.make(scene: instance, delegate: instance),
-                              SkyRenderer.make(scene: instance)]
+                              SkyRenderer.make(scene: instance),
+                              AudioRenderer.make(scene: instance)]
         return instance
     }
     

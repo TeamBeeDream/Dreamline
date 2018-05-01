@@ -35,6 +35,8 @@ class SkyRenderer: Observer {
             self.handlePhaseUpdate(phase)
         case .timePauseUpdate(let pause):
             self.handlePause(pause)
+        case .multiple(let events):
+            for e in events { self.observe(event: e) }
         default: break
         }
     }

@@ -44,6 +44,8 @@ class PauseRenderer: Observer {
         case .flowControlPhaseUpdate(let phase):
             if phase == .begin { self.run(self.pauseButton, action: self.showAction()) }
             if phase == .results { self.run(self.pauseButton, action: self.hideAction()) }
+        case .settingsMuteUpdate(let mute):
+            self.menuNode.toggleMuteButton(mute: mute, delegate: self.delegate)
         case .multiple(let events):
             for e in events {
                 self.observe(event: e)
@@ -70,7 +72,7 @@ class PauseRenderer: Observer {
         let menuRect = Layout.safeRect(rect: frame, margin: 0.10)
         let menuNode = PauseMenuNode.make(rect: menuRect)
         menuNode.resumeButton.action = { self.delegate.addEvent(.timePauseUpdate(pause: false)) }
-        //menuNode.menuButton.action = {}
+        menuNode.muteButton.action = { self.delegate.addEvent(.settingsMuteUpdate(mute: true)) }
         scene.addChild(menuNode)
         self.menuNode = menuNode
     }

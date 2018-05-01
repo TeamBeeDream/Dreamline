@@ -12,12 +12,14 @@ class PauseMenuNode: SKNode {
     
     var resumeButton: ButtonNode!
     var menuButton: ButtonNode!
+    var muteButton: LabelButtonNode!
     
     static func make(rect: CGRect) -> PauseMenuNode {
         let instance = PauseMenuNode()
         instance.addBackground(rect: rect)
         instance.addResumeButton(rect: rect)
         instance.addMenuButton(rect: rect)
+        instance.addMuteButton(rect: rect)
         instance.zPosition = 100 // @HARDCODED
         return instance
     }
@@ -35,7 +37,7 @@ class PauseMenuNode: SKNode {
         let resumeButton = LabelButtonNode.make("Resume",
                                                 size: buttonSize,
                                                 color: .orange)
-        resumeButton.position = CGPoint(x: rect.midX, y: rect.midY)
+        resumeButton.position = CGPoint(x: rect.midX, y: rect.midY + 100)
         self.addChild(resumeButton)
         self.resumeButton = resumeButton
     }
@@ -45,8 +47,27 @@ class PauseMenuNode: SKNode {
         let menuButton = LabelButtonNode.make("Menu",
                                               size: buttonSize,
                                               color: .yellow)
-        menuButton.position = CGPoint(x: rect.midX, y: rect.midY - 100)
+        menuButton.position = CGPoint(x: rect.midX, y: rect.midY)
         self.addChild(menuButton)
         self.menuButton = menuButton
+    }
+    
+    private func addMuteButton(rect: CGRect) {
+        let buttonSize = CGSize(width: rect.width, height: 100)
+        let muteButton = LabelButtonNode.make("Mute",
+                                              size: buttonSize,
+                                              color: .green)
+        muteButton.position = CGPoint(x: rect.midX, y: rect.midY - 100)
+        self.addChild(muteButton)
+        self.muteButton = muteButton
+    }
+    
+    func toggleMuteButton(mute: Bool, delegate: EventDelegate) {
+        if mute {
+            self.muteButton.setLabel("Unmute")
+        } else {
+            self.muteButton.setLabel("Mute")
+        }
+        self.muteButton.action = { delegate.addEvent(.settingsMuteUpdate(mute: !mute)) }
     }
 }

@@ -57,12 +57,17 @@ class SkyRenderer: Observer {
     private func handlePhaseUpdate(_ phase: FlowControlPhase) {
         switch phase {
         case .begin:
-            self.matteNode.run(Actions.fadeOut(duration: 0.2))
+            self.run(self.matteNode, action: Actions.fadeOut(duration: 0.2))
         case .results:
-            self.matteNode.run(Actions.fadeIn(duration: 0.5))
+            self.run(self.matteNode, action: Actions.fadeIn(duration: 0.5))
         default:
             break
         }
+    }
+    
+    private func run(_ node: SKNode, action: SKAction) {
+        node.removeAllActions()
+        node.run(action)
     }
     
     private func handlePause(_ pause: Bool) {

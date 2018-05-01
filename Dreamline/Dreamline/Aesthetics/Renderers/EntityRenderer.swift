@@ -40,7 +40,7 @@ class EntityRenderer: Observer {
         case .boardEntityRemove(let id):
             self.removeNode(id: id)
             
-        case .boardEntityStateUpdate(let id, let state):
+        case .boardEntityStateUpdate(let id, _, let state):
             if let node = self.cache.retrieveNode(id: id) {
                 self.delegate.handleEntityStateChange(state: state, node: node)
             }

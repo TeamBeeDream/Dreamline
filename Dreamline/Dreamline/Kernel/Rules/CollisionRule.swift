@@ -49,13 +49,16 @@ protocol CollisionDelegate {
 
 class BarrierCollisionDelegate: CollisionDelegate {
     func didCollide(state: KernelState, entity: Entity, lane: Int) -> [KernelEvent] {
+        if entity.state != .none { return [] }
         switch entity.type {
         case .barrier(let gates):
             if !state.health.invincible {
                 var events = [KernelEvent]()
                 
                 let entityState = self.getEntityStateAfterCollision(gates: gates, lane: lane)
-                events.append(.boardEntityStateUpdate(id: entity.id, state: entityState))
+                events.append(.boardEntityStateUpdate(id: entity.id,
+                                                      type: entity.type,
+                                                      state: entityState))
                 
                 if entityState == .crossed {
                     events.append(.healthHitPointUpdate(increment: -1))
@@ -91,7 +94,9 @@ class ThresholdCollisionDelegate: CollisionDelegate {
             case .chunkEnd:
                 var events = [KernelEvent]()
                 
-                events.append(.boardEntityStateUpdate(id: entity.id, state: .crossed))
+                events.append(.boardEntityStateUpdate(id: entity.id,
+                                                      type: entity.type,
+                                                      state: .crossed))
                 
                 if state.health.invincible {
                     events.append(.healthInvincibleUpdate(invincible: false))
@@ -102,7 +107,9 @@ class ThresholdCollisionDelegate: CollisionDelegate {
                 return events
             case .roundEnd:
                 return [
-                    .boardEntityStateUpdate(id: entity.id, state: .crossed),
+                .boardEntityStateUpdate(id: entity.id,
+                                        type: entity.type,
+                                        state: .crossed),
                     .flowControlPhaseUpdate(phase: .results)]
             }
         default:

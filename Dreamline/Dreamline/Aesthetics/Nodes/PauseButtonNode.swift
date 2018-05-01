@@ -9,9 +9,10 @@
 import SpriteKit
 
 class PauseButtonNode: ButtonNode {
-    static func make(size: CGSize) -> PauseButtonNode {
-        let instance = PauseButtonNode(color: .orange, size: size)
-        instance.zPosition = 50 // @HARDCODED
+    static func make(size: CGFloat) -> PauseButtonNode {
+        let texture = SKTexture(imageNamed: "PauseButton")
+        let instance = PauseButtonNode(texture: texture, size: CGSize(width: size, height: size))
+        instance.zPosition = 35 // @HARDCODED
         instance.isUserInteractionEnabled = true
         return instance
     }

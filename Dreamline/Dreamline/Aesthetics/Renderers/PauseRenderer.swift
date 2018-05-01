@@ -21,26 +21,11 @@ class PauseRenderer: Observer {
     // MARK: Init
     
     static func make(scene: SKScene, delegate: EventDelegate) -> PauseRenderer {
-        
-        // @TEMP
-        let frame = scene.frame
-        
-        let pauseButton = PauseButtonNode.make(size: CGSize(width: 50, height: 50))
-        pauseButton.position = CGPoint(x: frame.minX + 75, y: frame.maxY - 75)
-        pauseButton.action = { delegate.addEvent(.timePauseUpdate(pause: true)) }
-        scene.addChild(pauseButton)
-        
-        let menuRect = PauseRenderer.getMenuRect(frame: scene.frame, margin: 0.15)
-        let menuNode = PauseMenuNode.make(rect: menuRect)
-        menuNode.resumeButton.action = { delegate.addEvent(.timePauseUpdate(pause: false)) }
-        //menuNode.menuButton.action = {}
-        scene.addChild(menuNode)
-        
         let instance = PauseRenderer()
         instance.scene = scene
-        instance.pauseButton = pauseButton
-        instance.menuNode = menuNode
         instance.delegate = delegate
+        instance.addPauseButton(frame: scene.frame)
+        instance.addPauseMenu(frame: scene.frame)
         return instance
     }
     
@@ -69,13 +54,25 @@ class PauseRenderer: Observer {
     
     // MARK: Private Methods
     
-    private static func getMenuRect(frame: CGRect, margin: CGFloat) -> CGRect {
-        let marginInPixels = frame.width * margin
+    private func addPauseButton(frame: CGRect) {
+        let safeRect = Layout.safeRect(rect: frame, margin: 0.1)
         
-        return CGRect(x: frame.minX + marginInPixels,
-                      y: frame.minY + marginInPixels,
-                      width: frame.width - marginInPixels * 2,
-                      height: frame.height - marginInPixels * 2)
+        let width = safeRect.width * 0.2
+        let pauseButton = PauseButtonNode.make(size: width)
+        pauseButton.position = CGPoint(x: safeRect.minX,
+                                       y: safeRect.maxY)
+        pauseButton.action = { self.delegate.addEvent(.timePauseUpdate(pause: true)) }
+        scene.addChild(pauseButton)
+        self.pauseButton = pauseButton
+    }
+    
+    private func addPauseMenu(frame: CGRect) {
+        let menuRect = Layout.safeRect(rect: frame, margin: 0.10)
+        let menuNode = PauseMenuNode.make(rect: menuRect)
+        menuNode.resumeButton.action = { self.delegate.addEvent(.timePauseUpdate(pause: false)) }
+        //menuNode.menuButton.action = {}
+        scene.addChild(menuNode)
+        self.menuNode = menuNode
     }
     
     private func run(_ node: SKNode, action: SKAction) {

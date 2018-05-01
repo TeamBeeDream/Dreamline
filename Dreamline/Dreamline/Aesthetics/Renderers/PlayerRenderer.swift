@@ -13,7 +13,7 @@ class PlayerRenderer: Observer {
     // MARK: Private Properties
     
     private var scene: SKScene!
-    private var playerNode: SKNode! // @TODO: Make custom player node class
+    private var player: PlayerNode!
     private var yPos: Double = 0.0
     
     // MARK: Init
@@ -31,20 +31,19 @@ class PlayerRenderer: Observer {
         self.yPos = state.board.layout.playerPosition
         
         let width = self.scene.frame.width * 0.15
-        let airplane = SKSpriteNode(imageNamed: "PaperAirplaneA")
-        airplane.zPosition = 2 // @HARDCODED
-        airplane.size = CGSize(width: width, height: width)
-        self.scene.addChild(airplane)
-        self.playerNode = airplane
+        let player = PlayerNode.make(size: width)
+        player.zPosition = 2 // @HARDCODED
+        self.scene.addChild(player)
+        self.player = player
     }
     
     func observe(event: KernelEvent) {
         switch event {
         case .positionUpdate(let distanceFromOrigin):
             let pos = self.playerPoint(offset: distanceFromOrigin)
-            self.playerNode?.position = pos
+            self.player.position = pos
         case .healthInvincibleUpdate(let invincible):
-            self.playerNode?.alpha = invincible ? 0.5 : 1
+            self.handleInvincibleUpdate(invincible: invincible)
         case .multiple(let events):
             for bundledEvent in events {
                 self.observe(event: bundledEvent)
@@ -64,5 +63,13 @@ class PlayerRenderer: Observer {
         let x = midX + CGFloat(offset) * horizontalOffset
         let y = midY + CGFloat(yPos) * verticalOffset
         return CGPoint(x: x, y: y)
+    }
+    
+    private func handleInvincibleUpdate(invincible: Bool) {
+        if invincible {
+            self.player.startBlinking()
+        } else {
+            self.player.stopBlinking()
+        }
     }
 }

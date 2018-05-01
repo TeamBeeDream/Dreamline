@@ -12,7 +12,7 @@ protocol EventDelegate {
     func addEvent(_ event: KernelEvent)
 }
 
-class TestScene: SKScene, EventDelegate {
+class GameScene: SKScene, EventDelegate {
     
     private var kernel: Kernel!
     private var observers: [Observer]!
@@ -21,8 +21,8 @@ class TestScene: SKScene, EventDelegate {
     private var previousTime: TimeInterval = 0
     private var input = Input()
     
-    static func make(size: CGSize) -> TestScene {
-        let instance = TestScene(size: size)
+    static func make(size: CGSize) -> GameScene {
+        let instance = GameScene(size: size)
         instance.kernel = KernelMasterFactory().make()
         instance.observers = [EntityRenderer.make(scene: instance,
                                                   delegate: BarrierRendererDelegate.make(frame: instance.frame)),
@@ -30,7 +30,8 @@ class TestScene: SKScene, EventDelegate {
                                                   delegate: ThresholdRendererDelegate.make(frame: instance.frame)),
                               PlayerRenderer.make(scene: instance, state: instance.kernel.getState()),
                               PauseRenderer.make(scene: instance, delegate: instance),
-                              ResultsRenderer.make(scene: instance, delegate: instance)]
+                              ResultsRenderer.make(scene: instance, delegate: instance),
+                              SkyRenderer.make(scene: instance)]
         return instance
     }
     
@@ -73,7 +74,7 @@ class TestScene: SKScene, EventDelegate {
     }
 }
 
-extension TestScene {
+extension GameScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)

@@ -13,7 +13,7 @@ class PlayerRenderer: Observer {
     // MARK: Private Properties
     
     private var scene: SKScene!
-    private var playerNode: SKNode!
+    private var playerNode: SKNode! // @TODO: Make custom player node class
     private var yPos: Double = 0.0
     
     // MARK: Init

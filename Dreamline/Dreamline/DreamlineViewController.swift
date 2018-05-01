@@ -13,7 +13,7 @@ class DreamlineViewController: UIViewController {
     // MARK: Private Properties
     
     private var skView: SKView!
-    private var sceneController: SceneController!
+//    private var sceneController: SceneController!
     
     // MARK: Init and Deinit
     
@@ -27,8 +27,8 @@ class DreamlineViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.sceneController = DreamlineSceneController.make(size: self.view.frame.size)
-        
+//        self.sceneController = DreamlineSceneController.make(size: self.view.frame.size)
+//
         let skView = SKView(frame: self.view.frame)
         skView.isMultipleTouchEnabled = true
         self.view.addSubview(skView)
@@ -36,9 +36,12 @@ class DreamlineViewController: UIViewController {
         skView.ignoresSiblingOrder = true
         skView.showsDrawCount = true
         skView.showsFPS = true
-        //skView.isAsynchronous = true // @NOTE: I'm not sure what this does
+//        //skView.isAsynchronous = true // @NOTE: I'm not sure what this does
+
+        // @TEMP
+        skView.presentScene(TestScene.make(size: skView.frame.size))
         
-        self.didTransition(to: .game)
+//        self.didTransition(to: .game)
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -51,12 +54,5 @@ class DreamlineViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool {
         return true
-    }
-}
-
-extension DreamlineViewController: SceneDelegate {
-    func didTransition(to: Scene) {
-        let toScene = self.sceneController.getScene(to, delegate: self)
-        self.skView.presentScene(toScene)
     }
 }

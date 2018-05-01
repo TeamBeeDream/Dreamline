@@ -29,29 +29,31 @@ class BarrierRendererDelegate: EntityRendererDelegate {
     // MARK: EntityRenderDelegate Methods
     
     func makeNode(entity: Entity) -> SKNode? {
-        if !entity.isA(.barrier) { return nil }
-        
-        let gates = entity.barrierData()!
-        
-        let container = SKNode()
-        let offset = self.frame.width / 3.0
-        var posX = self.frame.width / 6.0
-        for gate in gates {
-            if gate == .open { posX += offset; continue }
-            
-            let texture = self.textures.retrieveTexture(key: 0) // @HARDCODED
-            let sprite = SKSpriteNode(texture: texture)
-            sprite.position.x = posX
-            sprite.zPosition = GameScene.LINE_Z_POSITION
-            posX += offset
-            container.addChild(sprite)
+        switch entity.type {
+        case .barrier(let gates):
+            let container = SKNode()
+            let offset = self.frame.width / 3.0
+            var posX = self.frame.width / 6.0
+            for gate in gates {
+                if gate == .open { posX += offset; continue }
+                
+                let texture = self.textures.retrieveTexture(key: 0) // @HARDCODED
+                let sprite = SKSpriteNode(texture: texture)
+                sprite.position.x = posX
+                //sprite.zPosition = GameScene.LINE_Z_POSITION
+                sprite.zPosition = 5 // @HARDOCDED
+                posX += offset
+                container.addChild(sprite)
+            }
+            return container
+        default:
+            return nil
         }
-        return container
     }
     
-    func handleEntityStateChange(entity: Entity, node: SKNode) {
-        if entity.state == .hit { self.blinkLine(node: node) }
-        if entity.state == .passed { self.fadeOutLine(node: node) }
+    func handleEntityStateChange(state: EntityState, node: SKNode) {
+        if state == .crossed { self.blinkLine(node: node) }
+        if state == .passed { self.fadeOutLine(node: node) }
     }
     
     // MARK: Private Methods

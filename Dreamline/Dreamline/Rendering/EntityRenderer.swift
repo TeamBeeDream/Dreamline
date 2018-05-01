@@ -31,39 +31,32 @@ class EntityRenderer: Observer {
     
     // MARK: Observer Methods
     
-    func sync(state: KernelState) {
-        self.layout = state.boardState.layout
-        // @TEST
-        for (_, entity) in state.boardState.entities {
-            if let node = self.delegate.makeNode(entity: entity) {
-                self.cache.storeNode(node, forId: entity.id)
+    func observe(event: KernelEvent) {
+        switch event {
+            
+        case .boardEntityAdd(let entity):
+            self.addNode(entity: entity)
+            
+        case .boardEntityRemove(let id):
+            self.removeNode(id: id)
+            
+        case .boardEntityStateUpdate(let id, let state):
+            if let node = self.cache.retrieveNode(id: id) {
+                self.delegate.handleEntityStateChange(state: state, node: node)
             }
-        }
-    }
-    
-    func observe(events: [KernelEvent]) {
-        for event in events {
-            switch event {
-                
-            case .entityAdded(let entity):
-                self.addNode(entity: entity)
-                
-            case .entityRemoved(let id):
-                self.removeNode(id: id)
-                
-            case .entityStateChanged(let entity):
-                if let node = self.cache.retrieveNode(id: entity.id) {
-                    self.delegate.handleEntityStateChange(entity: entity, node: node)
-                }
-                
-            case .boardScrolled(_, let delta):
-                for (_, entity) in self.cache.iter() {
-                    entity.position.y -= CGFloat(delta / 2.0) * self.scene.frame.height // @FIXME
-                }
-                
-            default:
-                break
+            
+        case .boardScroll(let distance):
+            for (_, entity) in self.cache.iter() {
+                entity.position.y -= CGFloat(distance / 2.0) * self.scene.frame.height // @FIXME
             }
+            
+        case .multiple(let events):
+            for bundledEvent in events {
+                self.observe(event: bundledEvent)
+            }
+            
+        default:
+            break
         }
     }
     
@@ -96,5 +89,5 @@ class EntityRenderer: Observer {
 
 protocol EntityRendererDelegate {
     func makeNode(entity: Entity) -> SKNode?
-    func handleEntityStateChange(entity: Entity, node: SKNode)
+    func handleEntityStateChange(state: EntityState, node: SKNode)
 }

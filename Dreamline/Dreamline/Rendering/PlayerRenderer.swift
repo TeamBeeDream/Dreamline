@@ -14,24 +14,21 @@ class PlayerRenderer: Observer {
     
     private var scene: SKScene!
     private var playerNode: SKNode!
-    private var scoreLabel: SKLabelNode!
-    
     private var yPos: Double = 0.0
     
     // MARK: Init
     
-    // @NOTE: View is probably not best thing to send as a SK container,
-    // should probably just send the scene(?)
-    static func make(scene: SKScene) -> PlayerRenderer {
+    static func make(scene: SKScene, state: KernelState) -> PlayerRenderer {
         let instance = PlayerRenderer()
         instance.scene = scene
+        instance.setup(state: state)
         return instance
     }
     
     // MARK: Observer Methods
     
-    func sync(state: KernelState) {
-        self.yPos = state.boardState.layout.playerPosition
+    private func setup(state: KernelState) {
+        self.yPos = state.board.layout.playerPosition
         
         let node = SKShapeNode(circleOfRadius: 15.0)
         node.zPosition = 2
@@ -39,29 +36,20 @@ class PlayerRenderer: Observer {
         node.fillColor = .orange
         self.scene.addChild(node) // @FIXME
         self.playerNode = node
-        
-        let label = SKLabelNode(text: "\(state.staminaState.level)")
-        label.zPosition = 2
-        label.fontColor = .white
-        self.scene.addChild(label) // @FIXME
-        self.scoreLabel = label
     }
     
-    func observe(events: [KernelEvent]) {
-        for event in events {
-            switch event {
-                
-            case .positionUpdated(let position):
-                let pos = self.playerPoint(offset: position.offset)
-                self.playerNode?.position = pos
-                self.scoreLabel?.position = CGPoint(x: pos.x + 35.0, y: pos.y + 8.0)
-                
-            case .scoreUpdated(let score):
-                self.scoreLabel?.text = "\(score)"
-                
-            default: break
-                
+    func observe(event: KernelEvent) {
+        switch event {
+        case .positionUpdate(let distanceFromOrigin):
+            let pos = self.playerPoint(offset: distanceFromOrigin)
+            self.playerNode?.position = pos
+        case .healthInvincibleUpdate(let invincible):
+            self.playerNode?.alpha = invincible ? 0.5 : 1
+        case .multiple(let events):
+            for bundledEvent in events {
+                self.observe(event: bundledEvent)
             }
+        default: break
         }
     }
     

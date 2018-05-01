@@ -13,14 +13,14 @@ class ThresholdRendererDelegate: EntityRendererDelegate {
     // MARK: Private Properties
     
     private var frame: CGRect!
-    private var textures: DictTextureCache<Threshold>!
+    private var textures: DictTextureCache<ThresholdType>!
     
     // MARK: Init
     
     static func make(frame: CGRect) -> ThresholdRendererDelegate {
         let instance = ThresholdRendererDelegate()
         instance.frame = frame
-        instance.textures = DictTextureCache<Threshold>.make()
+        instance.textures = DictTextureCache<ThresholdType>.make()
         instance.generateTextures()
         return instance
     }
@@ -28,18 +28,20 @@ class ThresholdRendererDelegate: EntityRendererDelegate {
     // MARK: EntityRendererDelegate
     
     func makeNode(entity: Entity) -> SKNode? {
-        guard let type = entity.thresholdType() else { return nil }
-        
-        let texture = self.textures.retrieveTexture(key: type)
-        let sprite = SKSpriteNode(texture: texture)
-        sprite.position.x = self.frame.midX
-        sprite.zPosition = GameScene.LINE_Z_POSITION // @HARDCODED
-        return sprite
+        switch entity.type {
+        case .threshold(let type):
+            let texture = self.textures.retrieveTexture(key: type)
+            let sprite = SKSpriteNode(texture: texture)
+            sprite.position.x = self.frame.midX
+            //sprite.zPosition = GameScene.LINE_Z_POSITION // @HARDCODED
+            sprite.zPosition = 5
+            return sprite
+        default:
+            return nil
+        }
     }
     
-    func handleEntityStateChange(entity: Entity, node: SKNode) {
-        
-    }
+    func handleEntityStateChange(state: EntityState, node: SKNode) {}
     
     // MARK: Private Methods
     

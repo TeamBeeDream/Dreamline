@@ -15,7 +15,7 @@ class EntityRenderer: Observer {
     private var layout: BoardLayout!
     
     private var scene: SKScene!
-    private var cache: NodeCache!
+    private var cache: DictNodeCache!
     
     private var delegate: EntityRendererDelegate!
     
@@ -88,6 +88,6 @@ class EntityRenderer: Observer {
 }
 
 protocol EntityRendererDelegate {
-    func makeNode(entity: Entity) -> SKNode?
-    func handleEntityStateChange(state: EntityState, node: SKNode)
+    func makeNode(entity: Entity) -> SKSpriteNode?
+    func handleEntityStateChange(state: EntityState, node: SKSpriteNode)
 }

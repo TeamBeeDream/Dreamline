@@ -30,4 +30,16 @@ class Actions {
             SKAction.fadeIn(withDuration: duration)])
         return SKAction.repeatForever(blink)
     }
+    
+    static func tint(color: UIColor, at: Double, duration: Double) -> SKAction {
+        return SKAction.colorize(with: color, colorBlendFactor: CGFloat(at), duration: duration)
+    }
+    
+    static func blinkWhite(duration: Double) -> SKAction {
+        let firstPart = duration * 0.33
+        let secondPart = duration * 0.66
+        return SKAction.sequence([
+            self.tint(color: .white, at: 1.0, duration: firstPart),
+            self.tint(color: .white, at: 0.0, duration: secondPart)])
+    }
 }

@@ -14,7 +14,7 @@ class BarrierRendererDelegate: EntityRendererDelegate {
     
     private var frame: CGRect! // @ROBUSTNESS
     private var textures: DictTextureCache<Int>!
-    private var barrierColor = SKColor.red
+    private var barrierColor = SKColor.darkText
     
     // MARK: Init
     
@@ -28,10 +28,10 @@ class BarrierRendererDelegate: EntityRendererDelegate {
     
     // MARK: EntityRenderDelegate Methods
     
-    func makeNode(entity: Entity) -> SKNode? {
+    func makeNode(entity: Entity) -> SKSpriteNode? {
         switch entity.type {
         case .barrier(let gates):
-            let container = SKNode()
+            let container = SKSpriteNode()
             let offset = self.frame.width / 3.0
             var posX = self.frame.width / 6.0
             for gate in gates {
@@ -51,9 +51,15 @@ class BarrierRendererDelegate: EntityRendererDelegate {
         }
     }
     
-    func handleEntityStateChange(state: EntityState, node: SKNode) {
-        if state == .crossed { self.blinkLine(node: node) }
-        if state == .passed { self.fadeOutLine(node: node) }
+    func handleEntityStateChange(state: EntityState, node: SKSpriteNode) {
+        switch state {
+        case .crossed:
+            self.blinkLine(node: node)
+        case .passed:
+            node.run(Actions.fadeOut(duration: 0.5))
+        default:
+            break
+        }
     }
     
     // MARK: Private Methods
@@ -62,7 +68,7 @@ class BarrierRendererDelegate: EntityRendererDelegate {
         let rect = CGRect(x: 0.0,
                           y: 0.0,
                           width: frame.width / 3.0,
-                          height: 2.0)
+                          height: 4.0)
         let shape = SKShapeNode(rect: rect)
         shape.lineWidth = 0.0
         shape.fillColor = self.barrierColor

@@ -17,10 +17,10 @@ protocol TextureCache {
 
 // @MOVE
 protocol NodeCache {
-    func storeNode(_ node: SKNode, forId id: Int)
-    func retrieveNode(id: Int) -> SKNode?
+    func storeNode(_ node: SKSpriteNode, forId id: Int)
+    func retrieveNode(id: Int) -> SKSpriteNode?
     func removeNode(id: Int)
-    func iter() -> [(Int, SKNode)]
+    func iter() -> [(Int, SKSpriteNode)]
 }
 
 class DictTextureCache<T: Hashable>: TextureCache {
@@ -52,23 +52,23 @@ class DictNodeCache: NodeCache {
     
     // MARK: Private Properties
     
-    private var nodes: [Int: SKNode]!
+    private var nodes: [Int: SKSpriteNode]!
     
     // MARK: Init
     
     static func make() -> DictNodeCache {
         let instance = DictNodeCache()
-        instance.nodes = [Int: SKNode]()
+        instance.nodes = [Int: SKSpriteNode]()
         return instance
     }
     
     // MARK: NodeCache Methods
     
-    func storeNode(_ node: SKNode, forId id: Int) {
+    func storeNode(_ node: SKSpriteNode, forId id: Int) {
         self.nodes[id] = node
     }
     
-    func retrieveNode(id: Int) -> SKNode? {
+    func retrieveNode(id: Int) -> SKSpriteNode? {
         return self.nodes[id]
     }
     
@@ -76,8 +76,8 @@ class DictNodeCache: NodeCache {
         self.nodes[id] = nil
     }
     
-    func iter() -> [(Int, SKNode)] {
-        var iter = [(Int, SKNode)]()
+    func iter() -> [(Int, SKSpriteNode)] {
+        var iter = [(Int, SKSpriteNode)]()
         for id in self.nodes.keys {
             iter.append((id, self.nodes[id]!))
         }

@@ -27,7 +27,7 @@ class ThresholdRendererDelegate: EntityRendererDelegate {
     
     // MARK: EntityRendererDelegate
     
-    func makeNode(entity: Entity) -> SKNode? {
+    func makeNode(entity: Entity) -> SKSpriteNode? {
         switch entity.type {
         case .threshold(let type):
             let texture = self.textures.retrieveTexture(key: type)
@@ -41,7 +41,7 @@ class ThresholdRendererDelegate: EntityRendererDelegate {
         }
     }
     
-    func handleEntityStateChange(state: EntityState, node: SKNode) {}
+    func handleEntityStateChange(state: EntityState, node: SKSpriteNode) {}
     
     // MARK: Private Methods
     
@@ -49,14 +49,14 @@ class ThresholdRendererDelegate: EntityRendererDelegate {
         let rect = CGRect(x: 0.0,
                           y: 0.0,
                           width: self.frame.width,
-                          height: 2.0)
+                          height: 4.0)
         let shape = SKShapeNode(rect: rect)
         shape.lineWidth = 0.0
         
-        shape.fillColor = .yellow // @HARDCODED
+        shape.fillColor = .orange
         self.textures.storeTexture(SKView().texture(from: shape)!, forKey: .chunkEnd)
         
-        shape.fillColor = .green
+        shape.fillColor = .purple
         self.textures.storeTexture(SKView().texture(from: shape)!, forKey: .roundEnd)
     }
 }

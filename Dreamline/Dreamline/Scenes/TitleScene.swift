@@ -27,8 +27,21 @@ class TitleScene: SKScene {
                                           font: "AppleSDGothicNeo-Medium",
                                           width: view.frame.width * 0.8,
                                           color: .white)
-        title.position = CGPoint(x: view.frame.midX, y: view.frame.midY)
+        title.position = CGPoint(x: view.frame.midX, y: view.frame.midY + view.frame.height * 0.2)
         title.zPosition = 100
         self.addChild(title)
+        
+        let titleShadow = HoppingLabelNode.make(text: "DREAMLINE",
+                                          font: "AppleSDGothicNeo-Medium",
+                                          width: view.frame.width * 0.8,
+                                          color: .lightGray)
+        titleShadow.position = CGPoint(x: title.position.x + 1, y: title.position.y - 2)
+        titleShadow.zPosition = 99
+        self.addChild(titleShadow)
+        
+        let musicUrl = Bundle.main.url(forResource: "menu_cloud_theme", withExtension: "mp3")
+        let music = SKAudioNode(url: musicUrl!)
+        music.autoplayLooped = true
+        self.addChild(music)
     }
 }

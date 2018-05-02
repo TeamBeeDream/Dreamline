@@ -68,7 +68,9 @@ class MasterChunkSequencer: ChunkSequencer {
 //        lookupTable[9] = (difficulty:   [0.2, 0.3],
 //                          length:       [  5,   5])
         
-        let data = lookupTable[level]!
+        // @HACK
+        let levelIndex = clamp(level, min: 1, max: lookupTable.count-1)
+        let data = lookupTable[levelIndex]!
         return self.generateChunks(count: data.difficulty.count,
                                    difficulty: data.difficulty,
                                    length: data.length)

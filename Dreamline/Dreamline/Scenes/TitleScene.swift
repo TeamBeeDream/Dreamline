@@ -19,13 +19,16 @@ class TitleScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        self.backgroundColor = .cyan
-        //self.addBackground()
+        self.backgroundColor = UIColor(red: 7.0/255.0,
+                                       green: 221.0/255.0,
+                                       blue: 238.0/255.0,
+                                       alpha: 1.0)
         self.addClouds()
         self.addTitle()
         self.addTapLabel()
         self.addMusic()
         self.addNextButton()
+        self.addCopyright()
     }
     
     private func addTitle() {
@@ -59,13 +62,6 @@ class TitleScene: SKScene {
         self.addChild(label)
     }
     
-    private func addBackground() {
-        let background = SKSpriteNode(imageNamed: "TitleScreenBGA")
-        background.size = CGSize(width: self.frame.height, height: self.frame.height)
-        background.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
-        self.addChild(background)
-    }
-    
     private func addNextButton() {
         let button = ButtonNode(color: .clear, size: self.frame.size)
         button.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
@@ -76,7 +72,7 @@ class TitleScene: SKScene {
     }
     
     private func addMusic() {
-        let musicUrl = Bundle.main.url(forResource: "menu_cloud_theme", withExtension: "mp3")
+        let musicUrl = Bundle.main.url(forResource: "menu_cloud_theme_2", withExtension: "mp3")
         let music = SKAudioNode(url: musicUrl!)
         music.autoplayLooped = true
         self.addChild(music)
@@ -85,14 +81,30 @@ class TitleScene: SKScene {
     private func addClouds() {
         let cloudNodeA = CloudNode.make(width: self.frame.width)
         cloudNodeA.position = CGPoint(x: 0.0, y: 0.0)
-        cloudNodeA.setScrollSpeed(x: 0.1, y: 0.0)
-        cloudNodeA.setTint(r: 252.0/255.0, g: 255.0/255.0, b: 237.0/255.0, a: 1.0)
+        cloudNodeA.setScrollSpeed(x: 0.04, y: 0.0)
+        cloudNodeA.setTint(r: 244.0/255.0, g: 255.0/255.0, b: 246.0/255.0, a: 0.3)
         self.addChild(cloudNodeA)
         
         let cloudNodeB = CloudNode.make(width: self.frame.width)
-        cloudNodeB.position = CGPoint(x: 0.0, y: -20.0)
-        cloudNodeB.setScrollSpeed(x: 0.08, y: 0.0)
-        cloudNodeB.setTint(r: 255.0/255.0, g: 246.0/255.0, b: 239.0/255.0, a: 1.0)
+        cloudNodeB.position = CGPoint(x: 0.0, y: -30.0)
+        cloudNodeB.setScrollSpeed(x: 0.055, y: 0.0)
+        cloudNodeB.setTint(r: 255.0/255.0, g: 246.0/255.0, b: 239.0/255.0, a: 0.5)
         self.addChild(cloudNodeB)
+        
+        let cloudNodeC = CloudNode.make(width: self.frame.width)
+        cloudNodeC.position = CGPoint(x: 0.0, y: -50.0)
+        cloudNodeC.setScrollSpeed(x: 0.06, y: 0.0)
+        cloudNodeC.setTint(r: 252.0/255.0, g: 255.0/255.0, b: 237.0/255.0, a: 0.8)
+        self.addChild(cloudNodeC)
+    }
+    
+    private func addCopyright() {
+        let label = SKLabelNode(text: "(c) 2018 Team BeeDream")
+        label.fontSize = 18
+        label.fontColor = .darkText
+        label.zPosition = 100
+        label.position = CGPoint(x: self.frame.midX, y: self.frame.minY)
+        label.verticalAlignmentMode = .bottom
+        self.addChild(label)
     }
 }

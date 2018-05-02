@@ -10,5 +10,5 @@ void main(void) {
     vec2 scrolledUV = vec2(mod(xScroll, 1.0), mod(yScroll, 1.0));
 
     vec4 color = texture2D(u_texture, scrolledUV) * vec4(u_tint_color.rgb, 1.0);
-    gl_FragColor = vec4(color.rgb, color.a * u_tint_color.a);
+    gl_FragColor = vec4(color.rgb, color.a) * color.a * u_tint_color.a;
 }

@@ -35,6 +35,7 @@ enum KernelEvent {
     case boardEntityAdd(entity: Entity)
     case boardEntityRemove(id: Int)
     case boardEntityStateUpdate(id: Int, type: EntityType, state: EntityState)
+    case boardScrollSpeedUpdate(speed: Double)
     case boardReset
     case positionUpdate(distanceFromOrigin: Double)
     case positionTargetUpdate(target: Int)
@@ -44,6 +45,7 @@ enum KernelEvent {
     case flowControlPhaseUpdate(phase: FlowControlPhase)
     case chunkNext
     case chunkSet(chunks: [Chunk])
+    case chunkLevelUpdate(level: Int)
     case settingsMuteUpdate(mute: Bool)
     
     case multiple(events: [KernelEvent]) // :(

@@ -27,6 +27,8 @@ class BoardMutator: Mutator {
             var entity = state.board.entities.remove(at: index)
             entity.state = entityState // @HACK
             state.board.entities.insert(entity, at: index)
+        case .boardScrollSpeedUpdate(let speed):
+            state.board.scrollSpeed = speed
         case .boardReset:
             state.board.lastEntityPosition = 0.0
             state.board.position = 0.0

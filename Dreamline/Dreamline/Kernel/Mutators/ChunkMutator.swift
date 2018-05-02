@@ -13,13 +13,13 @@ class ChunkMutator: Mutator {
         switch event {
         case .chunkNext:
             if !state.chunk.chunks.isEmpty {
-//                state.chunk.current = nil
-//            } else {
                 state.chunk.current = state.chunk.chunks.removeFirst()
             }
         case .chunkSet(let chunks):
             state.chunk.chunks = chunks
             state.chunk.current = state.chunk.chunks.removeFirst()
+        case .chunkLevelUpdate(let level):
+            state.chunk.level = level
         case .multiple(let events):
             for bundledEvent in events {
                 self.mutateState(state: &state, event: bundledEvent)

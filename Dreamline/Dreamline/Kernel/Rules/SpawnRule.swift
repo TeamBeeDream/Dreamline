@@ -104,8 +104,16 @@ class SpawnSequencer {
     }
     
     private func generateBarrierChunk(difficulty: Double, length: Int) {
-        for _ in 1...length-1 {
-            self.buffer.append(self.generator.generateBarrier())
+        let random = RealRandom()
+        var barrierCount = 0
+        while barrierCount < length {
+            let decider = random.next() < difficulty
+            if decider {
+                self.buffer.append(self.generator.generateBarrier())
+                barrierCount += 1
+            } else {
+                self.buffer.append(self.generator.generateEmpty())
+            }
         }
         self.buffer.append(self.generator.generateChunkEndThreshold())
         for _ in 1...self.trailing {

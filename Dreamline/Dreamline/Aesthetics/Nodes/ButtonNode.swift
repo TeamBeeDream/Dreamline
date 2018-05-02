@@ -13,11 +13,11 @@ class ButtonNode: SKSpriteNode {
     var action: (() -> Void)?
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.action?()
         self.pressButton()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.action?()
         self.releaseButton()
     }
     

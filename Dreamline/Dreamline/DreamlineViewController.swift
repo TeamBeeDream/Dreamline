@@ -18,7 +18,7 @@ class DreamlineViewController: UIViewController, SceneManager {
     // MARK: Private Properties
     
     private var skView: SKView!
-//    private var sceneController: SceneController!
+    private var gameScene: GameScene!
     
     // MARK: Init and Deinit
     
@@ -40,8 +40,14 @@ class DreamlineViewController: UIViewController, SceneManager {
         skView.showsDrawCount = true
         skView.showsFPS = true
         
-        //self.gotoTitle()
-        self.gotoGame()
+        // @HACK
+        let frame = self.view.frame
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.gameScene = GameScene.make(size: frame.size, manager: self)
+        }
+        
+        self.gotoTitle()
+        //self.gotoGame()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -59,10 +65,20 @@ class DreamlineViewController: UIViewController, SceneManager {
     // MARK: SceneManager Methods
     
     func gotoTitle() {
-        self.skView.presentScene(TitleScene.make(size: self.skView.frame.size))
+        let transition = SKTransition.crossFade(withDuration: 1.0)
+        transition.pausesOutgoingScene = true
+        transition.pausesIncomingScene = false
+        let scene = TitleScene.make(size: self.skView.frame.size, manager: self)
+        self.skView.presentScene(scene, transition: transition)
     }
     
     func gotoGame() {
-        self.skView.presentScene(GameScene.make(size: self.skView.frame.size))
+        let transition = SKTransition.crossFade(withDuration: 1.0)
+        transition.pausesIncomingScene = false
+        transition.pausesOutgoingScene = false
+        
+        //let frame = self.skView.frame
+        self.gameScene = GameScene.make(size: self.view.frame.size, manager: self)
+        self.skView.presentScene(self.gameScene, transition: transition)
     }
 }

@@ -13,17 +13,19 @@ class PauseRenderer: Observer {
     // MARK: Private Properties
     
     private var scene: SKScene!
+    private var delegate: EventDelegate!
+    private var manager: SceneManager!
+    
     private var menuNode: PauseMenuNode!
     private var pauseButton: ButtonNode!
     
-    private var delegate: EventDelegate!
-    
     // MARK: Init
     
-    static func make(scene: SKScene, delegate: EventDelegate) -> PauseRenderer {
+    static func make(scene: SKScene, delegate: EventDelegate, manager: SceneManager) -> PauseRenderer {
         let instance = PauseRenderer()
         instance.scene = scene
         instance.delegate = delegate
+        instance.manager = manager
         instance.addPauseButton(frame: scene.frame)
         instance.addPauseMenu(frame: scene.frame)
         return instance
@@ -71,6 +73,7 @@ class PauseRenderer: Observer {
     private func addPauseMenu(frame: CGRect) {
         let menuRect = Layout.safeRect(rect: frame, margin: 0.10)
         let menuNode = PauseMenuNode.make(rect: menuRect)
+        menuNode.menuButton.action = { self.manager.gotoTitle() }
         menuNode.resumeButton.action = { self.delegate.addEvent(.timePauseUpdate(pause: false)) }
         menuNode.muteButton.action = { self.delegate.addEvent(.settingsMuteUpdate(mute: true)) }
         scene.addChild(menuNode)

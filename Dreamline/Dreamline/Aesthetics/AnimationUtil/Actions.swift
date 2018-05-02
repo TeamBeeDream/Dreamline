@@ -17,6 +17,16 @@ class Actions {
         return SKAction.fadeOut(withDuration: duration)
     }
     
+    static func fadeLoop(duration: Double) -> SKAction {
+        let t = duration / 2.0
+        let a = SKAction.fadeAlpha(to: 0.0, duration: t)
+        a.timingMode = .easeInEaseOut
+        let b = SKAction.fadeAlpha(to: 1.0, duration: t)
+        b.timingMode = .easeInEaseOut
+        
+        return SKAction.repeatForever(SKAction.sequence([a, b]))
+    }
+    
     static func blink(duration: Double, count: Int) -> SKAction {
         let blink = SKAction.sequence([
             SKAction.fadeOut(withDuration: 0.0),

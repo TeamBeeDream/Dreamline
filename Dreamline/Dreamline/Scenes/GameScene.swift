@@ -14,6 +14,8 @@ protocol EventDelegate {
 
 class GameScene: SKScene, EventDelegate {
     
+    private var manager: SceneManager!
+    
     private var kernel: Kernel!
     private var observers: [Observer]!
     
@@ -21,15 +23,16 @@ class GameScene: SKScene, EventDelegate {
     private var previousTime: TimeInterval = 0
     private var input = Input()
     
-    static func make(size: CGSize) -> GameScene {
+    static func make(size: CGSize, manager: SceneManager) -> GameScene {
         let instance = GameScene(size: size)
+        instance.manager = manager
         instance.kernel = KernelMasterFactory().make()
         instance.observers = [EntityRenderer.make(scene: instance,
                                                   delegate: BarrierRendererDelegate.make(frame: instance.frame)),
                               EntityRenderer.make(scene: instance,
                                                   delegate: ThresholdRendererDelegate.make(frame: instance.frame)),
                               PlayerRenderer.make(scene: instance, state: instance.kernel.getState()),
-                              PauseRenderer.make(scene: instance, delegate: instance),
+                              PauseRenderer.make(scene: instance, delegate: instance, manager: manager),
                               ResultsRenderer.make(scene: instance, delegate: instance),
                               SkyRenderer.make(scene: instance),
                               AudioRenderer.make(scene: instance)]
@@ -38,10 +41,6 @@ class GameScene: SKScene, EventDelegate {
     
     override func didMove(to view: SKView) {
         self.backgroundColor = .darkText
-        let border = SKShapeNode(rect: view.frame)
-        border.fillColor = .clear
-        border.strokeColor = .green
-        self.addChild(border)
         
         // @TEMP
         self.kernel.addEvent(event: .settingsMuteUpdate(mute: true))

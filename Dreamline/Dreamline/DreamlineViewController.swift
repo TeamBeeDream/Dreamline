@@ -8,7 +8,12 @@
 
 import SpriteKit
 
-class DreamlineViewController: UIViewController {
+protocol SceneManager {
+    func gotoTitle()
+    func gotoGame()
+}
+
+class DreamlineViewController: UIViewController, SceneManager {
     
     // MARK: Private Properties
     
@@ -27,21 +32,15 @@ class DreamlineViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.sceneController = DreamlineSceneController.make(size: self.view.frame.size)
-//
         let skView = SKView(frame: self.view.frame)
-        skView.isMultipleTouchEnabled = true
         self.view.addSubview(skView)
-        self.skView = skView // @IMPORTANT
+        self.skView = skView
+        skView.isMultipleTouchEnabled = true
         skView.ignoresSiblingOrder = true
         skView.showsDrawCount = true
         skView.showsFPS = true
-//        //skView.isAsynchronous = true // @NOTE: I'm not sure what this does
-
-        // @TEMP
-        skView.presentScene(GameScene.make(size: skView.frame.size))
         
-//        self.didTransition(to: .game)
+        self.gotoTitle()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -54,5 +53,15 @@ class DreamlineViewController: UIViewController {
     
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    // MARK: SceneManager Methods
+    
+    func gotoTitle() {
+        self.skView.presentScene(TitleScene.make(size: self.skView.frame.size))
+    }
+    
+    func gotoGame() {
+        self.skView.presentScene(GameScene.make(size: self.skView.frame.size))
     }
 }

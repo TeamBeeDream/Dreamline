@@ -14,6 +14,7 @@
 		6950D4662099F8D400B0DFCC /* TitleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D4652099F8D400B0DFCC /* TitleScene.swift */; };
 		6950D468209A0D0800B0DFCC /* HoppingLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D467209A0D0800B0DFCC /* HoppingLabelNode.swift */; };
 		6950D46A209A1C6A00B0DFCC /* menu_cloud_theme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6950D469209A1C6900B0DFCC /* menu_cloud_theme.mp3 */; };
+		6950D46C209A35A500B0DFCC /* threshold_cross_chunk.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6950D46B209A35A400B0DFCC /* threshold_cross_chunk.mp3 */; };
 		695619222098BAB500A7E822 /* ScrollTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 695619202098BAB500A7E822 /* ScrollTexture.fsh */; };
 		695619232098BAB500A7E822 /* TiledTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 695619212098BAB500A7E822 /* TiledTexture.fsh */; };
 		695619252098BACB00A7E822 /* SkyNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695619242098BACB00A7E822 /* SkyNode.swift */; };
@@ -111,6 +112,7 @@
 		6950D4652099F8D400B0DFCC /* TitleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScene.swift; sourceTree = "<group>"; };
 		6950D467209A0D0800B0DFCC /* HoppingLabelNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoppingLabelNode.swift; sourceTree = "<group>"; };
 		6950D469209A1C6900B0DFCC /* menu_cloud_theme.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menu_cloud_theme.mp3; sourceTree = "<group>"; };
+		6950D46B209A35A400B0DFCC /* threshold_cross_chunk.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = threshold_cross_chunk.mp3; sourceTree = "<group>"; };
 		695619202098BAB500A7E822 /* ScrollTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ScrollTexture.fsh; sourceTree = "<group>"; };
 		695619212098BAB500A7E822 /* TiledTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TiledTexture.fsh; sourceTree = "<group>"; };
 		695619242098BACB00A7E822 /* SkyNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkyNode.swift; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 		693DF52D205997E0002C4821 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6950D46B209A35A400B0DFCC /* threshold_cross_chunk.mp3 */,
 				695619492098FE1400A7E822 /* player_move_2.mp3 */,
 				695619452098F78300A7E822 /* player_move.mp3 */,
 				695619432098F77E00A7E822 /* barrier_pass.mp3 */,
@@ -611,6 +614,7 @@
 				6913F852206C3601001FBAAB /* GoogleService-Info.plist in Resources */,
 				699FC566204E053600DB09B4 /* LaunchScreen.storyboard in Resources */,
 				695619232098BAB500A7E822 /* TiledTexture.fsh in Resources */,
+				6950D46C209A35A500B0DFCC /* threshold_cross_chunk.mp3 in Resources */,
 				695619462098F78300A7E822 /* player_move.mp3 in Resources */,
 				695619442098F77E00A7E822 /* barrier_pass.mp3 in Resources */,
 				695619352098E36D00A7E822 /* Dreamline_cloud_theme.mp3 in Resources */,

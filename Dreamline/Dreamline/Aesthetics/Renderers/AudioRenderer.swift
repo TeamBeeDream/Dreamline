@@ -16,7 +16,8 @@ class AudioRenderer: Observer {
     private var backgroundMusic: SKAudioNode!
     private var barrierCross: SKAction!
     private var barrierPass: SKAction!
-    private var thresholdCross: SKAction!
+    private var thresholdChunkCross: SKAction!
+    private var thresholdRoundCross: SKAction!
     private var playerMove: SKAction!
     private var playerReturn: SKAction!
     
@@ -68,7 +69,8 @@ class AudioRenderer: Observer {
         self.scene.addChild(self.nullNode)
         self.barrierCross = SKAction.playSoundFileNamed("barrier_cross_quiet.mp3", waitForCompletion: false)
         self.barrierPass = SKAction.playSoundFileNamed("barrier_pass.mp3", waitForCompletion: false)
-        self.thresholdCross = SKAction.playSoundFileNamed("threshold_cross.mp3", waitForCompletion: false)
+        self.thresholdRoundCross = SKAction.playSoundFileNamed("threshold_cross.mp3", waitForCompletion: false)
+        self.thresholdChunkCross = SKAction.playSoundFileNamed("threshold_cross_chunk.mp3", waitForCompletion: false)
         self.playerMove = SKAction.playSoundFileNamed("player_move.mp3", waitForCompletion: false)
         self.playerReturn = SKAction.playSoundFileNamed("player_move_2.mp3", waitForCompletion: false)
     }
@@ -77,7 +79,10 @@ class AudioRenderer: Observer {
         switch type {
         case .threshold(let type):
             switch type {
-            default: self.nullNode.run(self.thresholdCross)
+            case .chunkEnd:
+                self.nullNode.run(self.thresholdChunkCross)
+            case .roundEnd:
+                self.nullNode.run(self.thresholdRoundCross)
             }
         case .barrier:
             if state == .crossed {

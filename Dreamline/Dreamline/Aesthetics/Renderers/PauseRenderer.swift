@@ -84,13 +84,13 @@ class PauseRenderer: Observer {
     
     private func showAction() -> SKAction {
         let fade = SKAction.fadeIn(withDuration: 0.1)
-        let flip = SKAction.scaleX(to: 1.0, duration: 0.1)
+        let flip = SKAction.scaleY(to: 1.0, duration: 0.1)
         return SKAction.group([fade, flip])
     }
     
     private func hideAction() -> SKAction {
         let fade = SKAction.fadeOut(withDuration: 0.1)
-        let flip = SKAction.scaleX(to: 0.0, duration: 0.1)
+        let flip = SKAction.scaleY(to: 0.0, duration: 0.1)
         return SKAction.group([fade, flip])
     }
 }

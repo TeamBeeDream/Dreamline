@@ -259,8 +259,8 @@
 		695619262098BAE100A7E822 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				69C5A889209627BC0034C9E6 /* ButtonNode.swift */,
 				695619242098BACB00A7E822 /* SkyNode.swift */,
+				69C5A889209627BC0034C9E6 /* ButtonNode.swift */,
 				69C5A883209627AA0034C9E6 /* LabelButtonNode.swift */,
 				69C5A881209627A90034C9E6 /* PauseButtonNode.swift */,
 				69C5A882209627A90034C9E6 /* PauseMenuNode.swift */,

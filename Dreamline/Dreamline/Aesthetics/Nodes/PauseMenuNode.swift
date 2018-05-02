@@ -16,21 +16,9 @@ class PauseMenuNode: SKNode {
     
     static func make(rect: CGRect) -> PauseMenuNode {
         let instance = PauseMenuNode()
-        instance.addBackground(rect: rect)
         instance.addButtons(rect: rect)
-//        instance.addResumeButton(rect: rect)
-//        instance.addMenuButton(rect: rect)
-//        instance.addMuteButton(rect: rect)
         instance.zPosition = 100 // @HARDCODED
         return instance
-    }
-    
-    private func addBackground(rect: CGRect) {
-        let backgroundNode = SKShapeNode(rect: rect)
-        backgroundNode.lineWidth = 0
-        backgroundNode.fillColor = .lightGray
-        backgroundNode.alpha = 0.7
-        self.addChild(backgroundNode)
     }
     
     private func addButtons(rect: CGRect) {
@@ -49,23 +37,26 @@ class PauseMenuNode: SKNode {
     }
     
     private func addResumeButton(size: CGSize) -> ButtonNode {
+        let color = UIColor(red: 250.0/255.0, green: 202.0/255.0, blue: 102.0/255.0, alpha: 1.0)
         self.resumeButton = LabelButtonNode.make("Resume",
                                                 size: size,
-                                                color: .orange)
+                                                color: color)
         return self.resumeButton
     }
     
     private func addMenuButton(size: CGSize) -> ButtonNode {
+        let color = UIColor(red: 247.0/255.0, green: 165.0/255.0, blue: 65.0/255.0, alpha: 1.0)
         self.menuButton = LabelButtonNode.make("Menu",
                                               size: size,
-                                              color: .yellow)
+                                              color: color)
         return self.menuButton
     }
     
     private func addMuteButton(size: CGSize) -> ButtonNode {
+        let color = UIColor(red: 244.0/255.0, green: 93.0/255.0, blue: 76.0/255.0, alpha: 1.0)
         self.muteButton = LabelButtonNode.make("Mute",
                                               size: size,
-                                              color: .green)
+                                              color: color)
         return self.muteButton
     }
     

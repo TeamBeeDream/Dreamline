@@ -38,26 +38,10 @@ class ResultsRenderer: Observer {
         case .flowControlPhaseUpdate(let phase):
             if phase == .origin {
                 self.nodeContainer.removeAllChildren()
-                // @TODO: Properly handle reset
             }
             
-            if phase == .results {
-                let label = SKLabelNode(text: "ROUND COMPLETE")
-                label.fontColor = .white
-                label.fontSize = 30
-                label.zPosition = 40 // @HARDCODED
-                label.position = CGPoint(x: self.scene.frame.midX, y: self.scene.frame.midY)
-                label.run(SKAction.fadeIn(withDuration: 0.2))
-                self.nodeContainer.addChild(label)
-                
-                // @HACK
-                let continueButton = ButtonNode(color: .clear, size: self.scene.frame.size)
-                continueButton.isUserInteractionEnabled = true
-                continueButton.zPosition = 100 // @HARDCODED
-                continueButton.position = CGPoint(x: self.scene.frame.midX, y: self.scene.frame.midY)
-                continueButton.action = { self.delegate.addEvent(.flowControlPhaseUpdate(phase: .origin)) }
-                self.nodeContainer.addChild(continueButton)
-            }
+        case .roundComplete(let level):
+            self.draw(level: level)
             
         case .multiple(let events):
             for e in events {
@@ -66,5 +50,23 @@ class ResultsRenderer: Observer {
             
         default: break
         }
+    }
+    
+    private func draw(level: Int) {
+        let label = SKLabelNode(text: "ROUND \(level) COMPLETE")
+        label.fontColor = .white
+        label.fontSize = 26
+        label.zPosition = 40 // @HARDCODED
+        label.position = CGPoint(x: self.scene.frame.midX, y: self.scene.frame.midY)
+        label.run(SKAction.fadeIn(withDuration: 0.2))
+        self.nodeContainer.addChild(label)
+        
+        // @HACK
+        let continueButton = ButtonNode(color: .clear, size: self.scene.frame.size)
+        continueButton.isUserInteractionEnabled = true
+        continueButton.zPosition = 100 // @HARDCODED
+        continueButton.position = CGPoint(x: self.scene.frame.midX, y: self.scene.frame.midY)
+        continueButton.action = { self.delegate.addEvent(.flowControlPhaseUpdate(phase: .origin)) }
+        self.nodeContainer.addChild(continueButton)
     }
 }

@@ -47,6 +47,7 @@ enum KernelEvent {
     case chunkSet(chunks: [Chunk])
     case chunkLevelUpdate(level: Int)
     case settingsMuteUpdate(mute: Bool)
+    case roundComplete(level: Int)
     
     case multiple(events: [KernelEvent]) // :(
 }

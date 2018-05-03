@@ -31,7 +31,9 @@ extension KernelState {
     
     static func master() -> KernelState {
         var boardState = BoardState.new()
-        boardState.layout = BoardLayout(playerPosition: 0.2, upperBound: 1.0, lowerBound: -1.0)
+        boardState.layout = BoardLayout(playerPosition: 0.2,
+                                        upperBound: 1.0,
+                                        lowerBound: -1.0)
         boardState.scrollSpeed = 1.0
         boardState.distanceBetweenEntities = 0.5
         

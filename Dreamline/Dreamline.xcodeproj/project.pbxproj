@@ -261,6 +261,15 @@
 			path = Util;
 			sourceTree = "<group>";
 		};
+		6950D476209A89B500B0DFCC /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				69C5A83C20938A920034C9E6 /* Definitions.swift */,
+				69C5A836209389080034C9E6 /* Kernel.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		6956191F2098BAAD00A7E822 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -397,8 +406,7 @@
 		69C5A835209388F80034C9E6 /* Kernel */ = {
 			isa = PBXGroup;
 			children = (
-				69C5A83C20938A920034C9E6 /* Definitions.swift */,
-				69C5A836209389080034C9E6 /* Kernel.swift */,
+				6950D476209A89B500B0DFCC /* Common */,
 				69C5A828209383220034C9E6 /* State */,
 				69C5A83B20938A000034C9E6 /* Rules */,
 				69C5A842209395EF0034C9E6 /* Mutators */,

@@ -8,18 +8,22 @@
 
 import Foundation
 
-class KernelImpl: Kernel {
+class MasterKernel: Kernel {
     
     private var state: KernelState
     private var rules: [Rule]
     private var mutators: [Mutator]
     
-    private var externalEvents = [KernelEvent]()
+    private var externalEvents: [KernelEvent]
+    private var internalEvents: [KernelEvent]
     
     init(state: KernelState, rules: [Rule], mutators: [Mutator]) {
         self.state = state
         self.rules = rules
         self.mutators = mutators
+        
+        self.externalEvents = [KernelEvent]()
+        self.internalEvents = [KernelEvent]()
     }
     
     func getState() -> KernelState {
@@ -31,47 +35,52 @@ class KernelImpl: Kernel {
     }
     
     func update(deltaTime: Double) -> [KernelEvent] {
-        var events = self.processRules(deltaTime: deltaTime)
-        events.append(contentsOf: self.externalEvents)
-        self.mutateState(events: events)
-        self.clearExternalEvents()
-        return events
+        self.processRules(deltaTime: deltaTime)
+        self.compositeEvents()
+        self.mutateState()
+        return self.internalEvents
     }
     
-    private func processRules(deltaTime: Double) -> [KernelEvent] {
-        var events = [KernelEvent]()
+    private func compositeEvents() {
+        self.internalEvents.append(contentsOf: self.externalEvents)
+        self.externalEvents.removeAll(keepingCapacity: true)
+    }
+    
+    private func processRules(deltaTime: Double) {
+        self.internalEvents.removeAll(keepingCapacity: true)
         for rule in self.rules {
             let event = rule.process(state: self.state, deltaTime: deltaTime)
-            if event != nil { events.append(event!) }
-        }
-        return events
-    }
-    
-    private func mutateState(events: [KernelEvent]) {
-        for mutator in self.mutators {
-            for event in events {
-                mutator.mutateState(state: &self.state, event: event)
+            // This is tragic
+            if event != nil {
+                switch event! {
+                case .multiple(let events): self.internalEvents.append(contentsOf: events)
+                default: self.internalEvents.append(event!)
+                }
             }
         }
     }
     
-    private func clearExternalEvents() {
-        self.externalEvents.removeAll()
+    private func mutateState() {
+        for mutator in self.mutators {
+            for event in self.internalEvents {
+                mutator.mutateState(state: &self.state, event: event)
+            }
+        }
     }
 }
 
 class KernelMasterFactory {
     func make() -> Kernel {
-        return KernelImpl(state: self.getState(),
-                          rules: self.getRules(),
-                          mutators: self.getMutators())
+        return MasterKernel(state: self.createState(),
+                            rules: self.createRules(),
+                            mutators: self.createMutators())
     }
     
-    private func getState() -> KernelState {
+    private func createState() -> KernelState {
         return KernelState.master()
     }
     
-    private func getRules() -> [Rule] {
+    private func createRules() -> [Rule] {
         return [TimeRule(),
                 ScrollRule(),
                 SpawnRule(),
@@ -82,7 +91,7 @@ class KernelMasterFactory {
                 SetupRule()]
     }
     
-    private func getMutators() -> [Mutator] {
+    private func createMutators() -> [Mutator] {
         return [TimeMutator(),
                 BoardMutator(),
                 PositionMutator(),

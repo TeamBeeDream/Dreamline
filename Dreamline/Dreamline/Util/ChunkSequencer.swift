@@ -59,14 +59,6 @@ class MasterChunkSequencer: ChunkSequencer {
                           length:       [  5,   5,   5])
         lookupTable[5] = (difficulty:   [0.8, 0.9, 1.0],
                           length:       [  8,   8,   5])
-//        lookupTable[6] = (difficulty:   [0.2, 0.3],
-//                          length:       [  5,   5])
-//        lookupTable[7] = (difficulty:   [0.2, 0.3],
-//                          length:       [  5,   5])
-//        lookupTable[8] = (difficulty:   [0.2, 0.3],
-//                          length:       [  5,   5])
-//        lookupTable[9] = (difficulty:   [0.2, 0.3],
-//                          length:       [  5,   5])
         
         // @HACK
         let levelIndex = clamp(level, min: 1, max: lookupTable.count-1)
@@ -86,35 +78,3 @@ class MasterChunkSequencer: ChunkSequencer {
         return chunks
     }
 }
-
-//class JediCurveCalculator {
-//    func calculateValues(startValue: Double,
-//                         endValue: Double,
-//                         pointCount: Int,
-//                         maxVariation: Double) -> [Double] {
-//        var values = [Double]()
-//        for i in 0...pointCount {
-//            let t = Double(i) / Double(pointCount)
-//            values.append(self.getValue(startValue: startValue,
-//                                        endValue: endValue,
-//                                        t: t,
-//                                        maxVariation: maxVariation))
-//        }
-//        return values
-//    }
-//
-//    private func getValue(startValue: Double,
-//                          endValue: Double,
-//                          t: Double,
-//                          maxVariation: Double) -> Double {
-//        let linearValue = lerp(t, min: startValue, max: endValue)
-//        let variation = self.getRandomVariation(maxVariation: maxVariation)
-//        return clamp(linearValue * variation, min: startValue, max: endValue)
-//    }
-//
-//    private func getRandomVariation(maxVariation: Double) -> Double {
-//        let random = RealRandom() // @HARDCODED
-//        let sign = Double(random.nextBool() ? -1 : 1)
-//        return random.next() * maxVariation * sign
-//    }
-//}

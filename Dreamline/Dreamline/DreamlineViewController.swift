@@ -69,7 +69,13 @@ class DreamlineViewController: UIViewController, SceneManager {
         let transition = SKTransition.crossFade(withDuration: 1.0)
         transition.pausesIncomingScene = false
         transition.pausesOutgoingScene = false
-        let scene = GameScene.make(size: self.view.frame.size, manager: self)
-        self.skView.presentScene(scene, transition: transition)
+        
+        let frame = self.skView.frame
+        DispatchQueue.global(qos: .userInitiated).async {
+            let scene = GameScene.make(size: frame.size, manager: self)
+            DispatchQueue.main.async {
+                self.skView.presentScene(scene, transition: transition)
+            }
+        }
     }
 }

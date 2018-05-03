@@ -48,7 +48,7 @@ class DreamlineViewController: UIViewController, SceneManager {
     }
     
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
     
     override var prefersStatusBarHidden: Bool {

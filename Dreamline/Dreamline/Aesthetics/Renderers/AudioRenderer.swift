@@ -12,14 +12,7 @@ import AVFoundation
 class AudioRenderer: Observer {
     
     private var scene: SKScene!
-    
     private var backgroundMusic: SKAudioNode!
-    private var barrierCrossSound: SKAudioNode!
-    private var barrierPassSound: SKAudioNode!
-    private var playerAwaySound: SKAudioNode!
-    private var playerBackSound: SKAudioNode!
-    private var thresholdChunkSound: SKAudioNode!
-    private var thresholdRoundSound: SKAudioNode!
     
     private var lane: Int = 0
     
@@ -27,7 +20,6 @@ class AudioRenderer: Observer {
         let instance = AudioRenderer()
         instance.scene = scene
         instance.addBackgroundMusic()
-        instance.addSounds()
         return instance
     }
     
@@ -38,9 +30,9 @@ class AudioRenderer: Observer {
         case .positionTargetUpdate(let target):
             if lane != target {
                 if target == 0 {
-                    self.playerBackSound.run(SKAction.play())
+                    self.playSound(Resources.shared.getSound(.playerMoveBack))
                 } else {
-                    self.playerAwaySound.run(SKAction.play())
+                    self.playSound(Resources.shared.getSound(.playerMoveAway))
                 }
             }
             self.lane = target
@@ -55,42 +47,22 @@ class AudioRenderer: Observer {
         self.backgroundMusic.autoplayLooped = true
         self.scene.addChild(self.backgroundMusic)
     }
-    
-    private func addSounds() {
-        self.barrierPassSound = Resources.shared.getSound(.barrierPass)
-        self.scene.addChild(self.barrierPassSound)
-        
-        self.barrierCrossSound = Resources.shared.getSound(.barrierCross)
-        self.scene.addChild(self.barrierCrossSound)
-        
-        self.thresholdChunkSound = Resources.shared.getSound(.thresholdChunkCross)
-        self.scene.addChild(self.thresholdChunkSound)
-        
-        self.thresholdRoundSound = Resources.shared.getSound(.thresholdRoundCross)
-        self.scene.addChild(self.thresholdRoundSound)
-        
-        self.playerAwaySound = Resources.shared.getSound(.playerMoveAway)
-        self.scene.addChild(self.playerAwaySound)
-        
-        self.playerBackSound = Resources.shared.getSound(.playerMoveBack)
-        self.scene.addChild(self.playerBackSound)
-    }
 
     private func handleEvent(type: EntityType, state: EntityState) {
         switch type {
         case .threshold(let type):
             switch type {
             case .chunkEnd:
-                self.thresholdChunkSound.run(SKAction.play())
+                self.playSound(Resources.shared.getSound(.thresholdChunkCross))
             case .roundEnd:
-                self.thresholdRoundSound.run(SKAction.play())
+                self.playSound(Resources.shared.getSound(.thresholdRoundCross))
             }
         case .barrier:
             if state == .crossed {
-                self.barrierCrossSound.run(SKAction.play())
+                self.playSound(Resources.shared.getSound(.barrierCross))
             }
             if state == .passed {
-                self.barrierPassSound.run(SKAction.play())
+                self.playSound(Resources.shared.getSound(.barrierPass))
             }
         default:
             break
@@ -100,5 +72,10 @@ class AudioRenderer: Observer {
     private func handleMuteUpdate(mute: Bool) {
         let volume = Float(mute ? 0.0 : 1.0)
         self.backgroundMusic.run(SKAction.changeVolume(to: volume, duration: 0.5))
+    }
+    
+    private func playSound(_ player: AVPlayer) {
+        player.seek(to: kCMTimeZero)
+        player.play()
     }
 }

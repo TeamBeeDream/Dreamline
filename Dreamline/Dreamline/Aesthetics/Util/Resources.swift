@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import AVFoundation
 
 enum Texture {
     case player
@@ -38,12 +39,12 @@ class Resources {
     
     private var textures: [Texture: SKTexture]
     private var music: [Music: SKAudioNode]
-    private var sounds: [Sound: SKAudioNode]
+    private var sounds: [Sound: AVPlayer]
     
     init() {
         self.textures = [Texture: SKTexture]()
         self.music = [Music: SKAudioNode]()
-        self.sounds = [Sound: SKAudioNode]()
+        self.sounds = [Sound: AVPlayer]()
     }
     
     static var shared: Resources {
@@ -70,10 +71,12 @@ class Resources {
     }
     
     func getMusic(_ key: Music) -> SKAudioNode {
-        return self.music[key]!
+        let music = self.music[key]!
+        music.removeFromParent() // @HACK
+        return music
     }
     
-    func getSound(_ key: Sound) -> SKAudioNode {
+    func getSound(_ key: Sound) -> AVPlayer {
         return self.sounds[key]!
     }
 }
@@ -146,11 +149,9 @@ extension Resources {
         self.sounds[.playerMoveAway] = self.loadSound("player_move")
         self.sounds[.playerMoveBack] = self.loadSound("player_move_2")
     }
-    
-    private func loadSound(_ fileName: String) -> SKAudioNode {
-        let url = Bundle.main.url(forResource: fileName, withExtension: "mp3")
-        let node = SKAudioNode(url: url!)
-        node.autoplayLooped = false
-        return node
+
+    private func loadSound(_ fileName: String) -> AVPlayer {
+        let url = Bundle.main.url(forResource: fileName, withExtension: "mp3")!
+        return AVPlayer(url: url)
     }
 }

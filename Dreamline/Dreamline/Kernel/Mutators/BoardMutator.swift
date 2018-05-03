@@ -32,10 +32,6 @@ class BoardMutator: Mutator {
         case .boardReset:
             state.board.lastEntityPosition = 0.0
             state.board.position = 0.0
-        case .multiple(let events):
-            for bundledEvent in events {
-                self.mutateState(state: &state, event: bundledEvent)
-            }
         default: break
         }
     }

@@ -20,10 +20,6 @@ class ChunkMutator: Mutator {
             state.chunk.current = state.chunk.chunks.removeFirst()
         case .chunkLevelUpdate(let level):
             state.chunk.level = level
-        case .multiple(let events):
-            for bundledEvent in events {
-                self.mutateState(state: &state, event: bundledEvent)
-            }
         default: break
         }
     }

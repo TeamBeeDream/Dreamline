@@ -19,10 +19,6 @@ class TimeMutator: Mutator {
             state.time.timeSinceBeginning = timeSinceBeginning
         case .timePauseUpdate(let pause):
             state.time.paused = pause
-        case .multiple(let events):
-            for bundledEvent in events {
-                self.mutateState(state: &state, event: bundledEvent)
-            }
         default: break
         }
     }

@@ -48,10 +48,6 @@ class PauseRenderer: Observer {
             if phase == .results { self.run(self.pauseButton, action: self.hideAction()) }
         case .settingsMuteUpdate(let mute):
             self.menuNode.toggleMuteButton(mute: mute, delegate: self.delegate)
-        case .multiple(let events):
-            for e in events {
-                self.observe(event: e)
-            }
         default: break
         }
     }

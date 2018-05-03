@@ -49,14 +49,8 @@ class MasterKernel: Kernel {
     private func processRules(deltaTime: Double) {
         self.internalEvents.removeAll(keepingCapacity: true)
         for rule in self.rules {
-            let event = rule.process(state: self.state, deltaTime: deltaTime)
-            // This is tragic
-            if event != nil {
-                switch event! {
-                case .multiple(let events): self.internalEvents.append(contentsOf: events)
-                default: self.internalEvents.append(event!)
-                }
-            }
+            let events = rule.process(state: self.state, deltaTime: deltaTime)
+            self.internalEvents.append(contentsOf: events)
         }
     }
     

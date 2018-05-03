@@ -17,10 +17,6 @@ class HealthMutator: Mutator {
             state.health.hitPoints += increment
         case .healthInvincibleUpdate(let invincible):
             state.health.invincible = invincible
-        case .multiple(let events):
-            for bundledEvent in events {
-                self.mutateState(state: &state, event: bundledEvent)
-            }
         default: break
         }
     }

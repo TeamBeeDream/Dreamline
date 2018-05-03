@@ -15,7 +15,7 @@ protocol Kernel {
 }
 
 protocol Rule {
-    func process(state: KernelState, deltaTime: Double) -> KernelEvent?
+    func process(state: KernelState, deltaTime: Double) -> [KernelEvent]
 }
 
 protocol Mutator {
@@ -48,6 +48,4 @@ enum KernelEvent {
     case chunkLevelUpdate(level: Int)
     case settingsMuteUpdate(mute: Bool)
     case roundComplete(level: Int)
-    
-    case multiple(events: [KernelEvent]) // :(
 }

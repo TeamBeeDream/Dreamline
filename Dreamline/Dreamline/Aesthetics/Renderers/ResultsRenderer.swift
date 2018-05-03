@@ -43,11 +43,6 @@ class ResultsRenderer: Observer {
         case .roundComplete(let level):
             self.draw(level: level)
             
-        case .multiple(let events):
-            for e in events {
-                self.observe(event: e)
-            }
-            
         default: break
         }
     }

@@ -44,10 +44,6 @@ class PlayerRenderer: Observer {
             self.player.position = pos
         case .healthInvincibleUpdate(let invincible):
             self.handleInvincibleUpdate(invincible: invincible)
-        case .multiple(let events):
-            for bundledEvent in events {
-                self.observe(event: bundledEvent)
-            }
         default: break
         }
     }

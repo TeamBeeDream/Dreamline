@@ -45,8 +45,6 @@ class AudioRenderer: Observer {
             self.lane = target
         case .boardEntityStateUpdate(_, let type, let state):
             self.handleEvent(type: type, state: state)
-        case .multiple(let events):
-            for e in events { self.observe(event: e) }
         default: break
         }
     }

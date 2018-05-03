@@ -19,7 +19,7 @@ class CollisionRule: Rule {
     }
     
     // @TODO: Bundle a KernelEvent with multiple events
-    func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
+    func process(state: KernelState, deltaTime: Double) -> [KernelEvent] {
         for entity in state.board.entities {
             if Collision.didCrossLine(testPosition: state.board.layout.playerPosition,
                                       linePosition: entity.position,
@@ -27,10 +27,10 @@ class CollisionRule: Rule {
                 let events = self.getEventsFromDelegates(state: state,
                                                          entity: entity,
                                                          lane: state.position.nearestLane)
-                if !events.isEmpty { return .multiple(events: events) }
+                if !events.isEmpty { return events }
             }
         }
-        return nil
+        return []
     }
     
     private func getEventsFromDelegates(state: KernelState, entity: Entity, lane: Int) -> [KernelEvent] {

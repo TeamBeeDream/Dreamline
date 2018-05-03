@@ -13,10 +13,6 @@ class FlowControlMutator: Mutator {
         switch event {
         case .flowControlPhaseUpdate(let phase):
             state.flowControl.phase = phase
-        case .multiple(let events):
-            for bundledEvent in events {
-                self.mutateState(state: &state, event: bundledEvent)
-            }
         default: break
         }
     }

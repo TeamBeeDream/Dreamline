@@ -14,19 +14,19 @@ class SpawnRule: Rule {
     private var sequencer = SpawnSequencer()
     private var lastId: Int = 0 // @HACK
     
-    func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
+    func process(state: KernelState, deltaTime: Double) -> [KernelEvent] {
         if state.flowControl.phase == .origin {
             self.sequencer.clear()
         }
-        if state.flowControl.phase != .play { return nil }
+        if state.flowControl.phase != .play { return [] }
         
         if !self.regulator.shouldSpawnEntity(boardPosition: state.board.position,
                                              distanceBetweenBarriers: state.board.distanceBetweenEntities,
                                              lastEntityPosition: state.board.lastEntityPosition) {
-            return nil
+            return []
         }
         
-        return .boardEntityAdd(entity: self.getNextEntity(state: state))
+        return [.boardEntityAdd(entity: self.getNextEntity(state: state))]
     }
     
     // @CLEANUP

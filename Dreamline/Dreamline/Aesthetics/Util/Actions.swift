@@ -19,7 +19,7 @@ class Actions {
     
     static func fadeLoop(duration: Double) -> SKAction {
         let t = duration / 2.0
-        let a = SKAction.fadeAlpha(to: 0.0, duration: t)
+        let a = SKAction.fadeAlpha(to: 0.5, duration: t)
         a.timingMode = .easeInEaseOut
         let b = SKAction.fadeAlpha(to: 1.0, duration: t)
         b.timingMode = .easeInEaseOut

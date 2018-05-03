@@ -49,6 +49,7 @@ class DebugChunkSequencer: ChunkSequencer {
 class MasterChunkSequencer: ChunkSequencer {
     func getChunks(level: Int) -> [Chunk] {
         var lookupTable = [Int: (difficulty: [Double], length: [Int])]()
+        lookupTable[0] = (difficulty: [], length: []) // @HACK @REMOVE
         lookupTable[1] = (difficulty:   [0.6],
                           length:       [  5])
         lookupTable[2] = (difficulty:   [0.6, 0.7],
@@ -61,7 +62,7 @@ class MasterChunkSequencer: ChunkSequencer {
                           length:       [  8,   8,   5])
         
         // @HACK
-        let levelIndex = clamp(level, min: 1, max: lookupTable.count-1)
+        let levelIndex = clamp(level, min: 0, max: lookupTable.count-1)
         let data = lookupTable[levelIndex]!
         return self.generateChunks(count: data.difficulty.count,
                                    difficulty: data.difficulty,
@@ -70,9 +71,11 @@ class MasterChunkSequencer: ChunkSequencer {
     
     private func generateChunks(count: Int, difficulty: [Double], length: [Int]) -> [Chunk] {
         var chunks = [Chunk]()
-        for i in 0...count-1 {
-            let chunk = Chunk(type: .barriers, difficuly: difficulty[i], length: length[i])
-            chunks.append(chunk)
+        if count != 0 { // @HACK
+            for i in 0...count-1 {
+                let chunk = Chunk(type: .barriers, difficuly: difficulty[i], length: length[i])
+                chunks.append(chunk)
+            }
         }
         chunks.append(Chunk(type: .finish, difficuly: 0.0, length: 3))
         return chunks

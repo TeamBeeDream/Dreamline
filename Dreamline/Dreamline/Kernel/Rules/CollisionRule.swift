@@ -63,6 +63,9 @@ class BarrierCollisionDelegate: CollisionDelegate {
                 if entityState == .crossed {
                     events.append(.healthHitPointUpdate(increment: -1))
                     events.append(.healthInvincibleUpdate(invincible: true))
+                    events.append(.healthBarrierUpdate(pass: false))
+                } else {
+                    events.append(.healthBarrierUpdate(pass: true))
                 }
                 
                 return events

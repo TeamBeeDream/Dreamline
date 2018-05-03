@@ -17,6 +17,14 @@ class HealthMutator: Mutator {
             state.health.hitPoints += increment
         case .healthInvincibleUpdate(let invincible):
             state.health.invincible = invincible
+        case .healthBarrierUpdate(let pass):
+            state.health.totalBarriers += 1
+            state.health.barriersPassed += pass ? 1 : 0
+        case .healthReset:
+            state.health.barriersPassed = 0
+            state.health.totalBarriers = 0
+            state.health.hitPoints = 3
+            state.health.invincible = false
         default: break
         }
     }

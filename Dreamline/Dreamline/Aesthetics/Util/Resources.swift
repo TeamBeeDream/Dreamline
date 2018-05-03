@@ -129,7 +129,7 @@ extension Resources {
 // Music
 extension Resources {
     private func addMusic() {
-        self.music[.menu] = self.loadMusic("menu_cloud_theme_2")
+        self.music[.menu] = self.loadMusic("cloud_theme_menu_v3")
         self.music[.main] = self.loadMusic("Dreamline_cloud_theme")
     }
     
@@ -142,12 +142,12 @@ extension Resources {
 // Sounds
 extension Resources {
     private func addSounds() {
-        self.sounds[.barrierCross] = self.loadSound("barrier_cross_quiet")
-        self.sounds[.barrierPass] = self.loadSound("barrier_pass")
-        self.sounds[.thresholdRoundCross] = self.loadSound("threshold_cross")
-        self.sounds[.thresholdChunkCross] = self.loadSound("threshold_cross_chunk")
-        self.sounds[.playerMoveAway] = self.loadSound("player_move")
-        self.sounds[.playerMoveBack] = self.loadSound("player_move_2")
+        self.sounds[.barrierCross] = self.loadSound("barrier_cross_v4")
+        self.sounds[.barrierPass] = self.loadSound("barrier_pass_v2")
+        self.sounds[.thresholdRoundCross] = self.loadSound("threshold_cross_v2")
+        self.sounds[.thresholdChunkCross] = self.loadSound("threshold_cross_chunk_v2")
+        self.sounds[.playerMoveAway] = self.loadSound("player_move_v3")
+        self.sounds[.playerMoveBack] = self.loadSound("player_move_2_v2")
     }
 
     private func loadSound(_ fileName: String) -> AVPlayer {

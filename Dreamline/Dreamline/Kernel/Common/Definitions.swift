@@ -27,9 +27,7 @@ protocol Observer {
 }
 
 enum KernelEvent {
-    case timeUpdate(deltaTime: Double,
-                    frameNumber: Int,
-                    timeSinceBeginning: Double)
+    case timeUpdate(deltaTime: Double, frameNumber: Int, timeSinceBeginning: Double)
     case timePauseUpdate(pause: Bool)
     case boardScroll(distance: Double)
     case boardEntityAdd(entity: Entity)
@@ -42,10 +40,12 @@ enum KernelEvent {
     case healthHitPointSet(Int)
     case healthHitPointUpdate(increment: Int)
     case healthInvincibleUpdate(invincible: Bool)
+    case healthBarrierUpdate(pass: Bool)
+    case healthReset
     case flowControlPhaseUpdate(phase: FlowControlPhase)
     case chunkNext
     case chunkSet(chunks: [Chunk])
     case chunkLevelUpdate(level: Int)
     case settingsMuteUpdate(mute: Bool)
-    case roundComplete(level: Int)
+    case roundOver(didWin: Bool, level: Int, accuracy: Double)
 }

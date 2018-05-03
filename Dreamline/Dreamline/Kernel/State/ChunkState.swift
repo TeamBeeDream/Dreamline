@@ -30,6 +30,6 @@ extension ChunkState {
     static func new() -> ChunkState {
         return ChunkState(chunks: [],
                           current: nil,
-                          level: 1)
+                          level: 0)
     }
 }

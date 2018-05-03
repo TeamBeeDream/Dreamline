@@ -43,7 +43,7 @@ class GameScene: SKScene, EventDelegate {
         self.backgroundColor = .darkText
         
         // @TEMP
-        self.kernel.addEvent(event: .settingsMuteUpdate(mute: true))
+        //self.kernel.addEvent(event: .settingsMuteUpdate(mute: true))
     }
     
     override func update(_ currentTime: TimeInterval) {

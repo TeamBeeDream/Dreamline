@@ -42,9 +42,9 @@ class CloudNode: SKNode {
         shader.addUniform(SKUniform(name: speedXUniformKey, float: 0.0))
         shader.addUniform(SKUniform(name: speedYUniformKey, float: 0.0))
         shader.addUniform(SKUniform(name: colorUniformKey, vectorFloat4: vector4(1.0, 1.0, 1.0, 1.0)))
-        let cloudTexture = SKTexture(imageNamed: "TiledCloud1")
         self.scrollShader = shader
         
+        let cloudTexture = Resources.shared.getTexture(.tiledCloud1)
         let clouds = SKSpriteNode(texture: cloudTexture, size: CGSize(width: width, height: width))
         clouds.shader = shader
         clouds.position = CGPoint(x: width / 2.0, y: width / 2.0)

@@ -13,16 +13,12 @@ class BarrierRendererDelegate: EntityRendererDelegate {
     // MARK: Private Properties
     
     private var frame: CGRect! // @ROBUSTNESS
-    private var textures: DictTextureCache<Int>!
-    private var barrierColor = SKColor.darkText
     
     // MARK: Init
     
     static func make(frame: CGRect) -> BarrierRendererDelegate {
         let instance = BarrierRendererDelegate()
         instance.frame = frame
-        instance.textures = DictTextureCache.make()
-        instance.generateTextures()
         return instance
     }
     
@@ -36,8 +32,7 @@ class BarrierRendererDelegate: EntityRendererDelegate {
             var posX = self.frame.width / 6.0
             for gate in gates {
                 if gate == .open { posX += offset; continue }
-                
-                let texture = self.textures.retrieveTexture(key: 0) // @HARDCODED
+                let texture = Resources.shared.getTexture(.barrier)
                 let sprite = SKSpriteNode(texture: texture)
                 sprite.position.x = posX
                 //sprite.zPosition = GameScene.LINE_Z_POSITION
@@ -63,19 +58,6 @@ class BarrierRendererDelegate: EntityRendererDelegate {
     }
     
     // MARK: Private Methods
-    
-    private func generateTextures() {
-        let rect = CGRect(x: 0.0,
-                          y: 0.0,
-                          width: frame.width / 3.0,
-                          height: 4.0)
-        let shape = SKShapeNode(rect: rect)
-        shape.lineWidth = 0.0
-        shape.fillColor = self.barrierColor
-        
-        let texture = SKView().texture(from: shape)!
-        self.textures.storeTexture(texture, forKey: 0) // @HARDCODED
-    }
     
     private func fadeOutLine(node: SKNode) {
         node.run(SKAction.fadeOut(withDuration: 0.2))

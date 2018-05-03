@@ -72,8 +72,7 @@ class TitleScene: SKScene {
     }
     
     private func addMusic() {
-        let musicUrl = Bundle.main.url(forResource: "menu_cloud_theme_2", withExtension: "mp3")
-        let music = SKAudioNode(url: musicUrl!)
+        let music = Resources.shared.getMusic(.menu)
         music.autoplayLooped = true
         self.addChild(music)
     }

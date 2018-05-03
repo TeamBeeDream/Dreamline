@@ -17,6 +17,7 @@
 		6950D471209A462200B0DFCC /* CloudNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D470209A462200B0DFCC /* CloudNode.swift */; };
 		6950D473209A478A00B0DFCC /* CloudScroll.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 6950D472209A478A00B0DFCC /* CloudScroll.fsh */; };
 		6950D475209A4C4500B0DFCC /* menu_cloud_theme_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6950D474209A4C4500B0DFCC /* menu_cloud_theme_2.mp3 */; };
+		6950D478209A90F800B0DFCC /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D477209A90F800B0DFCC /* Resources.swift */; };
 		695619222098BAB500A7E822 /* ScrollTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 695619202098BAB500A7E822 /* ScrollTexture.fsh */; };
 		695619232098BAB500A7E822 /* TiledTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 695619212098BAB500A7E822 /* TiledTexture.fsh */; };
 		695619252098BACB00A7E822 /* SkyNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695619242098BACB00A7E822 /* SkyNode.swift */; };
@@ -117,6 +118,7 @@
 		6950D470209A462200B0DFCC /* CloudNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudNode.swift; sourceTree = "<group>"; };
 		6950D472209A478A00B0DFCC /* CloudScroll.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = CloudScroll.fsh; sourceTree = "<group>"; };
 		6950D474209A4C4500B0DFCC /* menu_cloud_theme_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menu_cloud_theme_2.mp3; sourceTree = "<group>"; };
+		6950D477209A90F800B0DFCC /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		695619202098BAB500A7E822 /* ScrollTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ScrollTexture.fsh; sourceTree = "<group>"; };
 		695619212098BAB500A7E822 /* TiledTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TiledTexture.fsh; sourceTree = "<group>"; };
 		695619242098BACB00A7E822 /* SkyNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkyNode.swift; sourceTree = "<group>"; };
@@ -319,13 +321,14 @@
 			path = Renderers;
 			sourceTree = "<group>";
 		};
-		6956192B2098C14C00A7E822 /* AnimationUtil */ = {
+		6956192B2098C14C00A7E822 /* Util */ = {
 			isa = PBXGroup;
 			children = (
 				6956192C2098C15F00A7E822 /* Actions.swift */,
 				695619302098C49A00A7E822 /* Layout.swift */,
+				6950D477209A90F800B0DFCC /* Resources.swift */,
 			);
-			path = AnimationUtil;
+			path = Util;
 			sourceTree = "<group>";
 		};
 		699FC549204E053600DB09B4 = {
@@ -471,7 +474,7 @@
 				6956191F2098BAAD00A7E822 /* Shaders */,
 				695619262098BAE100A7E822 /* Nodes */,
 				6956192A2098C13900A7E822 /* Renderers */,
-				6956192B2098C14C00A7E822 /* AnimationUtil */,
+				6956192B2098C14C00A7E822 /* Util */,
 			);
 			path = Aesthetics;
 			sourceTree = "<group>";
@@ -867,6 +870,7 @@
 				69C5A888209627AA0034C9E6 /* PauseRenderer.swift in Sources */,
 				69C5A832209387B80034C9E6 /* FlowControlState.swift in Sources */,
 				69C5A886209627AA0034C9E6 /* PauseMenuNode.swift in Sources */,
+				6950D478209A90F800B0DFCC /* Resources.swift in Sources */,
 				69C5A834209388110034C9E6 /* HealthState.swift in Sources */,
 				69C5A8532093A2DD0034C9E6 /* SpawnRule.swift in Sources */,
 			);

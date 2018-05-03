@@ -9,43 +9,11 @@
 import SpriteKit
 
 // @MOVE
-protocol TextureCache {
-    associatedtype T
-    func storeTexture(_ texture: SKTexture, forKey key: T)
-    func retrieveTexture(key: T) -> SKTexture?
-}
-
-// @MOVE
 protocol NodeCache {
     func storeNode(_ node: SKSpriteNode, forId id: Int)
     func retrieveNode(id: Int) -> SKSpriteNode?
     func removeNode(id: Int)
     func iter() -> [(Int, SKSpriteNode)]
-}
-
-class DictTextureCache<T: Hashable>: TextureCache {
-    
-    // MARK: Private Properties
-    
-    private var textures: [T: SKTexture]!
-    
-    // MARK: Init
-    
-    static func make() -> DictTextureCache {
-        let instance = DictTextureCache()
-        instance.textures = [T: SKTexture]()
-        return instance
-    }
-    
-    // MARK: TextureCache Methods
-    
-    func storeTexture(_ texture: SKTexture, forKey key: T) {
-        self.textures[key] =  texture
-    }
-    
-    func retrieveTexture(key: T) -> SKTexture? {
-        return self.textures[key]
-    }
 }
 
 class DictNodeCache: NodeCache {

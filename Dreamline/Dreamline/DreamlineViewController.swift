@@ -18,7 +18,6 @@ class DreamlineViewController: UIViewController, SceneManager {
     // MARK: Private Properties
     
     private var skView: SKView!
-    private var gameScene: GameScene!
     
     // MARK: Init and Deinit
     
@@ -39,12 +38,6 @@ class DreamlineViewController: UIViewController, SceneManager {
         skView.ignoresSiblingOrder = true
         skView.showsDrawCount = true
         skView.showsFPS = true
-        
-        // @HACK
-        let frame = self.view.frame
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.gameScene = GameScene.make(size: frame.size, manager: self)
-        }
         
         self.gotoTitle()
         //self.gotoGame()
@@ -76,9 +69,7 @@ class DreamlineViewController: UIViewController, SceneManager {
         let transition = SKTransition.crossFade(withDuration: 1.0)
         transition.pausesIncomingScene = false
         transition.pausesOutgoingScene = false
-        
-        //let frame = self.skView.frame
-        self.gameScene = GameScene.make(size: self.view.frame.size, manager: self)
-        self.skView.presentScene(self.gameScene, transition: transition)
+        let scene = GameScene.make(size: self.view.frame.size, manager: self)
+        self.skView.presentScene(scene, transition: transition)
     }
 }

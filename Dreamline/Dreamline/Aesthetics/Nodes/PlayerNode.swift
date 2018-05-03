@@ -29,7 +29,7 @@ class PlayerNode: SKNode {
     }
     
     private func drawAirplane(size: CGFloat) {
-        let texture = SKTexture(imageNamed: "PaperAirplaneA")
+        let texture = Resources.shared.getTexture(.player)
         let sprite = SKSpriteNode(texture: texture, size: CGSize(width: size, height: size))
         self.addChild(sprite)
         self.sprite = sprite

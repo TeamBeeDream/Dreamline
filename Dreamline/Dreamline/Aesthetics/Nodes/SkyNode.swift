@@ -51,9 +51,9 @@ class SkyNode: SKNode {
         let shader = SKShader(fileNamed: "ScrollTexture.fsh")
         shader.addUniform(SKUniform(name: speedUniformKey, float: 0.0))
         shader.addUniform(SKUniform(name: scaleUniformKey, float: 1.0))
-        let cloudTexture = SKTexture(imageNamed: "TiledSky1")
         self.scrollShader = shader
         
+        let cloudTexture = Resources.shared.getTexture(.tiledSky1)
         let clouds = SKSpriteNode(texture: cloudTexture, size: frame.size)
         clouds.shader = shader
         clouds.position = CGPoint(x: frame.midX, y: frame.midY)

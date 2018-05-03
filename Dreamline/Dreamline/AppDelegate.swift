@@ -23,7 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // @TODO: Properly setup Firebase
         //FirebaseApp.configure()
         
-        // Display DreamlineViewController
+        Resources.shared.preload()
+        
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.rootViewController = DreamlineViewController.make()
         self.window?.makeKeyAndVisible()

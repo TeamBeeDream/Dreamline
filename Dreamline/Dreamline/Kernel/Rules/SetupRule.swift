@@ -17,6 +17,7 @@ class SetupRule: Rule {
         switch state.flowControl.phase {
         case .origin:
             return [
+                .timePauseUpdate(pause: false),
                 .healthHitPointSet(3),
                 .healthReset,
                 .chunkLevelUpdate(level: 1), // @FIXME
@@ -25,11 +26,9 @@ class SetupRule: Rule {
             self.eventFlag = false
             let chunks = self.sequencer.getChunks(level: state.chunk.level)
             return [
-                .timePauseUpdate(pause: false),
                 .boardReset,
                 .chunkSet(chunks: chunks),
-                .healthInvincibleUpdate(invincible: false),
-                .flowControlPhaseUpdate(phase: .play)]
+                .healthInvincibleUpdate(invincible: false)]
         case .play:
             return [.boardScrollSpeedUpdate(speed: state.chunk.current!.speed)]
         case .results:

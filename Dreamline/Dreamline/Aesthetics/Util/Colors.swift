@@ -14,4 +14,5 @@ class Colors {
     static let green    = UIColor(red:  36.0/255.0, green: 181.0/255.0, blue:  62.0/255.0, alpha: 1.0)
     static let blue     = UIColor.blue
     static let pink     = UIColor(red: 242.0/255.0, green: 187.0/255.0, blue: 199.0/255.0, alpha: 1.0)
+    static let gray     = UIColor(red:  53.0/255.0, green:  59.0/255.0, blue:  60.0/255.0, alpha: 1.0)
 }

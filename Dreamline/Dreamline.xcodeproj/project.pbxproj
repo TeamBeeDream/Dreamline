@@ -46,6 +46,7 @@
 		699FC566204E053600DB09B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 699FC564204E053600DB09B4 /* LaunchScreen.storyboard */; };
 		699FC57C204E053600DB09B4 /* DreamlineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC57B204E053600DB09B4 /* DreamlineUITests.swift */; };
 		69A3082E209CA87A00FC23F8 /* ButtonRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A3082D209CA87A00FC23F8 /* ButtonRenderer.swift */; };
+		69A30830209CB1E400FC23F8 /* CountdownRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A3082F209CB1E400FC23F8 /* CountdownRenderer.swift */; };
 		69AB5E92204F251700093B33 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E91204F251700093B33 /* Math.swift */; };
 		69C5A827209382AC0034C9E6 /* KernelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A826209382AC0034C9E6 /* KernelState.swift */; };
 		69C5A82A209383300034C9E6 /* TimeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A829209383300034C9E6 /* TimeState.swift */; };
@@ -156,6 +157,7 @@
 		699FC57B204E053600DB09B4 /* DreamlineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamlineUITests.swift; sourceTree = "<group>"; };
 		699FC57D204E053600DB09B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69A3082D209CA87A00FC23F8 /* ButtonRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonRenderer.swift; sourceTree = "<group>"; };
+		69A3082F209CB1E400FC23F8 /* CountdownRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownRenderer.swift; sourceTree = "<group>"; };
 		69AB5E91204F251700093B33 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		69C5A826209382AC0034C9E6 /* KernelState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernelState.swift; sourceTree = "<group>"; };
 		69C5A829209383300034C9E6 /* TimeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeState.swift; sourceTree = "<group>"; };
@@ -325,6 +327,7 @@
 				695619272098BB0B00A7E822 /* SkyRenderer.swift */,
 				695619322098E32400A7E822 /* AudioRenderer.swift */,
 				69A3082D209CA87A00FC23F8 /* ButtonRenderer.swift */,
+				69A3082F209CB1E400FC23F8 /* CountdownRenderer.swift */,
 			);
 			path = Renderers;
 			sourceTree = "<group>";
@@ -830,6 +833,7 @@
 			files = (
 				69C5A880209621D00034C9E6 /* FlowControlMutator.swift in Sources */,
 				69C5A84A20939BD00034C9E6 /* ScrollRule.swift in Sources */,
+				69A30830209CB1E400FC23F8 /* CountdownRenderer.swift in Sources */,
 				6956192F2098C2D000A7E822 /* PlayerNode.swift in Sources */,
 				69C5A885209627AA0034C9E6 /* PauseButtonNode.swift in Sources */,
 				69C5A83F20938B7D0034C9E6 /* TimeRule.swift in Sources */,

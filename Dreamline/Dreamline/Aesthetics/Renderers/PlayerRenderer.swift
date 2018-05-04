@@ -15,6 +15,8 @@ class PlayerRenderer: Observer {
     private var scene: SKScene!
     private var player: PlayerNode!
     private var health: HealthNode!
+    private var score: SKLabelNode!
+    private var scoreValue: Int = 0
     private var yPos: Double = 0.0
     
     // MARK: Init
@@ -41,6 +43,17 @@ class PlayerRenderer: Observer {
         health.zPosition = 10 // @HARDCODED
         self.scene.addChild(health)
         self.health = health
+        
+        self.scoreValue = 0
+        let score = SKLabelNode(text: "\(self.scoreValue)")
+        score.fontColor = .darkText
+        score.fontSize = 24
+        score.zPosition = 10 // @HARDCODED
+        score.position = CGPoint(x: self.scene.frame.midX,
+                                 y: self.scene.frame.maxY - self.scene.frame.height * 0.1)
+        score.verticalAlignmentMode = .top
+        self.scene.addChild(score)
+        self.score = score
     }
     
     func observe(event: KernelEvent) {
@@ -55,6 +68,11 @@ class PlayerRenderer: Observer {
             self.health.set(amount)
         case .flowControlPhaseUpdate(let phase):
             self.handlePhase(phase)
+        case .healthBarrierUpdate(let pass):
+            if pass {
+                self.scoreValue += 1
+                self.score.text = "\(self.scoreValue)"
+            }
         default: break
         }
     }
@@ -97,6 +115,18 @@ class PlayerRenderer: Observer {
     }
     
     private func handlePhase(_ phase: FlowControlPhase) {
-        
+        switch phase {
+        case .origin:
+            self.scoreValue = 0
+            self.score.text = "0"
+        case .play:
+            self.health.alpha = 1.0
+            self.score.alpha = 1.0
+        case .results:
+            self.health.alpha = 0.0
+            self.score.alpha = 0.0
+        default:
+            break
+        }
     }
 }

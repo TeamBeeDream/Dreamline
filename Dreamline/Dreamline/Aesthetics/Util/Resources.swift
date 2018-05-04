@@ -105,7 +105,7 @@ extension Resources {
         let rect = CGRect(x: 0.0,
                           y: 0.0,
                           width: frame.width,
-                          height: 4.0)
+                          height: 8.0)
         let shape = SKShapeNode(rect: rect)
         shape.lineWidth = 0.0
         

@@ -11,7 +11,7 @@ import SpriteKit
 class SkyRenderer: Observer {
     
     private var scene: SKScene!
-    private var skyNode: SkyNode!
+    //private var skyNode: SkyNode!
     private var matteNode: SKSpriteNode!
     
     private let scrollSpeed = 0.2 // @HARDCODED
@@ -38,9 +38,14 @@ class SkyRenderer: Observer {
     }
     
     private func addSky(rect: CGRect) {
-        let sky = SkyNode.make(frame: scene.frame)
-        self.scene.addChild(sky)
-        self.skyNode = sky
+        let bg = SKSpriteNode(color: UIColor(red: 154.0/255.0,
+                                             green: 227.0/255.0,
+                                             blue: 239.0/255.0,
+                                             alpha: 1.0), size: self.scene.frame.size)
+        bg.position = CGPoint(x: self.scene.frame.midX, y: self.scene.frame.midY)
+        self.scene.addChild(bg)
+        let clouds = ScrollingCloudClusterNode.make(count: 8, bounds: self.scene.frame, vertical: true)
+        self.scene.addChild(clouds)
     }
     
     private func addMatte(rect: CGRect) {
@@ -77,10 +82,10 @@ class SkyRenderer: Observer {
     }
     
     private func setScrollSpeed(speed: Double) {
-        self.skyNode.setScrollSpeed(speed: speed)
+        //self.skyNode.setScrollSpeed(speed: speed)
     }
     
     private func setSkyColor(color: UIColor) {
-        self.skyNode.setSkyColor(color: color)
+        //self.skyNode.setSkyColor(color: color)
     }
 }

@@ -19,9 +19,9 @@ class TitleScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
-        self.backgroundColor = UIColor(red: 7.0/255.0,
-                                       green: 221.0/255.0,
-                                       blue: 238.0/255.0,
+        self.backgroundColor = UIColor(red: 154.0/255.0,
+                                       green: 227.0/255.0,
+                                       blue: 239.0/255.0,
                                        alpha: 1.0)
         self.addClouds()
         self.addTitle()
@@ -78,22 +78,7 @@ class TitleScene: SKScene {
     }
     
     private func addClouds() {
-        for _ in 1...5 {
-            self.randomCloud(texture: Resources.shared.getTexture(.cloudA))
-        }
-    }
-    
-    private func randomCloud(texture: SKTexture) {
-        let random = RealRandom()
-        let t = CGFloat(random.next())
-        let size = lerp(t, min: self.frame.width * 0.08, max: self.frame.width * 0.5)
-        let speed = lerp(t, min: 20.0, max: 12.0)
-        
-        let cloud = ScrollingCloudNode.make(texture: texture,
-                                             size: size,
-                                             bounds: self.frame,
-                                             speed: speed)
-        self.addChild(cloud)
+        self.addChild(ScrollingCloudClusterNode.make(count: 4, bounds: self.frame, vertical: false))
     }
     
     private func addCopyright() {

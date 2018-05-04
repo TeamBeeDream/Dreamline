@@ -18,6 +18,10 @@ enum Texture {
     case tiledCloud1
     case pauseButton
     case cloudA
+    case cloudB
+    case cloudC
+    case cloudD
+    case cloudE
 }
 
 enum Music {
@@ -121,6 +125,10 @@ extension Resources {
     private func addCloudTextures() {
         self.textures[.tiledCloud1] = SKTexture(imageNamed: "TiledCloud1")
         self.textures[.cloudA] = SKTexture(imageNamed: "CloudA")
+        self.textures[.cloudB] = SKTexture(imageNamed: "CloudB")
+        self.textures[.cloudC] = SKTexture(imageNamed: "CloudC")
+        self.textures[.cloudD] = SKTexture(imageNamed: "CloudD")
+        self.textures[.cloudE] = SKTexture(imageNamed: "CloudE")
     }
     
     private func addPauseButton() {

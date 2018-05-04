@@ -13,34 +13,34 @@ class Highscore: NSObject, NSCoding {
     // MARK: Public Properties
     var date: String
     var level: Int
-    var accuracy: Double
+    var points: Int
     
     // MARK: Keys
-    private static let dateKey = "v1_hs_date"
-    private static let levelKey = "v1_hs_level"
-    private static let accuracyKey = "v1_hs_accuracy"
-    private static let directoryKey = "v1_hs"
+    private static let dateKey = "v2_hs_date"
+    private static let levelKey = "v2_hs_level"
+    private static let pointsKey = "v2_hs_points"
+    private static let directoryKey = "v2_hs"
     
-    init(date: String, level: Int, accuracy: Double) {
+    init(date: String, level: Int, points: Int) {
         self.date = date
         self.level = level
-        self.accuracy = accuracy
+        self.points = points
     }
     
     required convenience init?(coder aDecoder: NSCoder) {
         let date = aDecoder.decodeObject(forKey: Highscore.dateKey) as! String
         let level = aDecoder.decodeInteger(forKey: Highscore.levelKey)
-        let accuracy = aDecoder.decodeDouble(forKey: Highscore.accuracyKey)
-        self.init(date: date, level: level, accuracy: accuracy)
+        let points = aDecoder.decodeInteger(forKey: Highscore.pointsKey)
+        self.init(date: date, level: level, points: points)
     }
     
     func encode(with aCoder: NSCoder) {
         let date: String = self.date
         let level: Int = self.level
-        let accuracy: Double = self.accuracy
+        let points: Int = self.points
         aCoder.encode(date, forKey: Highscore.dateKey)
         aCoder.encode(level, forKey: Highscore.levelKey)
-        aCoder.encode(accuracy, forKey: Highscore.accuracyKey)
+        aCoder.encode(points, forKey: Highscore.pointsKey)
     }
     
     private func getUrl() -> URL {

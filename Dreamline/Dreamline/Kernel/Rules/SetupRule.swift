@@ -20,7 +20,7 @@ class SetupRule: Rule {
             return [.flowControlPhaseUpdate(phase: .begin),
                     .chunkSet(chunks: chunks),
                     .boardScrollSpeedUpdate(speed: state.board.scrollSpeed * 1.1), // @TEMP
-                    .healthReset,
+                    //.healthReset,
                     .healthInvincibleUpdate(invincible: false),
                     .timePauseUpdate(pause: false),
                     .boardReset]
@@ -32,7 +32,7 @@ class SetupRule: Rule {
                 self.eventFlag = true
                 return [.roundOver(didWin: state.health.hitPoints != 0,
                                    level: state.chunk.level,
-                                   accuracy: Double(state.health.barriersPassed) / Double(state.health.totalBarriers)),
+                                   score: state.health.barriersPassed),
                         .chunkLevelUpdate(level: state.chunk.level + 1)]    // @TEMP
             } else {
                 return []

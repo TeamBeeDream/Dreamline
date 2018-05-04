@@ -47,5 +47,5 @@ enum KernelEvent {
     case chunkSet(chunks: [Chunk])
     case chunkLevelUpdate(level: Int)
     case settingsMuteUpdate(mute: Bool)
-    case roundOver(didWin: Bool, level: Int, accuracy: Double)
+    case roundOver(didWin: Bool, level: Int, score: Int)
 }

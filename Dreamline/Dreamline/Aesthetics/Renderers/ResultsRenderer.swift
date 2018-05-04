@@ -17,7 +17,7 @@ class ResultsRenderer: Observer {
     
     private var delegate: EventDelegate!
     
-    private let storageKey = "v1_highscores"
+    private let storageKey = "v2_highscores"
     
     // MARK: Init
     
@@ -45,18 +45,18 @@ class ResultsRenderer: Observer {
                     SKAction.fadeIn(withDuration: 0.0)]))
             }
             
-        case .roundOver(let didWin, let level, let accuracy):
+        case .roundOver(let didWin, let level, let score):
             if didWin {
-                self.drawWin(level: level, accuracy: accuracy)
+                self.drawWin(level: level, points: score)
             } else {
-                self.drawLose(level: level, accuracy: accuracy)
+                self.drawLose(level: level, points: score)
             }
             
         default: break
         }
     }
     
-    private func drawWin(level: Int, accuracy: Double) {
+    private func drawWin(level: Int, points: Int) {
         var layout = Layout.autoLayout(fullLength: self.scene.frame.height, segments: 12)
         layout.positions.reverse()
         
@@ -76,11 +76,10 @@ class ResultsRenderer: Observer {
         self.nodeContainer.addChild(completeLabel)
         
         // "Accuracy: X%"
-        let roundedAccuracy = Int(accuracy.isNaN ? 0 : accuracy * 100)
-        let accuracyLabel = self.normalLabel(text: "Accuracy: \(roundedAccuracy)%")
-        accuracyLabel.fontColor = .red
-        accuracyLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[5])
-        self.nodeContainer.addChild(accuracyLabel)
+        let scoreLabel = self.normalLabel(text: "Score: \(points)")
+        scoreLabel.fontColor = .red
+        scoreLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[5])
+        self.nodeContainer.addChild(scoreLabel)
         
         // "tap to continue"
         let continueLabel = self.normalLabel(text: "tap to continue")
@@ -97,7 +96,7 @@ class ResultsRenderer: Observer {
         self.nodeContainer.addChild(continueButton)
     }
     
-    private func drawLose(level: Int, accuracy: Double) {
+    private func drawLose(level: Int, points: Int) {
         var layout = Layout.autoLayout(fullLength: self.scene.frame.height, segments: 12)
         layout.positions.reverse()
         
@@ -107,19 +106,18 @@ class ResultsRenderer: Observer {
         self.nodeContainer.addChild(label)
         
         // Highscores
-        let newHighscore = self.createHighscore(level: level, accuracy: accuracy)
+        let newHighscore = self.createHighscore(level: level, points: points)
         var highscores = self.loadHighscores()
         highscores.append(newHighscore)
         
-        highscores = highscores.sorted(by: { $0.level > $1.level })
+        highscores = highscores.sorted(by: { $0.level > $1.level || $0.points > $0.points })
         // @TODO: Limit # of highscores
         self.saveHighscores(highscores: highscores)
         
         for i in 0...min(highscores.count-1, 4) {
             let highscore = highscores[i]
-            let roundedAccuracy = Int(accuracy.isNaN ? 0 : highscore.accuracy * 100)
-            let scoreLabel = self.normalLabel(text: "\(highscore.date) - Level \(highscore.level) - Accuracy: \(roundedAccuracy)%")
-            if highscore.level == newHighscore.level && highscore.accuracy == newHighscore.accuracy && highscore.date == newHighscore.date { scoreLabel.fontColor = .yellow }
+            let scoreLabel = self.normalLabel(text: "\(highscore.date) - Level \(highscore.level) - \(highscore.points) Points")
+            if highscore.level == newHighscore.level && highscore.points == newHighscore.points && highscore.date == newHighscore.date { scoreLabel.fontColor = .yellow }
             scoreLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[3 + i])
             self.nodeContainer.addChild(scoreLabel)
         }
@@ -153,13 +151,13 @@ class ResultsRenderer: Observer {
         return label
     }
     
-    private func createHighscore(level: Int, accuracy: Double) -> Highscore {
+    private func createHighscore(level: Int, points: Int) -> Highscore {
         let date = Date()
         let calendar = Calendar.current
         let components = calendar.dateComponents([.month, .day], from: date)
         
         let dateString = "\(components.month ?? 1)/\(components.day ?? 1)"
-        return Highscore(date: dateString, level: level, accuracy: accuracy.isNaN ? 0.0 : accuracy)
+        return Highscore(date: dateString, level: level, points: points)
     }
     
     private func loadHighscores() -> [Highscore] {

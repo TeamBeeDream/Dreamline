@@ -17,7 +17,7 @@ struct HealthState {
 
 extension HealthState {
     static func new() -> HealthState {
-        return HealthState(hitPoints: 0,
+        return HealthState(hitPoints: 3,
                            invincible: false,
                            totalBarriers: 0,
                            barriersPassed: 0)

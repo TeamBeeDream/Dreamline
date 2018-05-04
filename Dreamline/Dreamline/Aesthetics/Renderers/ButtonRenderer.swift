@@ -90,8 +90,6 @@ class ButtonRenderer: Observer {
             self.buttonContainer.alpha = 0.0
         case .play:
             self.buttonContainer.alpha = 1.0
-        default:
-            break
         }
     }
 }

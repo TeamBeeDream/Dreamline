@@ -54,6 +54,7 @@ class CountdownRenderer: Observer {
     }
     
     private func countdown() {
+        self.label.removeAllActions()
         self.label.run(
             SKAction.sequence([
                 // Wait for transition

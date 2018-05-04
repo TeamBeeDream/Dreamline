@@ -11,6 +11,7 @@ import SpriteKit
 class ButtonNode: SKSpriteNode {
     
     var action: (() -> Void)?
+    var soundEnabled = true
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.pressButton()
@@ -18,6 +19,9 @@ class ButtonNode: SKSpriteNode {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.action?()
+        if self.soundEnabled {
+            self.scene?.run(Resources.shared.getSound(.menuClick))
+        }
         self.releaseButton()
     }
     

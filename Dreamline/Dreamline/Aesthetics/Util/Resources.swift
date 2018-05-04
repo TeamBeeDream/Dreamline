@@ -39,6 +39,8 @@ enum Sound {
     case thresholdChunkCross
     case playerMoveAway
     case playerMoveBack
+    case menuClick
+    case highscore
 }
 
 class Resources {
@@ -170,6 +172,8 @@ extension Resources {
         self.sounds[.thresholdChunkCross] = self.loadSound("threshold_cross_chunk_v2.mp3")
         self.sounds[.playerMoveAway] = self.loadSound("player_move_v3.mp3")
         self.sounds[.playerMoveBack] = self.loadSound("player_move_2_v2.mp3")
+        self.sounds[.menuClick] = self.loadSound("menu_click.mp3")
+        self.sounds[.highscore] = self.loadSound("high_score.mp3")
     }
 
     private func loadSound(_ fileName: String) -> SKAction {

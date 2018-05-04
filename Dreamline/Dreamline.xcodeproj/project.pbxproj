@@ -25,6 +25,7 @@
 		6950D48C209B83AD00B0DFCC /* player_move_2_v2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6950D48B209B83AD00B0DFCC /* player_move_2_v2.mp3 */; };
 		6950D48E209B8EC000B0DFCC /* ScrollingCloudNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D48D209B8EC000B0DFCC /* ScrollingCloudNode.swift */; };
 		6950D490209C0EBE00B0DFCC /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D48F209C0EBE00B0DFCC /* Colors.swift */; };
+		6950D494209C1EDE00B0DFCC /* HealthNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D493209C1EDE00B0DFCC /* HealthNode.swift */; };
 		695619222098BAB500A7E822 /* ScrollTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 695619202098BAB500A7E822 /* ScrollTexture.fsh */; };
 		695619232098BAB500A7E822 /* TiledTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 695619212098BAB500A7E822 /* TiledTexture.fsh */; };
 		695619282098BB0B00A7E822 /* SkyRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695619272098BB0B00A7E822 /* SkyRenderer.swift */; };
@@ -127,6 +128,7 @@
 		6950D48B209B83AD00B0DFCC /* player_move_2_v2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = player_move_2_v2.mp3; sourceTree = "<group>"; };
 		6950D48D209B8EC000B0DFCC /* ScrollingCloudNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingCloudNode.swift; sourceTree = "<group>"; };
 		6950D48F209C0EBE00B0DFCC /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		6950D493209C1EDE00B0DFCC /* HealthNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthNode.swift; sourceTree = "<group>"; };
 		695619202098BAB500A7E822 /* ScrollTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ScrollTexture.fsh; sourceTree = "<group>"; };
 		695619212098BAB500A7E822 /* TiledTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TiledTexture.fsh; sourceTree = "<group>"; };
 		695619272098BB0B00A7E822 /* SkyRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyRenderer.swift; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 				6956192E2098C2D000A7E822 /* PlayerNode.swift */,
 				6950D467209A0D0800B0DFCC /* HoppingLabelNode.swift */,
 				6950D48D209B8EC000B0DFCC /* ScrollingCloudNode.swift */,
+				6950D493209C1EDE00B0DFCC /* HealthNode.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -866,6 +869,7 @@
 				69C5A887209627AA0034C9E6 /* LabelButtonNode.swift in Sources */,
 				69C5A85A2093BB2D0034C9E6 /* EntityRenderer.swift in Sources */,
 				6956192D2098C15F00A7E822 /* Actions.swift in Sources */,
+				6950D494209C1EDE00B0DFCC /* HealthNode.swift in Sources */,
 				6950D48E209B8EC000B0DFCC /* ScrollingCloudNode.swift in Sources */,
 				69AB5E92204F251700093B33 /* Math.swift in Sources */,
 				695619312098C49A00A7E822 /* Layout.swift in Sources */,

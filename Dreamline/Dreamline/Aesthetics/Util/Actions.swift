@@ -52,4 +52,10 @@ class Actions {
             self.tint(color: .white, at: 1.0, duration: firstPart),
             self.tint(color: .white, at: 0.0, duration: secondPart)])
     }
+    
+    static func pulse(duration: Double) -> SKAction {
+        return SKAction.repeatForever(SKAction.sequence([
+            SKAction.scale(to: 0.7, duration: duration * 0.8),
+            SKAction.scale(to: 1.0, duration: duration * 0.2)]))
+    }
 }

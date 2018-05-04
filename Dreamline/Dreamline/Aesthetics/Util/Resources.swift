@@ -22,6 +22,7 @@ enum Texture {
     case cloudC
     case cloudD
     case cloudE
+    case heart
 }
 
 enum Music {
@@ -119,6 +120,7 @@ extension Resources {
     
     private func addPlayerTexture() {
         self.textures[.player] = SKTexture(imageNamed: "PaperAirplaneB")
+        self.textures[.heart] = SKTexture(imageNamed: "Heart")
     }
     
     private func addSkyTexture() {

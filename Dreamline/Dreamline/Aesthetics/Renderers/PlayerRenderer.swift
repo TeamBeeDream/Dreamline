@@ -14,6 +14,7 @@ class PlayerRenderer: Observer {
     
     private var scene: SKScene!
     private var player: PlayerNode!
+    private var health: HealthNode!
     private var yPos: Double = 0.0
     
     // MARK: Init
@@ -35,6 +36,11 @@ class PlayerRenderer: Observer {
         player.zPosition = 10 // @HARDCODED
         self.scene.addChild(player)
         self.player = player
+        
+        let health = HealthNode.make(maxUnits: 3, size: width * 0.3)
+        health.zPosition = 10 // @HARDCODED
+        self.scene.addChild(health)
+        self.health = health
     }
     
     func observe(event: KernelEvent) {
@@ -43,6 +49,12 @@ class PlayerRenderer: Observer {
             self.update(position: distanceFromOrigin)
         case .healthInvincibleUpdate(let invincible):
             self.handleInvincibleUpdate(invincible: invincible)
+        case .healthHitPointUpdate(let increment):
+            self.health.increment(increment)
+        case .healthHitPointSet(let amount):
+            self.health.set(amount)
+        case .flowControlPhaseUpdate(let phase):
+            self.handlePhase(phase)
         default: break
         }
     }
@@ -60,6 +72,9 @@ class PlayerRenderer: Observer {
         
         let rotation = lerp(position, min: 0.0, max: 0.2)
         self.player.zRotation = CGFloat(rotation)
+        
+        // health
+        self.health.position = CGPoint(x: pos.x, y: pos.y)
     }
     
     private func playerPoint(offset: Double) -> CGPoint {
@@ -79,5 +94,9 @@ class PlayerRenderer: Observer {
         } else {
             self.player.stopBlinking()
         }
+    }
+    
+    private func handlePhase(_ phase: FlowControlPhase) {
+        
     }
 }

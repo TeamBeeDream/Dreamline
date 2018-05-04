@@ -115,7 +115,7 @@ extension Resources {
     }
     
     private func addPlayerTexture() {
-        self.textures[.player] = SKTexture(imageNamed: "PaperAirplaneA")
+        self.textures[.player] = SKTexture(imageNamed: "PaperAirplaneB")
     }
     
     private func addSkyTexture() {

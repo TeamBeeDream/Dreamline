@@ -40,8 +40,7 @@ class PlayerRenderer: Observer {
     func observe(event: KernelEvent) {
         switch event {
         case .positionUpdate(let distanceFromOrigin):
-            let pos = self.playerPoint(offset: distanceFromOrigin)
-            self.player.position = pos
+            self.update(position: distanceFromOrigin)
         case .healthInvincibleUpdate(let invincible):
             self.handleInvincibleUpdate(invincible: invincible)
         default: break
@@ -49,6 +48,19 @@ class PlayerRenderer: Observer {
     }
     
     // MARK: Private Properties
+    
+    private func update(position: Double) {
+        let pos = self.playerPoint(offset: position)
+        self.player.position = pos
+        
+        let t = abs(position) // [0, 1]
+        
+        let scaleX = lerp(t, min: 1.2, max: 0.6)
+        self.player.xScale = CGFloat(scaleX)
+        
+        let rotation = lerp(position, min: 0.0, max: 0.2)
+        self.player.zRotation = CGFloat(rotation)
+    }
     
     private func playerPoint(offset: Double) -> CGPoint {
         let midX = self.scene.frame.midX

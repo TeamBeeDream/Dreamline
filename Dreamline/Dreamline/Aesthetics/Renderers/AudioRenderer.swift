@@ -15,6 +15,7 @@ class AudioRenderer: Observer {
     private var backgroundMusic: SKAudioNode!
     
     private var lane: Int = 0
+    private var muted: Bool = false
     
     static func make(scene: SKScene) -> AudioRenderer {
         let instance = AudioRenderer()
@@ -74,9 +75,12 @@ class AudioRenderer: Observer {
     private func handleMuteUpdate(mute: Bool) {
         let volume = Float(mute ? 0.0 : 1.0)
         self.backgroundMusic.run(SKAction.changeVolume(to: volume, duration: 0.5))
+        self.muted = mute
     }
     
     private func playSound(_ player: SKAction) {
-        self.scene.run(player)
+        if !self.muted {
+            self.scene.run(player)
+        }
     }
 }

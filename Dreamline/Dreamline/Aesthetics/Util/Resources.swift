@@ -37,6 +37,7 @@ enum Sound {
     case barrierPass
     case thresholdRoundCross
     case thresholdChunkCross
+    case thresholdRecovery
     case playerMoveAway
     case playerMoveBack
     case menuClick
@@ -98,9 +99,20 @@ extension Resources {
                           y: 0.0,
                           width: frame.width / 3.0,
                           height: 4.0)
-        let shape = SKShapeNode(rect: rect)
-        shape.lineWidth = 0.0
-        shape.fillColor = .darkText
+        let fill = SKShapeNode(rect: rect)
+        fill.lineWidth = 0.0
+        fill.zPosition = 2
+        let shadow = SKShapeNode(rect: rect)
+        shadow.lineWidth = 0.0
+        shadow.position.y = -1.0
+        shadow.zPosition = 1
+        
+        let shape = SKNode()
+        shape.addChild(shadow)
+        shape.addChild(fill)
+        
+        fill.fillColor = Colors.gray
+        shadow.fillColor = Colors.purple
         self.textures[.barrier] = SKView().texture(from: shape)!
     }
     
@@ -108,17 +120,30 @@ extension Resources {
         let rect = CGRect(x: 0.0,
                           y: 0.0,
                           width: frame.width,
-                          height: 8.0)
-        let shape = SKShapeNode(rect: rect)
-        shape.lineWidth = 0.0
+                          height: 6.0)
+        let fill = SKShapeNode(rect: rect)
+        fill.lineWidth = 0.0
+        fill.zPosition = 2
         
-        shape.fillColor = Colors.green
+        let shadow = SKShapeNode(rect: rect)
+        shadow.lineWidth = 0.0
+        shadow.position.y = -1.0
+        shadow.zPosition = 1
+        
+        let shape = SKNode()
+        shape.addChild(fill)
+        shape.addChild(shadow)
+        
+        fill.fillColor = Colors.yellow
+        shadow.fillColor = Colors.purple
         self.textures[.thresholdChunk] = SKView().texture(from: shape)!
         
-        shape.fillColor = Colors.red
+        fill.fillColor = Colors.red
+        shadow.fillColor = Colors.orange
         self.textures[.thresholdRound] = SKView().texture(from: shape)!
         
-        shape.fillColor = .white
+        fill.fillColor = .white
+        shadow.fillColor = Colors.pink
         self.textures[.thresholdRecovery] = SKView().texture(from: shape)!
     }
     
@@ -146,6 +171,7 @@ extension Resources {
         let playLabel = SKLabelNode(text: "PLAY")
         playLabel.fontColor = Colors.gray
         playLabel.fontSize = 36
+        playLabel.fontName = "Avenir-Medium"
         self.textures[.playButton] = SKView().texture(from: playLabel)!
     }
 }
@@ -154,7 +180,7 @@ extension Resources {
 extension Resources {
     private func addMusic() {
         self.music[.menu] = self.loadMusic("cloud_theme_menu_v3")
-        self.music[.main] = self.loadMusic("Dreamline_cloud_theme")
+        self.music[.main] = self.loadMusic("cloud_course_theme")
     }
     
     private func loadMusic(_ fileName: String) -> SKAudioNode {
@@ -170,6 +196,7 @@ extension Resources {
         self.sounds[.barrierPass] = self.loadSound("barrier_pass_v2.mp3")
         self.sounds[.thresholdRoundCross] = self.loadSound("threshold_cross_v2.mp3")
         self.sounds[.thresholdChunkCross] = self.loadSound("threshold_cross_chunk_v2.mp3")
+        self.sounds[.thresholdRecovery] = self.loadSound("recovery_v5.mp3")
         self.sounds[.playerMoveAway] = self.loadSound("player_move_v3.mp3")
         self.sounds[.playerMoveBack] = self.loadSound("player_move_2_v2.mp3")
         self.sounds[.menuClick] = self.loadSound("menu_click.mp3")

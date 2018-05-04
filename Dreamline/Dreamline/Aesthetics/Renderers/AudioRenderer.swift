@@ -58,7 +58,7 @@ class AudioRenderer: Observer {
             case .roundEnd:
                 self.playSound(Resources.shared.getSound(.thresholdRoundCross))
             case .recovery:
-                break // @TODO
+                self.playSound(Resources.shared.getSound(.thresholdRecovery))
             }
         case .barrier:
             if state == .crossed {

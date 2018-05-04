@@ -48,8 +48,9 @@ class PlayerRenderer: Observer {
         
         self.scoreValue = 0
         let score = SKLabelNode(text: "\(self.scoreValue)")
-        score.fontColor = .darkText
-        score.fontSize = 24
+        score.fontName = "Avenir-Medium"
+        score.fontColor = Colors.gray
+        score.fontSize = 30
         score.zPosition = 10 // @HARDCODED
         score.position = CGPoint(x: self.scene.frame.midX,
                                  y: self.scene.frame.maxY - self.scene.frame.height * 0.1)

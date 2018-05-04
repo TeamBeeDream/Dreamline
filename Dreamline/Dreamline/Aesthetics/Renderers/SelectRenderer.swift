@@ -44,10 +44,12 @@ class SelectRenderer: Observer {
         
         let label = SKLabelNode(text: "Round Select")
         label.fontColor = Colors.gray
+        label.fontName = "Avenir-Light"
         label.fontSize = 30
         label.position = CGPoint(x: self.scene.frame.midX, y: layoutY.positions[3])
         
         let levelLabel = SKLabelNode(text: "\(self.level)")
+        levelLabel.fontName = "Avenir-Light"
         levelLabel.fontColor = Colors.gray
         levelLabel.fontSize = 48
         levelLabel.verticalAlignmentMode = .center
@@ -55,7 +57,7 @@ class SelectRenderer: Observer {
         self.levelLabel = levelLabel
         
         let arrowTexture = Resources.shared.getTexture(.arrowButton)
-        let arrowSize = CGSize(width: layoutX.sublength * 0.35, height: layoutX.sublength * 0.35)
+        let arrowSize = CGSize(width: layoutX.sublength * 0.25, height: layoutX.sublength * 0.25)
         
         self.leftArrow = self.makeButton(texture: arrowTexture, size: arrowSize, xScale: +1)
         self.leftArrow.action = { self.changeLevel(increment: -1) }

@@ -109,7 +109,11 @@ class ThresholdCollisionDelegate: CollisionDelegate {
                     .flowControlPhaseUpdate(phase: .results),
                 .healthInvincibleUpdate(invincible: false)]
             case .recovery:
-                return [.healthInvincibleUpdate(invincible: false)]
+                return [
+                    .boardEntityStateUpdate(id: entity.id,
+                                            type: entity.type,
+                                            state: .crossed),
+                        .healthInvincibleUpdate(invincible: false)]
             }
         default:
             return []

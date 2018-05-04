@@ -29,11 +29,11 @@ class TitleScene: SKScene {
     }
     
     private func addTitle() {
-        let title = HoppingLabelNode.make(text: "DREAMLINE",
+        let title = HoppingLabelNode.make(text: "CLOUD COURSE",
                                           font: "ArialRoundedMTBold",
-                                          width: self.frame.width * 0.8,
+                                          width: self.frame.width * 0.95,
                                           color: Colors.red,
-                                          secondaryColor: UIColor(red: 255.0/255.0, green: 135.0/255.0, blue: 156.0/255.0, alpha: 1.0))
+                                          secondaryColor: Colors.orange)
         title.position = CGPoint(x: self.frame.midX, y: self.frame.midY + self.frame.height * 0.2)
         title.zPosition = 100
         self.addChild(title)
@@ -70,9 +70,10 @@ class TitleScene: SKScene {
     }
     
     private func addCopyright() {
-        let label = SKLabelNode(text: "(c) 2018 Team BeeDream")
+        let label = SKLabelNode(text: "© 2018 Team BeeDream")
         label.fontSize = 18
-        label.fontColor = .darkText
+        label.fontName = "Avenir-Light"
+        label.fontColor = Colors.gray
         label.zPosition = 100
         label.position = CGPoint(x: self.frame.midX, y: self.frame.minY + 15.0)
         label.verticalAlignmentMode = .bottom

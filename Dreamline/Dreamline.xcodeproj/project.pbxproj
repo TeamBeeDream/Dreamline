@@ -33,7 +33,6 @@
 		6956192F2098C2D000A7E822 /* PlayerNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6956192E2098C2D000A7E822 /* PlayerNode.swift */; };
 		695619312098C49A00A7E822 /* Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695619302098C49A00A7E822 /* Layout.swift */; };
 		695619332098E32400A7E822 /* AudioRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695619322098E32400A7E822 /* AudioRenderer.swift */; };
-		695619352098E36D00A7E822 /* Dreamline_cloud_theme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 695619342098E36D00A7E822 /* Dreamline_cloud_theme.mp3 */; };
 		695619372098E70C00A7E822 /* SettingsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695619362098E70C00A7E822 /* SettingsState.swift */; };
 		6956193A2098E74100A7E822 /* SettingsMutator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695619392098E74100A7E822 /* SettingsMutator.swift */; };
 		69711D05207E7D4600B7309C /* NodeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69711D04207E7D4600B7309C /* NodeCache.swift */; };
@@ -47,11 +46,11 @@
 		699FC57C204E053600DB09B4 /* DreamlineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC57B204E053600DB09B4 /* DreamlineUITests.swift */; };
 		69A3082E209CA87A00FC23F8 /* ButtonRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A3082D209CA87A00FC23F8 /* ButtonRenderer.swift */; };
 		69A30830209CB1E400FC23F8 /* CountdownRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A3082F209CB1E400FC23F8 /* CountdownRenderer.swift */; };
-		69A30838209CCDF300FC23F8 /* barrier_pass_B6.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69A30837209CCDF300FC23F8 /* barrier_pass_B6.mp3 */; };
 		69A3083A209CD14600FC23F8 /* SelectRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A30839209CD14600FC23F8 /* SelectRenderer.swift */; };
 		69A3083C209CDBA800FC23F8 /* menu_click.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69A3083B209CDBA700FC23F8 /* menu_click.mp3 */; };
 		69A3083E209CDBAB00FC23F8 /* high_score.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69A3083D209CDBAB00FC23F8 /* high_score.mp3 */; };
-		69A30840209CDFCD00FC23F8 /* recovery.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69A3083F209CDFCD00FC23F8 /* recovery.mp3 */; };
+		69A30846209CE32100FC23F8 /* cloud_course_theme.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69A30845209CE32100FC23F8 /* cloud_course_theme.mp3 */; };
+		69A3084A209CE68E00FC23F8 /* recovery_v5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69A30849209CE68E00FC23F8 /* recovery_v5.mp3 */; };
 		69AB5E92204F251700093B33 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E91204F251700093B33 /* Math.swift */; };
 		69C5A827209382AC0034C9E6 /* KernelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A826209382AC0034C9E6 /* KernelState.swift */; };
 		69C5A82A209383300034C9E6 /* TimeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A829209383300034C9E6 /* TimeState.swift */; };
@@ -143,7 +142,6 @@
 		6956192E2098C2D000A7E822 /* PlayerNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerNode.swift; sourceTree = "<group>"; };
 		695619302098C49A00A7E822 /* Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Layout.swift; sourceTree = "<group>"; };
 		695619322098E32400A7E822 /* AudioRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRenderer.swift; sourceTree = "<group>"; };
-		695619342098E36D00A7E822 /* Dreamline_cloud_theme.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Dreamline_cloud_theme.mp3; sourceTree = "<group>"; };
 		695619362098E70C00A7E822 /* SettingsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsState.swift; sourceTree = "<group>"; };
 		695619392098E74100A7E822 /* SettingsMutator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMutator.swift; sourceTree = "<group>"; };
 		69711D04207E7D4600B7309C /* NodeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCache.swift; sourceTree = "<group>"; };
@@ -163,11 +161,11 @@
 		699FC57D204E053600DB09B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69A3082D209CA87A00FC23F8 /* ButtonRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonRenderer.swift; sourceTree = "<group>"; };
 		69A3082F209CB1E400FC23F8 /* CountdownRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownRenderer.swift; sourceTree = "<group>"; };
-		69A30837209CCDF300FC23F8 /* barrier_pass_B6.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = barrier_pass_B6.mp3; sourceTree = "<group>"; };
 		69A30839209CD14600FC23F8 /* SelectRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRenderer.swift; sourceTree = "<group>"; };
 		69A3083B209CDBA700FC23F8 /* menu_click.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = menu_click.mp3; sourceTree = "<group>"; };
 		69A3083D209CDBAB00FC23F8 /* high_score.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = high_score.mp3; sourceTree = "<group>"; };
-		69A3083F209CDFCD00FC23F8 /* recovery.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = recovery.mp3; sourceTree = "<group>"; };
+		69A30845209CE32100FC23F8 /* cloud_course_theme.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cloud_course_theme.mp3; sourceTree = "<group>"; };
+		69A30849209CE68E00FC23F8 /* recovery_v5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = recovery_v5.mp3; sourceTree = "<group>"; };
 		69AB5E91204F251700093B33 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		69C5A826209382AC0034C9E6 /* KernelState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernelState.swift; sourceTree = "<group>"; };
 		69C5A829209383300034C9E6 /* TimeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeState.swift; sourceTree = "<group>"; };
@@ -256,17 +254,16 @@
 		693DF52D205997E0002C4821 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				69A3083F209CDFCD00FC23F8 /* recovery.mp3 */,
+				69A30845209CE32100FC23F8 /* cloud_course_theme.mp3 */,
+				69A30849209CE68E00FC23F8 /* recovery_v5.mp3 */,
 				69A3083D209CDBAB00FC23F8 /* high_score.mp3 */,
 				69A3083B209CDBA700FC23F8 /* menu_click.mp3 */,
-				69A30837209CCDF300FC23F8 /* barrier_pass_B6.mp3 */,
 				6950D483209B6E4200B0DFCC /* barrier_pass_v2.mp3 */,
 				6950D481209B6E2B00B0DFCC /* barrier_cross_v4.mp3 */,
 				6950D47B209B5E1D00B0DFCC /* cloud_theme_menu_v3.mp3 */,
 				6950D485209B6E9800B0DFCC /* player_move_v3.mp3 */,
 				6950D489209B6F0B00B0DFCC /* threshold_cross_chunk_v2.mp3 */,
 				6950D48B209B83AD00B0DFCC /* player_move_2_v2.mp3 */,
-				695619342098E36D00A7E822 /* Dreamline_cloud_theme.mp3 */,
 				6950D487209B6EF000B0DFCC /* threshold_cross_v2.mp3 */,
 			);
 			path = Resources;
@@ -662,15 +659,14 @@
 				6950D482209B6E2B00B0DFCC /* barrier_cross_v4.mp3 in Resources */,
 				69A3083C209CDBA800FC23F8 /* menu_click.mp3 in Resources */,
 				6950D47C209B5E1D00B0DFCC /* cloud_theme_menu_v3.mp3 in Resources */,
-				695619352098E36D00A7E822 /* Dreamline_cloud_theme.mp3 in Resources */,
-				69A30840209CDFCD00FC23F8 /* recovery.mp3 in Resources */,
 				6950D484209B6E4200B0DFCC /* barrier_pass_v2.mp3 in Resources */,
+				69A3084A209CE68E00FC23F8 /* recovery_v5.mp3 in Resources */,
 				6950D48C209B83AD00B0DFCC /* player_move_2_v2.mp3 in Resources */,
 				6950D48A209B6F0B00B0DFCC /* threshold_cross_chunk_v2.mp3 in Resources */,
 				695619222098BAB500A7E822 /* ScrollTexture.fsh in Resources */,
 				6950D486209B6E9900B0DFCC /* player_move_v3.mp3 in Resources */,
-				69A30838209CCDF300FC23F8 /* barrier_pass_B6.mp3 in Resources */,
 				69A3083E209CDBAB00FC23F8 /* high_score.mp3 in Resources */,
+				69A30846209CE32100FC23F8 /* cloud_course_theme.mp3 in Resources */,
 				6950D488209B6EF000B0DFCC /* threshold_cross_v2.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

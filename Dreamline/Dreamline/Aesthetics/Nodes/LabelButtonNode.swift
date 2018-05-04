@@ -26,7 +26,7 @@ class LabelButtonNode: ButtonNode {
     
     private func addLabel(_ text: String) {
         let label = SKLabelNode(text: text)
-        label.fontColor = .darkText
+        label.fontColor = Colors.gray
         label.verticalAlignmentMode = .center
         self.addChild(label)
         self.label = label

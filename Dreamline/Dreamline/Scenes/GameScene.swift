@@ -43,7 +43,7 @@ class GameScene: SKScene, EventDelegate {
     }
     
     override func didMove(to view: SKView) {
-        self.backgroundColor = .darkText
+        //self.backgroundColor = .darkText
         
         // @TEMP
         //self.kernel.addEvent(event: .settingsMuteUpdate(mute: true))

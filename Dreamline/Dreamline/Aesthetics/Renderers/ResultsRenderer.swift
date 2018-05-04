@@ -69,20 +69,22 @@ class ResultsRenderer: Observer {
         let completeLabel = HoppingLabelNode.make(text: "COMPLETE",
                                                   font: "Avenir-Medium",
                                                   width: self.scene.frame.width * 0.8,
-                                                  color: .yellow,
+                                                  color: Colors.yellow,
                                                   secondaryColor: .gray)
         completeLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[3])
         completeLabel.zPosition = 40
         self.nodeContainer.addChild(completeLabel)
         
         // "Accuracy: X%"
-        let scoreLabel = self.normalLabel(text: "Score: \(points)")
+        let scoreLabel = self.normalLabel(text: "\(points) Points")
         scoreLabel.fontColor = Colors.red
+        scoreLabel.fontSize = 30
         scoreLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[5])
+        scoreLabel.run(Actions.fadeLoop(duration: 2.0))
         self.nodeContainer.addChild(scoreLabel)
         
         // "tap to continue"
-        let continueLabel = self.normalLabel(text: "tap to continue")
+        let continueLabel = self.normalLabel(text: "Tap to continue")
         continueLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[10])
         continueLabel.run(Actions.fadeLoop(duration: 1.0))
         self.nodeContainer.addChild(continueLabel)
@@ -137,7 +139,7 @@ class ResultsRenderer: Observer {
             
             let scoreLabel = self.alignedLabel(round: highscore.level,
                                                score: highscore.points,
-                                               color: same ? .yellow : .white)
+                                               color: same ? Colors.yellow : .white)
             scoreLabel.position = CGPoint(x: 0.0, y: layout.positions[4 + i])
             scoreLabel.alpha = 0.0
             scoreLabel.zPosition = 30
@@ -194,7 +196,7 @@ class ResultsRenderer: Observer {
     
     private func newHSLabel() -> SKLabelNode {
         let label = self.defaultLabel(text: "New Highscore!")
-        label.fontColor = .yellow
+        label.fontColor = Colors.yellow
         label.fontSize = 20
         label.run(Actions.blink(duration: 0.2, count: 10))
         return label
@@ -228,7 +230,7 @@ class ResultsRenderer: Observer {
         roundLabel.horizontalAlignmentMode = .left
         roundLabel.position = CGPoint(x: self.scene.frame.minX + margin, y: 0)
         
-        let scoreLabel = self.normalLabel(text: "\(score) Points")
+        let scoreLabel = self.normalLabel(text: "\(score) \(score == 1 ? "Point" : "Points")")
         scoreLabel.fontColor = color
         scoreLabel.horizontalAlignmentMode = .right
         scoreLabel.position = CGPoint(x: self.scene.frame.maxX - margin, y: 0)

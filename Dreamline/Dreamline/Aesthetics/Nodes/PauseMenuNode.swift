@@ -14,6 +14,8 @@ class PauseMenuNode: SKNode {
     var menuButton: ButtonNode!
     var muteButton: LabelButtonNode!
     
+    private var container: SKNode!
+    
     static func make(rect: CGRect) -> PauseMenuNode {
         let instance = PauseMenuNode()
         instance.addButtons(rect: rect)
@@ -22,8 +24,14 @@ class PauseMenuNode: SKNode {
     }
     
     private func addButtons(rect: CGRect) {
+        self.container = SKNode()
+        
+        let bg = SKSpriteNode(color: Colors.pink, size: rect.size)
+        bg.position = CGPoint(x: rect.midX, y: rect.midY)
+        self.container.addChild(bg)
+        
         let layout = Layout.autoLayout(fullLength: rect.height, segments: 3)
-        let buttonSize = CGSize(width: rect.width, height: layout.sublength)
+        let buttonSize = CGSize(width: rect.width, height: layout.sublength - 2)
         let buttonPositions = layout.positions
         
         let buttons = [self.addResumeButton(size: buttonSize),
@@ -32,31 +40,31 @@ class PauseMenuNode: SKNode {
         for (i, button) in buttons.enumerated() {
             let position = buttonPositions[i]
             button.position = CGPoint(x: rect.midX, y: rect.maxY - position)
-            self.addChild(button)
+            self.container.addChild(button)
         }
+        
+        self.addChild(self.container)
+        self.container.alpha = 0.65
     }
     
     private func addResumeButton(size: CGSize) -> ButtonNode {
-        let color = UIColor(red: 250.0/255.0, green: 202.0/255.0, blue: 102.0/255.0, alpha: 1.0)
         self.resumeButton = LabelButtonNode.make("Resume",
                                                 size: size,
-                                                color: color)
+                                                color: .white)
         return self.resumeButton
     }
     
     private func addMenuButton(size: CGSize) -> ButtonNode {
-        let color = UIColor(red: 247.0/255.0, green: 165.0/255.0, blue: 65.0/255.0, alpha: 1.0)
         self.menuButton = LabelButtonNode.make("Menu",
                                               size: size,
-                                              color: color)
+                                              color: .white)
         return self.menuButton
     }
     
     private func addMuteButton(size: CGSize) -> ButtonNode {
-        let color = UIColor(red: 244.0/255.0, green: 93.0/255.0, blue: 76.0/255.0, alpha: 1.0)
         self.muteButton = LabelButtonNode.make("Mute",
                                               size: size,
-                                              color: color)
+                                              color: .white)
         return self.muteButton
     }
     

@@ -36,6 +36,7 @@ class SetupRule: Rule {
                 return [.roundOver(didWin: state.health.hitPoints != 0,
                                    level: state.chunk.level,
                                    score: state.health.barriersPassed),
+                        .positionTargetUpdate(target: 0),
                         .chunkLevelUpdate(level: state.chunk.level + 1)]    // @TEMP
             } else {
                 return []

@@ -33,7 +33,7 @@ class CountdownRenderer: Observer {
     }
     
     private func makeLabel() {
-        let label = SKLabelNode(fontNamed: "Avenir-Medium")
+        let label = SKLabelNode(fontNamed: "ArialRoundedMTBold")
         label.fontSize = 36
         label.fontColor = Colors.gray
         label.position = CGPoint(x: self.scene.frame.midX, y: self.scene.frame.midY)

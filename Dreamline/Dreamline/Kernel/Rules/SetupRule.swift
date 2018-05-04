@@ -26,10 +26,11 @@ class SetupRule: Rule {
             return [
                 .timePauseUpdate(pause: false),
                 .boardReset,
-                .boardScrollSpeedUpdate(speed: state.board.scrollSpeed), // @TODO
                 .chunkSet(chunks: chunks),
                 .healthInvincibleUpdate(invincible: false),
                 .flowControlPhaseUpdate(phase: .play)]
+        case .play:
+            return [.boardScrollSpeedUpdate(speed: state.chunk.current!.speed)]
         case .results:
             if !self.eventFlag {
                 self.eventFlag = true
@@ -40,8 +41,6 @@ class SetupRule: Rule {
             } else {
                 return []
             }
-        default:
-            return []
         }
     }
 }

@@ -18,6 +18,7 @@ struct Chunk {
     var type: ChunkType
     var difficuly: Double
     var length: Int
+    var speed: Double
 }
 
 struct ChunkState {

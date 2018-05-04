@@ -11,8 +11,7 @@ import SpriteKit
 class SkyRenderer: Observer {
     
     private var scene: SKScene!
-    //private var skyNode: SkyNode!
-    private var matteNode: SKSpriteNode!
+    private var matteNode: SKNode!
     
     private let scrollSpeed = 0.2 // @HARDCODED
     private let skyColor = UIColor.cyan
@@ -49,9 +48,26 @@ class SkyRenderer: Observer {
     }
     
     private func addMatte(rect: CGRect) {
-        let matte = SKSpriteNode(color: .black, size: rect.size)
+        let color = UIColor(red: 43.0/255.0, green: 37.0/255.0, blue: 45.0/255.0, alpha: 1.0)
+        let texture = Resources.shared.getTexture(.tiledCloudBG)
+        let shader = SKShader(fileNamed: "TiledTexture.fsh")
+        shader.addUniform(SKUniform(name: "u_scale", float: 2.0))
+        shader.addUniform(SKUniform(name: "u_alpha", float: 0.1))
+        shader.addUniform(SKUniform(name: "u_scroll_speed_x", float: 0.2))
+        shader.addUniform(SKUniform(name: "u_scroll_speed_y", float: 0.1))
+        
+        let texturedMatte = SKSpriteNode(texture: texture, size: rect.size)
+        texturedMatte.zPosition = 0
+        texturedMatte.shader = shader
+        
+        let coloredMatte = SKSpriteNode(color: color, size: rect.size)
+        texturedMatte.zPosition = 1
+        
+        let matte = SKNode()
+        matte.addChild(coloredMatte)
+        matte.addChild(texturedMatte)
         matte.position = CGPoint(x: rect.midX, y: rect.midY)
-        matte.zPosition = 4 // @HARDCODED
+        matte.zPosition = 4
         matte.alpha = 0.0
         self.scene.addChild(matte)
         self.matteNode = matte

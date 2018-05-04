@@ -17,14 +17,18 @@ class ScrollingCloudNode: SKNode {
     static func make(texture: SKTexture,
                      size: CGFloat,
                      bounds: CGRect,
-                     moveTime: CGPoint) -> ScrollingCloudNode {
+                     moveTime: CGPoint,
+                     color: UIColor,
+                     blendFactor: CGFloat) -> ScrollingCloudNode {
         let instance = ScrollingCloudNode()
         instance.bounds = bounds
         instance.moveTime = moveTime
         instance.addSprite(texture: texture,
                            size: size,
                            bounds: bounds,
-                           position: instance.randomPoint(in: bounds))
+                           position: instance.randomPoint(in: bounds),
+                           color: color,
+                           blendFactor: blendFactor)
         instance.addAction()
         return instance
     }
@@ -32,10 +36,14 @@ class ScrollingCloudNode: SKNode {
     private func addSprite(texture: SKTexture,
                            size: CGFloat,
                            bounds: CGRect,
-                           position: CGPoint) {
+                           position: CGPoint,
+                           color: UIColor,
+                           blendFactor: CGFloat) {
         let sprite = SKSpriteNode(texture: texture, size: CGSize(width: size, height: size))
         sprite.position = position
         self.sprite = sprite
+        self.sprite.colorBlendFactor = blendFactor
+        self.sprite.color = color
         self.addChild(self.sprite)
     }
     
@@ -97,11 +105,17 @@ class ScrollingCloudClusterNode: SKNode {
             let moveTime = lerp(t, min: 15.0, max: 20.0) // @TODO: faster for vertical
             let time = CGPoint(x: vertical ? 0.0 : moveTime,
                                y: vertical ? moveTime: 0.0)
+            let blend = lerp(t, min: 0.0, max: 0.5)
             
             let cloud = ScrollingCloudNode.make(texture: texture,
                                                 size: size,
                                                 bounds: bounds,
-                                                moveTime: time)
+                                                moveTime: time,
+                                                color: UIColor(red: 154.0/255.0,
+                                                               green: 227.0/255.0,
+                                                               blue: 239.0/255.0,
+                                                               alpha: 1.0),
+                                                blendFactor: blend)
             cloud.zPosition = zPosition
             nodes.append(cloud)
         }

@@ -14,8 +14,9 @@ enum Texture {
     case thresholdChunk
     case thresholdRound
     case barrier
-    case tiledSky1
-    case tiledCloud1
+    case tiledSky1   // @REMOVE
+    case tiledCloud1 // @REMOVE
+    case tiledCloudBG
     case pauseButton
     case cloudA
     case cloudB
@@ -120,6 +121,7 @@ extension Resources {
     
     private func addSkyTexture() {
         self.textures[.tiledSky1] = SKTexture(imageNamed: "TiledSky1")
+        self.textures[.tiledCloudBG] = SKTexture(imageNamed: "TiledCloudBG")
     }
     
     private func addCloudTextures() {

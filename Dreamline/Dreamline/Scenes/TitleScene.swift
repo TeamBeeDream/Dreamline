@@ -35,7 +35,8 @@ class TitleScene: SKScene {
         let title = HoppingLabelNode.make(text: "DREAMLINE",
                                           font: "ArialRoundedMTBold",
                                           width: self.frame.width * 0.8,
-                                          color: UIColor(red: 247.0/255.0, green: 54.0/255.0, blue: 60.0/255.0, alpha: 1.0),
+                                          //color: UIColor(red: 247.0/255.0, green: 54.0/255.0, blue: 60.0/255.0, alpha: 1.0),
+            color: UIColor(red: 236.0/255.0, green: 11.0/255.0, blue: 67.0/255.0, alpha: 1.0),
                                           secondaryColor: UIColor(red: 255.0/255.0, green: 135.0/255.0, blue: 156.0/255.0, alpha: 1.0))
         title.position = CGPoint(x: self.frame.midX, y: self.frame.midY + self.frame.height * 0.2)
         title.zPosition = 100
@@ -77,7 +78,7 @@ class TitleScene: SKScene {
         label.fontSize = 18
         label.fontColor = .darkText
         label.zPosition = 100
-        label.position = CGPoint(x: self.frame.midX, y: self.frame.minY)
+        label.position = CGPoint(x: self.frame.midX, y: self.frame.minY + 15.0)
         label.verticalAlignmentMode = .bottom
         self.addChild(label)
     }

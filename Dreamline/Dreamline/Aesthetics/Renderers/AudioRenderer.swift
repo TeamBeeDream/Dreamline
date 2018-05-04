@@ -75,8 +75,6 @@ class AudioRenderer: Observer {
     }
     
     private func playSound(_ player: SKAction) {
-//        player.seek(to: kCMTimeZero)
-//        player.play()
         self.scene.run(player)
     }
 }

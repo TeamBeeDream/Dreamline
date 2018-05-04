@@ -37,7 +37,8 @@ class GameScene: SKScene, EventDelegate {
                               SkyRenderer.make(scene: instance),
                               AudioRenderer.make(scene: instance),
                               ButtonRenderer.make(scene: instance),
-                              CountdownRenderer.make(scene: instance, delegate: instance)]
+                              CountdownRenderer.make(scene: instance, delegate: instance),
+                              SelectRenderer.make(scene: instance, delegate: instance)]
         return instance
     }
     
@@ -72,7 +73,9 @@ class GameScene: SKScene, EventDelegate {
     
     private func getOutsideEvents() -> [KernelEvent] {
         var events = [KernelEvent]()
-        events.append(.positionTargetUpdate(target: self.input.getCurrent()))
+        if self.kernel.getState().flowControl.phase == .play { // @HACK
+            events.append(.positionTargetUpdate(target: self.input.getCurrent()))
+        }
         events.append(contentsOf: self.queuedEvents)
         self.queuedEvents.removeAll()
         return events

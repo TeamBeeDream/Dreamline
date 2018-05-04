@@ -48,6 +48,7 @@
 		69A3082E209CA87A00FC23F8 /* ButtonRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A3082D209CA87A00FC23F8 /* ButtonRenderer.swift */; };
 		69A30830209CB1E400FC23F8 /* CountdownRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A3082F209CB1E400FC23F8 /* CountdownRenderer.swift */; };
 		69A30838209CCDF300FC23F8 /* barrier_pass_B6.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69A30837209CCDF300FC23F8 /* barrier_pass_B6.mp3 */; };
+		69A3083A209CD14600FC23F8 /* SelectRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A30839209CD14600FC23F8 /* SelectRenderer.swift */; };
 		69AB5E92204F251700093B33 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E91204F251700093B33 /* Math.swift */; };
 		69C5A827209382AC0034C9E6 /* KernelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A826209382AC0034C9E6 /* KernelState.swift */; };
 		69C5A82A209383300034C9E6 /* TimeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A829209383300034C9E6 /* TimeState.swift */; };
@@ -160,6 +161,7 @@
 		69A3082D209CA87A00FC23F8 /* ButtonRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonRenderer.swift; sourceTree = "<group>"; };
 		69A3082F209CB1E400FC23F8 /* CountdownRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownRenderer.swift; sourceTree = "<group>"; };
 		69A30837209CCDF300FC23F8 /* barrier_pass_B6.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = barrier_pass_B6.mp3; sourceTree = "<group>"; };
+		69A30839209CD14600FC23F8 /* SelectRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRenderer.swift; sourceTree = "<group>"; };
 		69AB5E91204F251700093B33 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		69C5A826209382AC0034C9E6 /* KernelState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernelState.swift; sourceTree = "<group>"; };
 		69C5A829209383300034C9E6 /* TimeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeState.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				695619322098E32400A7E822 /* AudioRenderer.swift */,
 				69A3082D209CA87A00FC23F8 /* ButtonRenderer.swift */,
 				69A3082F209CB1E400FC23F8 /* CountdownRenderer.swift */,
+				69A30839209CD14600FC23F8 /* SelectRenderer.swift */,
 			);
 			path = Renderers;
 			sourceTree = "<group>";
@@ -870,6 +873,7 @@
 				69C5A86F2094D5210034C9E6 /* CollisionRule.swift in Sources */,
 				69C5A86A2094CB1A0034C9E6 /* Input.swift in Sources */,
 				69C5A8572093BA8F0034C9E6 /* GameScene.swift in Sources */,
+				69A3083A209CD14600FC23F8 /* SelectRenderer.swift in Sources */,
 				69C5A83D20938A920034C9E6 /* Definitions.swift in Sources */,
 				699FC556204E053600DB09B4 /* AppDelegate.swift in Sources */,
 				69C5A84E2093A0300034C9E6 /* BoardMutator.swift in Sources */,

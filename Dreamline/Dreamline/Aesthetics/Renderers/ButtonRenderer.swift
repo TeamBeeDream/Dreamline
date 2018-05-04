@@ -51,6 +51,7 @@ class ButtonRenderer: Observer {
         self.rightButton.position = CGPoint(x: layoutX.positions[1], y: layoutY.positions[0])
         
         self.buttonContainer = SKNode()
+        //self.buttonContainer.alpha = 0.0
         self.buttonContainer.addChild(self.leftButton)
         self.buttonContainer.addChild(self.rightButton)
         self.scene.addChild(self.buttonContainer)
@@ -82,11 +83,13 @@ class ButtonRenderer: Observer {
     
     private func handlePhase(phase: FlowControlPhase) {
         switch phase {
-        case .play:
-            self.buttonContainer.alpha = 1.0
+        case .origin: fallthrough
         case .begin: fallthrough
+        case .select: fallthrough
         case .results:
             self.buttonContainer.alpha = 0.0
+        case .play:
+            self.buttonContainer.alpha = 1.0
         default:
             break
         }

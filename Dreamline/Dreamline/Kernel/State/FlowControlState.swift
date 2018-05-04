@@ -20,6 +20,7 @@ extension FlowControlState {
 
 enum FlowControlPhase {
     case origin
+    case select
     case begin
     case play
     case results

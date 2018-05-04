@@ -44,9 +44,7 @@ class PauseRenderer: Observer {
                 self.run(self.pauseButton, action: self.showAction())
             }
         case .flowControlPhaseUpdate(let phase):
-            if phase == .play { self.run(self.pauseButton, action: self.showAction()) }
-            if phase == .results { self.run(self.pauseButton, action: self.hideAction()) }
-            if phase == .begin { self.run(self.pauseButton, action: self.hideAction()) }
+            self.handlePhase(phase: phase)
         case .settingsMuteUpdate(let mute):
             self.menuNode.toggleMuteButton(mute: mute, delegate: self.delegate)
         default: break
@@ -76,6 +74,19 @@ class PauseRenderer: Observer {
         menuNode.zPosition = 300 // @HARDCODED
         scene.addChild(menuNode)
         self.menuNode = menuNode
+    }
+    
+    private func handlePhase(phase: FlowControlPhase) {
+        switch phase {
+        case .origin: fallthrough
+        case .select: fallthrough
+        case .begin:
+            self.run(self.pauseButton, action: self.hideAction())
+        case .play:
+            self.run(self.pauseButton, action: self.showAction())
+        case .results:
+            self.run(self.pauseButton, action: self.hideAction())
+        }
     }
     
     private func run(_ node: SKNode, action: SKAction) {

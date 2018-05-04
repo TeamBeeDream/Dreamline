@@ -120,8 +120,15 @@ class PlayerRenderer: Observer {
     private func handlePhase(_ phase: FlowControlPhase) {
         switch phase {
         case .origin:
+            self.player.alpha = 0.0
+        case .select:
+            self.score.alpha = 0.0
+            self.player.alpha = 0.0
+            self.health.alpha = 0.0
+        case .begin:
             self.scoreValue = 0
             self.score.text = "0"
+            self.score.alpha = 0.0
             self.player.alpha = 1.0
         case .play:
             self.health.alpha = 1.0
@@ -130,8 +137,6 @@ class PlayerRenderer: Observer {
             self.health.alpha = 0.0
             self.score.alpha = 0.0
             if self.invincible { self.player.alpha = 0.0 }
-        default:
-            break
         }
     }
 }

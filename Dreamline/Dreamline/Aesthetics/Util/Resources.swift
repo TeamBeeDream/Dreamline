@@ -24,6 +24,7 @@ enum Texture {
     case cloudE
     case heart
     case arrowButton
+    case playButton
 }
 
 enum Music {
@@ -139,6 +140,11 @@ extension Resources {
     private func addPauseButton() {
         self.textures[.pauseButton] = SKTexture(imageNamed: "PauseButton")
         self.textures[.arrowButton] = SKTexture(imageNamed: "ArrowButton")
+        
+        let playLabel = SKLabelNode(text: "PLAY")
+        playLabel.fontColor = Colors.gray
+        playLabel.fontSize = 36
+        self.textures[.playButton] = SKView().texture(from: playLabel)!
     }
 }
 

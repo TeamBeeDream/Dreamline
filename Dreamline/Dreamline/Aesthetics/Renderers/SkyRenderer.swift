@@ -70,6 +70,7 @@ class SkyRenderer: Observer {
     
     private func handlePhaseUpdate(_ phase: FlowControlPhase) {
         switch phase {
+        case .select: fallthrough
         case .begin:
             self.run(self.matteNode, action: Actions.fadeOut(duration: 0.2))
         case .results:

@@ -20,8 +20,7 @@ class SetupRule: Rule {
                 .timePauseUpdate(pause: false),
                 .healthHitPointSet(3),
                 .healthReset,
-                .chunkLevelUpdate(level: 1), // @FIXME
-                .flowControlPhaseUpdate(phase: .begin)]
+                .flowControlPhaseUpdate(phase: .select)]
         case .begin:
             self.eventFlag = false
             let chunks = self.sequencer.getChunks(level: state.chunk.level)
@@ -41,6 +40,8 @@ class SetupRule: Rule {
             } else {
                 return []
             }
+        case .select:
+            return []
         }
     }
 }

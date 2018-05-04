@@ -38,7 +38,7 @@ class ResultsRenderer: Observer {
         switch event {
             
         case .flowControlPhaseUpdate(let phase):
-            if phase == .begin {
+            if phase == .begin || phase == .select {
                 self.nodeContainer.run(SKAction.sequence([
                     SKAction.fadeOut(withDuration: 0.5),
                     SKAction.run { self.nodeContainer.removeAllChildren() },
@@ -168,7 +168,7 @@ class ResultsRenderer: Observer {
         continueButton.action = { self.delegate.addEvent(.flowControlPhaseUpdate(phase: .origin)) }
         continueButton.isUserInteractionEnabled = false
         continueButton.run(SKAction.sequence([
-            SKAction.wait(forDuration: 2.0),
+            SKAction.wait(forDuration: 5.0),
             SKAction.run { continueButton.isUserInteractionEnabled = true }]))
         self.nodeContainer.addChild(continueButton)
     }

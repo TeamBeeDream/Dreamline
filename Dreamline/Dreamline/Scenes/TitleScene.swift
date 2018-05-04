@@ -78,23 +78,22 @@ class TitleScene: SKScene {
     }
     
     private func addClouds() {
-        let cloudNodeA = CloudNode.make(width: self.frame.width)
-        cloudNodeA.position = CGPoint(x: 0.0, y: 0.0)
-        cloudNodeA.setScrollSpeed(x: 0.04, y: 0.0)
-        cloudNodeA.setTint(r: 244.0/255.0, g: 255.0/255.0, b: 246.0/255.0, a: 0.3)
-        self.addChild(cloudNodeA)
+        for _ in 1...5 {
+            self.randomCloud(texture: Resources.shared.getTexture(.cloudA))
+        }
+    }
+    
+    private func randomCloud(texture: SKTexture) {
+        let random = RealRandom()
+        let t = CGFloat(random.next())
+        let size = lerp(t, min: self.frame.width * 0.08, max: self.frame.width * 0.5)
+        let speed = lerp(t, min: 20.0, max: 12.0)
         
-        let cloudNodeB = CloudNode.make(width: self.frame.width)
-        cloudNodeB.position = CGPoint(x: 0.0, y: -30.0)
-        cloudNodeB.setScrollSpeed(x: 0.055, y: 0.0)
-        cloudNodeB.setTint(r: 255.0/255.0, g: 246.0/255.0, b: 239.0/255.0, a: 0.5)
-        self.addChild(cloudNodeB)
-        
-        let cloudNodeC = CloudNode.make(width: self.frame.width)
-        cloudNodeC.position = CGPoint(x: 0.0, y: -50.0)
-        cloudNodeC.setScrollSpeed(x: 0.06, y: 0.0)
-        cloudNodeC.setTint(r: 252.0/255.0, g: 255.0/255.0, b: 237.0/255.0, a: 0.8)
-        self.addChild(cloudNodeC)
+        let cloud = ScrollingCloudNode.make(texture: texture,
+                                             size: size,
+                                             bounds: self.frame,
+                                             speed: speed)
+        self.addChild(cloud)
     }
     
     private func addCopyright() {

@@ -17,6 +17,7 @@ enum Texture {
     case tiledSky1
     case tiledCloud1
     case pauseButton
+    case cloudA
 }
 
 enum Music {
@@ -60,7 +61,7 @@ class Resources {
         self.addThresholdTextures(frame: frame)
         self.addPlayerTexture()
         self.addSkyTexture()
-        self.addCloudTexture()
+        self.addCloudTextures()
         self.addPauseButton()
         self.addMusic()
         self.addSounds()
@@ -117,8 +118,9 @@ extension Resources {
         self.textures[.tiledSky1] = SKTexture(imageNamed: "TiledSky1")
     }
     
-    private func addCloudTexture() {
+    private func addCloudTextures() {
         self.textures[.tiledCloud1] = SKTexture(imageNamed: "TiledCloud1")
+        self.textures[.cloudA] = SKTexture(imageNamed: "CloudA")
     }
     
     private func addPauseButton() {

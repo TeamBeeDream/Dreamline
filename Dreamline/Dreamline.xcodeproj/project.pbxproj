@@ -45,6 +45,7 @@
 		699FC563204E053600DB09B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 699FC562204E053600DB09B4 /* Assets.xcassets */; };
 		699FC566204E053600DB09B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 699FC564204E053600DB09B4 /* LaunchScreen.storyboard */; };
 		699FC57C204E053600DB09B4 /* DreamlineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC57B204E053600DB09B4 /* DreamlineUITests.swift */; };
+		69A3082E209CA87A00FC23F8 /* ButtonRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A3082D209CA87A00FC23F8 /* ButtonRenderer.swift */; };
 		69AB5E92204F251700093B33 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E91204F251700093B33 /* Math.swift */; };
 		69C5A827209382AC0034C9E6 /* KernelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A826209382AC0034C9E6 /* KernelState.swift */; };
 		69C5A82A209383300034C9E6 /* TimeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A829209383300034C9E6 /* TimeState.swift */; };
@@ -154,6 +155,7 @@
 		699FC577204E053600DB09B4 /* DreamlineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DreamlineUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		699FC57B204E053600DB09B4 /* DreamlineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DreamlineUITests.swift; sourceTree = "<group>"; };
 		699FC57D204E053600DB09B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		69A3082D209CA87A00FC23F8 /* ButtonRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonRenderer.swift; sourceTree = "<group>"; };
 		69AB5E91204F251700093B33 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		69C5A826209382AC0034C9E6 /* KernelState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernelState.swift; sourceTree = "<group>"; };
 		69C5A829209383300034C9E6 /* TimeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeState.swift; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				69C5A88B20962AA80034C9E6 /* ResultsRenderer.swift */,
 				695619272098BB0B00A7E822 /* SkyRenderer.swift */,
 				695619322098E32400A7E822 /* AudioRenderer.swift */,
+				69A3082D209CA87A00FC23F8 /* ButtonRenderer.swift */,
 			);
 			path = Renderers;
 			sourceTree = "<group>";
@@ -832,6 +835,7 @@
 				69C5A83F20938B7D0034C9E6 /* TimeRule.swift in Sources */,
 				69C5A8622094C33B0034C9E6 /* PositionRule.swift in Sources */,
 				69C5A827209382AC0034C9E6 /* KernelState.swift in Sources */,
+				69A3082E209CA87A00FC23F8 /* ButtonRenderer.swift in Sources */,
 				695619332098E32400A7E822 /* AudioRenderer.swift in Sources */,
 				695619282098BB0B00A7E822 /* SkyRenderer.swift in Sources */,
 				69C5A85C2093BC1F0034C9E6 /* BarrierRendererDelegate.swift in Sources */,

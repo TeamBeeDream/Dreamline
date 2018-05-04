@@ -38,7 +38,14 @@ class ThresholdRendererDelegate: EntityRendererDelegate {
         }
     }
     
-    func handleEntityStateChange(state: EntityState, node: SKSpriteNode) {}
+    func handleEntityStateChange(state: EntityState, node: SKSpriteNode) {
+        switch state {
+        case .crossed:
+            node.run(Actions.blink(duration: 0.2))
+        default:
+            break
+        }
+    }
     
     private func getTexture(type: ThresholdType) -> SKTexture {
         switch type {

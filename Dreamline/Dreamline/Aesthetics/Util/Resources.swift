@@ -23,6 +23,7 @@ enum Texture {
     case cloudD
     case cloudE
     case heart
+    case arrowButton
 }
 
 enum Music {
@@ -137,6 +138,7 @@ extension Resources {
     
     private func addPauseButton() {
         self.textures[.pauseButton] = SKTexture(imageNamed: "PauseButton")
+        self.textures[.arrowButton] = SKTexture(imageNamed: "ArrowButton")
     }
 }
 

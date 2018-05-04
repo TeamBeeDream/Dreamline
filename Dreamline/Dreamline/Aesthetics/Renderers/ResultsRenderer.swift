@@ -131,10 +131,10 @@ class ResultsRenderer: Observer {
                 highscore = newHighscore
             }
             if same(highscore, newHighscore) {
-                shownYours = false
+                shownYours = true
             }
             
-            let text = "\(highscore.date) Round \(highscore.level) \(highscore.points) Points"
+            let text = "Round \(highscore.level) - \(highscore.points) Points"
             let scoreLabel = self.normalLabel(text: text)
             scoreLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[4 + i])
             scoreLabel.alpha = 0.0

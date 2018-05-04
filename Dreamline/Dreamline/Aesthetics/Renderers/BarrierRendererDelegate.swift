@@ -49,9 +49,11 @@ class BarrierRendererDelegate: EntityRendererDelegate {
     func handleEntityStateChange(state: EntityState, node: SKSpriteNode) {
         switch state {
         case .crossed:
-            self.blinkLine(node: node)
+            node.run(Actions.blink(duration: 0.1))
         case .passed:
-            node.run(Actions.fadeOut(duration: 0.5))
+            node.run(SKAction.sequence([
+                Actions.hop(height: 15.0, duration: 0.15),
+                Actions.fadeOut(duration: 0.4)]))
         default:
             break
         }

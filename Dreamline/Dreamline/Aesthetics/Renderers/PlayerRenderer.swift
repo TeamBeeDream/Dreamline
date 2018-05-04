@@ -87,7 +87,7 @@ class PlayerRenderer: Observer {
         
         let t = abs(position) // [0, 1]
         
-        let scaleX = lerp(t, min: 1.2, max: 0.6)
+        let scaleX = lerp(t, min: 1.2, max: 0.8)
         self.player.xScale = CGFloat(scaleX)
         
         let rotation = lerp(position, min: 0.0, max: 0.2)

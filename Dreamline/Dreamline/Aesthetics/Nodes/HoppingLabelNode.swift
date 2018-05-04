@@ -71,17 +71,9 @@ class HoppingLabelNode: SKNode {
     
     private func hopAction() -> SKAction {
         var actions = [SKAction]()
-        actions.append(contentsOf: self.hop(height: 15.0, duration: 0.15))
-        actions.append(contentsOf: self.hop(height:  5.0, duration: 0.10))
+        actions.append(Actions.hop(height: 15.0, duration: 0.15))
+        actions.append(Actions.hop(height:  5.0, duration: 0.10))
         actions.append(SKAction.wait(forDuration: 1.0))
         return SKAction.repeatForever(SKAction.sequence(actions))
-    }
-    
-    private func hop(height: CGFloat, duration: Double) -> [SKAction] {
-        let hopUp = SKAction.moveBy(x: 0.0, y: height, duration: duration)
-        let hopDown = SKAction.moveBy(x: 0.0, y: -height, duration: duration)
-        hopUp.timingMode = .easeOut
-        hopDown.timingMode = .easeIn
-        return [hopUp, hopDown]
     }
 }

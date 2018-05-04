@@ -58,4 +58,12 @@ class Actions {
             SKAction.scale(to: 0.7, duration: duration * 0.8),
             SKAction.scale(to: 1.0, duration: duration * 0.2)]))
     }
+    
+    static func hop(height: CGFloat, duration: Double) -> SKAction {
+        let hopUp = SKAction.moveBy(x: 0.0, y: height, duration: duration)
+        let hopDown = SKAction.moveBy(x: 0.0, y: -height, duration: duration)
+        hopUp.timingMode = .easeOut
+        hopDown.timingMode = .easeIn
+        return SKAction.sequence([hopUp, hopDown])
+    }
 }

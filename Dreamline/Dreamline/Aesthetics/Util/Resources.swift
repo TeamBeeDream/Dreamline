@@ -115,7 +115,7 @@ extension Resources {
         shape.fillColor = Colors.red
         self.textures[.thresholdRound] = SKView().texture(from: shape)!
         
-        shape.fillColor = Colors.blue
+        shape.fillColor = .white
         self.textures[.thresholdRecovery] = SKView().texture(from: shape)!
     }
     

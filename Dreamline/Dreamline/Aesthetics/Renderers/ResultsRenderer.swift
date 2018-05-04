@@ -97,13 +97,21 @@ class ResultsRenderer: Observer {
     }
     
     private func drawLose(level: Int, points: Int) {
-        var layout = Layout.autoLayout(fullLength: self.scene.frame.height, segments: 12)
+        var layout = Layout.autoLayout(fullLength: self.scene.frame.height, segments: 10)
         layout.positions.reverse()
         
         // @TEMP
         let label = self.headerLabel(text: "GAME OVER")
         label.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[2])
         label.fontColor = Colors.red
+        label.alpha = 0.0
+        label.run(SKAction.sequence([
+            SKAction.wait(forDuration: 0.5),
+            SKAction.group([
+                SKAction.fadeIn(withDuration: 0.4),
+                SKAction.moveBy(x: 0.0, y: -10.0, duration: 0.4)
+                ])
+            ]))
         self.nodeContainer.addChild(label)
         
         // Highscores
@@ -115,20 +123,54 @@ class ResultsRenderer: Observer {
         // @TODO: Limit # of highscores
         self.saveHighscores(highscores: highscores)
         
-        for i in 0...min(highscores.count-1, 4) {
-            let highscore = highscores[i]
-            let scoreLabel = self.normalLabel(text: "\(highscore.date) - Round \(highscore.level) - \(highscore.points) Points")
-            if highscore.level == newHighscore.level && highscore.points == newHighscore.points && highscore.date == newHighscore.date { scoreLabel.fontColor = .yellow }
-            scoreLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[3 + i])
+        var shownYours = false
+        let max = min(highscores.count-1, 4)
+        for i in 0...max {
+            var highscore = highscores[i]
+            if i == max && !shownYours {
+                highscore = newHighscore
+            }
+            if same(highscore, newHighscore) {
+                shownYours = false
+            }
+            
+            let text = "\(highscore.date) Round \(highscore.level) \(highscore.points) Points"
+            let scoreLabel = self.normalLabel(text: text)
+            scoreLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[4 + i])
+            scoreLabel.alpha = 0.0
+            scoreLabel.zPosition = 30
+            
+            if same(highscore, newHighscore) {
+                scoreLabel.fontColor = .yellow
+                scoreLabel.run(SKAction.sequence([
+                    SKAction.wait(forDuration: Double(i+2) * 0.5),
+                    SKAction.group([
+                        SKAction.fadeIn(withDuration: 0.7),
+                        SKAction.moveBy(x: 0.0, y: 10.0, duration: 0.7)
+                        ]),
+                    Actions.fadeLoop(duration: 0.4)
+                    ]))
+            } else {
+                scoreLabel.run(SKAction.sequence([
+                    SKAction.wait(forDuration: Double(i+2) * 0.5),
+                    SKAction.group([
+                        SKAction.fadeIn(withDuration: 0.7),
+                        SKAction.moveBy(x: 0.0, y: 10.0, duration: 0.7)
+                        ])
+                    ]))
+            }
             self.nodeContainer.addChild(scoreLabel)
         }
         
         // @HACK
         let continueButton = ButtonNode(color: .clear, size: self.scene.frame.size)
-        continueButton.isUserInteractionEnabled = true
         continueButton.zPosition = 100 // @HARDCODED
         continueButton.position = CGPoint(x: self.scene.frame.midX, y: self.scene.frame.midY)
         continueButton.action = { self.delegate.addEvent(.flowControlPhaseUpdate(phase: .origin)) }
+        continueButton.isUserInteractionEnabled = false
+        continueButton.run(SKAction.sequence([
+            SKAction.wait(forDuration: 2.0),
+            SKAction.run { continueButton.isUserInteractionEnabled = true }]))
         self.nodeContainer.addChild(continueButton)
     }
     
@@ -175,5 +217,12 @@ class ResultsRenderer: Observer {
         let userDefaults = UserDefaults.standard
         userDefaults.set(encodedData, forKey: self.storageKey)
         userDefaults.synchronize()
+    }
+    
+    private func same(_ a: Highscore, _ b: Highscore) -> Bool {
+        return
+            a.level == b.level &&
+            a.points == b.points &&
+            a.date == b.date
     }
 }

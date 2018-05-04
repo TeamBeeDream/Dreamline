@@ -117,7 +117,7 @@ class ResultsRenderer: Observer {
         
         for i in 0...min(highscores.count-1, 4) {
             let highscore = highscores[i]
-            let scoreLabel = self.normalLabel(text: "\(highscore.date) - Level \(highscore.level) - \(highscore.points) Points")
+            let scoreLabel = self.normalLabel(text: "\(highscore.date) - Round \(highscore.level) - \(highscore.points) Points")
             if highscore.level == newHighscore.level && highscore.points == newHighscore.points && highscore.date == newHighscore.date { scoreLabel.fontColor = .yellow }
             scoreLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[3 + i])
             self.nodeContainer.addChild(scoreLabel)

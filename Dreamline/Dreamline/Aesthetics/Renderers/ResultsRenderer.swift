@@ -69,7 +69,8 @@ class ResultsRenderer: Observer {
         let completeLabel = HoppingLabelNode.make(text: "COMPLETE",
                                                   font: "Avenir-Medium",
                                                   width: self.scene.frame.width * 0.8,
-                                                  color: .yellow)
+                                                  color: .yellow,
+                                                  secondaryColor: .gray)
         completeLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[3])
         completeLabel.zPosition = 40
         self.nodeContainer.addChild(completeLabel)

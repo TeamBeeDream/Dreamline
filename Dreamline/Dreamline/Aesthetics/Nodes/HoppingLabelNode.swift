@@ -13,31 +13,60 @@ class HoppingLabelNode: SKNode {
     static func make(text: String,
                      font: String,
                      width: CGFloat,
-                     color: UIColor) -> HoppingLabelNode {
+                     color: UIColor,
+                     secondaryColor: UIColor) -> HoppingLabelNode {
         let instance = HoppingLabelNode()
         instance.addText(text: text,
                          font: font,
                          width: width,
-                         color: color)
+                         color: color,
+                         secondaryColor: secondaryColor)
         return instance
     }
     
     private func addText(text: String,
                          font: String,
                          width: CGFloat,
-                         color: UIColor) {
+                         color: UIColor,
+                         secondaryColor: UIColor) {
         let layout = Layout.autoLayout(fullLength: width, segments: text.count)
         for (i, char) in text.enumerated() {
-            let charLabel = SKLabelNode(text: "\(char)")
-            charLabel.fontSize = layout.sublength * 0.8
-            charLabel.fontColor = color
-            charLabel.fontName = font
-            charLabel.horizontalAlignmentMode = .center
+            let charLabel = self.charLabel(char,
+                                           fontSize: layout.sublength * 0.8,
+                                           font: font,
+                                           color: color,
+                                           secondaryColor: secondaryColor)
             charLabel.position = CGPoint(x: layout.positions[i] - width / 2.0, y: 0)
             charLabel.run(SKAction.sequence([SKAction.wait(forDuration: Double(i) * 0.125),
                                              self.hopAction()]))
             self.addChild(charLabel)
         }
+    }
+    
+    private func charLabel(_ char: Character,
+                           fontSize: CGFloat,
+                           font: String,
+                           color: UIColor,
+                           secondaryColor: UIColor) -> SKNode {
+        let charLabel = SKLabelNode(text: "\(char)")
+        charLabel.fontSize = fontSize
+        charLabel.fontColor = color
+        charLabel.fontName = font
+        charLabel.horizontalAlignmentMode = .center
+        charLabel.zPosition = 1
+        
+        let charLabel2 = SKLabelNode(text: "\(char)")
+        charLabel2.fontSize = fontSize
+        charLabel2.fontColor = secondaryColor
+        charLabel2.fontName = font
+        charLabel2.horizontalAlignmentMode = .center
+        charLabel.position = CGPoint(x: 0.0, y: 2.0)
+        charLabel.zPosition = 0.9
+        
+        let node = SKNode()
+        node.addChild(charLabel2)
+        node.addChild(charLabel)
+        return node
     }
     
     private func hopAction() -> SKAction {

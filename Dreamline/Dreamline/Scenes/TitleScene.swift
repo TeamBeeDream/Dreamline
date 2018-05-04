@@ -35,20 +35,11 @@ class TitleScene: SKScene {
         let title = HoppingLabelNode.make(text: "DREAMLINE",
                                           font: "ArialRoundedMTBold",
                                           width: self.frame.width * 0.8,
-                                          color: UIColor(red: 247.0/255.0, green: 54.0/255.0, blue: 60.0/255.0, alpha: 1.0))
+                                          color: UIColor(red: 247.0/255.0, green: 54.0/255.0, blue: 60.0/255.0, alpha: 1.0),
+                                          secondaryColor: UIColor(red: 255.0/255.0, green: 135.0/255.0, blue: 156.0/255.0, alpha: 1.0))
         title.position = CGPoint(x: self.frame.midX, y: self.frame.midY + self.frame.height * 0.2)
         title.zPosition = 100
         self.addChild(title)
-        
-        // @HACK
-        let titleShadow = HoppingLabelNode.make(text: "DREAMLINE",
-                                                font: "ArialRoundedMTBold",
-                                                width: self.frame.width * 0.8,
-                                                //color: .white)
-                                                color: UIColor(red: 255.0/255.0, green: 135.0/255.0, blue: 156.0/255.0, alpha: 1.0))
-        titleShadow.position = CGPoint(x: title.position.x, y: title.position.y - 2)
-        titleShadow.zPosition = 99
-        self.addChild(titleShadow)
     }
     
     private func addTapLabel() {

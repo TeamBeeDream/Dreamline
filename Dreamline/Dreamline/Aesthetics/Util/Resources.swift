@@ -25,6 +25,7 @@ enum Texture {
     case heart
     case arrowButton
     case playButton
+    case tbdLogo
 }
 
 enum Music {
@@ -150,6 +151,7 @@ extension Resources {
     private func addPlayerTexture() {
         self.textures[.player] = SKTexture(imageNamed: "PaperAirplaneB")
         self.textures[.heart] = SKTexture(imageNamed: "Heart")
+        self.textures[.tbdLogo] = SKTexture(imageNamed: "TBD_Logo")
     }
     
     private func addSkyTexture() {

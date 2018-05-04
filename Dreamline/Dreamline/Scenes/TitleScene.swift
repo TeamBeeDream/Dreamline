@@ -29,13 +29,23 @@ class TitleScene: SKScene {
     }
     
     private func addTitle() {
+        let moveUp = SKAction.moveBy(x: 0.0, y: self.frame.height * 0.1, duration: 1.2)
+        moveUp.timingMode = .easeOut
+        
         let title = HoppingLabelNode.make(text: "CLOUD COURSE",
                                           font: "ArialRoundedMTBold",
                                           width: self.frame.width * 0.95,
                                           color: Colors.red,
                                           secondaryColor: Colors.orange)
-        title.position = CGPoint(x: self.frame.midX, y: self.frame.midY + self.frame.height * 0.2)
+        title.position = CGPoint(x: self.frame.midX, y: self.frame.midY + self.frame.height * 0.1)
         title.zPosition = 100
+        title.alpha = 0.0
+        title.run(SKAction.sequence([
+            SKAction.wait(forDuration: 2.0),
+            SKAction.group([
+                SKAction.fadeIn(withDuration: 1.0),
+                moveUp])
+            ]))
         self.addChild(title)
     }
     
@@ -45,8 +55,12 @@ class TitleScene: SKScene {
         label.fontColor = .white
         label.fontSize = 28
         label.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
-        label.run(Actions.fadeLoop(duration: 3.0))
         label.zPosition = 100
+        label.alpha = 0.0
+        label.run(SKAction.sequence([
+            SKAction.wait(forDuration: 3.5),
+            SKAction.fadeIn(withDuration: 1.5),
+            Actions.fadeLoop(duration: 3.0)]))
         self.addChild(label)
     }
     
@@ -54,8 +68,10 @@ class TitleScene: SKScene {
         let button = ButtonNode(color: .clear, size: self.frame.size)
         button.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         button.zPosition = 200
-        button.isUserInteractionEnabled = true
         button.action = { self.manager.gotoGame() } // @TEMP
+        button.run(SKAction.sequence([
+            SKAction.wait(forDuration: 3.5),
+            SKAction.run { button.isUserInteractionEnabled = true }]))
         self.addChild(button)
     }
     
@@ -66,10 +82,29 @@ class TitleScene: SKScene {
     }
     
     private func addClouds() {
-        self.addChild(ScrollingCloudClusterNode.make(count: 4, bounds: self.frame, vertical: false))
+        let clouds = ScrollingCloudClusterNode.make(count: 4, bounds: self.frame, vertical: false)
+        clouds.alpha = 0.0
+        clouds.run(SKAction.sequence([
+            SKAction.wait(forDuration: 0.5),
+            Actions.fadeIn(duration: 3.0)]))
+        self.addChild(clouds)
     }
     
     private func addCopyright() {
+        let fadeIn = SKAction.sequence([
+            SKAction.wait(forDuration: 4.0),
+            SKAction.fadeIn(withDuration: 1.0)])
+        
+        let width = self.frame.width * 0.15
+        let size = CGSize(width: width, height: width)
+        let logo = SKSpriteNode(texture: Resources.shared.getTexture(.tbdLogo),
+                                size: size)
+        logo.zPosition = 40
+        logo.position = CGPoint(x: self.frame.midX, y: self.frame.minY + 15.0 + width)
+        logo.alpha = 0.0
+        logo.run(fadeIn)
+        self.addChild(logo)
+        
         let label = SKLabelNode(text: "© 2018 Team BeeDream")
         label.fontSize = 18
         label.fontName = "Avenir-Light"
@@ -77,6 +112,8 @@ class TitleScene: SKScene {
         label.zPosition = 100
         label.position = CGPoint(x: self.frame.midX, y: self.frame.minY + 15.0)
         label.verticalAlignmentMode = .bottom
+        label.alpha = 0.0
+        label.run(fadeIn)
         self.addChild(label)
     }
 }

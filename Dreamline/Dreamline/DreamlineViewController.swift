@@ -36,8 +36,8 @@ class DreamlineViewController: UIViewController, SceneManager {
         self.skView = skView
         skView.isMultipleTouchEnabled = true
         skView.ignoresSiblingOrder = true
-        skView.showsDrawCount = true
-        skView.showsFPS = true
+        skView.showsDrawCount = false
+        skView.showsFPS = false
         
         self.gotoTitle()
         //self.gotoGame()

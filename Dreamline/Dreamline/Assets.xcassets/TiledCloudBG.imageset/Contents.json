@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "TiledCloudBG.png",
+      "filename" : "TiledCloudB.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "TiledCloudBG@2x.png",
+      "filename" : "TiledCloudB@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "TiledCloudBG@3x.png",
+      "filename" : "TiledCloudB@3x.png",
       "scale" : "3x"
     }
   ],

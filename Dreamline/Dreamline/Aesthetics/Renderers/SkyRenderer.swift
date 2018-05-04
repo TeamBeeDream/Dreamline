@@ -38,13 +38,18 @@ class SkyRenderer: Observer {
     }
     
     private func addMatte(rect: CGRect) {
+        
+        let scale = 4.0
+        let proportion = Double(rect.height / rect.width)
+        
         let color = UIColor(red: 43.0/255.0, green: 37.0/255.0, blue: 45.0/255.0, alpha: 1.0)
         let texture = Resources.shared.getTexture(.tiledCloudBG)
         let shader = SKShader(fileNamed: "TiledTexture.fsh")
-        shader.addUniform(SKUniform(name: "u_scale", float: 2.0))
+        shader.addUniform(SKUniform(name: "u_scale_x", float: Float(scale)))
+        shader.addUniform(SKUniform(name: "u_scale_y", float: Float(scale * proportion)))
         shader.addUniform(SKUniform(name: "u_alpha", float: 0.1))
-        shader.addUniform(SKUniform(name: "u_scroll_speed_x", float: 0.2))
-        shader.addUniform(SKUniform(name: "u_scroll_speed_y", float: 0.1))
+        shader.addUniform(SKUniform(name: "u_scroll_speed_x", float: 0.1))
+        shader.addUniform(SKUniform(name: "u_scroll_speed_y", float: 0.05))
         
         let texturedMatte = SKSpriteNode(texture: texture, size: rect.size)
         texturedMatte.zPosition = 0

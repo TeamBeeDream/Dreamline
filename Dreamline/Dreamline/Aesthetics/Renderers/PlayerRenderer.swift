@@ -16,6 +16,8 @@ class PlayerRenderer: Observer {
     private var player: PlayerNode!
     private var health: HealthNode!
     private var score: SKLabelNode!
+    
+    private var invincible: Bool = false
     private var scoreValue: Int = 0
     private var yPos: Double = 0.0
     
@@ -112,6 +114,7 @@ class PlayerRenderer: Observer {
         } else {
             self.player.stopBlinking()
         }
+        self.invincible = invincible
     }
     
     private func handlePhase(_ phase: FlowControlPhase) {
@@ -119,12 +122,14 @@ class PlayerRenderer: Observer {
         case .origin:
             self.scoreValue = 0
             self.score.text = "0"
+            self.player.alpha = 1.0
         case .play:
             self.health.alpha = 1.0
             self.score.alpha = 1.0
         case .results:
             self.health.alpha = 0.0
             self.score.alpha = 0.0
+            if self.invincible { self.player.alpha = 0.0 }
         default:
             break
         }

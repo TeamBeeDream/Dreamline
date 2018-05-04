@@ -74,8 +74,9 @@ class AudioRenderer: Observer {
         self.backgroundMusic.run(SKAction.changeVolume(to: volume, duration: 0.5))
     }
     
-    private func playSound(_ player: AVPlayer) {
-        player.seek(to: kCMTimeZero)
-        player.play()
+    private func playSound(_ player: SKAction) {
+//        player.seek(to: kCMTimeZero)
+//        player.play()
+        self.scene.run(player)
     }
 }

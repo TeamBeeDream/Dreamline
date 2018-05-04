@@ -44,12 +44,12 @@ class Resources {
     
     private var textures: [Texture: SKTexture]
     private var music: [Music: SKAudioNode]
-    private var sounds: [Sound: AVPlayer]
+    private var sounds: [Sound: SKAction]
     
     init() {
         self.textures = [Texture: SKTexture]()
         self.music = [Music: SKAudioNode]()
-        self.sounds = [Sound: AVPlayer]()
+        self.sounds = [Sound: SKAction]()
     }
     
     static var shared: Resources {
@@ -81,7 +81,7 @@ class Resources {
         return music
     }
     
-    func getSound(_ key: Sound) -> AVPlayer {
+    func getSound(_ key: Sound) -> SKAction {
         return self.sounds[key]!
     }
 }
@@ -152,16 +152,15 @@ extension Resources {
 // Sounds
 extension Resources {
     private func addSounds() {
-        self.sounds[.barrierCross] = self.loadSound("barrier_cross_v4")
-        self.sounds[.barrierPass] = self.loadSound("barrier_pass_v2")
-        self.sounds[.thresholdRoundCross] = self.loadSound("threshold_cross_v2")
-        self.sounds[.thresholdChunkCross] = self.loadSound("threshold_cross_chunk_v2")
-        self.sounds[.playerMoveAway] = self.loadSound("player_move_v3")
-        self.sounds[.playerMoveBack] = self.loadSound("player_move_2_v2")
+        self.sounds[.barrierCross] = self.loadSound("barrier_cross_v4.mp3")
+        self.sounds[.barrierPass] = self.loadSound("barrier_pass_v2.mp3")
+        self.sounds[.thresholdRoundCross] = self.loadSound("threshold_cross_v2.mp3")
+        self.sounds[.thresholdChunkCross] = self.loadSound("threshold_cross_chunk_v2.mp3")
+        self.sounds[.playerMoveAway] = self.loadSound("player_move_v3.mp3")
+        self.sounds[.playerMoveBack] = self.loadSound("player_move_2_v2.mp3")
     }
 
-    private func loadSound(_ fileName: String) -> AVPlayer {
-        let url = Bundle.main.url(forResource: fileName, withExtension: "mp3")!
-        return AVPlayer(url: url)
+    private func loadSound(_ fileName: String) -> SKAction {
+        return SKAction.playSoundFileNamed(fileName, waitForCompletion: false)
     }
 }

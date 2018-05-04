@@ -23,5 +23,4 @@ enum FlowControlPhase {
     case begin
     case play
     case results
-    case end
 }

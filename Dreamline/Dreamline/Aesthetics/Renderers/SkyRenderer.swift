@@ -13,16 +13,11 @@ class SkyRenderer: Observer {
     private var scene: SKScene!
     private var matteNode: SKNode!
     
-    private let scrollSpeed = 0.2 // @HARDCODED
-    private let skyColor = UIColor.cyan
-    
     static func make(scene: SKScene) -> SkyRenderer {
         let instance = SkyRenderer()
         instance.scene = scene
         instance.addSky(rect: scene.frame)
         instance.addMatte(rect: scene.frame)
-        instance.setScrollSpeed(speed: instance.scrollSpeed)
-        instance.setSkyColor(color: instance.skyColor)
         return instance
     }
     
@@ -30,17 +25,12 @@ class SkyRenderer: Observer {
         switch event {
         case .flowControlPhaseUpdate(let phase):
             self.handlePhaseUpdate(phase)
-        case .timePauseUpdate(let pause):
-            self.handlePause(pause)
         default: break
         }
     }
     
     private func addSky(rect: CGRect) {
-        let bg = SKSpriteNode(color: UIColor(red: 154.0/255.0,
-                                             green: 227.0/255.0,
-                                             blue: 239.0/255.0,
-                                             alpha: 1.0), size: self.scene.frame.size)
+        let bg = SKSpriteNode(color: Colors.sky, size: self.scene.frame.size)
         bg.position = CGPoint(x: self.scene.frame.midX, y: self.scene.frame.midY)
         self.scene.addChild(bg)
         let clouds = ScrollingCloudClusterNode.make(count: 8, bounds: self.scene.frame, vertical: true)
@@ -75,7 +65,7 @@ class SkyRenderer: Observer {
     
     private func handlePhaseUpdate(_ phase: FlowControlPhase) {
         switch phase {
-        case .begin:
+        case .play:
             self.run(self.matteNode, action: Actions.fadeOut(duration: 0.2))
         case .results:
             self.run(self.matteNode, action: Actions.fadeIn(duration: 0.5))
@@ -87,21 +77,5 @@ class SkyRenderer: Observer {
     private func run(_ node: SKNode, action: SKAction) {
         node.removeAllActions()
         node.run(action)
-    }
-    
-    private func handlePause(_ pause: Bool) {
-        if pause {
-            self.setScrollSpeed(speed: 0.0)
-        } else {
-            self.setScrollSpeed(speed: scrollSpeed)
-        }
-    }
-    
-    private func setScrollSpeed(speed: Double) {
-        //self.skyNode.setScrollSpeed(speed: speed)
-    }
-    
-    private func setSkyColor(color: UIColor) {
-        //self.skyNode.setSkyColor(color: color)
     }
 }

@@ -16,17 +16,20 @@ class SetupRule: Rule {
     func process(state: KernelState, deltaTime: Double) -> [KernelEvent] {
         switch state.flowControl.phase {
         case .origin:
-            let chunks = self.sequencer.getChunks(level: state.chunk.level)
-            return [.flowControlPhaseUpdate(phase: .begin),
-                    .chunkSet(chunks: chunks),
-                    .boardScrollSpeedUpdate(speed: state.board.scrollSpeed * 1.1), // @TEMP
-                    //.healthReset,
-                    .healthInvincibleUpdate(invincible: false),
-                    .timePauseUpdate(pause: false),
-                    .boardReset]
+            return [
+                .healthHitPointSet(3),
+                .chunkLevelUpdate(level: 0), // @FIXME
+                .flowControlPhaseUpdate(phase: .begin)]
         case .begin:
             self.eventFlag = false
-            return [.flowControlPhaseUpdate(phase: .play)]
+            let chunks = self.sequencer.getChunks(level: state.chunk.level)
+            return [
+                .timePauseUpdate(pause: false),
+                .boardReset,
+                .boardScrollSpeedUpdate(speed: state.board.scrollSpeed), // @TODO
+                .chunkSet(chunks: chunks),
+                .healthInvincibleUpdate(invincible: false),
+                .flowControlPhaseUpdate(phase: .play)]
         case .results:
             if !self.eventFlag {
                 self.eventFlag = true

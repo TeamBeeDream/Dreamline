@@ -38,7 +38,7 @@ class ResultsRenderer: Observer {
         switch event {
             
         case .flowControlPhaseUpdate(let phase):
-            if phase == .origin {
+            if phase == .begin {
                 self.nodeContainer.run(SKAction.sequence([
                     SKAction.fadeOut(withDuration: 0.5),
                     SKAction.run { self.nodeContainer.removeAllChildren() },
@@ -77,7 +77,7 @@ class ResultsRenderer: Observer {
         
         // "Accuracy: X%"
         let scoreLabel = self.normalLabel(text: "Score: \(points)")
-        scoreLabel.fontColor = .red
+        scoreLabel.fontColor = Colors.red
         scoreLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[5])
         self.nodeContainer.addChild(scoreLabel)
         
@@ -92,7 +92,7 @@ class ResultsRenderer: Observer {
         continueButton.isUserInteractionEnabled = true
         continueButton.zPosition = 100 // @HARDCODED
         continueButton.position = CGPoint(x: self.scene.frame.midX, y: self.scene.frame.midY)
-        continueButton.action = { self.delegate.addEvent(.flowControlPhaseUpdate(phase: .origin)) }
+        continueButton.action = { self.delegate.addEvent(.flowControlPhaseUpdate(phase: .begin)) }
         self.nodeContainer.addChild(continueButton)
     }
     
@@ -101,8 +101,9 @@ class ResultsRenderer: Observer {
         layout.positions.reverse()
         
         // @TEMP
-        let label = self.headerLabel(text: "LOSE")
+        let label = self.headerLabel(text: "GAME OVER")
         label.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[2])
+        label.fontColor = Colors.red
         self.nodeContainer.addChild(label)
         
         // Highscores

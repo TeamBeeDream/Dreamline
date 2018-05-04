@@ -25,6 +25,7 @@
 		6950D48A209B6F0B00B0DFCC /* threshold_cross_chunk_v2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6950D489209B6F0B00B0DFCC /* threshold_cross_chunk_v2.mp3 */; };
 		6950D48C209B83AD00B0DFCC /* player_move_2_v2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6950D48B209B83AD00B0DFCC /* player_move_2_v2.mp3 */; };
 		6950D48E209B8EC000B0DFCC /* ScrollingCloudNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D48D209B8EC000B0DFCC /* ScrollingCloudNode.swift */; };
+		6950D490209C0EBE00B0DFCC /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D48F209C0EBE00B0DFCC /* Colors.swift */; };
 		695619222098BAB500A7E822 /* ScrollTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 695619202098BAB500A7E822 /* ScrollTexture.fsh */; };
 		695619232098BAB500A7E822 /* TiledTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 695619212098BAB500A7E822 /* TiledTexture.fsh */; };
 		695619282098BB0B00A7E822 /* SkyRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 695619272098BB0B00A7E822 /* SkyRenderer.swift */; };
@@ -127,6 +128,7 @@
 		6950D489209B6F0B00B0DFCC /* threshold_cross_chunk_v2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = threshold_cross_chunk_v2.mp3; sourceTree = "<group>"; };
 		6950D48B209B83AD00B0DFCC /* player_move_2_v2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = player_move_2_v2.mp3; sourceTree = "<group>"; };
 		6950D48D209B8EC000B0DFCC /* ScrollingCloudNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingCloudNode.swift; sourceTree = "<group>"; };
+		6950D48F209C0EBE00B0DFCC /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		695619202098BAB500A7E822 /* ScrollTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = ScrollTexture.fsh; sourceTree = "<group>"; };
 		695619212098BAB500A7E822 /* TiledTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TiledTexture.fsh; sourceTree = "<group>"; };
 		695619272098BB0B00A7E822 /* SkyRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyRenderer.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				6956192C2098C15F00A7E822 /* Actions.swift */,
 				695619302098C49A00A7E822 /* Layout.swift */,
 				6950D477209A90F800B0DFCC /* Resources.swift */,
+				6950D48F209C0EBE00B0DFCC /* Colors.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -839,6 +842,7 @@
 				6950D4662099F8D400B0DFCC /* TitleScene.swift in Sources */,
 				69C5A8642094C7270034C9E6 /* PositionMutator.swift in Sources */,
 				69C5A82A209383300034C9E6 /* TimeState.swift in Sources */,
+				6950D490209C0EBE00B0DFCC /* Colors.swift in Sources */,
 				699FC55E204E053600DB09B4 /* DreamlineViewController.swift in Sources */,
 				69711D05207E7D4600B7309C /* NodeCache.swift in Sources */,
 				6950D47E209B619900B0DFCC /* Highscore.swift in Sources */,

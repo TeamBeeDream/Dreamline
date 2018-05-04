@@ -108,10 +108,10 @@ extension Resources {
         let shape = SKShapeNode(rect: rect)
         shape.lineWidth = 0.0
         
-        shape.fillColor = .orange
+        shape.fillColor = Colors.green
         self.textures[.thresholdChunk] = SKView().texture(from: shape)!
         
-        shape.fillColor = .purple
+        shape.fillColor = Colors.red
         self.textures[.thresholdRound] = SKView().texture(from: shape)!
     }
     

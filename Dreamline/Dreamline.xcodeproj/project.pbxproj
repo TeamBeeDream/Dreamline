@@ -13,7 +13,6 @@
 		6913F854206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
 		6950D4662099F8D400B0DFCC /* TitleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D4652099F8D400B0DFCC /* TitleScene.swift */; };
 		6950D468209A0D0800B0DFCC /* HoppingLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D467209A0D0800B0DFCC /* HoppingLabelNode.swift */; };
-		6950D471209A462200B0DFCC /* CloudNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D470209A462200B0DFCC /* CloudNode.swift */; };
 		6950D473209A478A00B0DFCC /* CloudScroll.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 6950D472209A478A00B0DFCC /* CloudScroll.fsh */; };
 		6950D478209A90F800B0DFCC /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D477209A90F800B0DFCC /* Resources.swift */; };
 		6950D47C209B5E1D00B0DFCC /* cloud_theme_menu_v3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6950D47B209B5E1D00B0DFCC /* cloud_theme_menu_v3.mp3 */; };
@@ -116,7 +115,6 @@
 		6913F851206C3600001FBAAB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6950D4652099F8D400B0DFCC /* TitleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScene.swift; sourceTree = "<group>"; };
 		6950D467209A0D0800B0DFCC /* HoppingLabelNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoppingLabelNode.swift; sourceTree = "<group>"; };
-		6950D470209A462200B0DFCC /* CloudNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudNode.swift; sourceTree = "<group>"; };
 		6950D472209A478A00B0DFCC /* CloudScroll.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = CloudScroll.fsh; sourceTree = "<group>"; };
 		6950D477209A90F800B0DFCC /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		6950D47B209B5E1D00B0DFCC /* cloud_theme_menu_v3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cloud_theme_menu_v3.mp3; sourceTree = "<group>"; };
@@ -296,7 +294,6 @@
 				69C5A882209627A90034C9E6 /* PauseMenuNode.swift */,
 				6956192E2098C2D000A7E822 /* PlayerNode.swift */,
 				6950D467209A0D0800B0DFCC /* HoppingLabelNode.swift */,
-				6950D470209A462200B0DFCC /* CloudNode.swift */,
 				6950D48D209B8EC000B0DFCC /* ScrollingCloudNode.swift */,
 			);
 			path = Nodes;
@@ -863,7 +860,6 @@
 				69C5A84E2093A0300034C9E6 /* BoardMutator.swift in Sources */,
 				699EB42D206DAFDA00693CB8 /* Random.swift in Sources */,
 				69C5A8682094C9F60034C9E6 /* PlayerRenderer.swift in Sources */,
-				6950D471209A462200B0DFCC /* CloudNode.swift in Sources */,
 				69C5A8762094DB5B0034C9E6 /* HealthMutator.swift in Sources */,
 				69C5A82E209384590034C9E6 /* BoardState.swift in Sources */,
 				69C5A844209395FB0034C9E6 /* TimeMutator.swift in Sources */,

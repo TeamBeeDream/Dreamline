@@ -13,6 +13,7 @@ class SpawnRule: Rule {
     private var regulator = SpawnRegulator()
     private var sequencer = SpawnSequencer()
     private var lastId: Int = 0 // @HACK
+    private var didSendRecovery: Bool = false
     
     func process(state: KernelState, deltaTime: Double) -> [KernelEvent] {
         if state.flowControl.phase == .origin {
@@ -25,6 +26,8 @@ class SpawnRule: Rule {
                                              lastEntityPosition: state.board.lastEntityPosition) {
             return []
         }
+        
+        if !state.health.invincible { self.didSendRecovery = false }
         
         return [.boardEntityAdd(entity: self.getNextEntity(state: state))]
     }
@@ -40,9 +43,12 @@ class SpawnRule: Rule {
             return entity
         }
         
-        let type = self.sequencer.getNextEntity(type: chunk.type,
-                                                difficulty: chunk.difficuly,
-                                                length: chunk.length)
+        
+        let type = !state.health.invincible
+            ? self.sequencer.getNextEntity(type: chunk.type,
+                                           difficulty: chunk.difficuly,
+                                           length: chunk.length)
+            : self.recovery() // @HACK
         let entity = Entity(id: self.lastId,
                             position: state.board.layout.lowerBound,
                             type: type,
@@ -50,6 +56,16 @@ class SpawnRule: Rule {
         self.lastId += 1
         
         return entity
+    }
+    
+    private func recovery() -> EntityType {
+        if !self.didSendRecovery {
+            self.didSendRecovery = true
+            self.sequencer.clear()
+            return .threshold(type: .recovery)
+        } else {
+            return .blank
+        }
     }
 }
 

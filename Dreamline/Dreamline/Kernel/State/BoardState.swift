@@ -64,6 +64,7 @@ enum EntityState {
 enum ThresholdType {
     case roundEnd
     case chunkEnd
+    case recovery
 }
 
 enum Gate {

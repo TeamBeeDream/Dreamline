@@ -44,6 +44,7 @@ class ThresholdRendererDelegate: EntityRendererDelegate {
         switch type {
         case .chunkEnd: return Resources.shared.getTexture(.thresholdChunk)
         case .roundEnd: return Resources.shared.getTexture(.thresholdRound)
+        case .recovery: return Resources.shared.getTexture(.thresholdRecovery)
         }
     }
 }

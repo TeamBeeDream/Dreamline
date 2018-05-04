@@ -21,9 +21,7 @@ class HealthMutator: Mutator {
             state.health.totalBarriers += 1
             state.health.barriersPassed += pass ? 1 : 0
         case .healthReset:
-            //state.health.barriersPassed = 0
-            //state.health.totalBarriers = 0
-            //state.health.hitPoints = 3
+            state.health.barriersPassed = 0
             state.health.invincible = false
         default: break
         }

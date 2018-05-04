@@ -50,6 +50,13 @@ class EntityRenderer: Observer {
                 entity.position.y -= CGFloat(distance / 2.0) * self.scene.frame.height // @FIXME
             }
             
+        case .healthInvincibleUpdate(let invincible):
+            if invincible {
+                for (_, entity) in self.cache.iter() {
+                    entity.run(SKAction.fadeAlpha(to: 0.15, duration: 0.2))
+                }
+            }
+            
         default:
             break
         }
@@ -78,7 +85,6 @@ class EntityRenderer: Observer {
         let midY = self.scene.frame.midY
         let offset = self.scene.frame.height * -0.5
         return midY + CGFloat(position) * offset
-        //return self.scene.frame.maxY
     }
 }
 

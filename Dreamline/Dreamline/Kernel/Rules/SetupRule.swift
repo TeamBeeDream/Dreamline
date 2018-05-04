@@ -18,7 +18,8 @@ class SetupRule: Rule {
         case .origin:
             return [
                 .healthHitPointSet(3),
-                .chunkLevelUpdate(level: 0), // @FIXME
+                .healthReset,
+                .chunkLevelUpdate(level: 1), // @FIXME
                 .flowControlPhaseUpdate(phase: .begin)]
         case .begin:
             self.eventFlag = false

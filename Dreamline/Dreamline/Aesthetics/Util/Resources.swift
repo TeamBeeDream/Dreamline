@@ -13,9 +13,8 @@ enum Texture {
     case player
     case thresholdChunk
     case thresholdRound
+    case thresholdRecovery
     case barrier
-    case tiledSky1   // @REMOVE
-    case tiledCloud1 // @REMOVE
     case tiledCloudBG
     case pauseButton
     case cloudA
@@ -113,6 +112,9 @@ extension Resources {
         
         shape.fillColor = Colors.red
         self.textures[.thresholdRound] = SKView().texture(from: shape)!
+        
+        shape.fillColor = Colors.blue
+        self.textures[.thresholdRecovery] = SKView().texture(from: shape)!
     }
     
     private func addPlayerTexture() {
@@ -120,12 +122,10 @@ extension Resources {
     }
     
     private func addSkyTexture() {
-        self.textures[.tiledSky1] = SKTexture(imageNamed: "TiledSky1")
         self.textures[.tiledCloudBG] = SKTexture(imageNamed: "TiledCloudBG")
     }
     
     private func addCloudTextures() {
-        self.textures[.tiledCloud1] = SKTexture(imageNamed: "TiledCloud1")
         self.textures[.cloudA] = SKTexture(imageNamed: "CloudA")
         self.textures[.cloudB] = SKTexture(imageNamed: "CloudB")
         self.textures[.cloudC] = SKTexture(imageNamed: "CloudC")

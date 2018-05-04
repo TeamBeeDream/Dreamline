@@ -95,25 +95,21 @@ class ThresholdCollisionDelegate: CollisionDelegate {
             if entity.state != .none { return [] } // @HACK
             switch type {
             case .chunkEnd:
-                var events = [KernelEvent]()
-                
-                events.append(.boardEntityStateUpdate(id: entity.id,
-                                                      type: entity.type,
-                                                      state: .crossed))
-                
-                if state.health.invincible {
-                    events.append(.healthInvincibleUpdate(invincible: false))
-                } else {
-                    events.append(.chunkNext)
-                }
-                
-                return events
+                if state.health.invincible { return [] }
+                return [.boardEntityStateUpdate(id: entity.id,
+                                                type: entity.type,
+                                                state: .crossed),
+                        .chunkNext,
+                .healthInvincibleUpdate(invincible: false)]
             case .roundEnd:
                 return [
                 .boardEntityStateUpdate(id: entity.id,
                                         type: entity.type,
                                         state: .crossed),
-                    .flowControlPhaseUpdate(phase: .results)]
+                    .flowControlPhaseUpdate(phase: .results),
+                .healthInvincibleUpdate(invincible: false)]
+            case .recovery:
+                return [.healthInvincibleUpdate(invincible: false)]
             }
         default:
             return []

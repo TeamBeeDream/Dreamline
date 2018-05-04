@@ -110,7 +110,8 @@ class ResultsRenderer: Observer {
             SKAction.group([
                 SKAction.fadeIn(withDuration: 0.4),
                 SKAction.moveBy(x: 0.0, y: -10.0, duration: 0.4)
-                ])
+                ]),
+            Actions.fadeLoop(duration: 1.5)
             ]))
         self.nodeContainer.addChild(label)
         
@@ -132,6 +133,7 @@ class ResultsRenderer: Observer {
             }
             let same = self.same(highscore, newHighscore)
             if same { shownYours = true }
+            let highestScore = (same && i == 0)
             
             let scoreLabel = self.alignedLabel(round: highscore.level,
                                                score: highscore.points,
@@ -141,14 +143,31 @@ class ResultsRenderer: Observer {
             scoreLabel.zPosition = 30
             
             if same {
-                scoreLabel.run(SKAction.sequence([
-                    SKAction.wait(forDuration: Double(i+2) * 0.5),
-                    SKAction.group([
-                        SKAction.fadeIn(withDuration: 0.7),
-                        SKAction.moveBy(x: 0.0, y: 10.0, duration: 0.7)
-                        ]),
-                    Actions.fadeLoop(duration: 0.4)
-                    ]))
+                if highestScore {
+                    scoreLabel.run(SKAction.sequence([
+                        SKAction.wait(forDuration: Double(i+2) * 0.5),
+                        SKAction.group([
+                            SKAction.fadeIn(withDuration: 0.7),
+                            SKAction.moveBy(x: 0.0, y: 10.0, duration: 0.7)
+                            ]),
+                        SKAction.run { self.scene.run(Resources.shared.getSound(.highscore)) },
+                        SKAction.run {
+                            let hsLabel = self.newHSLabel()
+                            hsLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[3])
+                            self.nodeContainer.addChild(hsLabel)
+                        },
+                        Actions.fadeLoop(duration: 0.4)
+                        ]))
+                } else {
+                    scoreLabel.run(SKAction.sequence([
+                        SKAction.wait(forDuration: Double(i+2) * 0.5),
+                        SKAction.group([
+                            SKAction.fadeIn(withDuration: 0.7),
+                            SKAction.moveBy(x: 0.0, y: 10.0, duration: 0.7)
+                            ]),
+                        Actions.fadeLoop(duration: 0.4)
+                        ]))
+                }
             } else {
                 scoreLabel.run(SKAction.sequence([
                     SKAction.wait(forDuration: Double(i+2) * 0.5),
@@ -171,6 +190,14 @@ class ResultsRenderer: Observer {
             SKAction.wait(forDuration: 5.0),
             SKAction.run { continueButton.isUserInteractionEnabled = true }]))
         self.nodeContainer.addChild(continueButton)
+    }
+    
+    private func newHSLabel() -> SKLabelNode {
+        let label = self.defaultLabel(text: "New Highscore!")
+        label.fontColor = .yellow
+        label.fontSize = 20
+        label.run(Actions.blink(duration: 0.2, count: 10))
+        return label
     }
     
     private func defaultLabel(text: String) -> SKLabelNode {

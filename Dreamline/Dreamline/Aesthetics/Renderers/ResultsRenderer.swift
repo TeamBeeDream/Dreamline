@@ -130,18 +130,17 @@ class ResultsRenderer: Observer {
             if i == max && !shownYours {
                 highscore = newHighscore
             }
-            if same(highscore, newHighscore) {
-                shownYours = true
-            }
+            let same = self.same(highscore, newHighscore)
+            if same { shownYours = true }
             
-            let text = "Round \(highscore.level) - \(highscore.points) Points"
-            let scoreLabel = self.normalLabel(text: text)
-            scoreLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[4 + i])
+            let scoreLabel = self.alignedLabel(round: highscore.level,
+                                               score: highscore.points,
+                                               color: same ? .yellow : .white)
+            scoreLabel.position = CGPoint(x: 0.0, y: layout.positions[4 + i])
             scoreLabel.alpha = 0.0
             scoreLabel.zPosition = 30
             
-            if same(highscore, newHighscore) {
-                scoreLabel.fontColor = .yellow
+            if same {
                 scoreLabel.run(SKAction.sequence([
                     SKAction.wait(forDuration: Double(i+2) * 0.5),
                     SKAction.group([
@@ -192,6 +191,25 @@ class ResultsRenderer: Observer {
         let label = self.defaultLabel(text: text)
         label.fontSize = 24
         return label
+    }
+    
+    private func alignedLabel(round: Int, score: Int, color: UIColor) -> SKNode {
+        let margin = self.scene.frame.width * 0.08
+        
+        let roundLabel = self.normalLabel(text: "Round \(round)")
+        roundLabel.fontColor = color
+        roundLabel.horizontalAlignmentMode = .left
+        roundLabel.position = CGPoint(x: self.scene.frame.minX + margin, y: 0)
+        
+        let scoreLabel = self.normalLabel(text: "\(score) Points")
+        scoreLabel.fontColor = color
+        scoreLabel.horizontalAlignmentMode = .right
+        scoreLabel.position = CGPoint(x: self.scene.frame.maxX - margin, y: 0)
+        
+        let container = SKNode()
+        container.addChild(roundLabel)
+        container.addChild(scoreLabel)
+        return container
     }
     
     private func createHighscore(level: Int, points: Int) -> Highscore {

@@ -47,6 +47,7 @@
 		699FC57C204E053600DB09B4 /* DreamlineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 699FC57B204E053600DB09B4 /* DreamlineUITests.swift */; };
 		69A3082E209CA87A00FC23F8 /* ButtonRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A3082D209CA87A00FC23F8 /* ButtonRenderer.swift */; };
 		69A30830209CB1E400FC23F8 /* CountdownRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A3082F209CB1E400FC23F8 /* CountdownRenderer.swift */; };
+		69A30838209CCDF300FC23F8 /* barrier_pass_B6.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 69A30837209CCDF300FC23F8 /* barrier_pass_B6.mp3 */; };
 		69AB5E92204F251700093B33 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69AB5E91204F251700093B33 /* Math.swift */; };
 		69C5A827209382AC0034C9E6 /* KernelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A826209382AC0034C9E6 /* KernelState.swift */; };
 		69C5A82A209383300034C9E6 /* TimeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C5A829209383300034C9E6 /* TimeState.swift */; };
@@ -158,6 +159,7 @@
 		699FC57D204E053600DB09B4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		69A3082D209CA87A00FC23F8 /* ButtonRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonRenderer.swift; sourceTree = "<group>"; };
 		69A3082F209CB1E400FC23F8 /* CountdownRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownRenderer.swift; sourceTree = "<group>"; };
+		69A30837209CCDF300FC23F8 /* barrier_pass_B6.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = barrier_pass_B6.mp3; sourceTree = "<group>"; };
 		69AB5E91204F251700093B33 /* Math.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		69C5A826209382AC0034C9E6 /* KernelState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KernelState.swift; sourceTree = "<group>"; };
 		69C5A829209383300034C9E6 /* TimeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeState.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 		693DF52D205997E0002C4821 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				69A30837209CCDF300FC23F8 /* barrier_pass_B6.mp3 */,
 				6950D483209B6E4200B0DFCC /* barrier_pass_v2.mp3 */,
 				6950D481209B6E2B00B0DFCC /* barrier_cross_v4.mp3 */,
 				6950D47B209B5E1D00B0DFCC /* cloud_theme_menu_v3.mp3 */,
@@ -652,6 +655,7 @@
 				6950D48A209B6F0B00B0DFCC /* threshold_cross_chunk_v2.mp3 in Resources */,
 				695619222098BAB500A7E822 /* ScrollTexture.fsh in Resources */,
 				6950D486209B6E9900B0DFCC /* player_move_v3.mp3 in Resources */,
+				69A30838209CCDF300FC23F8 /* barrier_pass_B6.mp3 in Resources */,
 				6950D488209B6EF000B0DFCC /* threshold_cross_v2.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

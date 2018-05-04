@@ -84,6 +84,7 @@ class ButtonRenderer: Observer {
         switch phase {
         case .play:
             self.buttonContainer.alpha = 1.0
+        case .begin: fallthrough
         case .results:
             self.buttonContainer.alpha = 0.0
         default:

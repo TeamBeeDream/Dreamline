@@ -44,8 +44,9 @@ class PauseRenderer: Observer {
                 self.run(self.pauseButton, action: self.showAction())
             }
         case .flowControlPhaseUpdate(let phase):
-            if phase == .begin { self.run(self.pauseButton, action: self.showAction()) }
+            if phase == .play { self.run(self.pauseButton, action: self.showAction()) }
             if phase == .results { self.run(self.pauseButton, action: self.hideAction()) }
+            if phase == .begin { self.run(self.pauseButton, action: self.hideAction()) }
         case .settingsMuteUpdate(let mute):
             self.menuNode.toggleMuteButton(mute: mute, delegate: self.delegate)
         default: break
@@ -72,6 +73,7 @@ class PauseRenderer: Observer {
         menuNode.menuButton.action = { self.manager.gotoTitle() }
         menuNode.resumeButton.action = { self.delegate.addEvent(.timePauseUpdate(pause: false)) }
         menuNode.muteButton.action = { self.delegate.addEvent(.settingsMuteUpdate(mute: true)) }
+        menuNode.zPosition = 300 // @HARDCODED
         scene.addChild(menuNode)
         self.menuNode = menuNode
     }

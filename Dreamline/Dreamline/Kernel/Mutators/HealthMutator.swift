@@ -35,6 +35,7 @@ class HealthMutator: Mutator {
             return type != .chunkEnd
         case .blank:
             assert(false)
+            return false
         }
     }
 }

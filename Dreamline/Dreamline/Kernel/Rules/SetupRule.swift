@@ -10,25 +10,39 @@ import Foundation
 
 class SetupRule: Rule {
     
-    private var chunkSequencer = ChunkSequencer()
+    private var sequencer = MasterChunkSequencer()
+    private var eventFlag: Bool = false
     
-    func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
-        if state.flowControl.phase == .origin {
-            let chunks = self.chunkSequencer.getChunks(start: 0.2, end: 1.0, variation: 0.1, count: 1)
-            return .multiple(events: [
-                .flowControlPhaseUpdate(phase: .begin),
-                .chunkSet(chunks: chunks),
-                .healthHitPointSet(3),
-                .healthInvincibleUpdate(invincible: false),
+    func process(state: KernelState, deltaTime: Double) -> [KernelEvent] {
+        switch state.flowControl.phase {
+        case .origin:
+            return [
                 .timePauseUpdate(pause: false),
-                .boardReset])
+                .healthHitPointSet(3),
+                .healthReset,
+                .flowControlPhaseUpdate(phase: .select)]
+        case .begin:
+            self.eventFlag = false
+            let chunks = self.sequencer.getChunks(level: state.chunk.level)
+            return [
+                .boardReset,
+                .chunkSet(chunks: chunks),
+                .healthInvincibleUpdate(invincible: false)]
+        case .play:
+            return [.boardScrollSpeedUpdate(speed: state.chunk.current!.speed)]
+        case .results:
+            if !self.eventFlag {
+                self.eventFlag = true
+                return [.roundOver(didWin: state.health.hitPoints != 0,
+                                   level: state.chunk.level,
+                                   score: state.health.barriersPassed),
+                        .positionTargetUpdate(target: 0),
+                        .chunkLevelUpdate(level: state.chunk.level + 1)]    // @TEMP
+            } else {
+                return []
+            }
+        case .select:
+            return []
         }
-        
-        // @TEMP
-        if state.flowControl.phase == .begin {
-            return .flowControlPhaseUpdate(phase: .play)
-        }
-        
-        return nil
     }
 }

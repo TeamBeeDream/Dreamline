@@ -8,12 +8,16 @@
 
 import SpriteKit
 
-class DreamlineViewController: UIViewController {
+protocol SceneManager {
+    func gotoTitle()
+    func gotoGame()
+}
+
+class DreamlineViewController: UIViewController, SceneManager {
     
     // MARK: Private Properties
     
     private var skView: SKView!
-//    private var sceneController: SceneController!
     
     // MARK: Init and Deinit
     
@@ -27,21 +31,16 @@ class DreamlineViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.sceneController = DreamlineSceneController.make(size: self.view.frame.size)
-//
         let skView = SKView(frame: self.view.frame)
-        skView.isMultipleTouchEnabled = true
         self.view.addSubview(skView)
-        self.skView = skView // @IMPORTANT
+        self.skView = skView
+        skView.isMultipleTouchEnabled = true
         skView.ignoresSiblingOrder = true
-        skView.showsDrawCount = true
-        skView.showsFPS = true
-//        //skView.isAsynchronous = true // @NOTE: I'm not sure what this does
-
-        // @TEMP
-        skView.presentScene(TestScene.make(size: skView.frame.size))
+        skView.showsDrawCount = false
+        skView.showsFPS = false
         
-//        self.didTransition(to: .game)
+        self.gotoTitle()
+        //self.gotoGame()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -49,10 +48,34 @@ class DreamlineViewController: UIViewController {
     }
     
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
     
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+    
+    // MARK: SceneManager Methods
+    
+    func gotoTitle() {
+        let transition = SKTransition.crossFade(withDuration: 1.0)
+        transition.pausesOutgoingScene = true
+        transition.pausesIncomingScene = false
+        let scene = TitleScene.make(size: self.skView.frame.size, manager: self)
+        self.skView.presentScene(scene, transition: transition)
+    }
+    
+    func gotoGame() {
+        let transition = SKTransition.crossFade(withDuration: 1.0)
+        transition.pausesIncomingScene = false
+        transition.pausesOutgoingScene = false
+        
+        let frame = self.skView.frame
+        DispatchQueue.global(qos: .userInitiated).async {
+            let scene = GameScene.make(size: frame.size, manager: self)
+            DispatchQueue.main.async {
+                self.skView.presentScene(scene, transition: transition)
+            }
+        }
     }
 }

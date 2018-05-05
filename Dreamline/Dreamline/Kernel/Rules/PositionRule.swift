@@ -13,11 +13,11 @@ class PositionRule: Rule {
     private var calculator = PositionCalculator()
     static let MOVE_DURATION: Double = 0.1
     
-    func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
+    func process(state: KernelState, deltaTime: Double) -> [KernelEvent] {
         let position = self.calculator.calculateNewPosition(deltaTime: deltaTime,
                                                             moveDuration: 0.1,  // @HARDCODED
                                                             originalState: state.position)
-        return .positionUpdate(distanceFromOrigin: position)
+        return [.positionUpdate(distanceFromOrigin: position)]
     }
 }
 

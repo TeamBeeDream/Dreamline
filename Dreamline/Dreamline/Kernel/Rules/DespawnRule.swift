@@ -9,13 +9,13 @@
 import Foundation
 
 class DespawnRule: Rule {
-    func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
+    func process(state: KernelState, deltaTime: Double) -> [KernelEvent] {
+        var events = [KernelEvent]()
         for entity in state.board.entities {
             if entity.position > state.board.layout.upperBound {
-                return .boardEntityRemove(id: entity.id)
+                events.append(.boardEntityRemove(id: entity.id))
             }
         }
-        
-        return nil
+        return events
     }
 }

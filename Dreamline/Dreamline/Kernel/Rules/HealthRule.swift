@@ -9,13 +9,12 @@
 import Foundation
 
 class HealthRule: Rule {
-    func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
-        if state.flowControl.phase != .play { return nil }
+    func process(state: KernelState, deltaTime: Double) -> [KernelEvent] {
+        if state.flowControl.phase != .play { return [] }
         if state.health.hitPoints <= 0 {
-            //return .flowControlPhaseUpdate(phase: .results)
-            return nil
+            return [.flowControlPhaseUpdate(phase: .results)]
         } else {
-            return nil
+            return []
         }
     }
 }

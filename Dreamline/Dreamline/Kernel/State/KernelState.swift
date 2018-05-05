@@ -15,6 +15,7 @@ struct KernelState {
     var chunk: ChunkState
     var flowControl: FlowControlState
     var health: HealthState
+    var settings: SettingsState
 }
 
 extension KernelState {
@@ -24,12 +25,15 @@ extension KernelState {
                            position: PositionState.new(),
                            chunk: ChunkState.new(),
                            flowControl: FlowControlState.new(),
-                           health: HealthState.new())
+                           health: HealthState.new(),
+                           settings: SettingsState.new())
     }
     
     static func master() -> KernelState {
         var boardState = BoardState.new()
-        boardState.layout = BoardLayout(playerPosition: 0.2, upperBound: 1.0, lowerBound: -1.0)
+        boardState.layout = BoardLayout(playerPosition: 0.2,
+                                        upperBound: 1.0,
+                                        lowerBound: -1.0)
         boardState.scrollSpeed = 1.0
         boardState.distanceBetweenEntities = 0.5
         
@@ -38,6 +42,7 @@ extension KernelState {
                            position: PositionState.new(),
                            chunk: ChunkState.new(),
                            flowControl: FlowControlState.new(),
-                           health: HealthState.new())
+                           health: HealthState.new(),
+                           settings: SettingsState.new())
     }
 }

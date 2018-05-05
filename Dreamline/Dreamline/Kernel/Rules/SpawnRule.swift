@@ -13,20 +13,23 @@ class SpawnRule: Rule {
     private var regulator = SpawnRegulator()
     private var sequencer = SpawnSequencer()
     private var lastId: Int = 0 // @HACK
+    private var didSendRecovery: Bool = false
     
-    func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
+    func process(state: KernelState, deltaTime: Double) -> [KernelEvent] {
         if state.flowControl.phase == .origin {
             self.sequencer.clear()
         }
-        if state.flowControl.phase != .play { return nil }
+        if state.flowControl.phase != .play { return [] }
         
         if !self.regulator.shouldSpawnEntity(boardPosition: state.board.position,
                                              distanceBetweenBarriers: state.board.distanceBetweenEntities,
                                              lastEntityPosition: state.board.lastEntityPosition) {
-            return nil
+            return []
         }
         
-        return .boardEntityAdd(entity: self.getNextEntity(state: state))
+        if !state.health.invincible { self.didSendRecovery = false }
+        
+        return [.boardEntityAdd(entity: self.getNextEntity(state: state))]
     }
     
     // @CLEANUP
@@ -40,9 +43,12 @@ class SpawnRule: Rule {
             return entity
         }
         
-        let type = self.sequencer.getNextEntity(type: chunk.type,
-                                                difficulty: chunk.difficuly,
-                                                length: chunk.length)
+        
+        let type = !state.health.invincible
+            ? self.sequencer.getNextEntity(type: chunk.type,
+                                           difficulty: chunk.difficuly,
+                                           length: chunk.length)
+            : self.recovery() // @HACK
         let entity = Entity(id: self.lastId,
                             position: state.board.layout.lowerBound,
                             type: type,
@@ -50,6 +56,16 @@ class SpawnRule: Rule {
         self.lastId += 1
         
         return entity
+    }
+    
+    private func recovery() -> EntityType {
+        if !self.didSendRecovery {
+            self.didSendRecovery = true
+            self.sequencer.clear()
+            return .threshold(type: .recovery)
+        } else {
+            return .blank
+        }
     }
 }
 
@@ -104,8 +120,16 @@ class SpawnSequencer {
     }
     
     private func generateBarrierChunk(difficulty: Double, length: Int) {
-        for _ in 1...length-1 {
-            self.buffer.append(self.generator.generateBarrier())
+        let random = RealRandom()
+        var barrierCount = 0
+        while barrierCount < length {
+            let decider = random.next() < difficulty
+            if decider {
+                self.buffer.append(self.generator.generateBarrier())
+                barrierCount += 1
+            } else {
+                self.buffer.append(self.generator.generateEmpty())
+            }
         }
         self.buffer.append(self.generator.generateChunkEndThreshold())
         for _ in 1...self.trailing {

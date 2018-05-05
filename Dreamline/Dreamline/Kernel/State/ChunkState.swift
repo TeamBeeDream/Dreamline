@@ -18,15 +18,19 @@ struct Chunk {
     var type: ChunkType
     var difficuly: Double
     var length: Int
+    var speed: Double
 }
 
 struct ChunkState {
     var chunks: [Chunk]
     var current: Chunk?
+    var level: Int
 }
 
 extension ChunkState {
     static func new() -> ChunkState {
-        return ChunkState(chunks: [], current: nil)
+        return ChunkState(chunks: [],
+                          current: nil,
+                          level: 0)
     }
 }

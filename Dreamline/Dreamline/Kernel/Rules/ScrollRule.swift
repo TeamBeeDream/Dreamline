@@ -12,11 +12,11 @@ class ScrollRule: Rule {
     
     private let calculator = ScrollDistanceCalculator()
     
-    func process(state: KernelState, deltaTime: Double) -> KernelEvent? {
+    func process(state: KernelState, deltaTime: Double) -> [KernelEvent] {
         let distance = self.calculator.calculateScrollDistance(deltaTime: deltaTime,
                                                                paused: state.time.paused,
                                                                scrollSpeed: state.board.scrollSpeed)
-        return .boardScroll(distance: distance)
+        return [.boardScroll(distance: distance)]
     }
 }
 

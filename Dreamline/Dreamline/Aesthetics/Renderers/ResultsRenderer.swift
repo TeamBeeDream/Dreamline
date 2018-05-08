@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import FirebaseAnalytics
 
 class ResultsRenderer: Observer {
     
@@ -305,6 +306,11 @@ class WordsOfEncouragement {
     }
     
     static func getRoundLose() -> String {
+        if RealRandom().nextInt(min: 0, max: 200000) == 151420 {
+            Analytics.logEvent("poopy_di_scoop", parameters: nil)
+            return "Poop-diddy, whoop-scoop"
+        }
+        
         let phrases = ["Lift yourself",
                        "You can suceeed",
                        "Follow your dreams",

@@ -46,7 +46,7 @@ class PlayerRenderer: Observer {
         self.scene.addChild(health)
         self.health = health
         
-        self.scoreValue = 0
+        self.scoreValue = state.health.barriersPassed
         let score = SKLabelNode(text: "\(self.scoreValue)")
         score.fontName = "Avenir-Medium"
         score.fontColor = Colors.gray
@@ -126,9 +126,9 @@ class PlayerRenderer: Observer {
             self.score.alpha = 0.0
             self.player.alpha = 0.0
             self.health.alpha = 0.0
+            self.scoreValue = 0     // @HACK
+            self.score.text = "0"   // @HACK
         case .begin:
-            self.scoreValue = 0
-            self.score.text = "0"
             self.score.alpha = 0.0
             self.player.alpha = 1.0
         case .play:

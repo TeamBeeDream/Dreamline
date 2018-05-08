@@ -75,13 +75,21 @@ class ResultsRenderer: Observer {
         completeLabel.zPosition = 40
         self.nodeContainer.addChild(completeLabel)
         
-        // "Accuracy: X%"
+        // "Score: X"
         let scoreLabel = self.normalLabel(text: "\(points) Points")
         scoreLabel.fontColor = Colors.red
         scoreLabel.fontSize = 30
         scoreLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[5])
         scoreLabel.run(Actions.fadeLoop(duration: 2.0))
         self.nodeContainer.addChild(scoreLabel)
+        
+        // Words of encouragement
+        let wordsLabel = self.normalLabel(text: WordsOfEncouragement.getRoundComplete())
+        wordsLabel.fontColor = .white
+        wordsLabel.alpha = 0.8
+        wordsLabel.fontSize = 24
+        wordsLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[6])
+        self.nodeContainer.addChild(wordsLabel)
         
         // "tap to continue"
         let continueLabel = self.normalLabel(text: "Tap to continue")
@@ -182,6 +190,17 @@ class ResultsRenderer: Observer {
             self.nodeContainer.addChild(scoreLabel)
         }
         
+        // Words of encouragement
+        let wordsLabel = self.normalLabel(text: WordsOfEncouragement.getRoundLose())
+        wordsLabel.fontColor = .white
+        wordsLabel.alpha = 0.0
+        wordsLabel.fontSize = 24
+        wordsLabel.position = CGPoint(x: self.scene.frame.midX, y: layout.positions[9])
+        wordsLabel.run(SKAction.sequence([
+            SKAction.wait(forDuration: 4.0),
+            SKAction.fadeAlpha(to: 0.8, duration: 1.0)]))
+        self.nodeContainer.addChild(wordsLabel)
+        
         // @HACK
         let continueButton = ButtonNode(color: .clear, size: self.scene.frame.size)
         continueButton.zPosition = 100 // @HARDCODED
@@ -271,5 +290,27 @@ class ResultsRenderer: Observer {
             a.level == b.level &&
             a.points == b.points &&
             a.date == b.date
+    }
+}
+
+class WordsOfEncouragement {
+    static func getRoundComplete() -> String {
+        let phrases = ["Keep going",
+                       "You can do it",
+                       "Believe in yourself",
+                       "You must overcome",
+                       "Fly!"]
+        let randomIndex = RealRandom().nextInt(min: 0, max: phrases.count)
+        return phrases[randomIndex]
+    }
+    
+    static func getRoundLose() -> String {
+        let phrases = ["Lift yourself",
+                       "You can suceeed",
+                       "Follow your dreams",
+                       "You are a champion",
+                       "Fly like the wind"]
+        let randomIndex = RealRandom().nextInt(min: 0, max: phrases.count)
+        return phrases[randomIndex]
     }
 }

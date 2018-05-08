@@ -38,7 +38,8 @@ class GameScene: SKScene, EventDelegate {
                               AudioRenderer.make(scene: instance),
                               ButtonRenderer.make(scene: instance),
                               CountdownRenderer.make(scene: instance, delegate: instance),
-                              SelectRenderer.make(scene: instance, delegate: instance)]
+                              SelectRenderer.make(scene: instance, delegate: instance),
+                              FirebaseObserver()]
         return instance
     }
     

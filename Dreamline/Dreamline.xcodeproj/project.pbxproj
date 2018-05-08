@@ -11,6 +11,7 @@
 		6913F852206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
 		6913F853206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
 		6913F854206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
+		692335DC20A13BCB000F3653 /* FirebaseObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692335DB20A13BCB000F3653 /* FirebaseObserver.swift */; };
 		6950D4662099F8D400B0DFCC /* TitleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D4652099F8D400B0DFCC /* TitleScene.swift */; };
 		6950D468209A0D0800B0DFCC /* HoppingLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D467209A0D0800B0DFCC /* HoppingLabelNode.swift */; };
 		6950D473209A478A00B0DFCC /* CloudScroll.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 6950D472209A478A00B0DFCC /* CloudScroll.fsh */; };
@@ -120,6 +121,7 @@
 
 /* Begin PBXFileReference section */
 		6913F851206C3600001FBAAB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		692335DB20A13BCB000F3653 /* FirebaseObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseObserver.swift; sourceTree = "<group>"; };
 		6950D4652099F8D400B0DFCC /* TitleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScene.swift; sourceTree = "<group>"; };
 		6950D467209A0D0800B0DFCC /* HoppingLabelNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoppingLabelNode.swift; sourceTree = "<group>"; };
 		6950D472209A478A00B0DFCC /* CloudScroll.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = CloudScroll.fsh; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				69A3082D209CA87A00FC23F8 /* ButtonRenderer.swift */,
 				69A3082F209CB1E400FC23F8 /* CountdownRenderer.swift */,
 				69A30839209CD14600FC23F8 /* SelectRenderer.swift */,
+				692335DB20A13BCB000F3653 /* FirebaseObserver.swift */,
 			);
 			path = Renderers;
 			sourceTree = "<group>";
@@ -904,6 +907,7 @@
 				69C5A886209627AA0034C9E6 /* PauseMenuNode.swift in Sources */,
 				6950D478209A90F800B0DFCC /* Resources.swift in Sources */,
 				69C5A834209388110034C9E6 /* HealthState.swift in Sources */,
+				692335DC20A13BCB000F3653 /* FirebaseObserver.swift in Sources */,
 				69C5A8532093A2DD0034C9E6 /* SpawnRule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

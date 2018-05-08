@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import FirebaseAnalytics
 
 class SelectRenderer: Observer {
     
@@ -73,6 +74,8 @@ class SelectRenderer: Observer {
         playButton.action = {
             self.delegate.addEvent(.chunkLevelUpdate(level: self.level))
             self.delegate.addEvent(.flowControlPhaseUpdate(phase: .begin))
+            Analytics.logEvent("v1_0_round_select",
+                               parameters: ["level": self.level as NSObject])
         }
         self.playButton = playButton
         

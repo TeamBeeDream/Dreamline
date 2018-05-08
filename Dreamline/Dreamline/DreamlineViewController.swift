@@ -40,7 +40,6 @@ class DreamlineViewController: UIViewController, SceneManager {
         skView.showsFPS = false
         
         self.gotoTitle()
-        //self.gotoGame()
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

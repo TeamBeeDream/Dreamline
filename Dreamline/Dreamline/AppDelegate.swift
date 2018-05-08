@@ -20,8 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        // @TODO: Properly setup Firebase
-        //FirebaseApp.configure()
+        FirebaseApp.configure()
         
         Resources.shared.preload()
         

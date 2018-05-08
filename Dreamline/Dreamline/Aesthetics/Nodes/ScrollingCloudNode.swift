@@ -96,10 +96,13 @@ class ScrollingCloudClusterNode: SKNode {
     
     private func generate(count: Int, bounds: CGRect, vertical: Bool) -> [ScrollingCloudNode] {
         let clouds: [Texture] = [.cloudA, .cloudB, .cloudC, .cloudD, .cloudE]
+        let layout = Layout.autoLayout(fullLength: 1.0, segments: count)
+        let variation = 1.0 / Double(count * 2)
         var nodes = [ScrollingCloudNode]()
         for i in 0...count-1 {
             let texture = Resources.shared.getTexture(clouds[i % clouds.count])
-            let t = CGFloat(i) / CGFloat(count)
+            //let t = CGFloat(i) / CGFloat(count)
+            let t = layout.positions[i] + CGFloat(RealRandom().next() * variation)
             let size = lerp(t, min: bounds.width * 0.65, max: bounds.width * 0.1)
             let zPosition = lerp(t, min: 3, max: 2)
             let moveTime = lerp(t, min: 15.0, max: 20.0) // @TODO: faster for vertical

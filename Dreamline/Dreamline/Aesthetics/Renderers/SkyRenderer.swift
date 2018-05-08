@@ -33,7 +33,7 @@ class SkyRenderer: Observer {
         let bg = SKSpriteNode(color: Colors.sky, size: self.scene.frame.size)
         bg.position = CGPoint(x: self.scene.frame.midX, y: self.scene.frame.midY)
         self.scene.addChild(bg)
-        let clouds = ScrollingCloudClusterNode.make(count: 8, bounds: self.scene.frame, vertical: true)
+        let clouds = ScrollingCloudClusterNode.make(count: 4, bounds: self.scene.frame, vertical: true)
         self.scene.addChild(clouds)
     }
     

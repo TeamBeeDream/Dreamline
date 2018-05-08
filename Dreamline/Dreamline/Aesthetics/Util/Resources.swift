@@ -41,6 +41,7 @@ enum Sound {
     case thresholdRecovery
     case playerMoveAway
     case playerMoveBack
+    case playerDeath
     case menuClick
     case highscore
 }
@@ -201,6 +202,7 @@ extension Resources {
         self.sounds[.thresholdRecovery] = self.loadSound("recovery_v5.mp3")
         self.sounds[.playerMoveAway] = self.loadSound("player_move_v3.mp3")
         self.sounds[.playerMoveBack] = self.loadSound("player_move_2_v2.mp3")
+        self.sounds[.playerDeath] = self.loadSound("player_death.mp3")
         self.sounds[.menuClick] = self.loadSound("menu_click.mp3")
         self.sounds[.highscore] = self.loadSound("high_score.mp3")
     }

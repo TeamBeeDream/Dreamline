@@ -17,6 +17,8 @@ class AudioRenderer: Observer {
     private var lane: Int = 0
     private var muted: Bool = false
     
+    private var hp: Int = 0
+    
     static func make(scene: SKScene) -> AudioRenderer {
         let instance = AudioRenderer()
         instance.scene = scene
@@ -39,6 +41,11 @@ class AudioRenderer: Observer {
             self.lane = target
         case .boardEntityStateUpdate(_, let type, let state):
             self.handleEvent(type: type, state: state)
+        case .healthHitPointSet(let hp):
+            self.hp = hp
+        case .healthHitPointUpdate(let increment):
+            self.hp += increment
+            self.handleHp()
         default: break
         }
     }
@@ -61,9 +68,6 @@ class AudioRenderer: Observer {
                 self.playSound(Resources.shared.getSound(.thresholdRecovery))
             }
         case .barrier:
-            if state == .crossed {
-                self.playSound(Resources.shared.getSound(.barrierCross))
-            }
             if state == .passed {
                 self.playSound(Resources.shared.getSound(.barrierPass))
             }
@@ -81,6 +85,14 @@ class AudioRenderer: Observer {
     private func playSound(_ player: SKAction) {
         if !self.muted {
             self.scene.run(player)
+        }
+    }
+    
+    private func handleHp() {
+        if self.hp == 0 {
+            self.playSound(Resources.shared.getSound(.playerDeath))
+        } else {
+            self.playSound(Resources.shared.getSound(.barrierCross))
         }
     }
 }

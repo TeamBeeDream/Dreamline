@@ -12,6 +12,7 @@
 		6913F853206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
 		6913F854206C3601001FBAAB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6913F851206C3600001FBAAB /* GoogleService-Info.plist */; };
 		692335DC20A13BCB000F3653 /* FirebaseObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692335DB20A13BCB000F3653 /* FirebaseObserver.swift */; };
+		692335DE20A1DBC4000F3653 /* player_death.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 692335DD20A1DBC4000F3653 /* player_death.mp3 */; };
 		6950D4662099F8D400B0DFCC /* TitleScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D4652099F8D400B0DFCC /* TitleScene.swift */; };
 		6950D468209A0D0800B0DFCC /* HoppingLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6950D467209A0D0800B0DFCC /* HoppingLabelNode.swift */; };
 		6950D473209A478A00B0DFCC /* CloudScroll.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 6950D472209A478A00B0DFCC /* CloudScroll.fsh */; };
@@ -122,6 +123,7 @@
 /* Begin PBXFileReference section */
 		6913F851206C3600001FBAAB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		692335DB20A13BCB000F3653 /* FirebaseObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseObserver.swift; sourceTree = "<group>"; };
+		692335DD20A1DBC4000F3653 /* player_death.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = player_death.mp3; sourceTree = "<group>"; };
 		6950D4652099F8D400B0DFCC /* TitleScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScene.swift; sourceTree = "<group>"; };
 		6950D467209A0D0800B0DFCC /* HoppingLabelNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoppingLabelNode.swift; sourceTree = "<group>"; };
 		6950D472209A478A00B0DFCC /* CloudScroll.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = CloudScroll.fsh; sourceTree = "<group>"; };
@@ -256,17 +258,18 @@
 		693DF52D205997E0002C4821 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				69A30845209CE32100FC23F8 /* cloud_course_theme.mp3 */,
+				6950D485209B6E9800B0DFCC /* player_move_v3.mp3 */,
+				6950D48B209B83AD00B0DFCC /* player_move_2_v2.mp3 */,
+				692335DD20A1DBC4000F3653 /* player_death.mp3 */,
 				69A30849209CE68E00FC23F8 /* recovery_v5.mp3 */,
 				69A3083D209CDBAB00FC23F8 /* high_score.mp3 */,
-				69A3083B209CDBA700FC23F8 /* menu_click.mp3 */,
 				6950D483209B6E4200B0DFCC /* barrier_pass_v2.mp3 */,
 				6950D481209B6E2B00B0DFCC /* barrier_cross_v4.mp3 */,
-				6950D47B209B5E1D00B0DFCC /* cloud_theme_menu_v3.mp3 */,
-				6950D485209B6E9800B0DFCC /* player_move_v3.mp3 */,
 				6950D489209B6F0B00B0DFCC /* threshold_cross_chunk_v2.mp3 */,
-				6950D48B209B83AD00B0DFCC /* player_move_2_v2.mp3 */,
 				6950D487209B6EF000B0DFCC /* threshold_cross_v2.mp3 */,
+				69A3083B209CDBA700FC23F8 /* menu_click.mp3 */,
+				69A30845209CE32100FC23F8 /* cloud_course_theme.mp3 */,
+				6950D47B209B5E1D00B0DFCC /* cloud_theme_menu_v3.mp3 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -670,6 +673,7 @@
 				6950D486209B6E9900B0DFCC /* player_move_v3.mp3 in Resources */,
 				69A3083E209CDBAB00FC23F8 /* high_score.mp3 in Resources */,
 				69A30846209CE32100FC23F8 /* cloud_course_theme.mp3 in Resources */,
+				692335DE20A1DBC4000F3653 /* player_death.mp3 in Resources */,
 				6950D488209B6EF000B0DFCC /* threshold_cross_v2.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

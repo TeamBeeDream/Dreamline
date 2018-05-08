@@ -122,7 +122,7 @@ class ResultsRenderer: Observer {
         var highscores = self.loadHighscores()
         highscores.append(newHighscore)
         
-        highscores = highscores.sorted(by: { $0.level > $1.level || $0.points > $0.points })
+        highscores = highscores.sorted(by: { $0.level > $1.level || $0.points > $1.points })
         // @TODO: Limit # of highscores
         self.saveHighscores(highscores: highscores)
         
